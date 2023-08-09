@@ -9,7 +9,6 @@ import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 
 @Repository
-public class CandidateLanguage extends AbstractJpaDao{
+public class CandidateReferencesDao extends AbstractJpaDao {
 	private EntityManager em = ConnHandler.getManager();
-	
 }
