@@ -8,3 +8,4 @@ import com.lawencon.base.AbstractJpaDao;
 public class ReviewDetailDao extends AbstractJpaDao{
 
 }
+	

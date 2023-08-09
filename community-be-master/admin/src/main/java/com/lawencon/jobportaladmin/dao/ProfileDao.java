@@ -7,4 +7,6 @@ import com.lawencon.base.AbstractJpaDao;
 @Repository
 public class ProfileDao extends AbstractJpaDao{
 
+	
+	
 }
