@@ -44,7 +44,5 @@ public class CandidateUser extends BaseEntity{
 	public void setCandidateProfile(CandidateProfile candidateProfile) {
 		this.candidateProfile = candidateProfile;
 	}
-	
-	
-	
+
 }
