@@ -36,4 +36,62 @@ public class CandidateEducation extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
 
+	public String getDegreeName() {
+		return degreeName;
+	}
+
+	public void setDegreeName(String degreeName) {
+		this.degreeName = degreeName;
+	}
+
+	public String getInstitutionName() {
+		return institutionName;
+	}
+
+	public void setInstitutionName(String institutionName) {
+		this.institutionName = institutionName;
+	}
+
+	public String getMajors() {
+		return majors;
+	}
+
+	public void setMajors(String majors) {
+		this.majors = majors;
+	}
+
+	public Float getCgpa() {
+		return cgpa;
+	}
+
+	public void setCgpa(Float cgpa) {
+		this.cgpa = cgpa;
+	}
+
+	public LocalDateTime getStartYear() {
+		return startYear;
+	}
+
+	public void setStartYear(LocalDateTime startYear) {
+		this.startYear = startYear;
+	}
+
+	public LocalDateTime getEndYear() {
+		return endYear;
+	}
+
+	public void setEndYear(LocalDateTime endYear) {
+		this.endYear = endYear;
+	}
+
+	public CandidateUser getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUser candidateUser) {
+		this.candidateUser = candidateUser;
+	}
+	
+	
+
 }

@@ -13,23 +13,71 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(name = "t_candidate_project_exp")
 public class CandidateProjectExp extends BaseEntity {
-	@Column(name = "project_name", length=30 , nullable=false)
+	@Column(name = "project_name", length = 30, nullable = false)
 	private String projectName;
-	
-	@Column(name = "project_url" , nullable=true)
+
+	@Column(name = "project_url", nullable = true)
 	private String projectUrl;
-	
-	@Column(name = "description", nullable=false)
+
+	@Column(name = "description", nullable = false)
 	private String description;
-	
-	@Column(name = "start_date" , nullable=false)
+
+	@Column(name = "start_date", nullable = false)
 	private LocalDateTime startDate;
-	
-	
-	@Column(name ="end_date",nullable=false)
+
+	@Column(name = "end_date", nullable = false)
 	private LocalDateTime endDate;
-	
+
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getProjectUrl() {
+		return projectUrl;
+	}
+
+	public void setProjectUrl(String projectUrl) {
+		this.projectUrl = projectUrl;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public CandidateUser getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUser candidateUser) {
+		this.candidateUser = candidateUser;
+	}
+
 }
