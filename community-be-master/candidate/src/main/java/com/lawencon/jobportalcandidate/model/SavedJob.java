@@ -7,9 +7,11 @@ import javax.persistence.Table;
 
 import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name = "t_saved_job")
-public class SavedJob {
+public class SavedJob extends BaseEntity{
 
 	@OneToOne
 	@JoinColumn(name = "job_id")
