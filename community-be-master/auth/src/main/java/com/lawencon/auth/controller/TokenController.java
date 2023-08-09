@@ -19,7 +19,6 @@ import com.lawencon.auth.dto.TokenReqDto;
 import com.lawencon.auth.filter.AuthorizationFilter;
 import com.lawencon.auth.service.JwtService;
 
-
 @RestController
 @RequestMapping("token")
 public class TokenController {
@@ -27,7 +26,6 @@ public class TokenController {
 	@Autowired
 	private JwtService jwtService;
 	private AuthorizationFilter authorizationFilter;
-	
 	
 	@PostMapping
 	public ResponseEntity<String> getToken(@RequestBody TokenReqDto tokenDto){
@@ -46,7 +44,6 @@ public class TokenController {
 	public ResponseEntity<Boolean> validateToken(@RequestBody String token){
 		
 		final Boolean result = true;
-		
 		
 		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 	}

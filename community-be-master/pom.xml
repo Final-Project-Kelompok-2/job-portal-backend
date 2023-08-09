@@ -25,7 +25,7 @@
 		<module>core</module>
 		<module>admin</module>
 		<module>candidate</module>
-		<module>auth</module>
+		<module>token-manager</module>
 	</modules>
 
 	<dependencies>
