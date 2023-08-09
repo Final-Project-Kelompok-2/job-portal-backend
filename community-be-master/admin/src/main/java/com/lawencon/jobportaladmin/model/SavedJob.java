@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.model;
+package com.lawencon.jobportaladmin.model;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
