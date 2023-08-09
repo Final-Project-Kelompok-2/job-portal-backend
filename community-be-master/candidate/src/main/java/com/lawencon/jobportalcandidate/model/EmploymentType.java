@@ -15,5 +15,22 @@ public class EmploymentType extends BaseEntity{
 	
 	@Column(name = "employment_type_name",length = 20, nullable = false)
 	private String employmentTypeName;
+
+	public String getEmploymentTypeCode() {
+		return employmentTypeCode;
+	}
+
+	public void setEmploymentTypeCode(String employmentTypeCode) {
+		this.employmentTypeCode = employmentTypeCode;
+	}
+
+	public String getEmploymentTypeName() {
+		return employmentTypeName;
+	}
+
+	public void setEmploymentTypeName(String employmentTypeName) {
+		this.employmentTypeName = employmentTypeName;
+	}
+	
 	
 }
