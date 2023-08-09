@@ -12,7 +12,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name ="t_user")
 public class User extends BaseEntity{
 
-	@Column(name ="user_email",  nullable = false)
+	@Column(name ="user_email", length = 50, nullable = false)
 	private String userEmail;
 	
 	@Column(name ="user_password",  nullable = false)

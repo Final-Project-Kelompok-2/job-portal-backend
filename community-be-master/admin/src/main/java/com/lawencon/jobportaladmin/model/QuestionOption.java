@@ -9,18 +9,17 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name ="t_question_option")
-public class QuestionOption extends BaseEntity{
+@Table(name = "t_question_option")
+public class QuestionOption extends BaseEntity {
 
-
-	@Column(name ="option_label",  nullable = false)
+	@Column(name = "option_label", length = 20, nullable = false)
 	private String optionLabel;
-	
-	@Column(name ="is_correct",  nullable = false)
+
+	@Column(name = "is_correct", nullable = false)
 	private Boolean isCorrect;
-	
+
 	@OneToOne
-	@JoinColumn(name ="question_id")
+	@JoinColumn(name = "question_id")
 	private Question question;
-	
+
 }
