@@ -935,5 +935,6 @@ insert into t_hiring_status values
  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 --job, company, employment type, applicant
 
+SELECT *  FROM t_assesment ta INNER JOIN t_applicant tap ON tap.id = ta.applicant_id  INNER JOIN t_review tr ON tr.applicant_id = tap.id WHERE ta.applicant_id = :applicantId  ;
 
-SELECT * FROM t_assigned_job_question tajq INNER JOIN t_question tq ON tq.id = tajq.question_id WHERE job_id = ;
+SELECT * FROM t_assigned_job_question tajq INNER JOIN t_question tq ON tq.id = tajq.question_id INNER JOIN t_question_option tqo ON tqo.question_id = tq.id ;
