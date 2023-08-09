@@ -35,7 +35,6 @@ public class CandidateAddress extends BaseEntity {
 	@JoinColumn(name= "user_id")
 	private CandidateUser candidateUser;
 
-
 	public String getAddress() {
 		return address;
 	}
@@ -91,5 +90,4 @@ public class CandidateAddress extends BaseEntity {
 	public void setCandidateUser(CandidateUser candidateUser) {
 		this.candidateUser = candidateUser;
 	}
-
 }
