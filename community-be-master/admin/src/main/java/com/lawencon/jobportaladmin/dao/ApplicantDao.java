@@ -6,5 +6,8 @@ import com.lawencon.base.AbstractJpaDao;
 
 @Repository
 public class ApplicantDao extends AbstractJpaDao{
+	
 
+	
+	
 }

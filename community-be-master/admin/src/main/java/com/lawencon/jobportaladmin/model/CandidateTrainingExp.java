@@ -31,4 +31,54 @@ public class CandidateTrainingExp extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+	}
+
+	public String getTrainingName() {
+		return trainingName;
+	}
+
+	public void setTrainingName(String trainingName) {
+		this.trainingName = trainingName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public CandidateUser getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUser candidateUser) {
+		this.candidateUser = canFdidateUser;
+	}
+	
+	
 }

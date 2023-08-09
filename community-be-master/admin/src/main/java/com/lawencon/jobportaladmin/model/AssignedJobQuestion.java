@@ -18,4 +18,21 @@ public class AssignedJobQuestion extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "question_id")
 	private Question question;
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
 }
