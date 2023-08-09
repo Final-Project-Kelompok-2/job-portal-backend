@@ -915,22 +915,44 @@ VALUES
 ( uuid_generate_v4(),'PT-01','CANDIDATE',1,NOW(),1,NOW(),TRUE,1),
 ( uuid_generate_v4(),'PT-02','EMPLOYEE',1,NOW(),1,NOW(),TRUE,1);
 SELECT * FROM t_person_type tpt ;
+
 insert into t_file(id,filename,file_extension,created_by,created_at,updated_by,updated_at,is_active,ver)
 values 
 (uuid_generate_v4(),'asdasdasdd','jpg',1,NOW(),1,NOW(),TRUE,1);
+
 select * from t_file tf ;
+
 insert into t_profile (id,full_name,photo_id,phone_number,address,person_type_id,created_by,created_at,updated_by,updated_at,is_active,ver)
 values 
-(uuid_generate_v4(),'ADMIN','693f6d1d-ceea-4ebe-a7a7-4e5115ef7c58','10298301','BEKASI','ea2a6cc4-43b6-4318-b2aa-7641a17eacb9',1,NOW(),1,NOW(),TRUE,1);
+(uuid_generate_v4(),
+'ADMIN',
+(SELECT id FROM t_file WHERE filename = 'asdasdasdd'),
+'10298301',
+'BEKASI',
+(SELECT id FROM t_person_type tpt WHERE tpt.type_code='PT-02')
+,1,NOW(),1,NOW(),TRUE,1);
+
 select * from t_profile tp ;
+
 insert into t_user (id,user_email,user_password,profile_id,role_id,created_by,created_at,updated_by,updated_at,is_active,ver)
 VALUES
-( uuid_generate_v4(),'ADMIN@GMAIL.COM','123','09f469bf-d984-497a-8556-f04cb643ca19','44c40380-4f30-4fbd-8f78-9e1b43c68334',1,NOW(),1,NOW(),TRUE,1);
-SELECT * FROM t_file tf ;
-select * from t_user tu 
+( uuid_generate_v4(),
+'ADMIN@GMAIL.COM',
+'123',
+(SELECT id FROM t_profile tp WHERE tp.full_name  = 'ADMIN'),
+(SELECT id FROM t_role tr WHERE tr.role_code = 'R-001'),
+1,NOW(),1,NOW(),TRUE,1);
+
+SELECT * FROM t_file tf;
+select * from t_user tu;
+SELECT * FROM t_role;
+
 insert into t_company (id,company_code,company_name,address,company_url,company_phone,photo_id,created_by,created_at,updated_by,updated_at,is_active,ver)
 VALUES
-(uuid_generate_v4(),'C-001','SHOPEE','JAKARTA','WWW.GOOGLE.COM','01293917','93744fdd-8967-46fc-bb45-7527a189d864',1,NOW(),1,NOW(),TRUE,1);
+(uuid_generate_v4(),'C-001','SHOPEE','JAKARTA',
+'WWW.GOOGLE.COM','01293917',
+(SELECT id FROM t_file WHERE filename = 'asdasdasdd'),
+1,NOW(),1,NOW(),TRUE,1);
 
 insert into t_hiring_status values
 (uuid_generate_v4(),'S-001','APPLIED',1,NOW(),1,NOW(),TRUE,1),
@@ -938,7 +960,12 @@ insert into t_hiring_status values
 (uuid_generate_v4(),'S-003','INTERVIEW',1,NOW(),1,NOW(),TRUE,1),
 (uuid_generate_v4(),'S-004','MCU',1,NOW(),1,NOW(),TRUE,1),
 (uuid_generate_v4(),'S-005','OFFERING',1,NOW(),1,NOW(),TRUE,1),
-(uuid_generate_v4(),'S-006','HIRED',1,NOW(),1,NOW(),TRUE,1),
+(uuid_generate_v4(),'S-006','HIRED',1,NOW(),1,NOW(),TRUE,1);
+
+select * from t_hiring_status ths ;
+select * from t_company tc ;
 
  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+select * from t_employment_type tet ;
+select * from t
