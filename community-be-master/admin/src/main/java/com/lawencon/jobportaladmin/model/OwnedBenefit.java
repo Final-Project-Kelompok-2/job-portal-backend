@@ -18,5 +18,21 @@ public class OwnedBenefit extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name ="job_id")
 	private Job job;
+
+	public Benefit getBenefit() {
+		return benefit;
+	}
+
+	public void setBenefit(Benefit benefit) {
+		this.benefit = benefit;
+	}
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
 	
 }

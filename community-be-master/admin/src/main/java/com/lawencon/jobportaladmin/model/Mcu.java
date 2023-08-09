@@ -16,4 +16,20 @@ public class Mcu {
 	@OneToOne
 	@JoinColumn(name = "file_id")
 	private File file;
+
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
 }

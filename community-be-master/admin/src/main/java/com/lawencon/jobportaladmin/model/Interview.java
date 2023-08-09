@@ -21,4 +21,28 @@ public class Interview {
 
 	@Column(name = "interview_date", nullable = false)
 	private LocalDateTime interviewDate;
+
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
+
+	public String getInterviewLocation() {
+		return interviewLocation;
+	}
+
+	public void setInterviewLocation(String interviewLocation) {
+		this.interviewLocation = interviewLocation;
+	}
+
+	public LocalDateTime getInterviewDate() {
+		return interviewDate;
+	}
+
+	public void setInterviewDate(LocalDateTime interviewDate) {
+		this.interviewDate = interviewDate;
+	}
 }

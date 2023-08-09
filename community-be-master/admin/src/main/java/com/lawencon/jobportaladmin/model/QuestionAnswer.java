@@ -22,4 +22,28 @@ public class QuestionAnswer extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name ="question_id")
 	private Question question;
+
+	public QuestionOption getQuestionOption() {
+		return questionOption;
+	}
+
+	public void setQuestionOption(QuestionOption questionOption) {
+		this.questionOption = questionOption;
+	}
+
+	public CandidateUser getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUser candidateUser) {
+		this.candidateUser = candidateUser;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
 }

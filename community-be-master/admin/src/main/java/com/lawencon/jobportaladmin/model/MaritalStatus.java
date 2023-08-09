@@ -16,5 +16,21 @@ public class MaritalStatus extends BaseEntity{
 	@Column(name = "marital_name",length = 20 , nullable = false)
 	private String maritalName;
 
+	public String getMaritalCode() {
+		return maritalCode;
+	}
+
+	public void setMaritalCode(String maritalCode) {
+		this.maritalCode = maritalCode;
+	}
+
+	public String getMaritalName() {
+		return maritalName;
+	}
+
+	public void setMaritalName(String maritalName) {
+		this.maritalName = maritalName;
+	}
+
 
 }
