@@ -5,6 +5,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
+
 @Entity
 @Table(name = "t_saved_job")
 public class SavedJob {
@@ -17,20 +19,6 @@ public class SavedJob {
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
 
-	public Job getJob() {
-		return job;
-	}
 
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
-	public CandidateUser getCandidateUser() {
-		return candidateUser;
-	}
-
-	public void setCandidateUser(CandidateUser candidateUser) {
-		this.candidateUser = candidateUser;
-	}
 
 }
