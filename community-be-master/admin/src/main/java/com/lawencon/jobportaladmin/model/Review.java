@@ -6,9 +6,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name ="t_review")
-public class Review {
+public class Review extends BaseEntity{
 
 	@Column(name ="notes",  nullable = false)
 	private String notes;
