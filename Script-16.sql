@@ -434,8 +434,6 @@ ALTER TABLE t_candidate_references ADD CONSTRAINT candidate_references_user_fk
 	REFERENCES t_candidate_user(id);
 
 
-
-
 CREATE TABLE t_employment_type(
 	id varchar(36) NOT NULL,
 	employment_type_code varchar(5) NOT NULL,
@@ -451,9 +449,6 @@ CREATE TABLE t_employment_type(
 ALTER TABLE t_employment_type ADD CONSTRAINT t_employment_type_pk PRIMARY KEY(id);
 ALTER TABLE t_employment_type ADD CONSTRAINT employment_type_code_bk
 	UNIQUE (employment_type_code);
-
-
-
 
 
 CREATE TABLE t_role(
@@ -931,5 +926,5 @@ insert into t_hiring_status values
 (uuid_generate_v4(),'S-005','OFFERING',1,NOW(),1,NOW(),TRUE,1),
 (uuid_generate_v4(),'S-006','HIRED',1,NOW(),1,NOW(),TRUE,1),
 
- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 --job, company, employment type, applicant
