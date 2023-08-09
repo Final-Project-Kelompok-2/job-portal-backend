@@ -17,8 +17,8 @@ public class OfferingLetter {
 	@JoinColumn(name = "benefit_id")
 	private Benefit benefit;
 
-	@Column(name = "location", length = 50, nullable = false)
-	private String location;
+	@Column(name = "address", length = 50, nullable = false)
+	private String address;
 
 	@Column(name = "salary", nullable = false)
 	private Integer salary;
