@@ -8,10 +8,11 @@ import javax.persistence.Table;
 @Table(name = "t_marital_status")
 public class MaritalStatus {
 
-	@Column(name ="marital_code",  nullable = false)
+	@Column(name = "marital_code",length = 5 , nullable = false)
 	private String maritalCode;
 	
-	@Column(name ="marital_name",  nullable = false)
-	private String maritalName;	
-	
+	@Column(name = "marital_name",length = 20 , nullable = false)
+	private String maritalName;
+
+
 }

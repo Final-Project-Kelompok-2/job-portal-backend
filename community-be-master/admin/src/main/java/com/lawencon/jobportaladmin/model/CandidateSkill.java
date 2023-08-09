@@ -1,21 +1,19 @@
-package com.lawencon.jobportalcandidate.model;
+package com.lawencon.jobportaladmin.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_saved_job")
-public class SavedJob {
-
-	@OneToOne
-	@JoinColumn(name = "job_id")
-	private Job job;
+@Table(name = "t_candidate_skill")
+public class CandidateSkill {
+	
+	@Column(name = "skill_name", nullable = false)
+	private String skillName ;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
-
-
 }
