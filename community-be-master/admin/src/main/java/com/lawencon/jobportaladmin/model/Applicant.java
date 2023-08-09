@@ -20,7 +20,15 @@ public class Applicant {
 	
 	@OneToOne
 	@JoinColumn(name = "job_id")
-	private Job job;
+	private Job job;	
+	
+	@OneToOne
+	@JoinColumn(name = "status_id")
+	private HiringStatus status;
+	
+	@OneToOne
+	@JoinColumn(name = "candidate_id")
+	private CandidateUser candidate;
 	
 	
 	
