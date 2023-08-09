@@ -18,7 +18,7 @@ public class Assesment extends BaseEntity{
 	private LocalDateTime assesmentDate;
 	
 	
-	@Column(name ="assesment_date", length = 50, nullable = false)
+	@Column(name ="assesment_location", length = 50, nullable = false)
 	private String assesmentLocation;
 	
 	@OneToOne
