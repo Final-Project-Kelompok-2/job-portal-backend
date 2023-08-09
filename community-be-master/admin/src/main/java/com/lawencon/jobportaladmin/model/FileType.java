@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name = "t_file_type")
-public class FileType {
+public class FileType extends BaseEntity{
 	
 	@Column(name = "type_code",length = 5, nullable = false)
 	private String typeCode;
