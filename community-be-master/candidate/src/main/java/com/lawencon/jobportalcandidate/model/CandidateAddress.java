@@ -24,7 +24,7 @@ public class CandidateAddress extends BaseEntity {
 	@Column(name= "province", length=20, nullable= false)
 	private String province;
 	
-	@Column(name= "city", length=20, nullable= false)
+	@Column(name= "city", length=10, nullable= false)
 	private String city;
 	
 	@Column(name= "postal_code", length=20, nullable= false)

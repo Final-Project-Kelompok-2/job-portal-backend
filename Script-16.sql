@@ -43,8 +43,8 @@
 --DROP TABLE IF EXISTS t_person_type;
 
 CREATE TABLE t_file (
-	id varchar(36) NOT NULL,
-	file_name text NOT NULL,
+	id VARCHAR(36) NOT NULL,
+	filename TEXT NOT NULL,
 	file_extension VARCHAR(5) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
@@ -58,7 +58,7 @@ ALTER TABLE t_file ADD CONSTRAINT file_pk
 	PRIMARY KEY(id);
 
 CREATE TABLE t_candidate_status (
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	status_code VARCHAR(5) NOT NULL,
 	status_name VARCHAR(20) NOT NULL,
 	created_by int NOT NULL,
@@ -72,10 +72,10 @@ CREATE TABLE t_candidate_status (
 ALTER TABLE t_candidate_status ADD CONSTRAINT candidate_status_pk
 	PRIMARY KEY(id);
 ALTER TABLE t_candidate_status ADD CONSTRAINT status_code_bk
-	UNIQUE (status_code);
+	UNIQUE(status_code);
 
 CREATE TABLE t_religion (
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	religion_code VARCHAR(5) NOT NULL,
 	religion_name VARCHAR(20) NOT NULL,
 	created_by int NOT NULL,
@@ -91,9 +91,8 @@ ALTER TABLE t_religion ADD CONSTRAINT religion_pk
 ALTER TABLE t_religion ADD CONSTRAINT religion_code_bk
 	UNIQUE (religion_code);
 
-
 CREATE TABLE t_marital_status (
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	marital_code VARCHAR(5) NOT NULL,
 	marital_name VARCHAR(20) NOT NULL,
 	created_by int NOT NULL,
@@ -110,7 +109,7 @@ ALTER TABLE t_marital_status ADD CONSTRAINT marital_code_bk
 	UNIQUE (marital_code);
 
 CREATE TABLE t_person_type ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	type_code VARCHAR(5) NOT NULL,
 	type_name VARCHAR(20) NOT NULL,
 	created_by int NOT NULL,
@@ -126,9 +125,8 @@ ALTER TABLE t_person_type ADD CONSTRAINT person_type_pk
 ALTER TABLE t_person_type ADD CONSTRAINT type_code_bk
 	UNIQUE (type_code);
 
-
 CREATE TABLE t_candidate_profile (
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	salutation VARCHAR(4) NOT NULL,
 	fullname VARCHAR(50) NOT NULL,
 	gender VARCHAR(10) NOT NULL,
@@ -139,11 +137,11 @@ CREATE TABLE t_candidate_profile (
 	nik VARCHAR(50) NOT NULL,
 	birth_date date NOT NULL,
 	birth_place VARCHAR(20) NOT NULL,
-	marital_status_id varchar(36) NOT NULL,
-	religion_id varchar(36) NOT NULL,
-	person_type_id varchar(36) NOT NULL,
-	file_id varchar(36) NOT NULL,
-	candidate_status_id varchar(36) NOT NULL,
+	marital_status_id VARCHAR(36) NOT NULL,
+	religion_id VARCHAR(36) NOT NULL,
+	person_type_id VARCHAR(36) NOT NULL,
+	file_id VARCHAR(36) NOT NULL,
+	candidate_status_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -171,10 +169,10 @@ ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_status_fk_t_candidate_p
 	REFERENCES t_candidate_status(id);
 
 CREATE TABLE t_candidate_user ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	user_email VARCHAR(50) NOT NULL,
 	user_password TEXT NOT NULL,
-	profile_id varchar(36) NOT NULL,
+	profile_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -190,14 +188,14 @@ ALTER TABLE t_candidate_user ADD CONSTRAINT profile_id_fk_t_candidate_user
 	REFERENCES t_candidate_profile(id);
 
 CREATE TABLE t_candidate_family ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	fullname VARCHAR(50) NOT NULL,
 	relationship VARCHAR(10) NOT NULL,
-	degree_id varchar(36) NOT NULL,
+	degree_name VARCHAR(50) NOT NULL,
 	occupation VARCHAR(50) NOT NULL,
 	birth_date date NOT NULL,
 	birth_place VARCHAR(20) NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -213,14 +211,14 @@ ALTER TABLE t_candidate_family ADD CONSTRAINT user_id_fk_t_candidate_family
 	REFERENCES t_candidate_user(id);
 
 CREATE TABLE t_candidate_address ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	address TEXT NOT NULL,
 	residence_type VARCHAR(10) NOT NULL,
 	country VARCHAR(20) NOT NULL,
 	province VARCHAR(20) NOT NULL,
 	city VARCHAR(20) NOT NULL,
 	postal_code VARCHAR(10) NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -236,9 +234,9 @@ ALTER TABLE t_candidate_address ADD CONSTRAINT user_id_fk_t_candidate_address
 	REFERENCES t_candidate_user(id);
 
 CREATE TABLE t_candidate_skill ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	skill_name text NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -254,7 +252,7 @@ ALTER TABLE t_candidate_skill ADD CONSTRAINT user_id_fk_t_candidate_skill
 	REFERENCES t_candidate_user(id);
 
 CREATE TABLE t_candidate_work_exp ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	position_name VARCHAR(30) NOT NULL,
 	company_name VARCHAR(30) NOT NULL,
 	address TEXT NOT NULL,
@@ -263,7 +261,7 @@ CREATE TABLE t_candidate_work_exp (
 	last_salary float NOT NULL,
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -279,13 +277,13 @@ ALTER TABLE t_candidate_work_exp ADD CONSTRAINT user_id_fk_t_candidate_work_exp
 	REFERENCES t_candidate_user(id);
 
 CREATE TABLE t_candidate_project_exp ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	project_name VARCHAR(30) NOT NULL,
 	project_url TEXT,
 	description TEXT NOT NULL,
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -301,13 +299,13 @@ ALTER TABLE t_candidate_project_exp ADD CONSTRAINT project_exp_user_fk
 	REFERENCES t_candidate_user(id);
 
 CREATE TABLE t_candidate_training_exp ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	organization_name VARCHAR(20) NOT NULL,
 	training_name VARCHAR(20) NOT NULL,
 	description TEXT NOT NULL,
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -323,14 +321,14 @@ ALTER TABLE t_candidate_training_exp ADD CONSTRAINT training_exp_user_fk
 	REFERENCES t_candidate_user(id); 
 
 CREATE TABLE t_candidate_education ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	degree_name VARCHAR(50) NOT NULL,
 	institution_name VARCHAR(50) NOT NULL,
 	majors VARCHAR(50) NOT NULL,
 	cGPA float NOT NULL,
 	start_year date NOT NULL,
 	end_year date NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -346,12 +344,12 @@ ALTER TABLE t_candidate_education ADD CONSTRAINT candidate_education_user_fk
 	REFERENCES t_candidate_user(id); 
 
 CREATE TABLE t_candidate_language ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	language_name VARCHAR(30) NOT NULL,
-	writing_rate VARCHAR(5) NOT NULL,
-	speaking_rate VARCHAR(5) NOT NULL,
-	listening_rate VARCHAR(5) NOT NULL,
-	user_id varchar(36) NOT NULL,
+	writing_rate VARCHAR(2) NOT NULL,
+	speaking_rate VARCHAR(2) NOT NULL,
+	listening_rate VARCHAR(2) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -367,7 +365,7 @@ ALTER TABLE t_candidate_language ADD CONSTRAINT candidate_language_user_fk
 	REFERENCES t_candidate_user(id); 
 
 CREATE TABLE t_file_type (
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	type_code VARCHAR(5) NOT NULL,
 	type_name VARCHAR(20) NOT NULL,
 	created_by int NOT NULL,
@@ -384,11 +382,11 @@ ALTER TABLE t_file_type ADD CONSTRAINT file_type_bk
 	UNIQUE(type_code, type_name);
 
 CREATE TABLE t_candidate_documents ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	doc_name VARCHAR(30) NOT NULL,
-	user_id varchar(36) NOT NULL,
-	file_id varchar(36) NOT NULL,
-	file_type_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
+	file_id VARCHAR(36) NOT NULL,
+	file_type_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -410,7 +408,7 @@ ALTER TABLE t_candidate_documents ADD CONSTRAINT candidate_documents_file_type_f
 	REFERENCES t_file_type(id); 
 
 CREATE TABLE t_candidate_references ( 
-	id varchar(36) NOT NULL,
+	id VARCHAR(36) NOT NULL,
 	fullname VARCHAR(50) NOT NULL,
 	relationship VARCHAR(10) NOT NULL,
 	occupation VARCHAR(20) NOT NULL,
@@ -418,7 +416,7 @@ CREATE TABLE t_candidate_references (
 	email VARCHAR(50) NOT NULL,
 	company VARCHAR(50) NOT NULL,
 	description TEXT NOT NULL,
-	user_id varchar(36) NOT NULL,
+	user_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
@@ -432,6 +430,9 @@ ALTER TABLE t_candidate_references ADD CONSTRAINT candidate_references_pk
 ALTER TABLE t_candidate_references ADD CONSTRAINT candidate_references_user_fk
 	FOREIGN KEY(user_id)
 	REFERENCES t_candidate_user(id);
+
+
+
 
 
 
