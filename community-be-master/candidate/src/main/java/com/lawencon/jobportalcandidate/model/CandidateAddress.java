@@ -89,5 +89,5 @@ public class CandidateAddress extends BaseEntity {
 	public void setCandidateUser(CandidateUser candidateUser) {
 		this.candidateUser = candidateUser;
 	}
-
+//asdads
 }
