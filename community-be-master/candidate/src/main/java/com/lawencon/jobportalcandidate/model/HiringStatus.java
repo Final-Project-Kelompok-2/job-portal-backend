@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name = "t_hiring_status")
-public class HiringStatus {
+public class HiringStatus extends BaseEntity {
 	@Column(name = "status_code",length = 5 , nullable =false)
 	private String statusCode;
 	

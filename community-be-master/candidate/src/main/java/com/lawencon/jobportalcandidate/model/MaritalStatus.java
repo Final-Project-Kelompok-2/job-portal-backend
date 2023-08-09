@@ -4,9 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name = "t_marital_status")
-public class MaritalStatus {
+public class MaritalStatus extends BaseEntity {
 	@Column(name = "marital_code",length = 5 , nullable = false)
 	private String maritalCode;
 	
