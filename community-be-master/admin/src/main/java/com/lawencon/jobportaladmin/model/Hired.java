@@ -8,9 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name = "t_hired")
-public class Hired {
+public class Hired extends BaseEntity{
 	
 	@OneToOne
 	@JoinColumn(name = "applicant_id")
@@ -18,7 +20,6 @@ public class Hired {
 	
 	@Column(name = "start_date", nullable = false)
 	private LocalDateTime startDate;
-	
 	
 	@Column(name = "end_date", nullable = true)
 	private LocalDateTime endDate;
