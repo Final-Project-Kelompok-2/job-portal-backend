@@ -11,7 +11,6 @@ public class Question {
 	@Column(name ="question_code",  nullable = false)
 	private String questionCode;
 	
-	
 	@Column(name ="question_detail",  nullable = false)
 	private String questionDetail;
 }
