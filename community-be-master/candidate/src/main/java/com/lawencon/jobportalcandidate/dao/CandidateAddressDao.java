@@ -1,10 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +11,7 @@ import com.lawencon.jobportalcandidate.model.CandidateAddress;
 @Repository
 public class CandidateAddressDao extends AbstractJpaDao{
 	
-
 	private EntityManager em = ConnHandler.getManager();
-	
 	
 	public CandidateAddress getByCandidateId(String id){
 		final String sql = "SELECT  "
@@ -49,11 +43,7 @@ public class CandidateAddressDao extends AbstractJpaDao{
 		
 		final Object[] candidateAddressArr = (Object[]) candidateAddressObjs;
 		final CandidateAddress candidateAddressList = null;
-		
-//		if(candidateAddressObjs > .)
 	
-		
-		
 		return candidateAddressList;
 		
 		
