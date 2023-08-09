@@ -28,6 +28,9 @@ public class CandidateWorkExp extends BaseEntity{
 	@Column(name = "reason_leave",nullable = false)
 	private String reasonLeave;
 	
+	@Column(name = "last_salary", nullable = false)
+	private Float lastSalary;
+	
 	@Column(name = "start_date",nullable = false)
 	private LocalDateTime startDate;
 	

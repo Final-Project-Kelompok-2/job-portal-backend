@@ -25,7 +25,7 @@ public class Job {
 	@Column(name = "start_date", nullable = false)
 	private LocalDate startDate;
 	
-	@Column(name = "end_date",length = 30, nullable = false)
+	@Column(name = "end_date", nullable = false)
 	private LocalDate endDate;
 		
 	@Column(name = "description", nullable = false)
@@ -35,8 +35,13 @@ public class Job {
 	private Integer expectedSalaryMin;	
 	
 	@Column(name = "expected_salary_max", nullable = true)
-	private Integer expectedSalaryMax;	
+	private Integer expectedSalaryMax;
 	
+	@OneToOne
+	@JoinColumn(name = "employment_type_id")
+	private EmploymentType employmentType;
+	
+		
 	@OneToOne
 	@JoinColumn(name = "job_picture_id")
 	private File jobPicture;
