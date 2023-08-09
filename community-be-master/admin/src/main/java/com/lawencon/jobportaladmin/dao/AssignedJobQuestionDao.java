@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
@@ -13,7 +12,8 @@ import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
 import com.lawencon.jobportaladmin.model.Question;
 
 @Repository
-public class AssignedJobQuestionDao extends AbstractJpaDao{
+public class AssignedJobQuestionDao extends AbstractJpaDao {
+
 
 	private EntityManager em = ConnHandler.getManager();
 	
@@ -43,5 +43,4 @@ public class AssignedJobQuestionDao extends AbstractJpaDao{
 		return assignedJobQuestions;
 		
 	}
-	
 }

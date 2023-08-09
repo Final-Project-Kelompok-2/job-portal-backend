@@ -59,7 +59,3 @@ public class CandidateReferencesDao extends AbstractJpaDao {
 		return references;
 	}
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 26a13ee290e67476d5486226e7480926c508caeb
