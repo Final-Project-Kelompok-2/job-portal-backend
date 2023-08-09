@@ -46,9 +46,9 @@ CREATE TABLE t_file (
 	id VARCHAR(36) NOT NULL,
 	filename TEXT NOT NULL,
 	file_extension VARCHAR(5) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -61,9 +61,9 @@ CREATE TABLE t_candidate_status (
 	id VARCHAR(36) NOT NULL,
 	status_code VARCHAR(5) NOT NULL,
 	status_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -78,9 +78,9 @@ CREATE TABLE t_religion (
 	id VARCHAR(36) NOT NULL,
 	religion_code VARCHAR(5) NOT NULL,
 	religion_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -95,9 +95,9 @@ CREATE TABLE t_marital_status (
 	id VARCHAR(36) NOT NULL,
 	marital_code VARCHAR(5) NOT NULL,
 	marital_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -112,9 +112,9 @@ CREATE TABLE t_person_type (
 	id VARCHAR(36) NOT NULL,
 	type_code VARCHAR(5) NOT NULL,
 	type_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -142,9 +142,9 @@ CREATE TABLE t_candidate_profile (
 	person_type_id VARCHAR(36) NOT NULL,
 	file_id VARCHAR(36) NOT NULL,
 	candidate_status_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -173,9 +173,9 @@ CREATE TABLE t_candidate_user (
 	user_email VARCHAR(50) NOT NULL,
 	user_password TEXT NOT NULL,
 	profile_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -196,9 +196,9 @@ CREATE TABLE t_candidate_family (
 	birth_date date NOT NULL,
 	birth_place VARCHAR(20) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -219,9 +219,9 @@ CREATE TABLE t_candidate_address (
 	city VARCHAR(20) NOT NULL,
 	postal_code VARCHAR(10) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -237,9 +237,9 @@ CREATE TABLE t_candidate_skill (
 	id VARCHAR(36) NOT NULL,
 	skill_name text NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -262,9 +262,9 @@ CREATE TABLE t_candidate_work_exp (
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -284,9 +284,9 @@ CREATE TABLE t_candidate_project_exp (
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -306,9 +306,9 @@ CREATE TABLE t_candidate_training_exp (
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -329,9 +329,9 @@ CREATE TABLE t_candidate_education (
 	start_year date NOT NULL,
 	end_year date NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -350,9 +350,9 @@ CREATE TABLE t_candidate_language (
 	speaking_rate VARCHAR(2) NOT NULL,
 	listening_rate VARCHAR(2) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -368,9 +368,9 @@ CREATE TABLE t_file_type (
 	id VARCHAR(36) NOT NULL,
 	type_code VARCHAR(5) NOT NULL,
 	type_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -387,9 +387,9 @@ CREATE TABLE t_candidate_documents (
 	user_id VARCHAR(36) NOT NULL,
 	file_id VARCHAR(36) NOT NULL,
 	file_type_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -417,9 +417,9 @@ CREATE TABLE t_candidate_references (
 	company VARCHAR(50) NOT NULL,
 	description TEXT NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -441,9 +441,9 @@ CREATE TABLE t_employment_type(
 	id varchar(36) NOT NULL,
 	employment_type_code varchar(5) NOT NULL,
 	employment_type_name varchar(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -461,9 +461,9 @@ CREATE TABLE t_role(
 	id varchar(36) NOT NULL,
 	role_code varchar(5) NOT NULL,
 	role_name varchar(10) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -479,9 +479,9 @@ CREATE TABLE t_profile(
 	phone_number varchar(13) NOT NULL,
 	address text NOT NULL,
 	person_type_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -502,9 +502,9 @@ CREATE TABLE t_user(
 	user_password text NOT NULL,
 	profile_id varchar(36) NOT NULL,
 	role_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -528,9 +528,9 @@ CREATE TABLE t_company(
 	company_url text,
 	company_phone varchar(15) NOT NULL,
 	photo_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -560,9 +560,9 @@ CREATE TABLE t_job(
 	expected_salary_max int,
 	employment_type_id varchar(36) NOT NULL,
 	job_picture_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -596,9 +596,9 @@ CREATE TABLE t_hiring_status(
 	id varchar(36) NOT NULL,
 	status_code varchar(5) NOT NULL,
 	status_name varchar(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -613,9 +613,9 @@ CREATE TABLE t_applicant(
 	applied_date timestamp NOT NULL,
 	status_id varchar(36) NOT NULL,
 	candidate_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -639,9 +639,9 @@ CREATE TABLE t_question(
 	id varchar(36) NOT NULL,
 	question_code varchar(5) NOT NULL,
 	question_detail text NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -656,9 +656,9 @@ CREATE TABLE t_question_option(
 	option_label varchar(20) NOT NULL,
 	is_correct boolean NOT NULL,
 	question_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -674,9 +674,9 @@ CREATE TABLE t_question_answer(
 	option_id varchar(36) NOT NULL,
 	candidate_id varchar(36) NOT NULL,
 	question_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -695,9 +695,9 @@ CREATE TABLE t_assigned_job_question(
 	id varchar(36) NOT NULL,
 	job_id varchar(36) NOT NULL,
 	question_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -716,9 +716,9 @@ CREATE TABLE t_review(
 	notes text,
 	score float,
 	applicant_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -730,9 +730,9 @@ CREATE TABLE t_review_detail(
 	id varchar(36) NOT NULL,
 	review_id varchar(36) NOT NULL,
 	question_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -750,9 +750,9 @@ CREATE TABLE t_assesment(
 	assesment_date timestamp NOT NULL,
 	assesment_location varchar(50) NOT NULL,
 	applicant_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -767,9 +767,9 @@ CREATE TABLE t_interview(
 	interview_date timestamp NOT NULL,
 	interview_location varchar(50) NOT NULL,
 	applicant_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -784,9 +784,9 @@ CREATE TABLE t_mcu(
 	id varchar(36) NOT NULL,
 	file_id varchar(36) NOT NULL,
 	applicant_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -805,9 +805,9 @@ CREATE TABLE t_benefit(
 	id varchar(36) NOT NULL,
 	benefit_code varchar(5) NOT NULL,
 	benefit_name varchar(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -820,9 +820,9 @@ CREATE TABLE t_owned_benefit(
 	id varchar(36) NOT NULL,
 	benefit_id varchar(36) NOT NULL,
 	job_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -840,9 +840,9 @@ CREATE TABLE t_offering_letter(
 	address varchar(50) NOT NULL,
 	salary int NOT NULL,
 	applicant_id varchar(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -859,9 +859,9 @@ CREATE TABLE t_hired(
 	applicant_id varchar(36) NOT NULL,
 	start_date timestamp NOT NULL,
 	end_date timestamp,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -875,15 +875,14 @@ CREATE TABLE t_blacklist(
 	id varchar(36) NOT NULL,
 	email varchar(50) NOT NULL,
 	notes text NOT NULL,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by varchar(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
 );
 ALTER TABLE t_blacklist  ADD CONSTRAINT t_blacklist_pk PRIMARY KEY(id);
-
 
 INSERT INTO t_role (id,role_code,role_name,created_by,created_at,updated_by,updated_at,is_active,ver)
 VALUES
@@ -965,7 +964,29 @@ insert into t_hiring_status values
 select * from t_hiring_status ths ;
 select * from t_company tc ;
 
- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-select * from t_employment_type tet ;
-select * from t
+
+SELECT * FROM t_candidate_address tca ;
+
+SELECT 
+	tca.id,
+	address,
+	residence_type,
+	country,
+	province,
+	city,
+	postal_code,
+	tcu.id,
+	tcp.fullname 
+FROM 
+	t_candidate_address tca 
+INNER JOIN 
+	t_candidate_user tcu 
+ON 
+	tcu.id = tca.user_id 
+INNER JOIN
+	t_candidate_profile tcp 
+ON
+	tcp.id = tcu.profile_id 
+WHERE 	;
+--job, company, employment type, applicant
