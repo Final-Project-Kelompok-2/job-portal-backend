@@ -628,6 +628,9 @@ FOREIGN KEY(status_id)
 REFERENCES t_hiring_status(id);
 ALTER TABLE t_applicant ADD CONSTRAINT t_applicant_bk
 UNIQUE (applicant_code);
+ALTER TABLE t_applicant ADD CONSTRAINT t_candidate_fk
+FOREIGN KEY(candidate_id)
+REFERENCES t_candidate_user(id);
 
 
 
@@ -827,7 +830,7 @@ REFERENCES t_job(id);
 
 CREATE TABLE t_offering_letter(
 	id varchar(36) NOT NULL,
-	location varchar(50) NOT NULL,
+	address varchar(50) NOT NULL,
 	salary int NOT NULL,
 	benefit_id varchar(36) NOT NULL,
 	applicant_id varchar(36) NOT NULL,
