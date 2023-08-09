@@ -77,7 +77,7 @@ public class CandidateTrainingExp extends BaseEntity{
 	}
 
 	public void setCandidateUser(CandidateUser candidateUser) {
-		this.candidateUser = canFdidateUser;
+		this.candidateUser = candidateUser;
 	}
 	
 	

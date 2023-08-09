@@ -13,9 +13,7 @@ import com.lawencon.jobportalcandidate.model.CandidateUser;
 @Repository
 public class CandidateAddressDao extends AbstractJpaDao{
 	
-
 	private EntityManager em = ConnHandler.getManager();
-	
 	
 	public CandidateAddress getByCandidateId(String id){
 		final String sql = "SELECT  "
@@ -46,6 +44,7 @@ public class CandidateAddressDao extends AbstractJpaDao{
 				.getSingleResult();
 		
 		final Object[] candidateAddressArr = (Object[]) candidateAddressObjs;
+
 		CandidateAddress candidateAddress = null;
 		if(candidateAddressArr.length > 0) {
 			candidateAddress = new CandidateAddress();
@@ -68,6 +67,7 @@ public class CandidateAddressDao extends AbstractJpaDao{
 		
 		
 		return candidateAddress;
+
 		
 		
 	}

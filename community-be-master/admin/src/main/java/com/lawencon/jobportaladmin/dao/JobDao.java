@@ -7,4 +7,6 @@ import com.lawencon.base.AbstractJpaDao;
 @Repository
 public class JobDao extends AbstractJpaDao{
 
+	
+	
 }

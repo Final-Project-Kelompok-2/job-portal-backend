@@ -966,3 +966,4 @@ ON
 	tcp.id = tcu.profile_id 
 WHERE 	;
 --job, company, employment type, applicant
+
