@@ -59,4 +59,3 @@ public class CandidateReferencesDao extends AbstractJpaDao {
 		return references;
 	}
 }
-

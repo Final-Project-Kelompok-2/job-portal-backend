@@ -961,7 +961,9 @@ insert into t_hiring_status values
 (uuid_generate_v4(),'S-005','OFFERING',1,NOW(),1,NOW(),TRUE,1),
 (uuid_generate_v4(),'S-006','HIRED',1,NOW(),1,NOW(),TRUE,1);
 
- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+select * from t_hiring_status ths ;
+select * from t_company tc ;
+
 
 
 SELECT * FROM t_candidate_address tca ;
