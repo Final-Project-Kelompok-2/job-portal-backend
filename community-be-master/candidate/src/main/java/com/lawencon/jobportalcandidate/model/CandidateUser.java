@@ -20,5 +20,31 @@ public class CandidateUser extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name = "profile_id")
 	private CandidateProfile candidateProfile;
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getUserPassword() {
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+
+	public CandidateProfile getCandidateProfile() {
+		return candidateProfile;
+	}
+
+	public void setCandidateProfile(CandidateProfile candidateProfile) {
+		this.candidateProfile = candidateProfile;
+	}
+	
+	
 	
 }
