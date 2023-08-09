@@ -9,5 +9,6 @@ import com.lawencon.base.ConnHandler;
 
 @Repository
 public class CandidateProfileDao extends AbstractJpaDao{
+	
 	private EntityManager em = ConnHandler.getManager();
 }
