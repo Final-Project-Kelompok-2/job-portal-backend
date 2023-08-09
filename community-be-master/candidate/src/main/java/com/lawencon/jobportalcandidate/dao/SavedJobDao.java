@@ -1,5 +1,7 @@
 package com.lawencon.jobportalcandidate.dao;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
+import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportalcandidate.model.Company;
+import com.lawencon.jobportalcandidate.model.EmploymentType;
+import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.SavedJob;
 
@@ -17,13 +23,9 @@ public class SavedJobDao extends AbstractJpaDao {
 	
 	private EntityManager em = ConnHandler.getManager();
 
-	public SavedJob insert(SavedJob savedjob) {
-		em.persist(savedjob);
-		return savedjob;
-	}
-	
 	public List<SavedJob> getByCandidate(String id) {
-		List<SavedJob> savedjobs = new ArrayList<>();
+		final List<SavedJob> savedjobs = new ArrayList<>();
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		final String sql = "SELECT "
 				+ "	tsj.id AS saved_id, "
@@ -62,6 +64,31 @@ public class SavedJobDao extends AbstractJpaDao {
 				savedjob.setId(savedjobArr[0].toString());
 				
 				final Job job = new Job();
+				job.setId(savedjobArr[1].toString());
+				job.setJobName(savedjobArr[2].toString());
+				
+				final File file = new File();
+				file.setId(savedjobArr[3].toString());
+				job.setJobPicture(file);
+				
+				final Company company = new Company();
+				company.setCompanyName(savedjobArr[4].toString());
+				company.setAddress(savedjobArr[5].toString());
+				job.setCompany(company);
+				
+				job.setStartDate(LocalDate.parse(savedjobArr[6].toString(), formatter));
+				job.setEndDate(LocalDate.parse(savedjobArr[7].toString(), formatter));
+				job.setExpectedSalaryMin(Integer.valueOf(savedjobArr[8].toString()));
+				job.setExpectedSalaryMax(Integer.valueOf(savedjobArr[9].toString()));
+				
+				final EmploymentType type = new EmploymentType();
+				type.setEmploymentTypeName(savedjobArr[10].toString());
+				job.setEmploymentType(type);
+				savedjob.setJob(job);
+				
+				final CandidateUser candidate = new CandidateUser();
+				candidate.setId(savedjobArr[11].toString());
+				savedjob.setCandidateUser(candidate);
 
 				savedjobs.add(savedjob);
 			}
