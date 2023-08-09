@@ -33,7 +33,4 @@ public class CandidateAddress extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name= "user_id")
 	private CandidateUser candidateUser;
-	
-	
-
 }
