@@ -942,28 +942,3 @@ insert into t_hiring_status values
 
  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-SELECT * FROM t_candidate_address tca ;
-
-SELECT 
-	tca.id,
-	address,
-	residence_type,
-	country,
-	province,
-	city,
-	postal_code,
-	tcu.id,
-	tcp.fullname 
-FROM 
-	t_candidate_address tca 
-INNER JOIN 
-	t_candidate_user tcu 
-ON 
-	tcu.id = tca.user_id 
-INNER JOIN
-	t_candidate_profile tcp 
-ON
-	tcp.id = tcu.profile_id 
-WHERE 	;
---job, company, employment type, applicant
-
