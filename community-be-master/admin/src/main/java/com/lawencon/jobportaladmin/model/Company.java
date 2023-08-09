@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,5 +29,6 @@ public class Company {
 	@OneToOne
 	@JoinColumn(name = "photo_id")
 	private File photo;
+
 
 }
