@@ -31,4 +31,5 @@ public class CandidateAddress {
 	@OneToOne
 	@JoinColumn(name= "user_id")
 	private CandidateUser candidateUser;
+
 }

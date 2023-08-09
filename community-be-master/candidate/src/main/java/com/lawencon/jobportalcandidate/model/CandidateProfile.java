@@ -62,4 +62,5 @@ public class CandidateProfile {
 	@JoinColumn(name = "candidate_status_id")
 	private CandidateStatus candidateStatus;
 
+
 }

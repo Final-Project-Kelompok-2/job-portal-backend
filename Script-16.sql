@@ -434,6 +434,8 @@ ALTER TABLE t_candidate_references ADD CONSTRAINT candidate_references_user_fk
 	REFERENCES t_candidate_user(id);
 
 
+
+
 CREATE TABLE t_employment_type(
 	id varchar(36) NOT NULL,
 	employment_type_code varchar(5) NOT NULL,
@@ -449,6 +451,9 @@ CREATE TABLE t_employment_type(
 ALTER TABLE t_employment_type ADD CONSTRAINT t_employment_type_pk PRIMARY KEY(id);
 ALTER TABLE t_employment_type ADD CONSTRAINT employment_type_code_bk
 	UNIQUE (employment_type_code);
+
+
+
 
 
 CREATE TABLE t_role(
@@ -823,7 +828,7 @@ REFERENCES t_job(id);
 CREATE TABLE t_offering_letter(
 	id varchar(36) NOT NULL,
 	location varchar(50) NOT NULL,
-	salary int ,
+	salary int NOT NULL,
 	benefit_id varchar(36) NOT NULL,
 	applicant_id varchar(36) NOT NULL,
 	created_by int NOT NULL,
@@ -906,17 +911,18 @@ VALUES
 insert into t_file(id,file_name,file_extension,created_by,created_at,updated_by,updated_at,is_active,ver)
 values 
 (uuid_generate_v4(),'asdasdasdd','jpg',1,NOW(),1,NOW(),TRUE,1);
+select * from t_file tf ;
 insert into t_profile (id,full_name,photo_id,phone_number,address,person_type_id,created_by,created_at,updated_by,updated_at,is_active,ver)
 values 
-(uuid_generate_v4(),'ADMIN','93744fdd-8967-46fc-bb45-7527a189d864','10298301','BEKASI','bcc4d4fa-5e2a-4c7f-bb82-68dd0d4c5052',1,NOW(),1,NOW(),TRUE,1);
+(uuid_generate_v4(),'ADMIN','be928121-0db5-4d19-b83c-431e53c651d7','10298301','BEKASI','bcc4d4fa-5e2a-4c7f-bb82-68dd0d4c5052',1,NOW(),1,NOW(),TRUE,1);
 insert into t_user (id,user_email,user_password,profile_id,role_id,created_by,created_at,updated_by,updated_at,is_active,ver)
 VALUES
 ( uuid_generate_v4(),'ADMIN@GMAIL.COM','123','98cf70ef-0ffe-4be1-8407-0c8840eab6e7','44c40380-4f30-4fbd-8f78-9e1b43c68334',1,NOW(),1,NOW(),TRUE,1);
 SELECT * FROM t_file tf ;
+
 insert into t_company (id,company_code,company_name,address,company_url,company_phone,photo_id,created_by,created_at,updated_by,updated_at,is_active,ver)
 VALUES
 (uuid_generate_v4(),'C-001','SHOPEE','JAKARTA','WWW.GOOGLE.COM','01293917','93744fdd-8967-46fc-bb45-7527a189d864',1,NOW(),1,NOW(),TRUE,1);
-SELECT uuid_generate_v4();
 
 insert into t_hiring_status values
 (uuid_generate_v4(),'S-001','APPLIED',1,NOW(),1,NOW(),TRUE,1),
@@ -926,5 +932,5 @@ insert into t_hiring_status values
 (uuid_generate_v4(),'S-005','OFFERING',1,NOW(),1,NOW(),TRUE,1),
 (uuid_generate_v4(),'S-006','HIRED',1,NOW(),1,NOW(),TRUE,1),
 
--- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 --job, company, employment type, applicant
