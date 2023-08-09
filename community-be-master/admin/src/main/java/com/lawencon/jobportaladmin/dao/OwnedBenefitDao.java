@@ -44,5 +44,4 @@ public class OwnedBenefitDao extends AbstractJpaDao {
 		return ownedBenefits;
 		
 	}
-
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
@@ -13,16 +12,19 @@ import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
 import com.lawencon.jobportaladmin.model.Question;
 
 @Repository
-public class AssignedJobQuestionDao extends AbstractJpaDao{
+public class AssignedJobQuestionDao extends AbstractJpaDao {
 
-	private EntityManager em = ConnHandler.getManager();
+	
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<AssignedJobQuestion> getByJob(String id){
 		final String sql = "SELECT tq.id, tq.question_detail FROM t_assigned_job_question tajq "
 				+ " INNER JOIN t_question tq on tq.id =tajq.question_id "
 				+ " WHERE tajq.job_id =:id ";
 		
-		final List<?> assignedJobQuestionObjs = em.createNativeQuery(sql).setParameter("id", id).getResultList();
+		final List<?> assignedJobQuestionObjs = em().createNativeQuery(sql).setParameter("id", id).getResultList();
 		
 		final List<AssignedJobQuestion> assignedJobQuestions = new ArrayList<>();
 		
@@ -43,5 +45,4 @@ public class AssignedJobQuestionDao extends AbstractJpaDao{
 		return assignedJobQuestions;
 		
 	}
-	
 }
