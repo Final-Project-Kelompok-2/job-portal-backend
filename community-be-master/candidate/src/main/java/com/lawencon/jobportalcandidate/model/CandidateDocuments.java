@@ -25,36 +25,4 @@ public class CandidateDocuments {
 	@JoinColumn(name = "file_type_id")
 	private FileType fileType;
 
-	public String getDocName() {
-		return docName;
-	}
-
-	public void setDocName(String docName) {
-		this.docName = docName;
-	}
-
-	public CandidateUser getCandidateUser() {
-		return candidateUser;
-	}
-
-	public void setCandidateUser(CandidateUser candidateUser) {
-		this.candidateUser = candidateUser;
-	}
-
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
-	}
-
-	public FileType getFileType() {
-		return fileType;
-	}
-
-	public void setFileType(FileType fileType) {
-		this.fileType = fileType;
-	}
-
 }

@@ -9,6 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_candidate_references")
 public class CandidateReferences {
+	
 	@Column(name = "fullname",length = 50, nullable=false)
 	private String fullName;
 	
@@ -26,7 +27,6 @@ public class CandidateReferences {
 	
 	@Column(name="description",nullable =false)
 	private String description;
-	
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
