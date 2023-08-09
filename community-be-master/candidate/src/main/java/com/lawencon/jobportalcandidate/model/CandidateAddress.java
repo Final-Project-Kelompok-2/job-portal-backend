@@ -29,7 +29,7 @@ public class CandidateAddress extends BaseEntity {
 
 	@Column(name = "postal_code", length = 20, nullable = false)
 	private String postalCode;
-
+ 
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;

@@ -1,7 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
