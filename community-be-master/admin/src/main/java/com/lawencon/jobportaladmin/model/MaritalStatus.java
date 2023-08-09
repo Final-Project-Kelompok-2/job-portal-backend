@@ -15,3 +15,4 @@ public class MaritalStatus {
 	private String maritalName;
 
 
+}
