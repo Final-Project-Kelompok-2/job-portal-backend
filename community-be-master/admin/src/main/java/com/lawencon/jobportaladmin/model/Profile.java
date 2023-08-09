@@ -6,9 +6,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name ="t_profile")
-public class Profile {
+public class Profile extends BaseEntity{
 
 	@Column(name ="full_name",  nullable = false)
 	private String fullName;

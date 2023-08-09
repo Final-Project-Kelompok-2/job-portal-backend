@@ -5,9 +5,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name ="t_question_answer")
-public class QuestionAnswer {
+public class QuestionAnswer extends BaseEntity{
 
 	@OneToOne
 	@JoinColumn(name ="option_id")

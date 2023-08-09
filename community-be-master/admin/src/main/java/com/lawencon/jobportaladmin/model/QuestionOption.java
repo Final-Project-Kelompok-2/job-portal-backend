@@ -6,9 +6,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name ="t_question_option")
-public class QuestionOption {
+public class QuestionOption extends BaseEntity{
 
 
 	@Column(name ="option_label",  nullable = false)
