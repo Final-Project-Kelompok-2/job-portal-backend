@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.model;
+package com.lawencon.jobportaladmin.model;
 
 import java.time.LocalDate;
 

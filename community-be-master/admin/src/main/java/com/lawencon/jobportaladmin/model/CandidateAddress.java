@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.model;
+package com.lawencon.jobportaladmin.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,5 +31,4 @@ public class CandidateAddress {
 	@OneToOne
 	@JoinColumn(name= "user_id")
 	private CandidateUser candidateUser;
-
 }

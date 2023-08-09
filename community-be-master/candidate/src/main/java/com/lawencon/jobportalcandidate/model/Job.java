@@ -1,4 +1,4 @@
-package com.lawencon.jobportaladmin.model;
+package com.lawencon.jobportalcandidate.model;
 
 import java.time.LocalDate;
 
@@ -22,14 +22,6 @@ public class Job {
 	@JoinColumn(name = "company_id")
 	private Company Company;
 	
-	@OneToOne
-	@JoinColumn(name = "hr_id")
-	private User hr;	
-	
-	@OneToOne
-	@JoinColumn(name = "pic_id")
-	private User pic;
-	
 	@Column(name = "start_date", nullable = false)
 	private LocalDate startDate;
 	
@@ -46,11 +38,7 @@ public class Job {
 	private Integer expectedSalaryMax;	
 	
 	@OneToOne
-	@JoinColumn(name = "employment_type_id")
-	private EmploymentType employmentType;	
-	
-	@OneToOne
 	@JoinColumn(name = "job_picture_id")
-	private File jobPicture;	
-	
+	private File jobPicture;
+
 }

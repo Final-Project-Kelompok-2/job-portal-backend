@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.model;
+package com.lawencon.jobportaladmin.model;
 
 import java.time.LocalDate;
 
@@ -61,6 +61,5 @@ public class CandidateProfile {
 	@OneToOne
 	@JoinColumn(name = "candidate_status_id")
 	private CandidateStatus candidateStatus;
-
 
 }
