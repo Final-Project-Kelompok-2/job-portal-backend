@@ -917,8 +917,19 @@ values
 insert into t_user (id,user_email,user_password,profile_id,role_id,created_by,created_at,updated_by,updated_at,is_active,ver)
 VALUES
 ( uuid_generate_v4(),'ADMIN@GMAIL.COM','123','98cf70ef-0ffe-4be1-8407-0c8840eab6e7','44c40380-4f30-4fbd-8f78-9e1b43c68334',1,NOW(),1,NOW(),TRUE,1);
-
-
+SELECT * FROM t_file tf ;
+insert into t_company (id,company_code,company_name,address,company_url,company_phone,photo_id,created_by,created_at,updated_by,updated_at,is_active,ver)
+VALUES
+(uuid_generate_v4(),'C-001','SHOPEE','JAKARTA','WWW.GOOGLE.COM','01293917','93744fdd-8967-46fc-bb45-7527a189d864',1,NOW(),1,NOW(),TRUE,1);
 SELECT uuid_generate_v4();
+
+insert into t_hiring_status values
+(uuid_generate_v4(),'S-001','APPLIED',1,NOW(),1,NOW(),TRUE,1),
+(uuid_generate_v4(),'S-002','ASSESMENT',1,NOW(),1,NOW(),TRUE,1),
+(uuid_generate_v4(),'S-003','INTERVIEW',1,NOW(),1,NOW(),TRUE,1),
+(uuid_generate_v4(),'S-004','MCU',1,NOW(),1,NOW(),TRUE,1),
+(uuid_generate_v4(),'S-005','OFFERING',1,NOW(),1,NOW(),TRUE,1),
+(uuid_generate_v4(),'S-006','HIRED',1,NOW(),1,NOW(),TRUE,1),
+
  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 --job, company, employment type, applicant
