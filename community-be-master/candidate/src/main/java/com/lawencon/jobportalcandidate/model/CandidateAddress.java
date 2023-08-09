@@ -29,11 +29,66 @@ public class CandidateAddress extends BaseEntity {
 	
 	@Column(name= "postal_code", length=20, nullable= false)
 	private String postalCode;
-	
+
 	@OneToOne
 	@JoinColumn(name= "user_id")
 	private CandidateUser candidateUser;
-	
-	
+
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getResidenceType() {
+		return residenceType;
+	}
+
+	public void setResidenceType(String residenceType) {
+		this.residenceType = residenceType;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public CandidateUser getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUser candidateUser) {
+		this.candidateUser = candidateUser;
+	}
 
 }
