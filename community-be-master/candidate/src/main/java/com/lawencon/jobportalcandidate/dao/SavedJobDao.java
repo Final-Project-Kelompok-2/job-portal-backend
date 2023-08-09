@@ -21,7 +21,9 @@ import com.lawencon.jobportalcandidate.model.SavedJob;
 @Repository
 public class SavedJobDao extends AbstractJpaDao {
 	
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 
 	public List<SavedJob> getByCandidate(String id) {
 		final List<SavedJob> savedjobs = new ArrayList<>();
@@ -53,7 +55,7 @@ public class SavedJobDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
-		final List<?> savedJobObjs = this.em.createNativeQuery(sql)
+		final List<?> savedJobObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		
