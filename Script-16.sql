@@ -540,7 +540,7 @@ ALTER TABLE t_company ADD CONSTRAINT t_company_picture_fk
 FOREIGN KEY(photo_id)
 REFERENCES t_file(id);
 ALTER TABLE t_company ADD CONSTRAINT t_company_bk
-UNIQUE (company_code)
+UNIQUE (company_code);
 
 
 
