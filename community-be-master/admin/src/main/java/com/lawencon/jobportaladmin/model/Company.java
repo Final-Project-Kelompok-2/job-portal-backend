@@ -79,4 +79,4 @@ public class Company extends BaseEntity {
 		this.photo = photo;
 	}
 
-s}
+}

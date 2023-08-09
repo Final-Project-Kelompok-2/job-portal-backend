@@ -171,7 +171,6 @@ ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_status_fk_t_candidate_p
 CREATE TABLE t_candidate_user ( 
 	id VARCHAR(36) NOT NULL,
 	user_email VARCHAR(50) NOT NULL,
-	user_password TEXT NOT NULL,
 	profile_id VARCHAR(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
@@ -937,3 +936,18 @@ insert into t_hiring_status values
 
 
 SELECT * FROM t_assigned_job_question tajq INNER JOIN t_question tq ON tq.id = tajq.question_id WHERE job_id = ;
+
+SELECT tb.benefit_name from t_owned_benefit tob  INNER JOIN t_benefit tb ON tob.benefit_id  = tb.id  WHERE tob.job_id = :id
+
+
+ select * from t_profile tp ;
+select * from t_candidate_user;
+
+ select * from t_profile tp ;	
+select * from t_question_option tqo ;	
+
+select tqo.id, tqo.option_label from t_question_option tqo  where tqo.question_id =:id;
+select * from t_review;
+
+SELECT tr.notes,tr.score  FROM t_review tr WHERE tr.applicant_id = :id;
+ 
