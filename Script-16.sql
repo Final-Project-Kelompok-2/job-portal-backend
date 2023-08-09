@@ -193,7 +193,7 @@ CREATE TABLE t_candidate_family (
 	id varchar(36) NOT NULL,
 	fullname VARCHAR(50) NOT NULL,
 	relationship VARCHAR(10) NOT NULL,
-	degree_id varchar(36) NOT NULL,
+	degree_name varchar(50) NOT NULL,
 	occupation VARCHAR(50) NOT NULL,
 	birth_date date NOT NULL,
 	birth_place VARCHAR(20) NOT NULL,
