@@ -10,10 +10,10 @@ import com.lawencon.base.BaseEntity;
 @Table(name ="t_role")
 public class Role extends BaseEntity{
 
-	@Column(name ="role_code",  nullable = false)
+	@Column(name ="role_code", length = 5, nullable = false)
 	private String role_code;
 	
-	@Column(name ="role_name",  nullable = false)
+	@Column(name ="role_name",  length = 10,nullable = false)
 	private String role_name;
 	
 }

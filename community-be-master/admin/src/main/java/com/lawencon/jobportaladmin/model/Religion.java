@@ -10,10 +10,10 @@ import com.lawencon.base.BaseEntity;
 @Table(name ="t_religion")
 public class Religion extends BaseEntity{
 
-	@Column(name ="religion_code",  nullable = false)
+	@Column(name ="religion_code", length = 5, nullable = false)
 	private String religionCode;
 	
-	@Column(name ="religion_name",  nullable = false)
+	@Column(name ="religion_name",  length = 20, nullable = false)
 	private String religionName;	
 	
 }

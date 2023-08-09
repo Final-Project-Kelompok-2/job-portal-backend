@@ -1,6 +1,6 @@
 package com.lawencon.jobportaladmin.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,10 +27,10 @@ public class CandidateEducation extends BaseEntity{
 	private Float cgpa;
 	
 	@Column(name = "start_year", nullable = false)
-	private LocalDateTime startYear;
+	private LocalDate startYear;
 	
 	@Column(name = "end_year", nullable = false)
-	private LocalDateTime endYear;
+	private LocalDate endYear;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")

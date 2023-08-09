@@ -18,7 +18,7 @@ public class CandidateUser extends BaseEntity{
 	private String userPassword;
 	
 	@OneToOne
-	@JoinColumn(name = "t_candidate_profile")
+	@JoinColumn(name = "profile_id")
 	private CandidateProfile candidateProfile;
 	
 }

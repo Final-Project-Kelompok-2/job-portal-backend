@@ -14,8 +14,8 @@ public class OfferingLetter {
 	private Applicant applicant;
 
 	@OneToOne
-	@JoinColumn(name = "benefit_id")
-	private Benefit benefit;
+	@JoinColumn(name = "owned_benefit_id")
+	private OwnedBenefit ownedBenefit;
 
 	@Column(name = "address", length = 50, nullable = false)
 	private String address;
