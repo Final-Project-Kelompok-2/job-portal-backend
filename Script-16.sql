@@ -833,7 +833,6 @@ CREATE TABLE t_offering_letter(
 	id varchar(36) NOT NULL,
 	address varchar(50) NOT NULL,
 	salary int NOT NULL,
-	benefit_id varchar(36) NOT NULL,
 	applicant_id varchar(36) NOT NULL,
 	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
@@ -844,9 +843,6 @@ CREATE TABLE t_offering_letter(
 );
 ALTER TABLE t_offering_letter ADD CONSTRAINT t_offering_letter_pk PRIMARY KEY(id);
 
-ALTER TABLE t_offering_letter ADD CONSTRAINT t_offering_letter_benefit_fk 
-FOREIGN KEY(benefit_id)
-REFERENCES t_benefit(id);
 
 ALTER TABLE t_offering_letter ADD CONSTRAINT t_offering_letter_applicant_fk
 FOREIGN KEY(applicant_id)
