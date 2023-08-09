@@ -21,6 +21,9 @@ public class CandidateReferences extends BaseEntity{
 	@Column(name = "occupation",length = 20, nullable = false)
 	private String occupation;
 	
+	@Column(name = "phone_number",length = 20, nullable = false)
+	private String phoneNumber;
+	
 	@Column(name = "email", length=50, nullable =false)
 	private String email;
 	

@@ -12,14 +12,14 @@ import com.lawencon.base.BaseEntity;
 @Table(name ="t_profile")
 public class Profile extends BaseEntity{
 
-	@Column(name ="full_name",  nullable = false)
+	@Column(name ="full_name", length = 50,  nullable = false)
 	private String fullName;
 	
 	@OneToOne
 	@JoinColumn(name ="photo_id")
 	private File photo;
 	
-	@Column(name ="phone_number",  nullable = true)
+	@Column(name ="phone_number",  length = 13, nullable = true)
 	private String phoneNumber;
 	
 	@Column(name ="address",  nullable = true)

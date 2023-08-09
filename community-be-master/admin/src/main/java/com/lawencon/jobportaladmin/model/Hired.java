@@ -1,6 +1,6 @@
 package com.lawencon.jobportaladmin.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,11 +17,11 @@ public class Hired {
 	private Applicant applicant;
 	
 	@Column(name = "start_date", nullable = false)
-	private LocalDate startDate;
+	private LocalDateTime startDate;
 	
 	
 	@Column(name = "end_date", nullable = true)
-	private LocalDate endDate;
+	private LocalDateTime endDate;
 	
 
 }
