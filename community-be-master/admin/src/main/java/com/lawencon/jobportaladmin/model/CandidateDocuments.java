@@ -10,21 +10,53 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "t_candidate_documents")
-public class CandidateDocuments extends BaseEntity{
+public class CandidateDocuments extends BaseEntity {
 
-	@Column(name = "doc_name", length= 30, nullable= false)
+	@Column(name = "doc_name", length = 30, nullable = false)
 	private String docName;
-	
+
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
-	
+
 	@OneToOne
 	@JoinColumn(name = "file_id")
 	private File file;
-	
+
 	@OneToOne
 	@JoinColumn(name = "file_type_id")
 	private FileType fileType;
+
+	public String getDocName() {
+		return docName;
+	}
+
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
+
+	public CandidateUser getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUser candidateUser) {
+		this.candidateUser = candidateUser;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public FileType getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(FileType fileType) {
+		this.fileType = fileType;
+	}
 
 }

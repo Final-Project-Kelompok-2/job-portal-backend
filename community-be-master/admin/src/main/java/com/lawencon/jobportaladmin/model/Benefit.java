@@ -10,9 +10,26 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_benefit")
 public class Benefit extends BaseEntity {
 
-	@Column(name ="benefit_code", length = 5, nullable = false)
+	@Column(name = "benefit_code", length = 5, nullable = false)
 	private String benefitCode;
-	
-	@Column(name = "benefit_name",length = 20, nullable = false)
+
+	@Column(name = "benefit_name", length = 20, nullable = false)
 	private String benefitName;
+
+	public String getBenefitCode() {
+		return benefitCode;
+	}
+
+	public void setBenefitCode(String benefitCode) {
+		this.benefitCode = benefitCode;
+	}
+
+	public String getBenefitName() {
+		return benefitName;
+	}
+
+	public void setBenefitName(String benefitName) {
+		this.benefitName = benefitName;
+	}
+
 }
