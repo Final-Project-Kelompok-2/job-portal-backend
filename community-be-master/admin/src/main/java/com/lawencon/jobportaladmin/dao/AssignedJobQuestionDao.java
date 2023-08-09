@@ -1,13 +1,9 @@
 package com.lawencon.jobportaladmin.dao;
 
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-
->>>>>>> 26a13ee290e67476d5486226e7480926c508caeb
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
@@ -19,9 +15,6 @@ import com.lawencon.jobportaladmin.model.Question;
 public class AssignedJobQuestionDao extends AbstractJpaDao {
 
 
-
-<<<<<<< HEAD
-=======
 	private EntityManager em = ConnHandler.getManager();
 	
 	public List<AssignedJobQuestion> getByJob(String id){
@@ -50,6 +43,4 @@ public class AssignedJobQuestionDao extends AbstractJpaDao {
 		return assignedJobQuestions;
 		
 	}
-	
->>>>>>> 26a13ee290e67476d5486226e7480926c508caeb
 }

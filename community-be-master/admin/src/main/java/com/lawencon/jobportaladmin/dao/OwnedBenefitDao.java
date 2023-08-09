@@ -1,10 +1,5 @@
 package com.lawencon.jobportaladmin.dao;
 
-<<<<<<< HEAD
-import org.springframework.stereotype.Repository;
-
-import com.lawencon.base.AbstractJpaDao;
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +11,10 @@ import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.model.Benefit;
 import com.lawencon.jobportaladmin.model.OwnedBenefit;
->>>>>>> 26a13ee290e67476d5486226e7480926c508caeb
 
 @Repository
 public class OwnedBenefitDao extends AbstractJpaDao {
 
-<<<<<<< HEAD
-=======
 	private EntityManager em = ConnHandler.getManager();
 	
 	public List<OwnedBenefit> getByJob(String id) {
@@ -52,6 +44,4 @@ public class OwnedBenefitDao extends AbstractJpaDao {
 		return ownedBenefits;
 		
 	}
-
->>>>>>> 26a13ee290e67476d5486226e7480926c508caeb
 }
