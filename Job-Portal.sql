@@ -31,9 +31,9 @@ CREATE TABLE t_file (
 	id VARCHAR(36) NOT NULL,
 	filename TEXT NOT NULL,
 	file_extension VARCHAR(5) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -46,9 +46,9 @@ CREATE TABLE t_candidate_status (
 	id VARCHAR(36) NOT NULL,
 	status_code VARCHAR(5) NOT NULL,
 	status_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -63,9 +63,9 @@ CREATE TABLE t_religion (
 	id VARCHAR(36) NOT NULL,
 	religion_code VARCHAR(5) NOT NULL,
 	religion_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -80,9 +80,9 @@ CREATE TABLE t_marital_status (
 	id VARCHAR(36) NOT NULL,
 	marital_code VARCHAR(5) NOT NULL,
 	marital_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -97,9 +97,9 @@ CREATE TABLE t_person_type (
 	id VARCHAR(36) NOT NULL,
 	type_code VARCHAR(5) NOT NULL,
 	type_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -127,9 +127,9 @@ CREATE TABLE t_candidate_profile (
 	person_type_id VARCHAR(36) NOT NULL,
 	file_id VARCHAR(36) NOT NULL,
 	candidate_status_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -152,15 +152,19 @@ ALTER TABLE t_candidate_profile ADD CONSTRAINT file_id_fk_t_candidate_profile
 ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_status_fk_t_candidate_profile
 	FOREIGN KEY(candidate_status_id)
 	REFERENCES t_candidate_status(id);
+ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_profile_nik_bk
+	UNIQUE(nik);
+ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_profile_phonenumber_bk
+	UNIQUE(phone_number);
 
 CREATE TABLE t_candidate_user ( 
 	id VARCHAR(36) NOT NULL,
 	user_email VARCHAR(50) NOT NULL,
 	user_password TEXT NOT NULL,
 	profile_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -171,6 +175,8 @@ ALTER TABLE t_candidate_user ADD CONSTRAINT candidate_user_pk
 ALTER TABLE t_candidate_user ADD CONSTRAINT profile_id_fk_t_candidate_user
 	FOREIGN KEY (profile_id)
 	REFERENCES t_candidate_profile(id);
+ALTER TABLE t_candidate_user ADD CONSTRAINT candidate_user_email_bk
+	UNIQUE(user_email);
 
 CREATE TABLE t_candidate_family ( 
 	id VARCHAR(36) NOT NULL,
@@ -181,9 +187,9 @@ CREATE TABLE t_candidate_family (
 	birth_date date NOT NULL,
 	birth_place VARCHAR(20) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -204,9 +210,9 @@ CREATE TABLE t_candidate_address (
 	city VARCHAR(20) NOT NULL,
 	postal_code VARCHAR(10) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -222,9 +228,9 @@ CREATE TABLE t_candidate_skill (
 	id VARCHAR(36) NOT NULL,
 	skill_name text NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -247,9 +253,9 @@ CREATE TABLE t_candidate_work_exp (
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -269,9 +275,9 @@ CREATE TABLE t_candidate_project_exp (
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -291,9 +297,9 @@ CREATE TABLE t_candidate_training_exp (
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -310,13 +316,13 @@ CREATE TABLE t_candidate_education (
 	degree_name VARCHAR(50) NOT NULL,
 	institution_name VARCHAR(50) NOT NULL,
 	majors VARCHAR(50) NOT NULL,
-	cGPA float NOT NULL,
+	cgpa float NOT NULL,
 	start_year date NOT NULL,
 	end_year date NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -335,9 +341,9 @@ CREATE TABLE t_candidate_language (
 	speaking_rate VARCHAR(2) NOT NULL,
 	listening_rate VARCHAR(2) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -353,9 +359,9 @@ CREATE TABLE t_file_type (
 	id VARCHAR(36) NOT NULL,
 	type_code VARCHAR(5) NOT NULL,
 	type_name VARCHAR(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -372,9 +378,9 @@ CREATE TABLE t_candidate_documents (
 	user_id VARCHAR(36) NOT NULL,
 	file_id VARCHAR(36) NOT NULL,
 	file_type_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -402,9 +408,9 @@ CREATE TABLE t_candidate_references (
 	company VARCHAR(50) NOT NULL,
 	description TEXT NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -420,9 +426,9 @@ CREATE TABLE t_employment_type(
 	id VARCHAR(36) NOT NULL,
 	employment_type_code varchar(5) NOT NULL,
 	employment_type_name varchar(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -439,9 +445,9 @@ CREATE TABLE t_company(
 	company_url text,
 	company_phone varchar(15) NOT NULL,
 	photo_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -465,9 +471,9 @@ CREATE TABLE t_job(
 	expected_salary_max int,
 	employment_type_id VARCHAR(36) NOT NULL,
 	job_picture_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -489,9 +495,9 @@ CREATE TABLE t_hiring_status(
 	id VARCHAR(36) NOT NULL,
 	status_code varchar(5) NOT NULL,
 	status_name varchar(20) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -507,9 +513,9 @@ CREATE TABLE t_applicant(
 	applied_date timestamp NOT NULL,
 	status_id VARCHAR(36) NOT NULL,
 	candidate_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -531,9 +537,9 @@ CREATE TABLE t_saved_job (
 	id VARCHAR(36) NOT NULL,
 	job_id VARCHAR(36) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -594,7 +600,6 @@ CREATE TABLE t_question_answer(
 	is_active boolean NOT NULL,
 	ver int NOT NULL
 );
-
 
 ALTER TABLE t_question_answer ADD CONSTRAINT t_question_answer_pk 
 	PRIMARY KEY(id);
@@ -660,64 +665,64 @@ INSERT INTO t_person_type (id, type_code, type_name, created_by, created_at, is_
 
 SELECT * FROM t_candidate_profile tcp;
 INSERT INTO t_candidate_profile (id, salutation, fullname, gender, experience, expected_salary, phone_number, mobile_number, nik, birth_date, birth_place, marital_status_id, religion_id, person_type_id, file_id, candidate_status_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'Mr.'	, 'Ganjar Sutrisno'	, 'Male'	, '1', '5000000'	, '08174563256', '08126354856', '35153135151515', '1995-05-07', 'Jakarta'	, '72eb9289-df4e-408b-b617-6f39e4649105', '457b3886-6c79-4be5-8fde-bbe4c02b22e2', '5fee0a8a-8eae-49a8-9efe-4b078410f1a5', 'ce1acdc2-d8e2-4dbd-9512-c79be1d189a4', 'd249f1eb-994f-4291-a268-26edbe6f64bf', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Mrs.'	, 'Ariana Pratiwi'	, 'Female'	, '3', '10000000'	, '08174563456', '08126309856', '35153135151987', '2001-08-08', 'Madiun'	, '72eb9289-df4e-408b-b617-6f39e4649105', '457b3886-6c79-4be5-8fde-bbe4c02b22e2', '5fee0a8a-8eae-49a8-9efe-4b078410f1a5', 'ce1acdc2-d8e2-4dbd-9512-c79be1d189a4', 'd249f1eb-994f-4291-a268-26edbe6f64bf', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Ms.'	, 'Putri Anggini'	, 'Female'	, '2', '7000000'	, '08176123456', '08102109856', '35789135151987', '2002-02-08', 'Tangerang'	, 'f6ee5ce8-7869-4282-9d3f-d69d7d255402', 'e50eaf58-a8ed-4b83-9512-75395e1374da', '5fee0a8a-8eae-49a8-9efe-4b078410f1a5', 'ce1acdc2-d8e2-4dbd-9512-c79be1d189a4', 'd249f1eb-994f-4291-a268-26edbe6f64bf', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Mr.'	, 'Robin Smith'		, 'Male'	, '1', '6000000'	, '08741123456', '08133309856', '35789555151987', '1999-09-01', 'Malang'	, 'f6ee5ce8-7869-4282-9d3f-d69d7d255402', 'fa4298cc-0faa-492e-a3f1-eb57b21a375c', '5fee0a8a-8eae-49a8-9efe-4b078410f1a5', 'ce1acdc2-d8e2-4dbd-9512-c79be1d189a4', 'd249f1eb-994f-4291-a268-26edbe6f64bf', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Mr.'	, 'Mario Simbiak'	, 'Male'	, '1', '8000000'	, '08789123456', '08162409856', '35789555100087', '1999-07-03', 'Surabaya'	, 'f6ee5ce8-7869-4282-9d3f-d69d7d255402', 'fa4298cc-0faa-492e-a3f1-eb57b21a375c', '5fee0a8a-8eae-49a8-9efe-4b078410f1a5', 'ce1acdc2-d8e2-4dbd-9512-c79be1d189a4', 'd249f1eb-994f-4291-a268-26edbe6f64bf', 1, now(), true, 0);
+	(uuid_generate_v4(), 'Mr.'	, 'Ganjar Sutrisno'	, 'Male'	, '1', '5000000'	, '08174563256', '08126354856', '35153135151515', '1995-05-07', 'Jakarta'	, (SELECT id FROM t_marital_status tms WHERE marital_code = 'MRD'), (SELECT id FROM t_religion WHERE religion_code = 'ISL'), (SELECT id FROM t_person_type WHERE type_code = 'CND'), (SELECT id FROM t_file WHERE filename = 'ProfilePicture'), (SELECT id FROM t_candidate_status WHERE status_code = 'CS-01'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'Mrs.'	, 'Ariana Pratiwi'	, 'Female'	, '3', '10000000'	, '08174563456', '08126309856', '35153135151987', '2001-08-08', 'Madiun'	, (SELECT id FROM t_marital_status tms WHERE marital_code = 'MRD'), (SELECT id FROM t_religion WHERE religion_code = 'ISL'), (SELECT id FROM t_person_type WHERE type_code = 'CND'), (SELECT id FROM t_file WHERE filename = 'ProfilePicture'), (SELECT id FROM t_candidate_status WHERE status_code = 'CS-01'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'Ms.'	, 'Putri Anggini'	, 'Female'	, '2', '7000000'	, '08176123456', '08102109856', '35789135151987', '2002-02-08', 'Tangerang'	, (SELECT id FROM t_marital_status tms WHERE marital_code = 'SNG'), (SELECT id FROM t_religion WHERE religion_code = 'CHT'), (SELECT id FROM t_person_type WHERE type_code = 'CND'), (SELECT id FROM t_file WHERE filename = 'ProfilePicture'), (SELECT id FROM t_candidate_status WHERE status_code = 'CS-01'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'Mr.'	, 'Robin Smith'		, 'Male'	, '1', '6000000'	, '08741123456', '08133309856', '35789555151987', '1999-09-01', 'Malang'	, (SELECT id FROM t_marital_status tms WHERE marital_code = 'SNG'), (SELECT id FROM t_religion WHERE religion_code = 'CHR'), (SELECT id FROM t_person_type WHERE type_code = 'CND'), (SELECT id FROM t_file WHERE filename = 'ProfilePicture'), (SELECT id FROM t_candidate_status WHERE status_code = 'CS-01'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'Mr.'	, 'Mario Simbiak'	, 'Male'	, '1', '8000000'	, '08789123456', '08162409856', '35789555100087', '1999-07-03', 'Surabaya'	, (SELECT id FROM t_marital_status tms WHERE marital_code = 'SNG'), (SELECT id FROM t_religion WHERE religion_code = 'CHR'), (SELECT id FROM t_person_type WHERE type_code = 'CND'), (SELECT id FROM t_file WHERE filename = 'ProfilePicture'), (SELECT id FROM t_candidate_status WHERE status_code = 'CS-01'), 1, now(), true, 0);
 
 SELECT * FROM t_candidate_user tcu;
 INSERT INTO t_candidate_user (id, user_email, user_password, profile_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'candidate1@email.com', 'jobportal', '8539b4c1-f3d9-47b8-918a-14615fb13755', 1, now(), true, 0),
-	(uuid_generate_v4(), 'candidate2@email.com', 'jobportal', '59798613-3196-4232-bef9-7ddd139cea23', 1, now(), true, 0),
-	(uuid_generate_v4(), 'candidate3@email.com', 'jobportal', '4ac7ddac-c31d-4fb9-b2e4-12eb7e156877', 1, now(), true, 0),
-	(uuid_generate_v4(), 'candidate4@email.com', 'jobportal', '732ced9a-1764-409a-a39a-2dc10262fecc', 1, now(), true, 0),
-	(uuid_generate_v4(), 'candidate5@email.com', 'jobportal', '77a3b3b5-b44c-48c4-9671-6dcd21775f7a', 1, now(), true, 0);
+	(uuid_generate_v4(), 'candidate1@email.com', 'jobportal', (SELECT id FROM t_candidate_profile WHERE nik = '35153135151515'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'candidate2@email.com', 'jobportal', (SELECT id FROM t_candidate_profile WHERE nik = '35153135151987'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'candidate3@email.com', 'jobportal', (SELECT id FROM t_candidate_profile WHERE nik = '35789135151987'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'candidate4@email.com', 'jobportal', (SELECT id FROM t_candidate_profile WHERE nik = '35789555151987'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'candidate5@email.com', 'jobportal', (SELECT id FROM t_candidate_profile WHERE nik = '35789555100087'), 1, now(), true, 0);
 	
 SELECT * FROM t_candidate_family tcf;
 INSERT INTO t_candidate_family (id, fullname, relationship, degree_name, occupation, birth_date, birth_place, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'Lusiana Sutrisno'	, 'Istri'	, 'Sarjana (S1)', 'Manager'	, '1996-05-02', 'Jakarta', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Angga Sutrisno'	, 'Anak'	, 'Sarjana (S1)', 'Employee', '2001-06-03', 'Jakarta', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Aryon Sutrisno'	, 'Anak'	, 'SMA'			, 'Student'	, '2003-08-01', 'Kediri' , '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'Lusiana Sutrisno'	, 'Istri'	, 'Sarjana (S1)', 'Manager'	, '1996-05-02', 'Jakarta', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Angga Sutrisno'	, 'Anak'	, 'Sarjana (S1)', 'Employee', '2001-06-03', 'Jakarta', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Aryon Sutrisno'	, 'Anak'	, 'SMA'			, 'Student'	, '2003-08-01', 'Kediri' , (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 
 SELECT * FROM t_candidate_address tca;
 INSERT INTO t_candidate_address (id, address, residence_type, country, province, city, postal_code, user_id, created_by, created_at, is_active, ver) VALUES
-	(uuid_generate_v4(), 'Jl. Menteng Atas No.21', 'Home', 'Indonesia', 'DKI Jakarta', 'Jakarta Selatan', '15115', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'Jl. Menteng Atas No.21', 'Home', 'Indonesia', 'DKI Jakarta', 'Jakarta Selatan', '15115', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 	
 SELECT * FROM t_candidate_skill tcs;
 INSERT INTO t_candidate_skill (id, skill_name, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'Web Development'	, '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'SQL Queries'		, '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Video Editing'	, '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Back-End Engineer', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'Web Development'	, (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'SQL Queries'		, (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Video Editing'	, (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Back-End Engineer', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 
 SELECT * FROM t_candidate_work_exp tcwe;
 INSERT INTO t_candidate_work_exp (id, position_name, company_name, address, responsibility, reason_leave, last_salary, start_date, end_date, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'Full Stack Engineer', 'PT. Lawencon International', 'Pakuwon Tower, Jakarta', 'Optimize code and application for maximum speed and scalability', 'Not suitable with the salary', '7000000', '2019-01-01', '2019-05-30', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'UI / UX', 'PT. Mentari International', 'Graha Tower, Jakarta', 'Designing User Interface for Mobile App', 'Finish the contract', '5000000', '2019-08-01', '2019-11-25', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'Full Stack Engineer', 'PT. Lawencon International', 'Pakuwon Tower, Jakarta', 'Optimize code and application for maximum speed and scalability', 'Not suitable with the salary', '7000000', '2019-01-01', '2019-05-30', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'UI / UX', 'PT. Mentari International', 'Graha Tower, Jakarta', 'Designing User Interface for Mobile App', 'Finish the contract', '5000000', '2019-08-01', '2019-11-25', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 
 SELECT * FROM t_candidate_project_exp tcpe;
 INSERT INTO t_candidate_project_exp (id, project_name, project_url, description, start_date, end_date, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'Assets Management System'		, 'www.github.com/assetsystem'		, 'Language: Java, TypeScript', '2019-01-05', '2019-04-05', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Ticket Management System'		, 'www.github.com/ticketsystem'		, 'Language: Java, TypeScript', '2019-05-05', '2019-08-05', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Learning Management System'	, 'www.github.com/learningsystem'	, 'Language: Java, TypeScript', '2019-08-05', '2019-10-05', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'Assets Management System'		, 'www.github.com/assetsystem'		, 'Language: Java, TypeScript', '2019-01-05', '2019-04-05', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Ticket Management System'		, 'www.github.com/ticketsystem'		, 'Language: Java, TypeScript', '2019-05-05', '2019-08-05', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Learning Management System'	, 'www.github.com/learningsystem'	, 'Language: Java, TypeScript', '2019-08-05', '2019-10-05', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 	
 SELECT * FROM t_candidate_training_exp tcte;
 INSERT INTO t_candidate_training_exp (id, organization_name, training_name, description, start_date, end_date, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'PT. Google Indonesia'	, 'IT Support Training'	, 'Software & Hardware management skills', '2017-01-01', '2017-04-25', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'PT. Dell Indonesia'	, 'UI / UX Training'	, 'Designing User Interface and creative', '2018-01-01', '2018-02-25', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'PT. Asus Indonesia'	, 'Full Stack Training'	, 'Develop web application with Java Lan', '2018-06-01', '2018-12-25', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'PT. Google Indonesia'	, 'IT Support Training'	, 'Software & Hardware management skills', '2017-01-01', '2017-04-25', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'PT. Dell Indonesia'	, 'UI / UX Training'	, 'Designing User Interface and creative', '2018-01-01', '2018-02-25', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'PT. Asus Indonesia'	, 'Full Stack Training'	, 'Develop web application with Java Lan', '2018-06-01', '2018-12-25', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 	
 SELECT * FROM t_candidate_education tce;
 INSERT INTO t_candidate_education (id, degree_name, institution_name, majors, cgpa, start_year, end_year, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'Sarjana (S1)'	, 'Universitas Indonesia', 'Information Technology', 3.9, '2010-07-07', '2014-05-05', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Magister (S2)', 'Universitas Udayana', 'Information Technology', 3.7, '2015-07-07', '2017-04-06', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'Sarjana (S1)'	, 'Universitas Indonesia', 'Information Technology', 3.9, '2010-07-07', '2014-05-05', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Magister (S2)', 'Universitas Udayana', 'Information Technology', 3.7, '2015-07-07', '2017-04-06', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 	
 SELECT * FROM t_candidate_language tcl;
 INSERT INTO t_candidate_language (id, language_name, writing_rate, speaking_rate, listening_rate, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'English', '8', '7', '9', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Indonesia', '9', '7', '9', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Mandarin', '5', '6', '5', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), 'English', '8', '7', '9', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Indonesia', '9', '7', '9', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Mandarin', '5', '6', '5', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 
 SELECT * FROM t_file_type tft;
 INSERT INTO t_file_type (id, type_code, type_name, created_by, created_at, is_active, ver) VALUES 
@@ -739,17 +744,17 @@ INSERT INTO t_file_type (id,type_code,type_name,created_by,created_at,updated_by
 	
 SELECT * FROM t_candidate_documents tcd;
 INSERT INTO t_candidate_documents (id, doc_name, user_id, file_id, file_type_id, created_by, created_at, is_active, ver) VALUES
-	(uuid_generate_v4(), 'CV_GanjarSutrisno', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', '806b3230-7e13-474f-8103-4c58a5bae715', 'fa3f81c1-4dd0-450b-97ec-40f89a914736', 1, now(), true, 0),
-	(uuid_generate_v4(), 'KTP_GanjarSutrisno', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', '806b3230-7e13-474f-8103-4c58a5bae715', '6eb3977c-1ece-49db-bbff-cf5aff00db09', 1, now(), true, 0),
-	(uuid_generate_v4(), 'KK_GanjarSutrisno', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', '806b3230-7e13-474f-8103-4c58a5bae715', '2f6ac514-a4ee-47a6-a7fa-2b65c44e3d5b', 1, now(), true, 0),
-	(uuid_generate_v4(), 'TR_GanjarSutrisno', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', '806b3230-7e13-474f-8103-4c58a5bae715', '1dd81472-66de-4dd9-b796-e7630db27fb2', 1, now(), true, 0);
+	(uuid_generate_v4(), 'CV_GanjarSutrisno', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_file WHERE filename = 'DocumentDummy'), (SELECT id FROM t_file_type WHERE type_code = 'FE-01'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'KTP_GanjarSutrisno', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_file WHERE filename = 'DocumentDummy'), (SELECT id FROM t_file_type WHERE type_code = 'FE-06'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'KK_GanjarSutrisno', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_file WHERE filename = 'DocumentDummy'), (SELECT id FROM t_file_type WHERE type_code = 'FE-02'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'TR_GanjarSutrisno', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_file WHERE filename = 'DocumentDummy'), (SELECT id FROM t_file_type WHERE type_code = 'FE-04'), 1, now(), true, 0);
 
 SELECT * FROM t_candidate_references tcr;
 INSERT INTO t_candidate_references (id, fullname, relationship, occupation, phone_number, email, company, description, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'Angga Yulir', 'Uncle', 'General Manager', '08152223455', 'angga@email.com', 'PT. Lawencon International', 'My previous GM', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Rahmat Sutrisnno', 'Colleague', 'IT Supervisor', '08151230555', 'rahmat@email.com', 'PT. Mentari International', 'My previous Supervisor', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'Angela Mins', 'Colleague', 'HR', '08845123455', 'angela@email.com', 'PT. Mentari International', 'My previous HR', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
-	
+	(uuid_generate_v4(), 'Angga Yulir', 'Uncle', 'General Manager', '08152223455', 'angga@email.com', 'PT. Lawencon International', 'My previous GM', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Rahmat Sutris', 'Colleague', 'IT Supervisor', '08151230555', 'rahmat@email.com', 'PT. Mentari International', 'My previous Supervisor', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'Angela Mins', 'Colleague', 'HR', '08845123455', 'angela@email.com', 'PT. Mentari International', 'My previous HR', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
+
 SELECT * FROM t_employment_type tet;
 INSERT INTO t_employment_type (id,employment_type_code,employment_type_name,created_by,created_at,updated_by,updated_at,is_active,ver) VALUES
 	(uuid_generate_v4(),'ET-01','INTERN',1,NOW(),1,NOW(),TRUE,1),
@@ -759,19 +764,19 @@ INSERT INTO t_employment_type (id,employment_type_code,employment_type_name,crea
 
 SELECT * FROM t_company tc;
 INSERT INTO t_company (id, company_code, company_name, address, company_url, company_phone, photo_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'LWC', 'PT. Lawencon International', 'Pakuwon Tower, Jakarta', 'www.lawencon.com', '08151321554', '940f00b1-6e9b-4b00-8452-ce7c2ea47908', 1, now(), true, 0),
-	(uuid_generate_v4(), 'SHP', 'PT. Shopee Indonesia', 'Pakuwon Tower, Jakarta', 'www.shopee.com', '08156541554', '940f00b1-6e9b-4b00-8452-ce7c2ea47908', 1, now(), true, 0),
-	(uuid_generate_v4(), 'LWS', 'PT. Lawson International', 'Menteng Tower, Bandung', 'www.lawson.com', '08151378954', '940f00b1-6e9b-4b00-8452-ce7c2ea47908', 1, now(), true, 0),
-	(uuid_generate_v4(), 'KBJ', 'PT. Kebinekaan Jaya', 'Graha Tower, Jakarta', 'www.bhineka.com', '08151300054', '940f00b1-6e9b-4b00-8452-ce7c2ea47908', 1, now(), true, 0)
+	(uuid_generate_v4(), 'LWC', 'PT. Lawencon International', 'Pakuwon Tower, Jakarta', 'www.lawencon.com', '08151321554', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'SHP', 'PT. Shopee Indonesia', 'Pakuwon Tower, Jakarta', 'www.shopee.com', '08156541554', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'LWS', 'PT. Lawson International', 'Menteng Tower, Bandung', 'www.lawson.com', '08151378954', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'KBJ', 'PT. Kebinekaan Jaya', 'Graha Tower, Jakarta', 'www.bhineka.com', '08151300054', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0)
 	
 SELECT * FROM t_job tj;
 INSERT INTO t_job (id, job_code, job_name, company_id, start_date, end_date, description, expected_salary_min, expected_salary_max, employment_type_id, job_picture_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'FSD', 'Full Stack Developer', 'cf6a1139-2c88-41cc-872a-f5007f6ba81b', '2023-05-05', '2024-05-05', 'FSDeveloper Job Description', '5000000', '7000000', '78cec7e4-9e50-4c8e-ab3f-b166c6da58c3', '5ae09027-1793-4c15-baee-645be9821867', 1, now(), true, 0),
-	(uuid_generate_v4(), 'JVD', 'Java Developer', 'cf6a1139-2c88-41cc-872a-f5007f6ba81b', '2023-05-05', '2024-05-05', 'Java Developer Job Description', '7000000', '10000000', '78cec7e4-9e50-4c8e-ab3f-b166c6da58c3', '5ae09027-1793-4c15-baee-645be9821867', 1, now(), true, 0),
-	(uuid_generate_v4(), 'DBA', 'Database Administrator', 'cf6a1139-2c88-41cc-872a-f5007f6ba81b', '2023-05-05', '2024-05-05', 'DB Admin Job Description', '5000000', '10000000', '78cec7e4-9e50-4c8e-ab3f-b166c6da58c3', '5ae09027-1793-4c15-baee-645be9821867', 1, now(), true, 0),
-	(uuid_generate_v4(), 'SLM', 'Sales Manager', 'a99c1b30-58c5-47f7-a715-bff40526577e', '2023-05-05', '2024-05-05', 'Sales Manager Job Description', '5000000', '7000000', '78cec7e4-9e50-4c8e-ab3f-b166c6da58c3', '5ae09027-1793-4c15-baee-645be9821867', 1, now(), true, 0),
-	(uuid_generate_v4(), 'CSS', 'Customer Service', 'a99c1b30-58c5-47f7-a715-bff40526577e', '2023-05-05', '2024-05-05', 'CS Job Description', '6000000', '10000000', '78cec7e4-9e50-4c8e-ab3f-b166c6da58c3', '5ae09027-1793-4c15-baee-645be9821867', 1, now(), true, 0);
-	
+	(uuid_generate_v4(), 'FSD', 'Full Stack Developer', (SELECT id FROM t_company WHERE company_code = 'LWC'), '2023-05-05', '2024-05-05', 'FSDeveloper Job Description', '5000000', '7000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'JVD', 'Java Developer', (SELECT id FROM t_company WHERE company_code = 'LWC'), '2023-05-05', '2024-05-05', 'Java Developer Job Description', '7000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'DBA', 'Database Administrator', (SELECT id FROM t_company WHERE company_code = 'LWC'), '2023-05-05', '2024-05-05', 'DB Admin Job Description', '5000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'SLM', 'Sales Manager', (SELECT id FROM t_company WHERE company_code = 'SHP'), '2023-05-05', '2024-05-05', 'Sales Manager Job Description', '5000000', '7000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'CSS', 'Customer Service', (SELECT id FROM t_company WHERE company_code = 'SHP'), '2023-05-05', '2024-05-05', 'CS Job Description', '6000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0);
+
 SELECT * FROM t_hiring_status ths;
 INSERT INTO t_hiring_status (id, status_code, status_name, created_by, created_at, is_active, ver) VALUES 
 	(uuid_generate_v4(), 'APL', 'Application', 1, now(), true, 0),
@@ -784,15 +789,15 @@ INSERT INTO t_hiring_status (id, status_code, status_name, created_by, created_a
 	
 SELECT * FROM t_applicant ta;
 INSERT INTO t_applicant (id, applicant_code, job_id, applied_date, status_id, candidate_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'X23NB', '25de4c86-eadb-42e4-833c-8889a245625f', '2023-08-08', 'a588de44-842c-492f-88b2-474f57c07b41', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'X24NB', '945833a1-c75f-4168-af1a-78bf3cb3a7ad', '2023-08-08', 'a588de44-842c-492f-88b2-474f57c07b41', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), 'X25NB', '25de4c86-eadb-42e4-833c-8889a245625f', '2023-08-08', 'a588de44-842c-492f-88b2-474f57c07b41', '8e2cedb0-0d53-447f-8f43-98a9a9fdb1f1', 1, now(), true, 0);
+	(uuid_generate_v4(), 'X23NB', (SELECT id FROM t_job WHERE job_code = 'FSD'), '2023-08-08', (SELECT id FROM t_hiring_status WHERE status_code = 'APL'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'X24NB', (SELECT id FROM t_job WHERE job_code = 'JVD'), '2023-08-08', (SELECT id FROM t_hiring_status WHERE status_code = 'APL'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), 'X25NB', (SELECT id FROM t_job WHERE job_code = 'FSD'), '2023-08-08', (SELECT id FROM t_hiring_status WHERE status_code = 'APL'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate2@email.com'), 1, now(), true, 0);
 	
 SELECT * FROM t_saved_job tsj;
 INSERT INTO t_saved_job (id, job_id, user_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), '51bffe33-f491-4475-9348-39790b35152f', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), '7f73664a-89f6-410e-8e03-850fa7d2261c', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0),
-	(uuid_generate_v4(), '9ec4c138-aa5f-4ac3-8465-9deb485cb5fd', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 1, now(), true, 0);
+	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'DBA'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'SLM'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0),
+	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'CSS'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , 1, now(), true, 0);
 
 SELECT * FROM t_question tq;
 INSERT INTO t_question (id, question_code, question_detail, created_by, created_at, is_active, ver) VALUES 
@@ -802,27 +807,27 @@ INSERT INTO t_question (id, question_code, question_detail, created_by, created_
 	
 SELECT * FROM t_question_option tqo;
 INSERT INTO t_question_option (id, option_label, is_correct, question_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'A. Abstraction', false, 'fdd3df64-f885-4ec9-a71d-3e0a6e53d535', 1, now(), true, 0),
-	(uuid_generate_v4(), 'B. Polymorphism', false, 'fdd3df64-f885-4ec9-a71d-3e0a6e53d535', 1, now(), true, 0),
-	(uuid_generate_v4(), 'C. Encapsulation', false, 'fdd3df64-f885-4ec9-a71d-3e0a6e53d535', 1, now(), true, 0),
-	(uuid_generate_v4(), 'D. Inheritance', true, 'fdd3df64-f885-4ec9-a71d-3e0a6e53d535', 1, now(), true, 0),
-	(uuid_generate_v4(), 'A. 1980', false, 'e87077ca-00c3-423f-bdc5-e10edae75373', 1, now(), true, 0),
-	(uuid_generate_v4(), 'B. 1995', false, 'e87077ca-00c3-423f-bdc5-e10edae75373', 1, now(), true, 0),
-	(uuid_generate_v4(), 'C. 1970', true, 'e87077ca-00c3-423f-bdc5-e10edae75373', 1, now(), true, 0),
-	(uuid_generate_v4(), 'D. 1993', false, 'e87077ca-00c3-423f-bdc5-e10edae75373', 1, now(), true, 0),
-	(uuid_generate_v4(), 'A. Kotlin', false, 'a1d9d1c0-756b-40e5-b699-53b7add78f12', 1, now(), true, 0),
-	(uuid_generate_v4(), 'B. SmallTalk', true, 'a1d9d1c0-756b-40e5-b699-53b7add78f12', 1, now(), true, 0),
-	(uuid_generate_v4(), 'C. Java', false, 'a1d9d1c0-756b-40e5-b699-53b7add78f12', 1, now(), true, 0),
-	(uuid_generate_v4(), 'D. C++', false, 'a1d9d1c0-756b-40e5-b699-53b7add78f12', 1, now(), true, 0);
+	(uuid_generate_v4(), 'A. Abstraction', false, (SELECT id FROM t_question WHERE question_code = 'Q1FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'B. Polymorphism', false, (SELECT id FROM t_question WHERE question_code = 'Q1FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'C. Encapsulation', false, (SELECT id FROM t_question WHERE question_code = 'Q1FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'D. Inheritance', true, (SELECT id FROM t_question WHERE question_code = 'Q1FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'A. 1980', false, (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'B. 1995', false, (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'C. 1970', true, (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'D. 1993', false, (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'A. Kotlin', false, (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'B. SmallTalk', true, (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'C. Java', false, (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'D. C++', false, (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0);
 
 SELECT * FROM t_question_answer tqa;
 INSERT INTO t_question_answer (id, option_id, candidate_id, question_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), '6760e40b-7c4d-446b-b60f-99ba02e58928', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 'fdd3df64-f885-4ec9-a71d-3e0a6e53d535', 1, now(), true, 0),
-	(uuid_generate_v4(), '1b3f4c30-a74a-4f5d-9e67-531ea61c86a3', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 'e87077ca-00c3-423f-bdc5-e10edae75373', 1, now(), true, 0),
-	(uuid_generate_v4(), '26a339d8-bf35-4472-b12e-411d5522990b', '6e7ac1d7-0f66-4849-9449-57af4a70e2e8', 'a1d9d1c0-756b-40e5-b699-53b7add78f12', 1, now(), true, 0);
+	(uuid_generate_v4(), (SELECT id FROM t_question_option WHERE option_label = 'D. Inheritance'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_question WHERE question_code = 'Q1FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), (SELECT id FROM t_question_option WHERE option_label = 'D. 1993'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), (SELECT id FROM t_question_option WHERE option_label = 'B. SmallTalk'), (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0);
 
 SELECT * FROM t_assigned_job_question tajq;
 INSERT INTO t_assigned_job_question (id, job_id, question_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), '25de4c86-eadb-42e4-833c-8889a245625f', 'fdd3df64-f885-4ec9-a71d-3e0a6e53d535', 1, now(), true, 0),
-	(uuid_generate_v4(), '25de4c86-eadb-42e4-833c-8889a245625f', 'e87077ca-00c3-423f-bdc5-e10edae75373', 1, now(), true, 0),
-	(uuid_generate_v4(), '25de4c86-eadb-42e4-833c-8889a245625f', 'a1d9d1c0-756b-40e5-b699-53b7add78f12', 1, now(), true, 0);
+	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q1FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
+	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0);
