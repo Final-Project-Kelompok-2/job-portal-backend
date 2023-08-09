@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.model.CandidateAddress;
+import com.lawencon.jobportalcandidate.model.CandidateProfile;
+import com.lawencon.jobportalcandidate.model.CandidateUser;
 
 @Repository
 public class CandidateAddressDao extends AbstractJpaDao{
@@ -22,8 +24,8 @@ public class CandidateAddressDao extends AbstractJpaDao{
 				+ "	province, "
 				+ "	city, "
 				+ "	postal_code, "
-				+ "	tcu.id, "
-				+ "	tcp.fullname  "
+				+ "	user_id,"
+				+ " tcp.fullname "
 				+ "FROM  "
 				+ "	t_candidate_address tca  "
 				+ "INNER JOIN  "
@@ -42,9 +44,30 @@ public class CandidateAddressDao extends AbstractJpaDao{
 				.getSingleResult();
 		
 		final Object[] candidateAddressArr = (Object[]) candidateAddressObjs;
-		final CandidateAddress candidateAddressList = null;
-	
-		return candidateAddressList;
+
+		CandidateAddress candidateAddress = null;
+		if(candidateAddressArr.length > 0) {
+			candidateAddress = new CandidateAddress();
+			candidateAddress.setId(candidateAddressArr[0].toString());
+			candidateAddress.setAddress(candidateAddressArr[1].toString());
+			candidateAddress.setResidenceType(candidateAddressArr[2].toString());
+			candidateAddress.setCountry(candidateAddressArr[3].toString());
+			candidateAddress.setProvince(candidateAddressArr[4].toString());
+			candidateAddress.setCity(candidateAddressArr[5].toString());
+			candidateAddress.setPostalCode(candidateAddressArr[6].toString());
+			
+			final CandidateProfile candidateProfile = new CandidateProfile();
+			candidateProfile.setFullname(candidateAddressArr[8].toString());
+			
+			final CandidateUser candidateUser = new CandidateUser();
+			candidateUser.setId(candidateAddressArr[7].toString());
+			candidateUser.setCandidateProfile(candidateProfile);
+			candidateAddress.setCandidateUser(candidateUser);
+		}
+		
+		
+		return candidateAddress;
+
 		
 		
 	}

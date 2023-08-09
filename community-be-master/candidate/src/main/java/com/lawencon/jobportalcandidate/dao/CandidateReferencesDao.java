@@ -5,10 +5,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
+
 import com.lawencon.jobportalcandidate.model.CandidateReferences;
 
 @Repository
@@ -56,4 +58,4 @@ public class CandidateReferencesDao extends AbstractJpaDao {
 		
 		return references;
 	}
-}
+
