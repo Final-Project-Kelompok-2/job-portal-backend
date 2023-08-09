@@ -15,4 +15,20 @@ public class Question extends BaseEntity{
 	
 	@Column(name ="question_detail",  nullable = false)
 	private String questionDetail;
+
+	public String getQuestionCode() {
+		return questionCode;
+	}
+
+	public void setQuestionCode(String questionCode) {
+		this.questionCode = questionCode;
+	}
+
+	public String getQuestionDetail() {
+		return questionDetail;
+	}
+
+	public void setQuestionDetail(String questionDetail) {
+		this.questionDetail = questionDetail;
+	}
 }

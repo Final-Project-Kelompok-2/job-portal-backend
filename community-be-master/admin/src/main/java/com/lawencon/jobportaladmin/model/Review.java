@@ -21,5 +21,29 @@ public class Review extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name ="applicant_id")
 	private Applicant applicant;
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public Float getScore() {
+		return score;
+	}
+
+	public void setScore(Float score) {
+		this.score = score;
+	}
+
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
 	
 }

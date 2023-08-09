@@ -53,6 +53,102 @@ public class Job extends BaseEntity{
 	
 	@OneToOne
 	@JoinColumn(name = "job_picture_id")
-	private File jobPicture;	
+	private File jobPicture;
+
+	public String getJobCode() {
+		return jobCode;
+	}
+
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
+	public Company getCompany() {
+		return Company;
+	}
+
+	public void setCompany(Company company) {
+		Company = company;
+	}
+
+	public User getHr() {
+		return hr;
+	}
+
+	public void setHr(User hr) {
+		this.hr = hr;
+	}
+
+	public User getPic() {
+		return pic;
+	}
+
+	public void setPic(User pic) {
+		this.pic = pic;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getExpectedSalaryMin() {
+		return expectedSalaryMin;
+	}
+
+	public void setExpectedSalaryMin(Integer expectedSalaryMin) {
+		this.expectedSalaryMin = expectedSalaryMin;
+	}
+
+	public Integer getExpectedSalaryMax() {
+		return expectedSalaryMax;
+	}
+
+	public void setExpectedSalaryMax(Integer expectedSalaryMax) {
+		this.expectedSalaryMax = expectedSalaryMax;
+	}
+
+	public EmploymentType getEmploymentType() {
+		return employmentType;
+	}
+
+	public void setEmploymentType(EmploymentType employmentType) {
+		this.employmentType = employmentType;
+	}
+
+	public File getJobPicture() {
+		return jobPicture;
+	}
+
+	public void setJobPicture(File jobPicture) {
+		this.jobPicture = jobPicture;
+	}	
 	
 }

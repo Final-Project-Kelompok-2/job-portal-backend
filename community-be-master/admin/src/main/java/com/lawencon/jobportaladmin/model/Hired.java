@@ -22,6 +22,36 @@ public class Hired {
 	
 	@Column(name = "end_date", nullable = true)
 	private LocalDateTime endDate;
+
+
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
+
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
 	
 
 }

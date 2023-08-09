@@ -22,4 +22,28 @@ public class QuestionOption extends BaseEntity {
 	@JoinColumn(name = "question_id")
 	private Question question;
 
+	public String getOptionLabel() {
+		return optionLabel;
+	}
+
+	public void setOptionLabel(String optionLabel) {
+		this.optionLabel = optionLabel;
+	}
+
+	public Boolean getIsCorrect() {
+		return isCorrect;
+	}
+
+	public void setIsCorrect(Boolean isCorrect) {
+		this.isCorrect = isCorrect;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
 }

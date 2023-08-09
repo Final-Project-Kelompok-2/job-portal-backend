@@ -28,6 +28,46 @@ public class Profile extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name ="person_type_id")
 	private PersonType personType;
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public File getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(File photo) {
+		this.photo = photo;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public PersonType getPersonType() {
+		return personType;
+	}
+
+	public void setPersonType(PersonType personType) {
+		this.personType = personType;
+	}
 	
 	
 }
