@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "t_candidate_address")
-public class CandidateAddress extends BaseEntity{
+public class CandidateAddress extends BaseEntity {
 
 	@Column(name = "address", nullable= false)
 	private String address;
