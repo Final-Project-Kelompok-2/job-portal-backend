@@ -51,7 +51,6 @@ public class Job {
 	
 	@OneToOne
 	@JoinColumn(name = "job_picture_id")
-	private File jobPicture;
-	
+	private File jobPicture;	
 	
 }
