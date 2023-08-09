@@ -26,44 +26,4 @@ public class CandidateLanguage {
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
 
-	public String getLanguageName() {
-		return languageName;
-	}
-
-	public void setLanguageName(String languageName) {
-		this.languageName = languageName;
-	}
-
-	public String getWritingRate() {
-		return writingRate;
-	}
-
-	public void setWritingRate(String writingRate) {
-		this.writingRate = writingRate;
-	}
-
-	public String getSpeakingRate() {
-		return speakingRate;
-	}
-
-	public void setSpeakingRate(String speakingRate) {
-		this.speakingRate = speakingRate;
-	}
-
-	public String getListeningRate() {
-		return listeningRate;
-	}
-
-	public void setListeningRate(String listeningRate) {
-		this.listeningRate = listeningRate;
-	}
-
-	public CandidateUser getCandidateUser() {
-		return candidateUser;
-	}
-
-	public void setCandidateUser(CandidateUser candidateUser) {
-		this.candidateUser = candidateUser;
-	}
-
 }

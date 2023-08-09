@@ -13,5 +13,4 @@ public class CandidateStatus {
 	
 	@Column(name = "status_name", length = 20, nullable = false)
 	private String statusName;
-	
 }

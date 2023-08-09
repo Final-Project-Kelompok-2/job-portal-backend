@@ -30,7 +30,4 @@ public class CandidateProjectExp {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
-	
-	
-	
 }
