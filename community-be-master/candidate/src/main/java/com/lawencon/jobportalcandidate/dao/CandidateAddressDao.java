@@ -13,7 +13,9 @@ import com.lawencon.jobportalcandidate.model.CandidateUser;
 @Repository
 public class CandidateAddressDao extends AbstractJpaDao{
 	
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public CandidateAddress getByCandidateId(String id){
 		final String sql = "SELECT  "
@@ -39,7 +41,7 @@ public class CandidateAddressDao extends AbstractJpaDao{
 				+ "WHERE  "
 				+ "	tca.user_id  = :candidate";
 		
-		final Object candidateAddressObjs = this.em.createNativeQuery(sql)
+		final Object candidateAddressObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getSingleResult();
 		

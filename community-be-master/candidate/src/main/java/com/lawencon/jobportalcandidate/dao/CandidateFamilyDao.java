@@ -15,7 +15,10 @@ import com.lawencon.jobportalcandidate.model.CandidateFamily;
 
 @Repository
 public class CandidateFamilyDao extends AbstractJpaDao{
-	private EntityManager em = ConnHandler.getManager();
+
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<CandidateFamily>getFamilyByCandidate(String id){
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -33,7 +36,7 @@ public class CandidateFamilyDao extends AbstractJpaDao{
 				+ "WHERE  "
 				+ "	user_id = :candidate"
 				;
-		final List<?>familyObjs = this.em.createNativeQuery(sql)
+		final List<?>familyObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateFamily> candidateFamilyList = new ArrayList<>();

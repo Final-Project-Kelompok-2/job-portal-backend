@@ -15,11 +15,14 @@ import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.EmploymentType;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.Job;
+import com.lawencon.jobportaladmin.model.User;
 
 @Repository
 public class JobDao extends AbstractJpaDao{
 
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<Job> getByCompany(String code) {
 		final List<Job> jobs = new ArrayList<>();
@@ -32,20 +35,26 @@ public class JobDao extends AbstractJpaDao{
 				+ "	address,"
 				+ "	start_date,"
 				+ "	end_date,"
+				+ " hr_id,"
+				+ " pic_id,"
 				+ "	expected_salary_min,"
 				+ "	expected_salary_max,"
 				+ "	employment_type_name,"
 				+ "	job_picture_id "
 				+ "FROM "
-				+ "	t_job tj"
+				+ "	t_job tj "
 				+ "INNER JOIN "
-				+ "	t_company tc ON tc.id = tj.company_id"
+				+ "	t_company tc ON tc.id = tj.company_id "
 				+ "INNER JOIN"
-				+ "	t_employment_type tet ON tet.id = tj.employment_type_id"
+				+ "	t_employment_type tet ON tet.id = tj.employment_type_id "
+				+ "INNER JOIN"
+				+ "	t_user tu ON tu.id = tj.hr_id "
+				+ "INNER JOIN"
+				+ "	t_user tu2 ON tu2.id = tj.pic_id "
 				+ "WHERE "
 				+ "	company_code = :companycode";
-		
-		final List<?> jobObjs = em.createNativeQuery(sql)
+			
+		final List<?> jobObjs = em().createNativeQuery(sql)
 				.setParameter("companycode", code)
 				.getResultList();
 		
@@ -62,16 +71,27 @@ public class JobDao extends AbstractJpaDao{
 				
 				job.setStartDate(LocalDate.parse(jobArr[4].toString(), formatter));
 				job.setEndDate(LocalDate.parse(jobArr[5].toString(), formatter));
-				job.setExpectedSalaryMin(Integer.valueOf(jobArr[6].toString()));
-				job.setExpectedSalaryMax(Integer.valueOf(jobArr[7].toString()));
+				
+				final User hr = new User();
+				hr.setId(jobArr[6].toString());
+				job.setHr(hr);
+				
+				final User pic = new User();
+				pic.setId(jobArr[7].toString());
+				job.setPic(pic);
+				
+				job.setExpectedSalaryMin(Integer.valueOf(jobArr[8].toString()));
+				job.setExpectedSalaryMax(Integer.valueOf(jobArr[9].toString()));
 				
 				final EmploymentType type = new EmploymentType();
-				type.setEmploymentTypeName(jobArr[8].toString());
+				type.setEmploymentTypeName(jobArr[10].toString());
 				job.setEmploymentType(type);
 				
 				final File file = new File();
-				file.setId(jobArr[9].toString());
+				file.setId(jobArr[11].toString());
 				job.setJobPicture(file);
+				
+				jobs.add(job);
 			}
 		}
 		

@@ -35,7 +35,6 @@ public class AssesmentDao extends AbstractJpaDao {
 				review.setScore(Float.valueOf(assArr[1].toString()));
 				
 				
-				
 				assesment = new Assesment();
 //				assesment;
 //

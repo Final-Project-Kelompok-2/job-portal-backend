@@ -15,14 +15,16 @@ import com.lawencon.jobportaladmin.model.OwnedBenefit;
 @Repository
 public class OwnedBenefitDao extends AbstractJpaDao {
 
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<OwnedBenefit> getByJob(String id) {
 		final String sql = "SELECT tb.benefit_name from t_owned_benefit tob " 
 				+ " INNER JOIN t_benefit tb ON tob.benefit_id = tb.id "
 				+ " WHERE tob.job_id = :id";
 
-		final List<?> ownedBenefitObjs = em.createNativeQuery(sql)
+		final List<?> ownedBenefitObjs = em().createNativeQuery(sql)
 				.setParameter("id", id)
 				.getResultList();
 

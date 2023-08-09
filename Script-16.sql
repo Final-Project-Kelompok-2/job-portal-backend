@@ -990,3 +990,12 @@ ON
 	tcp.id = tcu.profile_id 
 WHERE 	;
 --job, company, employment type, applicant
+
+
+select tj.hr_id  from t_job tj ;
+
+SELECT 	tj.id AS job_id,	job_name,	company_name,	address,	start_date,	end_date,
+	hr_id,
+	pic_id,	expected_salary_min,	expected_salary_max,	employment_type_name,	job_picture_id FROM 	t_job tj INNER JOIN 	t_company tc ON tc.id = tj.company_id INNER JOIN	t_employment_type tet ON tet.id = tj.employment_type_id INNER JOIN t_user tu ON tu.id = :hrId
+INNER JOIN
+ t_user tu2 ON tu2.id = :picIdWHERE 	company_code = :companycode;

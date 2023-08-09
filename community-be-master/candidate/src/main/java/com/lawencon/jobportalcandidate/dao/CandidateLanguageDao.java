@@ -14,7 +14,10 @@ import com.lawencon.jobportalcandidate.model.CandidateUser;
 
 @Repository
 public class CandidateLanguageDao extends AbstractJpaDao{
-	private EntityManager em = ConnHandler.getManager();
+	
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<CandidateLanguage>getLanguageByCandidate(String id){
 		final String sql = "SELECT  "
@@ -28,7 +31,7 @@ public class CandidateLanguageDao extends AbstractJpaDao{
 				+ "	t_candidate_language tcl "
 				+ " WHERE"
 				+ " user_id = :candidate ";
-		final List<?> languageObjs = this.em.createNativeQuery(sql)
+		final List<?> languageObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateLanguage> candidateLanguageList = new ArrayList<>();
