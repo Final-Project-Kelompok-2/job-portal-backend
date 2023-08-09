@@ -6,9 +6,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.lawencon.base.BaseEntity;
+
 @Entity
 @Table(name = "t_candidate_address")
-public class CandidateAddress {
+public class CandidateAddress extends BaseEntity{
 
 	@Column(name = "address", nullable= false)
 	private String address;
@@ -31,4 +33,5 @@ public class CandidateAddress {
 	@OneToOne
 	@JoinColumn(name= "user_id")
 	private CandidateUser candidateUser;
+
 }
