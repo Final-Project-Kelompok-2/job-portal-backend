@@ -41,7 +41,9 @@ public class CandidateAddressDao extends AbstractJpaDao{
 				+ "WHERE  "
 				+ "	tca.user_id  = :candidate";
 		
-		final Object candidateAddressObjs = this.em().createNativeQuery(sql)
+
+		final Object candidateAddressObjs = em().createNativeQuery(sql)
+
 				.setParameter("candidate", id)
 				.getSingleResult();
 		

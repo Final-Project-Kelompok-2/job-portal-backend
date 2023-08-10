@@ -41,7 +41,8 @@ public class CandidateEducationDao extends AbstractJpaDao{
 				+ "	tcu.id = tce.user_id "
 				+ "WHERE  "
 				+ "	tce.user_id  = :candidate" ;
-		final List<?>educationObjs = this.em().createNativeQuery(sql)
+
+		final List<?>educationObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateEducation> educationList = new ArrayList<>();

@@ -14,13 +14,15 @@ import com.lawencon.jobportaladmin.model.QuestionOption;
 @Repository
 public class QuestionOptionDao extends AbstractJpaDao{
 
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<QuestionOption> getByQuestion(String id){
 	final String sql = "SELECT tqo.id, tqo.option_label FROM t_question_option tqo "
 				+ " WHERE tqo.question_id = :id ";
 
-		final List<?> questionOptionObjs = em.createNativeQuery(sql)
+		final List<?> questionOptionObjs = em().createNativeQuery(sql)
 				.setParameter("id", id)
 				.getResultList();
 		

@@ -36,7 +36,8 @@ public class CandidateProjectExpDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
-		final List<?> projectObjs = this.em().createNativeQuery(sql)
+
+		final List<?> projectObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		

@@ -11,17 +11,18 @@ import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.model.Role;
 
 @Repository
-public class RoleDao extends AbstractJpaDao{
+public class RoleDao extends AbstractJpaDao {
 
-	private EntityManager em = ConnHandler.getManager();
-	
-	public List<Role> getByCode() {
-		final String sql= "SELECT tr.id, tr.role_name FROM t_role tr "
-				+ " WHERE tr.role_code != 'ADM' ";
-				
-		final List<Role> roles = em.createNativeQuery(sql,Role.class).getResultList();
-		return roles;
-		
+	private EntityManager em() {
+		return ConnHandler.getManager();
 	}
-	
+
+	public List<Role> getByCode() {
+		final String sql = "SELECT tr.id, tr.role_name FROM t_role tr WHERE tr.role_code != 'ADM' ";
+
+		final List<Role> roles = em().createNativeQuery(sql, Role.class).getResultList();
+		return roles;
+
+	}
+
 }

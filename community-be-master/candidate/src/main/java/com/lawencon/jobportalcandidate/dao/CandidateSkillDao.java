@@ -28,7 +28,8 @@ public class CandidateSkillDao extends AbstractJpaDao{
 				+ "	t_candidate_skill tcs "
 				+ "WHERE "
 				+ "	user_id = :candidate";
-		final List<?> skillObjs = this.em().createNativeQuery(sql)
+
+		final List<?> skillObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		

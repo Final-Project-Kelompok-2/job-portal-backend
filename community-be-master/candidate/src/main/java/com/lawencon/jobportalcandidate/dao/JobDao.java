@@ -19,7 +19,9 @@ import com.lawencon.jobportalcandidate.model.Job;
 @Repository
 public class JobDao extends AbstractJpaDao  {
 
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<Job> getByCompany(String code) {
 		final List<Job> jobs = new ArrayList<>();
@@ -45,7 +47,7 @@ public class JobDao extends AbstractJpaDao  {
 				+ "WHERE "
 				+ "	company_code = :companycode";
 		
-		final List<?> jobObjs = this.em.createNativeQuery(sql)
+		final List<?> jobObjs = em().createNativeQuery(sql)
 				.setParameter("companycode", code)
 				.getResultList();
 		
@@ -72,6 +74,7 @@ public class JobDao extends AbstractJpaDao  {
 				final File file = new File();
 				file.setId(jobArr[9].toString());
 				job.setJobPicture(file);
+				jobs.add(job);
 			}
 		}
 		

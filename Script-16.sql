@@ -989,3 +989,4 @@ insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_
 --	tcp.id = tcu.profile_id 
 --WHERE 	;
 --job, company, employment type, applicant
+

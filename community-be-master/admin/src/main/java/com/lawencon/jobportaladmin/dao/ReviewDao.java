@@ -11,12 +11,15 @@ import com.lawencon.jobportaladmin.model.Review;
 @Repository
 public class ReviewDao extends AbstractJpaDao{
 
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
+	
 	
 	public Review getByApplicant(String id) {
 		final String sql ="SELECT tr.notes,tr.score FROM t_review tr WHERE tr.applicant_id = :id";
 		
-		final Object reviewObj = em.createNativeQuery(sql)
+		final Object reviewObj = em().createNativeQuery(sql)
 				.setParameter("id", id)
 				.getSingleResult();
 		

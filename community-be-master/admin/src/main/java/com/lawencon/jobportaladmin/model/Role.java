@@ -7,29 +7,29 @@ import javax.persistence.Table;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name ="t_role")
-public class Role extends BaseEntity{
+@Table(name = "t_role")
+public class Role extends BaseEntity {
 
-	@Column(name ="role_code", length = 5, nullable = false)
-	private String role_code;
-	
-	@Column(name ="role_name",  length = 10,nullable = false)
-	private String role_name;
+	@Column(name = "role_code", length = 5, nullable = false)
+	private String roleCode;
 
-	public String getRole_code() {
-		return role_code;
+	@Column(name = "role_name", length = 10, nullable = false)
+	private String roleName;
+
+	public String getRoleCode() {
+		return roleCode;
 	}
 
-	public void setRole_code(String role_code) {
-		this.role_code = role_code;
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
 	}
 
-	public String getRole_name() {
-		return role_name;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole_name(String role_name) {
-		this.role_name = role_name;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
-	
+
 }

@@ -15,6 +15,7 @@ import com.lawencon.jobportalcandidate.model.CandidateTrainingExp;
 
 @Repository
 public class CandidateTrainingExpDao extends AbstractJpaDao{
+
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
@@ -35,7 +36,8 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
-		final List<?> trainingObjs = this.em().createNativeQuery(sql)
+
+		final List<?> trainingObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		

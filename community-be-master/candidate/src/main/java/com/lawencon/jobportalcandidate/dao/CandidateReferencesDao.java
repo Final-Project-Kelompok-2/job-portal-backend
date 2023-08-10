@@ -37,7 +37,8 @@ public class CandidateReferencesDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
-		final List<?> refObjs = this.em().createNativeQuery(sql)
+
+		final List<?> refObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		
