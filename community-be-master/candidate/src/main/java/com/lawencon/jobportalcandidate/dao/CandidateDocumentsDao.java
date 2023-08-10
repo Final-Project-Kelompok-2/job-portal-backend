@@ -18,7 +18,9 @@ import com.lawencon.jobportalcandidate.model.FileType;
 @Repository
 public class CandidateDocumentsDao extends AbstractJpaDao{
 
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	
 	public List<CandidateDocuments> getCandidateDocumentsByCandidate (String id){
@@ -54,7 +56,7 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 				+ "	tcd.file_type_id = tft.id  "
 				+ "WHERE  "
 				+ "	tcd.user_id  = :candidate";
-		final List<?>documentObjs = this.em.createNativeQuery(sql)
+		final List<?>documentObjs = this.em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateDocuments> candidateDocumentsList = new ArrayList<>();

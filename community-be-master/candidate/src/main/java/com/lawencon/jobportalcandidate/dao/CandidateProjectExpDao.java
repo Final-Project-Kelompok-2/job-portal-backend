@@ -16,7 +16,9 @@ import com.lawencon.jobportalcandidate.model.CandidateProjectExp;
 @Repository
 public class CandidateProjectExpDao extends AbstractJpaDao{
 	
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<CandidateProjectExp> getByCandidate(String id) {
 		final List<CandidateProjectExp> projects = new ArrayList<>();
@@ -34,7 +36,7 @@ public class CandidateProjectExpDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
-		final List<?> projectObjs = this.em.createNativeQuery(sql)
+		final List<?> projectObjs = this.em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		

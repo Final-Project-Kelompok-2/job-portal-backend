@@ -16,7 +16,9 @@ import com.lawencon.jobportalcandidate.model.CandidateReferences;
 @Repository
 public class CandidateReferencesDao extends AbstractJpaDao {
 	
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<CandidateReferences> getByCandidate(String id) {
 		final List<CandidateReferences> references = new ArrayList<>();
@@ -35,7 +37,7 @@ public class CandidateReferencesDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
-		final List<?> refObjs = this.em.createNativeQuery(sql)
+		final List<?> refObjs = this.em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		

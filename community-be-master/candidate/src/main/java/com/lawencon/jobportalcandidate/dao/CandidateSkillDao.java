@@ -14,7 +14,9 @@ import com.lawencon.jobportalcandidate.model.CandidateSkill;
 @Repository
 public class CandidateSkillDao extends AbstractJpaDao{
 	
-	private EntityManager em = ConnHandler.getManager();
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
 	
 	public List<CandidateSkill> getByCandidate(String id) {
 		final List<CandidateSkill> skills = new ArrayList<>();
@@ -26,7 +28,7 @@ public class CandidateSkillDao extends AbstractJpaDao{
 				+ "	t_candidate_skill tcs "
 				+ "WHERE "
 				+ "	user_id = :candidate";
-		final List<?> skillObjs = this.em.createNativeQuery(sql)
+		final List<?> skillObjs = this.em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
 		
