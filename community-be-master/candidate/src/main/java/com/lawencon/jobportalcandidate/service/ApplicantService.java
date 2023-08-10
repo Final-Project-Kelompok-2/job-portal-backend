@@ -32,7 +32,7 @@ public class ApplicantService {
 	@Autowired
 	private HiringStatusDao hiringStatusDao;
 
-	public List<ApplicantResDto> getAllApplicant(String id) {
+	public List<ApplicantResDto> getApplicantByCandidate(String id) {
 		final List<Applicant> applicantList = applicantDao.getApplicantByCandidate(id);
 		final List<ApplicantResDto> applicantListRes = new ArrayList<>();
 		for (int i = 0; i < applicantList.size(); i++) {
@@ -61,7 +61,7 @@ public class ApplicantService {
 
 			final Job job = jobDao.getById(Job.class, data.getJobId());
 			applicant.setJob(job);
-			
+
 			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, data.getStatusId());
 			applicant.setStatus(hiringStatus);
 			applicant.setCreatedBy("Id principal");
@@ -72,8 +72,7 @@ public class ApplicantService {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 		}
-		
-		
+
 		return insertRes;
 	}
 
