@@ -1,6 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +55,8 @@ public class CandidateEducationDao extends AbstractJpaDao{
 				candidateEducation.setInstitutionName(educationArr[2].toString());
 				candidateEducation.setMajors(educationArr[3].toString());
 				candidateEducation.setCgpa(Float.valueOf(educationArr[4].toString()));
-				candidateEducation.setStartYear(LocalDateTime.parse(educationArr[5].toString(),formatter));
-				candidateEducation.setEndYear(LocalDateTime.parse(educationArr[6].toString(),formatter));
+				candidateEducation.setStartYear(LocalDate.parse(educationArr[5].toString(),formatter));
+				candidateEducation.setEndYear(LocalDate.parse(educationArr[6].toString(),formatter));
 				
 				final CandidateUser candidateUser = new CandidateUser();
 				candidateUser.setId(educationArr[7].toString());

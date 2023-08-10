@@ -1,5 +1,6 @@
 package com.lawencon.jobportalcandidate.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -27,10 +28,10 @@ public class CandidateEducation extends BaseEntity {
 	private Float cgpa;
 	
 	@Column(name = "start_year", nullable = false)
-	private LocalDateTime startYear;
+	private LocalDate startYear;
 	
 	@Column(name = "end_year", nullable = false)
-	private LocalDateTime endYear;
+	private LocalDate endYear;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -68,19 +69,19 @@ public class CandidateEducation extends BaseEntity {
 		this.cgpa = cgpa;
 	}
 
-	public LocalDateTime getStartYear() {
+	public LocalDate getStartYear() {
 		return startYear;
 	}
 
-	public void setStartYear(LocalDateTime startYear) {
+	public void setStartYear(LocalDate startYear) {
 		this.startYear = startYear;
 	}
 
-	public LocalDateTime getEndYear() {
+	public LocalDate getEndYear() {
 		return endYear;
 	}
 
-	public void setEndYear(LocalDateTime endYear) {
+	public void setEndYear(LocalDate endYear) {
 		this.endYear = endYear;
 	}
 
