@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.jobportalcandidate.dao.AssignedJobQuestionDao;
 import com.lawencon.jobportalcandidate.dto.assignedjobquestion.AssignedJobQuestionResDto;
 import com.lawencon.jobportalcandidate.model.AssignedJobQuestion;
 
+@Service
 public class AssignedJobQuestionService {
 	@Autowired
 	private AssignedJobQuestionDao assignedJobQuestionDao;
@@ -27,5 +29,7 @@ public class AssignedJobQuestionService {
 		
 		return jobQuestionRes;
 	}
+	
+	
 	
 }

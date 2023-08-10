@@ -6,12 +6,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CompanyDao;
 import com.lawencon.jobportalcandidate.dto.company.CompanyResDto;
 import com.lawencon.jobportalcandidate.model.Company;
 
+@Service
 public class CompanyService {
 	
 	private EntityManager em() {

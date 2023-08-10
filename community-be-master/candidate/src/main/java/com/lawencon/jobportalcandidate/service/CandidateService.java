@@ -3,12 +3,14 @@ package com.lawencon.jobportalcandidate.service;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CandidateAddressDao;
 import com.lawencon.jobportalcandidate.dao.CandidateDocumentsDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 
+@Service
 public class CandidateService {
 
 	private EntityManager em() {
