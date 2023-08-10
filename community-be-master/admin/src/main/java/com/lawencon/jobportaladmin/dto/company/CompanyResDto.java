@@ -7,7 +7,7 @@ public class CompanyResDto {
 	private String address;
 	private String companyUrl;
 	private String companyPhone;
-	private Long photoId;
+	private String photoId;
 
 	public String getId() {
 		return id;
@@ -57,12 +57,13 @@ public class CompanyResDto {
 		this.companyPhone = companyPhone;
 	}
 
-	public Long getPhotoId() {
+	public String getPhotoId() {
 		return photoId;
 	}
 
-	public void setPhotoId(Long photoId) {
+	public void setPhotoId(String photoId) {
 		this.photoId = photoId;
 	}
 
+	
 }

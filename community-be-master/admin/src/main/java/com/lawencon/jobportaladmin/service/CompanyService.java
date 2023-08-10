@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.dao.CompanyDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.company.CompanyInsertReqDto;
+import com.lawencon.jobportaladmin.dto.company.CompanyResDto;
 import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.File;
 
@@ -17,7 +19,7 @@ import com.lawencon.jobportaladmin.model.File;
 public class CompanyService {
 
 	
-	public InsertResDto insertCompany(CompanyInsertReqDto data) {
+	
 		private EntityManager em() {
 			return ConnHandler.getManager();
 		}
@@ -70,8 +72,7 @@ public class CompanyService {
 			}
 			
 			
-			
-			
+		
 			return insertRes;
 		}
 }
