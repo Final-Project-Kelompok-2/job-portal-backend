@@ -1,19 +1,18 @@
-package com.lawencon.jobportalcandidate.dto.job;
+package com.lawencon.jobportaladmin.dto.job;
 
-public class JobUpdateReqDto {
+public class JobResDto {
 
 	private String id;
 	private String jobName;
-	private String companyId;
+	private String companyName;
+	private String address;
 	private String startDate;
 	private String endDate;
 	private String description;
 	private String expectedSalaryMin;
 	private String expectedSalaryMax;
-	private String employmentTypeId;
+	private String employementTypeName;
 	private String fileId;
-	private String file;
-	private String fileExtension;
 
 	public String getId() {
 		return id;
@@ -31,12 +30,20 @@ public class JobUpdateReqDto {
 		this.jobName = jobName;
 	}
 
-	public String getCompanyId() {
-		return companyId;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getStartDate() {
@@ -79,12 +86,12 @@ public class JobUpdateReqDto {
 		this.expectedSalaryMax = expectedSalaryMax;
 	}
 
-	public String getEmploymentTypeId() {
-		return employmentTypeId;
+	public String getEmployementTypeName() {
+		return employementTypeName;
 	}
 
-	public void setEmploymentTypeId(String employmentTypeId) {
-		this.employmentTypeId = employmentTypeId;
+	public void setEmployementTypeName(String employementTypeName) {
+		this.employementTypeName = employementTypeName;
 	}
 
 	public String getFileId() {
@@ -93,22 +100,6 @@ public class JobUpdateReqDto {
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
-	}
-
-	public String getFile() {
-		return file;
-	}
-
-	public void setFile(String file) {
-		this.file = file;
-	}
-
-	public String getFileExtension() {
-		return fileExtension;
-	}
-
-	public void setFileExtension(String fileExtension) {
-		this.fileExtension = fileExtension;
 	}
 
 }
