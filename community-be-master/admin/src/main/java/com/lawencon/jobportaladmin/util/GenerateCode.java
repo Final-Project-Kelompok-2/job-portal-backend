@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.util;
+package com.lawencon.jobportaladmin.util;
 
 public class GenerateCode {
 	public static String generateTicket(int limit) {
