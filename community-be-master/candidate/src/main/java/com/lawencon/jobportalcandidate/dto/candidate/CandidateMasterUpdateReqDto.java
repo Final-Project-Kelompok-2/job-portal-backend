@@ -12,9 +12,11 @@ import com.lawencon.jobportalcandidate.dto.candidateprojectexp.CandidateProjectE
 import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesUpdateReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillUpdateReqDto;
 import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpUpdateReqDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserUpdateReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
 
 public class CandidateMasterUpdateReqDto {
+	private CandidateUserUpdateReqDto candidateUser;
 	private CandidateProfileUpdateReqDto candidateProfile;
 	private CandidateAddressUpdateReqDto candidateAddress;
 	private List<CandidateDocumentUpdateReqDto> candidateDocuments;
@@ -70,5 +72,4 @@ public class CandidateMasterUpdateReqDto {
 	public List<CandidateWorkExpUpdateReqDto> getCandidateWorkExp() {
 		return candidateWorkExp;
 	}
-
 }

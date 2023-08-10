@@ -44,14 +44,6 @@ public class CandidateEducationResDto {
 		this.majors = majors;
 	}
 
-	public Float getCgpa() {
-		return cgpa;
-	}
-
-	public void setCgpa(Float cgpa) {
-		this.cgpa = cgpa;
-	}
-
 	public String getStartYear() {
 		return startYear;
 	}
@@ -74,5 +66,13 @@ public class CandidateEducationResDto {
 
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
+	}
+
+	public Float getCgpa() {
+		return cgpa;
+	}
+
+	public void setCgpa(Float cgpa) {
+		this.cgpa = cgpa;
 	}
 }

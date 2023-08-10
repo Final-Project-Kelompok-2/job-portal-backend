@@ -77,7 +77,7 @@ public class SavedJobService {
 			savedJobDao.save(savedjob);
 
 			result = new InsertResDto();
-			result.setId(null);
+			result.setId(savedjob.getId());
 			result.setMessage("Job has been added to your Saved Jobs");
 			
 			em().getTransaction().commit();
