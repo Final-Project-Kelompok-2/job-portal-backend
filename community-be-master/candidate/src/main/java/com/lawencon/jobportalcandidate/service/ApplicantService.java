@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.ApplicantDao;
@@ -20,6 +21,7 @@ import com.lawencon.jobportalcandidate.model.HiringStatus;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
 
+@Service
 public class ApplicantService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -65,7 +67,8 @@ public class ApplicantService {
 			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, data.getStatusId());
 			applicant.setStatus(hiringStatus);
 			applicant.setCreatedBy("Id principal");
-			insertRes.setId(applicant.getId());
+			final Applicant applicantId = applicantDao.save(applicant);
+			insertRes.setId(applicantId.getId());
 			insertRes.setMessage("Applicant Insert Success");
 			em().getTransaction().commit();
 		} catch (Exception e) {
