@@ -725,14 +725,6 @@ INSERT INTO t_candidate_language (id, language_name, writing_rate, speaking_rate
 	(uuid_generate_v4(), 'Mandarin', '5', '6', '5', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com'), now(), true, 0);
 
 SELECT * FROM t_file_type tft;
-INSERT INTO t_file_type (id, type_code, type_name, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'FCV', 'Curicullum Vitae', 1, now(), true, 0),
-	(uuid_generate_v4(), 'FCC', 'Citizen Card', 1, now(), true, 0),
-	(uuid_generate_v4(), 'FFC', 'Family Card', 1, now(), true, 0),
-	(uuid_generate_v4(), 'FBC', 'Birth Card', 1, now(), true, 0),
-	(uuid_generate_v4(), 'FTR', 'Transcript', 1, now(), true, 0);
-
-SELECT * FROM t_file_type tft;
 INSERT INTO t_file_type (id,type_code,type_name,created_by,created_at,updated_by,updated_at,is_active,ver) VALUES
 	( uuid_generate_v4(),'FE-01','CURICULUM VITAE',1,NOW(),1,NOW(),TRUE,1),
 	( uuid_generate_v4(),'FE-02','FAMILY CARD',1,NOW(),1,NOW(),TRUE,1),

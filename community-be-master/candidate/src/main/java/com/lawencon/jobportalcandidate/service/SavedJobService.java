@@ -11,6 +11,7 @@ import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
 import com.lawencon.jobportalcandidate.dao.SavedJobDao;
+import com.lawencon.jobportalcandidate.dto.DeleteResDto;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobResDto;
@@ -83,5 +84,14 @@ public class SavedJobService {
 		}
 		
 		return result;
+	}
+	
+	public DeleteResDto removeSavedJob(String id) {
+		savedJobDao.deleteById(SavedJob.class, id);
+		
+		final DeleteResDto response = new DeleteResDto();
+		response.setMessage("Job removed from your SavedList");
+		
+		return response;
 	}
 }
