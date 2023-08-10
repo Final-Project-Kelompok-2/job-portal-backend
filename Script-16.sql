@@ -28,7 +28,6 @@
 --DROP TABLE IF EXISTS t_job;
 --DROP TABLE IF EXISTS t_company;
 --DROP TABLE IF EXISTS t_employment_type;
---DROP TABLE IF EXISTS t_file_type;
 --DROP TABLE IF EXISTS t_user;
 --DROP TABLE IF EXISTS t_profile;
 --DROP TABLE IF EXISTS t_role;
@@ -884,44 +883,27 @@ CREATE TABLE t_blacklist(
 );
 ALTER TABLE t_blacklist  ADD CONSTRAINT t_blacklist_pk PRIMARY KEY(id);
 
-INSERT INTO t_role (id,role_code,role_name,created_by,created_at,updated_by,updated_at,is_active,ver)
+INSERT INTO t_role (id,role_code,role_name,created_by,created_at,is_active,ver)
 VALUES
-( uuid_generate_v4(),'R-001','ADMIN',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'R-002','HR',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'R-003','CANDIDATE',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'R-004','PIC',1,NOW(),1,NOW(),TRUE,1);
+( uuid_generate_v4(),'R-001','ADMIN','0',NOW(),TRUE,1),
+( uuid_generate_v4(),'R-002','HR','0',NOW(),TRUE,1),
+( uuid_generate_v4(),'R-003','CANDIDATE','0',NOW(),TRUE,1),
+( uuid_generate_v4(),'R-004','PIC','0',NOW(),TRUE,1);
 
 
-INSERT INTO t_employment_type (id,employment_type_code,employment_type_name,created_by,created_at,updated_by,updated_at,is_active,ver)
-VALUES
-( uuid_generate_v4(),'ET-01','INTERN',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'ET-02','PART TIME',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'ET-03','CONTRACT',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'ET-04','FULL TIME',1,NOW(),1,NOW(),TRUE,1);
 
-INSERT INTO t_file_type (id,type_code,type_name,created_by,created_at,updated_by,updated_at,is_active,ver)
-VALUES
-( uuid_generate_v4(),'FE-01','CURICULUM VITAE',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'FE-02','FAMILY CARD',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'FE-03','RESUME',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'FE-04','TRANSCRIPT',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'FE-05','CERTIFICATE',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'FE-06','CITIZEN CARD',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'FE-07','OTHERS',1,NOW(),1,NOW(),TRUE,1);
-
-INSERT INTO t_person_type (id,type_code,type_name,created_by,created_at,updated_by,updated_at,is_active,ver)
-VALUES
-( uuid_generate_v4(),'PT-01','CANDIDATE',1,NOW(),1,NOW(),TRUE,1),
-( uuid_generate_v4(),'PT-02','EMPLOYEE',1,NOW(),1,NOW(),TRUE,1);
-SELECT * FROM t_person_type tpt ;
-
-insert into t_file(id,filename,file_extension,created_by,created_at,updated_by,updated_at,is_active,ver)
+insert into t_file(id,filename,file_extension,created_by,created_at,is_active,ver)
 values 
-(uuid_generate_v4(),'asdasdasdd','jpg',1,NOW(),1,NOW(),TRUE,1);
+(uuid_generate_v4(),'asdasdasdd','jpg','0',NOW(),TRUE,1);
 
 select * from t_file tf ;
+INSERT INTO t_person_type (id,type_code,type_name,created_by,created_at,is_active,ver)
+VALUES
+( uuid_generate_v4(),'PT-01','CANDIDATE','0',NOW(),TRUE,1),
+( uuid_generate_v4(),'PT-02','EMPLOYEE','0',NOW(),TRUE,1);
+SELECT * FROM t_person_type tpt ;
 
-insert into t_profile (id,full_name,photo_id,phone_number,address,person_type_id,created_by,created_at,updated_by,updated_at,is_active,ver)
+insert into t_profile (id,full_name,photo_id,phone_number,address,person_type_id,created_by,created_at,is_active,ver)
 values 
 (uuid_generate_v4(),
 'ADMIN',
@@ -929,62 +911,81 @@ values
 '10298301',
 'BEKASI',
 (SELECT id FROM t_person_type tpt WHERE tpt.type_code='PT-02')
-,1,NOW(),1,NOW(),TRUE,1);
+,'0',NOW(),TRUE,1);
 
 select * from t_profile tp ;
 
-insert into t_user (id,user_email,user_password,profile_id,role_id,created_by,created_at,updated_by,updated_at,is_active,ver)
+insert into t_user (id,user_email,user_password,profile_id,role_id,created_by,created_at,is_active,ver)
 VALUES
 ( uuid_generate_v4(),
 'ADMIN@GMAIL.COM',
 '123',
 (SELECT id FROM t_profile tp WHERE tp.full_name  = 'ADMIN'),
 (SELECT id FROM t_role tr WHERE tr.role_code = 'R-001'),
-1,NOW(),1,NOW(),TRUE,1);
+'0',NOW(),TRUE,1);
 
 SELECT * FROM t_file tf;
 select * from t_user tu;
 SELECT * FROM t_role;
 
-insert into t_company (id,company_code,company_name,address,company_url,company_phone,photo_id,created_by,created_at,updated_by,updated_at,is_active,ver)
+INSERT INTO t_employment_type (id,employment_type_code,employment_type_name,created_by,created_at,is_active,ver)
+VALUES
+( uuid_generate_v4(),'ET-01','INTERN',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'ET-02','PART TIME',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'ET-03','CONTRACT',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'ET-04','FULL TIME',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
+
+INSERT INTO t_file_type (id,type_code,type_name,created_by,created_at,is_active,ver)
+VALUES
+( uuid_generate_v4(),'FE-01','CURICULUM VITAE',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'FE-02','FAMILY CARD',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'FE-03','RESUME',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'FE-04','TRANSCRIPT',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'FE-05','CERTIFICATE',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'FE-06','CITIZEN CARD',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+( uuid_generate_v4(),'FE-07','OTHERS',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
+
+
+
+insert into t_company (id,company_code,company_name,address,company_url,company_phone,photo_id,created_by,created_at,is_active,ver)
 VALUES
 (uuid_generate_v4(),'C-001','SHOPEE','JAKARTA',
 'WWW.GOOGLE.COM','01293917',
 (SELECT id FROM t_file WHERE filename = 'asdasdasdd'),
-1,NOW(),1,NOW(),TRUE,1);
+(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
 
-insert into t_hiring_status values
-(uuid_generate_v4(),'S-001','APPLIED',1,NOW(),1,NOW(),TRUE,1),
-(uuid_generate_v4(),'S-002','ASSESMENT',1,NOW(),1,NOW(),TRUE,1),
-(uuid_generate_v4(),'S-003','INTERVIEW',1,NOW(),1,NOW(),TRUE,1),
-(uuid_generate_v4(),'S-004','MCU',1,NOW(),1,NOW(),TRUE,1),
-(uuid_generate_v4(),'S-005','OFFERING',1,NOW(),1,NOW(),TRUE,1),
-(uuid_generate_v4(),'S-006','HIRED',1,NOW(),1,NOW(),TRUE,1);
+insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_active,ver) values
+(uuid_generate_v4(),'S-001','APPLIED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+(uuid_generate_v4(),'S-002','ASSESMENT',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+(uuid_generate_v4(),'S-003','INTERVIEW',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+(uuid_generate_v4(),'S-004','MCU',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+(uuid_generate_v4(),'S-005','OFFERING',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+(uuid_generate_v4(),'S-006','HIRED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
 
- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-
-SELECT * FROM t_candidate_address tca ;
-
-SELECT 
-	tca.id,
-	address,
-	residence_type,
-	country,
-	province,
-	city,
-	postal_code,
-	tcu.id,
-	tcp.fullname 
-FROM 
-	t_candidate_address tca 
-INNER JOIN 
-	t_candidate_user tcu 
-ON 
-	tcu.id = tca.user_id 
-INNER JOIN
-	t_candidate_profile tcp 
-ON
-	tcp.id = tcu.profile_id 
-WHERE 	;
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+--
+--
+--SELECT * FROM t_candidate_address tca ;
+--
+--SELECT 
+--	tca.id,
+--	address,
+--	residence_type,
+--	country,
+--	province,
+--	city,
+--	postal_code,
+--	tcu.id,
+--	tcp.fullname 
+--FROM 
+--	t_candidate_address tca 
+--INNER JOIN 
+--	t_candidate_user tcu 
+--ON 
+--	tcu.id = tca.user_id 
+--INNER JOIN
+--	t_candidate_profile tcp 
+--ON
+--	tcp.id = tcu.profile_id 
+--WHERE 	;
 --job, company, employment type, applicant
