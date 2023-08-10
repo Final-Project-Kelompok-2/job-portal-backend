@@ -1,7 +1,8 @@
-package com.lawencon.jobportalcandidate.dto.job;
+package com.lawencon.jobportaladmin.dto.job;
 
-public class JobInsertReqDto {
+public class JobUpdateReqDto {
 
+	private String id;
 	private String jobName;
 	private String companyId;
 	private String startDate;
@@ -10,8 +11,17 @@ public class JobInsertReqDto {
 	private String expectedSalaryMin;
 	private String expectedSalaryMax;
 	private String employmentTypeId;
+	private String fileId;
 	private String file;
 	private String fileExtension;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getJobName() {
 		return jobName;
@@ -75,6 +85,14 @@ public class JobInsertReqDto {
 
 	public void setEmploymentTypeId(String employmentTypeId) {
 		this.employmentTypeId = employmentTypeId;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public String getFile() {

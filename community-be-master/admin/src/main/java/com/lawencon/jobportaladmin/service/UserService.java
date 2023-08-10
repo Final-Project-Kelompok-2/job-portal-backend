@@ -1,11 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.jobportaladmin.dao.ProfileDao;
@@ -15,7 +10,7 @@ import com.lawencon.jobportaladmin.dto.login.LoginResDto;
 import com.lawencon.jobportaladmin.model.User;
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserService {
 
 	@Autowired
 	private ProfileDao profileDao;
@@ -43,18 +38,17 @@ public class UserService implements UserDetailsService{
 		return loginRes;
 	}
 
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		final User user = userDao.getByUsername(username);
-
-		if (user != null) {
-			return new org.springframework.security.core.userdetails.User(username, user.getUserPassword(),
-					new ArrayList<>());
-		}
-
-		throw new UsernameNotFoundException("Email / Password salah");
-	}
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		final User user = userDao.getByUsername(username);
+//
+//		if (user != null) {
+//			return new org.springframework.security.core.userdetails.User(username, user.getUserPassword(),
+//					new ArrayList<>());
+//		}
+//
+//		throw new UsernameNotFoundException("Email / Password salah");
+//	}
 
 
 	

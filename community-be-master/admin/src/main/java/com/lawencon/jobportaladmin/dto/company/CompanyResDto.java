@@ -1,13 +1,21 @@
-package com.lawencon.jobportalcandidate.dto.company;
+package com.lawencon.jobportaladmin.dto.company;
 
-public class CompanyInsertReqDto {
+public class CompanyResDto {
+	private String id;
 	private String companyCode;
 	private String companyName;
 	private String address;
 	private String companyUrl;
 	private String companyPhone;
-	private String fileName;
-	private String fileExtension;
+	private Long photoId;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getCompanyCode() {
 		return companyCode;
@@ -49,20 +57,12 @@ public class CompanyInsertReqDto {
 		this.companyPhone = companyPhone;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public Long getPhotoId() {
+		return photoId;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public String getFileExtension() {
-		return fileExtension;
-	}
-
-	public void setFileExtension(String fileExtension) {
-		this.fileExtension = fileExtension;
+	public void setPhotoId(Long photoId) {
+		this.photoId = photoId;
 	}
 
 }

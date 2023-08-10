@@ -19,7 +19,6 @@ public class ReligionController {
 	@Autowired
 	private ReligionService religionService;
 	
-	
 	@GetMapping
 	public ResponseEntity<List<ReligionsResDto>>getReligions(){
 		final List<ReligionsResDto> response = religionService.getReligions();
