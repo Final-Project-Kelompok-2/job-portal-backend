@@ -41,8 +41,6 @@ public class TokenController {
 	
 	@PostMapping("/validate")
 	public ResponseEntity<Boolean> validateToken(){
-	
-		
 		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 	

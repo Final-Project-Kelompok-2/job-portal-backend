@@ -20,7 +20,7 @@ import com.lawencon.jobportaladmin.model.User;
 @Repository
 public class JobDao extends AbstractJpaDao{
 
-	private EntityManager em() {
+	private EntityManager em() {	
 		return ConnHandler.getManager();
 	}
 	
