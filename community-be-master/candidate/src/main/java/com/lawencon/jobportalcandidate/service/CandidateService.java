@@ -15,5 +15,4 @@ public class CandidateService {
 	@Autowired
 	private CandidateDocumentsDao candidateDocumentDao;
 	
-
 }
