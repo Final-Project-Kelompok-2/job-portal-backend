@@ -990,3 +990,4 @@ insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_
 --WHERE 	;
 --job, company, employment type, applicant
 
+
