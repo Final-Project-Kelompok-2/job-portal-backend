@@ -2,17 +2,17 @@ package com.lawencon.jobportaladmin.dto.candidate;
 
 import java.util.List;
 
-import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatedocument.CandidateDocumentInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducationInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatelanguage.CandidateLanguageInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateprojectexp.CandidateProjectExpInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateaddress.CandidateAddressInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatedocument.CandidateDocumentInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateeducation.CandidateEducationInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatefamily.CandidateFamilyInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatelanguage.CandidateLanguageInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateprofile.CandidateProfileInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateprojectexp.CandidateProjectExpInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatereferences.CandidateReferencesInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateskill.CandidateSkillInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatetrainingexp.CandidateTrainingExpInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
 
 public class CandidateMasterInsertReqDto {
 	private CandidateProfileInsertReqDto candidateProfile;

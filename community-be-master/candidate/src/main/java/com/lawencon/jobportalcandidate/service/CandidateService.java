@@ -10,15 +10,15 @@ import com.lawencon.jobportalcandidate.dao.CandidateDocumentsDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 
 public class CandidateService {
+
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	
 	@Autowired
 	private CandidateUserDao candidateUserDao;
 	@Autowired
 	private CandidateAddressDao candidateAddressDao;
 	@Autowired
 	private CandidateDocumentsDao candidateDocumentDao;
-	
+
 }
