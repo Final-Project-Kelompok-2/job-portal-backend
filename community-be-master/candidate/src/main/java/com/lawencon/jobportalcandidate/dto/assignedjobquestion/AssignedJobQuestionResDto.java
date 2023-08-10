@@ -2,8 +2,8 @@ package com.lawencon.jobportalcandidate.dto.assignedjobquestion;
 
 public class AssignedJobQuestionResDto {
 	private String id;
-	private String jobId;
 	private String questionId;
+	private String questionDetail;
 
 	public String getId() {
 		return id;
@@ -13,12 +13,12 @@ public class AssignedJobQuestionResDto {
 		this.id = id;
 	}
 
-	public String getJobId() {
-		return jobId;
+	public String getQuestionDetail() {
+		return questionDetail;
 	}
 
-	public void setJobId(String jobId) {
-		this.jobId = jobId;
+	public void setQuestionDetail(String questionDetail) {
+		this.questionDetail = questionDetail;
 	}
 
 	public String getQuestionId() {
