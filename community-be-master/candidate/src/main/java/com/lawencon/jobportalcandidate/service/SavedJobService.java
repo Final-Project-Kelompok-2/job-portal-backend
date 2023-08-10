@@ -6,11 +6,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
 import com.lawencon.jobportalcandidate.dao.SavedJobDao;
+import com.lawencon.jobportalcandidate.dto.DeleteResDto;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobResDto;
@@ -18,6 +20,7 @@ import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.SavedJob;
 
+@Service
 public class SavedJobService {
 
 	private EntityManager em() {
@@ -83,5 +86,14 @@ public class SavedJobService {
 		}
 		
 		return result;
+	}
+	
+	public DeleteResDto removeSavedJob(String id) {
+		savedJobDao.deleteById(SavedJob.class, id);
+		
+		final DeleteResDto response = new DeleteResDto();
+		response.setMessage("Job removed from your SavedList");
+		
+		return response;
 	}
 }

@@ -112,24 +112,24 @@ ALTER TABLE t_person_type ADD CONSTRAINT type_code_bk
 
 CREATE TABLE t_candidate_profile (
 	id VARCHAR(36) NOT NULL,
-	salutation VARCHAR(4) NOT NULL,
+	salutation VARCHAR(4) ,
 	fullname VARCHAR(50) NOT NULL,
-	gender VARCHAR(10) NOT NULL,
-	experience VARCHAR(10) NOT NULL,
-	expected_salary float NOT NULL,
-	phone_number VARCHAR(20) NOT NULL,
-	mobile_number VARCHAR(20) NOT NULL,
-	nik VARCHAR(50) NOT NULL,
-	birth_date date NOT NULL,
-	birth_place VARCHAR(20) NOT NULL,
-	marital_status_id VARCHAR(36) NOT NULL,
-	religion_id VARCHAR(36) NOT NULL,
-	person_type_id VARCHAR(36) NOT NULL,
-	file_id VARCHAR(36) NOT NULL,
-	candidate_status_id VARCHAR(36) NOT NULL,
-	created_by VARCHAR(36) NOT NULL,
+	gender VARCHAR(10) ,
+	experience VARCHAR(10) ,
+	expected_salary float ,
+	phone_number VARCHAR(20),
+	mobile_number VARCHAR(20) ,
+	nik VARCHAR(50) ,
+	birth_date date ,
+	birth_place VARCHAR(20) ,
+	marital_status_id VARCHAR(36) ,
+	religion_id VARCHAR(36) ,
+	person_type_id VARCHAR(36) ,
+	file_id VARCHAR(36) ,
+	candidate_status_id VARCHAR(36) ,
+	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by VARCHAR(36),
+	updated_by int,
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -724,7 +724,6 @@ INSERT INTO t_candidate_language (id, language_name, writing_rate, speaking_rate
 	(uuid_generate_v4(), 'Indonesia', '9', '7', '9', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com'), now(), true, 0),
 	(uuid_generate_v4(), 'Mandarin', '5', '6', '5', (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com') , (SELECT id FROM t_candidate_user WHERE user_email = 'candidate1@email.com'), now(), true, 0);
 
---SELECT * FROM t_file_type tft;
 INSERT INTO t_file_type (id, type_code, type_name, created_by, created_at, is_active, ver) VALUES 
 	(uuid_generate_v4(), 'FCV', 'Curicullum Vitae', 1, now(), true, 0),
 	(uuid_generate_v4(), 'FCC', 'Citizen Card', 1, now(), true, 0),
@@ -733,6 +732,7 @@ INSERT INTO t_file_type (id, type_code, type_name, created_by, created_at, is_ac
 	(uuid_generate_v4(), 'FTR', 'Transcript', 1, now(), true, 0);
 
 --SELECT * FROM t_file_type tft;
+
 INSERT INTO t_file_type (id,type_code,type_name,created_by,created_at,updated_by,updated_at,is_active,ver) VALUES
 	( uuid_generate_v4(),'FE-01','CURICULUM VITAE',1,NOW(),1,NOW(),TRUE,1),
 	( uuid_generate_v4(),'FE-02','FAMILY CARD',1,NOW(),1,NOW(),TRUE,1),

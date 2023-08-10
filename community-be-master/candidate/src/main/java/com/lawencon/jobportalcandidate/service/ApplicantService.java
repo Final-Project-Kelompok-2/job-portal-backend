@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.ApplicantDao;
@@ -20,6 +21,7 @@ import com.lawencon.jobportalcandidate.model.HiringStatus;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
 
+@Service
 public class ApplicantService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -32,7 +34,7 @@ public class ApplicantService {
 	@Autowired
 	private HiringStatusDao hiringStatusDao;
 
-	public List<ApplicantResDto> getAllApplicant(String id) {
+	public List<ApplicantResDto> getApplicantByCandidate(String id) {
 		final List<Applicant> applicantList = applicantDao.getApplicantByCandidate(id);
 		final List<ApplicantResDto> applicantListRes = new ArrayList<>();
 		for (int i = 0; i < applicantList.size(); i++) {
@@ -61,19 +63,19 @@ public class ApplicantService {
 
 			final Job job = jobDao.getById(Job.class, data.getJobId());
 			applicant.setJob(job);
-			
+
 			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, data.getStatusId());
 			applicant.setStatus(hiringStatus);
 			applicant.setCreatedBy("Id principal");
-			insertRes.setId(applicant.getId());
+			final Applicant applicantId = applicantDao.save(applicant);
+			insertRes.setId(applicantId.getId());
 			insertRes.setMessage("Applicant Insert Success");
 			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 		}
-		
-		
+
 		return insertRes;
 	}
 

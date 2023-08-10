@@ -2,61 +2,61 @@ package com.lawencon.jobportalcandidate.dto.candidate;
 
 import java.util.List;
 
-import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatedocument.CandidateDocumentInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducationInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatelanguage.CandidateLanguageInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateprojectexp.CandidateProjectExpInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
+import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressResDto;
+import com.lawencon.jobportalcandidate.dto.candidatedocument.CandidateDocumentResDto;
+import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducationResDto;
+import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyResDto;
+import com.lawencon.jobportalcandidate.dto.candidatelanguage.CandidateLanguageResDto;
+import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResDto;
+import com.lawencon.jobportalcandidate.dto.candidateprojectexp.CandidateProjectExpResDto;
+import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesResDto;
+import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillResDto;
+import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpResDto;
+import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpResDto;
 
 public class CandidateMasterResDto {
-	private CandidateProfileInsertReqDto candidateProfile;
-	private CandidateAddressInsertReqDto candidateAddress;
-	private List<CandidateDocumentInsertReqDto> candidateDocuments;
-	private List<CandidateEducationInsertReqDto> candidateEducations;
-	private List<CandidateFamilyInsertReqDto> candidateFamily;
-	private List<CandidateLanguageInsertReqDto> candidateLanguage;
-	private List<CandidateProjectExpInsertReqDto> candidateProjectExp;
-	private List<CandidateReferencesInsertReqDto> candidateReferences;
-	private List<CandidateSkillInsertReqDto> candidateSkill;
-	private List<CandidateTrainingExpInsertReqDto> candidateTrainingExp;
-	private List<CandidateWorkExpInsertReqDto> candidateWorkExp;
-	public CandidateProfileInsertReqDto getCandidateProfile() {
+	private CandidateProfileResDto candidateProfile;
+	private CandidateAddressResDto candidateAddress;
+	private List<CandidateDocumentResDto> candidateDocuments;
+	private List<CandidateEducationResDto> candidateEducations;
+	private List<CandidateFamilyResDto> candidateFamily;
+	private List<CandidateLanguageResDto> candidateLanguage;
+	private List<CandidateProjectExpResDto> candidateProjectExp;
+	private List<CandidateReferencesResDto> candidateReferences;
+	private List<CandidateSkillResDto> candidateSkill;
+	private List<CandidateTrainingExpResDto> candidateTrainingExp;
+	private List<CandidateWorkExpResDto> candidateWorkExp;
+	public CandidateProfileResDto getCandidateProfile() {
 		return candidateProfile;
 	}
-	public CandidateAddressInsertReqDto getCandidateAddress() {
+	public CandidateAddressResDto getCandidateAddress() {
 		return candidateAddress;
 	}
-	public List<CandidateDocumentInsertReqDto> getCandidateDocuments() {
+	public List<CandidateDocumentResDto> getCandidateDocuments() {
 		return candidateDocuments;
 	}
-	public List<CandidateEducationInsertReqDto> getCandidateEducations() {
+	public List<CandidateEducationResDto> getCandidateEducations() {
 		return candidateEducations;
 	}
-	public List<CandidateFamilyInsertReqDto> getCandidateFamily() {
+	public List<CandidateFamilyResDto> getCandidateFamily() {
 		return candidateFamily;
 	}
-	public List<CandidateLanguageInsertReqDto> getCandidateLanguage() {
+	public List<CandidateLanguageResDto> getCandidateLanguage() {
 		return candidateLanguage;
 	}
-	public List<CandidateProjectExpInsertReqDto> getCandidateProjectExp() {
+	public List<CandidateProjectExpResDto> getCandidateProjectExp() {
 		return candidateProjectExp;
 	}
-	public List<CandidateReferencesInsertReqDto> getCandidateReferences() {
+	public List<CandidateReferencesResDto> getCandidateReferences() {
 		return candidateReferences;
 	}
-	public List<CandidateSkillInsertReqDto> getCandidateSkill() {
+	public List<CandidateSkillResDto> getCandidateSkill() {
 		return candidateSkill;
 	}
-	public List<CandidateTrainingExpInsertReqDto> getCandidateTrainingExp() {
+	public List<CandidateTrainingExpResDto> getCandidateTrainingExp() {
 		return candidateTrainingExp;
 	}
-	public List<CandidateWorkExpInsertReqDto> getCandidateWorkExp() {
+	public List<CandidateWorkExpResDto> getCandidateWorkExp() {
 		return candidateWorkExp;
 	}
 

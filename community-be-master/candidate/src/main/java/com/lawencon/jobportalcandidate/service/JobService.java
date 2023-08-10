@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.jobportalcandidate.dao.JobDao;
 import com.lawencon.jobportalcandidate.dto.job.JobResDto;
 import com.lawencon.jobportalcandidate.model.Job;
 
+@Service
 public class JobService {
 
 	@Autowired
@@ -85,5 +87,7 @@ public class JobService {
 		
 		return jobsDto;
 	}
+	
+	
 
 }
