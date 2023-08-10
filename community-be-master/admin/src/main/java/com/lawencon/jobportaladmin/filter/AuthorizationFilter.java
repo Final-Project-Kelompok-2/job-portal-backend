@@ -1,8 +1,7 @@
-package com.lawencon.auth.filter;
+package com.lawencon.jobportaladmin.filter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
@@ -11,21 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lawencon.auth.service.JwtService;
+import com.lawencon.jobportaladmin.dto.token.TokenReqDto;
 
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter{
 
 	@Autowired
-	private JwtService jwtService;
+	private RestTemplate restTemplate;
 
 	@Autowired
 	private List<RequestMatcher> matchers;
@@ -41,10 +41,13 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 			if (header != null) {
 				final String jwt = header.replaceFirst("Bearer ", "");
 				try {					
-					final Map<String, Object> map = jwtService.parseJwt(jwt);
+					final String tokenURl = "http://localhost:8082/token/validate";
 					
-					final Authentication auth = new UsernamePasswordAuthenticationToken(map.get("id"), null);
-				 	SecurityContextHolder.getContext().setAuthentication(auth);
+					final HttpHeaders headers = new HttpHeaders();
+				    headers.setContentType(MediaType.APPLICATION_JSON);
+					headers.setBearerAuth(jwt);
+					final RequestEntity<Object> tokenChecker= RequestEntity.post(tokenURl).headers(headers).body(null);
+					restTemplate.exchange(tokenChecker, Boolean.class);
 					
 				} catch (Exception e) {
 					e.printStackTrace() ;

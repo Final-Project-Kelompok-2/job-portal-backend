@@ -397,6 +397,8 @@ ALTER TABLE t_candidate_documents ADD CONSTRAINT candidate_documents_file_fk
 ALTER TABLE t_candidate_documents ADD CONSTRAINT candidate_documents_file_type_fk
 	FOREIGN KEY(file_type_id)
 	REFERENCES t_file_type(id); 
+ALTER TABLE t_candidate_documents ADD CONSTRAINT candidate_documents_bk
+	UNIQUE(user_id, file_type_id);
 
 CREATE TABLE t_candidate_references ( 
 	id VARCHAR(36) NOT NULL,

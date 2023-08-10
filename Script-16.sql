@@ -126,7 +126,7 @@ ALTER TABLE t_person_type ADD CONSTRAINT person_type_pk
 ALTER TABLE t_person_type ADD CONSTRAINT type_code_bk
 	UNIQUE (type_code);
 
-CREATE TABLE t_candidate_profile (
+
 	CREATE TABLE t_candidate_profile (
 	id VARCHAR(36) NOT NULL,
 	salutation VARCHAR(4) ,
@@ -150,7 +150,7 @@ CREATE TABLE t_candidate_profile (
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
-);
+
 );
 
 ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_profile_pk
@@ -909,24 +909,18 @@ SELECT * FROM t_person_type tpt ;
 
 insert into t_profile (id,full_name,photo_id,phone_number,address,person_type_id,created_by,created_at,is_active,ver)
 values 
-(uuid_generate_v4(),
-'ADMIN',
-(SELECT id FROM t_file WHERE filename = 'asdasdasdd'),
-'10298301',
-'BEKASI',
-(SELECT id FROM t_person_type tpt WHERE tpt.type_code='PT-02')
-,'0',NOW(),TRUE,1);
+(uuid_generate_v4(),'ADMIN',(SELECT id FROM t_file WHERE filename = 'asdasdasdd'),'102983012','BEKASI',(SELECT id FROM t_person_type tpt WHERE tpt.type_code='PT-02'),'0',NOW(),TRUE,1),
+(uuid_generate_v4(),'HR',(SELECT id FROM t_file WHERE filename = 'asdasdasdd'),'102983013','BEKASI',(SELECT id FROM t_person_type tpt WHERE tpt.type_code='PT-02'),'0',NOW(),TRUE,1),
+(uuid_generate_v4(),'PIC',(SELECT id FROM t_file WHERE filename = 'asdasdasdd'),'102983014','BEKASI',(SELECT id FROM t_person_type tpt WHERE tpt.type_code='PT-02'),'0',NOW(),TRUE,1);
 
 select * from t_profile tp ;
 
+
 insert into t_user (id,user_email,user_password,profile_id,role_id,created_by,created_at,is_active,ver)
 VALUES
-( uuid_generate_v4(),
-'ADMIN@GMAIL.COM',
-'123',
-(SELECT id FROM t_profile tp WHERE tp.full_name  = 'ADMIN'),
-(SELECT id FROM t_role tr WHERE tr.role_code = 'R-001'),
-'0',NOW(),TRUE,1);
+( uuid_generate_v4(),'ADMIN@GMAIL.COM','123',(SELECT id FROM t_profile tp WHERE tp.full_name  = 'ADMIN'),(SELECT id FROM t_role tr WHERE tr.role_code = 'R-001'),'0',NOW(),TRUE,1),
+( uuid_generate_v4(),'HR@GMAIL.COM','123',(SELECT id FROM t_profile tp WHERE tp.full_name  = 'HR'),(SELECT id FROM t_role tr WHERE tr.role_code = 'R-002'),'0',NOW(),TRUE,1),
+( uuid_generate_v4(),'PIC@GMAIL.COM','123',(SELECT id FROM t_profile tp WHERE tp.full_name  = 'ADMIN'),(SELECT id FROM t_role tr WHERE tr.role_code = 'R-003'),'0',NOW(),TRUE,1);
 
 SELECT * FROM t_file tf;
 select * from t_user tu;
@@ -1137,12 +1131,13 @@ INSERT INTO t_company (id, company_code, company_name, address, company_url, com
 select * from t_user;
 select * from t_candidate_user;
 --SELECT * FROM t_job tj;
+
 INSERT INTO t_job (id, job_code, job_name, company_id,hr_id,pic_id, start_date, end_date, description, expected_salary_min, expected_salary_max, employment_type_id, job_picture_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'FSD', 'Full Stack Developer', (SELECT id FROM t_company WHERE company_code = 'LWC'), '2023-05-05', '2024-05-05', 'FSDeveloper Job Description', '5000000', '7000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
-	(uuid_generate_v4(), 'JVD', 'Java Developer', (SELECT id FROM t_company WHERE company_code = 'LWC'), '2023-05-05', '2024-05-05', 'Java Developer Job Description', '7000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
-	(uuid_generate_v4(), 'DBA', 'Database Administrator', (SELECT id FROM t_company WHERE company_code = 'LWC'), '2023-05-05', '2024-05-05', 'DB Admin Job Description', '5000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
-	(uuid_generate_v4(), 'SLM', 'Sales Manager', (SELECT id FROM t_company WHERE company_code = 'SHP'), '2023-05-05', '2024-05-05', 'Sales Manager Job Description', '5000000', '7000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
-	(uuid_generate_v4(), 'CSS', 'Customer Service', (SELECT id FROM t_company WHERE company_code = 'SHP'), '2023-05-05', '2024-05-05', 'CS Job Description', '6000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0);
+	(uuid_generate_v4(), 'FSD', 'Full Stack Developer', (SELECT id FROM t_company WHERE company_code = 'LWC'),(SELECT id FROM t_user WHERE user_email='HR@GMAIL.COM'),(SELECT ID FROM t_user WHERE user_email ='PIC@GMAIL.COM'), '2023-05-05', '2024-05-05', 'FSDeveloper Job Description', '5000000', '7000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'JVD', 'Java Developer', (SELECT id FROM t_company WHERE company_code = 'LWC'),(SELECT id FROM t_user WHERE user_email='HR@GMAIL.COM'),(SELECT ID FROM t_user WHERE user_email ='PIC@GMAIL.COM'), '2023-05-05', '2024-05-05', 'Java Developer Job Description', '7000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'DBA', 'Database Administrator', (SELECT id FROM t_company WHERE company_code = 'LWC'),(SELECT id FROM t_user WHERE user_email='HR@GMAIL.COM'),(SELECT ID FROM t_user WHERE user_email ='PIC@GMAIL.COM'), '2023-05-05', '2024-05-05', 'DB Admin Job Description', '5000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'SLM', 'Sales Manager', (SELECT id FROM t_company WHERE company_code = 'SHP'),(SELECT id FROM t_user WHERE user_email='HR@GMAIL.COM'),(SELECT ID FROM t_user WHERE user_email ='PIC@GMAIL.COM'), '2023-05-05', '2024-05-05', 'Sales Manager Job Description', '5000000', '7000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0),
+	(uuid_generate_v4(), 'CSS', 'Customer Service', (SELECT id FROM t_company WHERE company_code = 'SHP'),(SELECT id FROM t_user WHERE user_email='HR@GMAIL.COM'),(SELECT ID FROM t_user WHERE user_email ='PIC@GMAIL.COM'), '2023-05-05', '2024-05-05', 'CS Job Description', '6000000', '10000000', (SELECT id FROM t_employment_type WHERE employment_type_code = 'ET-04'), (SELECT id FROM t_file WHERE filename = 'JobPhoto'), 1, now(), true, 0);
 
 --SELECT * FROM t_hiring_status ths;
 INSERT INTO t_hiring_status (id, status_code, status_name, created_by, created_at, is_active, ver) VALUES 
@@ -1199,4 +1194,4 @@ INSERT INTO t_assigned_job_question (id, job_id, question_id, created_by, create
 	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
 	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0);
 	
-
+--CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

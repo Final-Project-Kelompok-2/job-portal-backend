@@ -125,4 +125,12 @@ public class CandidateMasterInsertReqDto {
 		this.candidateWorkExp = candidateWorkExp;
 	}
 
+	public CandidateUserInsertReqDto getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUserInsertReqDto candidateUser) {
+		this.candidateUser = candidateUser;
+	}
+
 }

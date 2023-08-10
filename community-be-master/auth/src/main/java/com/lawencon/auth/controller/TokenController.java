@@ -25,7 +25,6 @@ public class TokenController {
 
 	@Autowired
 	private JwtService jwtService;
-	private AuthorizationFilter authorizationFilter;
 	
 	@PostMapping
 	public ResponseEntity<String> getToken(@RequestBody TokenReqDto tokenDto){
