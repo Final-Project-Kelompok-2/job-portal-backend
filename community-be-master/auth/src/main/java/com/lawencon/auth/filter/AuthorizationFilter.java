@@ -24,7 +24,7 @@ import com.lawencon.auth.service.JwtService;
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter{
 
-	
+	@Autowired
 	private JwtService jwtService;
 
 	@Autowired
