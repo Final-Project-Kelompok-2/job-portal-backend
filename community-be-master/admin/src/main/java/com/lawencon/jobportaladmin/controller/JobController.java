@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lawencon.jobportaladmin.dto.hiringstatus.HiringStatusGetResDto;
 import com.lawencon.jobportaladmin.dto.job.JobResDto;
 import com.lawencon.jobportaladmin.service.JobService;
 

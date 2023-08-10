@@ -21,8 +21,6 @@ public class ReligionController {
 	
 	@GetMapping
 	public ResponseEntity<List<ReligionsResDto>>getReligions(){
-		
-		
 		final List<ReligionsResDto> response = religionService.getReligions();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

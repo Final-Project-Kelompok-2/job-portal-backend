@@ -34,6 +34,9 @@ public class QuestionService {
 	@Autowired
 	private AssignedJobQuestionDao assignedJobQuestionDao;
 	
+	@Autowired
+	private PrincipalService principalService;
+	
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
@@ -49,8 +52,8 @@ public class QuestionService {
 							
 				Question newQuestion = new Question();
 				newQuestion.setQuestionDetail(question.getQuestionDetail());
-				newQuestion.setQuestionCode(GenerateCode.generateTicket(5));
-				newQuestion.setCreatedBy("0");
+				newQuestion.setQuestionCode(GenerateCode.generateCode());
+				newQuestion.setCreatedBy(principalService.getAuthPrincipal());
 
 				newQuestion = questionDao.save(newQuestion);
 				
@@ -61,16 +64,13 @@ public class QuestionService {
 					newOption.setOptionLabel(option.getOptionLabel());
 					newOption.setIsCorrect(option.getIsCorrect());
 					newOption.setQuestion(newQuestion);
-					newOption.setCreatedBy("0");
-					
+					newOption.setCreatedBy(principalService.getAuthPrincipal());
 					newOption = questionOptionDao.save(newOption);
 				}
 			}
-			
 			insertRes.setMessage("Insert Question Success");
 			em().getTransaction().commit();
-			
-			
+				
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();

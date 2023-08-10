@@ -23,7 +23,6 @@ public class ApplicantService {
 	@Autowired
 	private ApplicantDao applicantDao;
 
-
 	public List<ApplicantResDto> getAllApplicantByJob(String id) {
 		final List<Applicant> applicantList = applicantDao.getApplicantByJob(id);
 		final List<ApplicantResDto> applicantListRes = new ArrayList<>();

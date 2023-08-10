@@ -2,8 +2,8 @@ package com.lawencon.jobportaladmin.dto.user;
 
 public class UserInsertReqDto {
 	private String userEmail;
-	private String role;
-	private String personType;
+	private String roleId;
+	private String personTypeId;
 	private String fullName;
 	private String address;
 	private String phoneNumber;
@@ -18,21 +18,6 @@ public class UserInsertReqDto {
 		this.userEmail = userEmail;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public String getPersonType() {
-		return personType;
-	}
-
-	public void setPersonType(String personType) {
-		this.personType = personType;
-	}
 
 	public String getFullName() {
 		return fullName;
@@ -72,6 +57,22 @@ public class UserInsertReqDto {
 
 	public void setExtensionName(String extensionName) {
 		this.extensionName = extensionName;
+	}
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getPersonTypeId() {
+		return personTypeId;
+	}
+
+	public void setPersonTypeId(String personTypeId) {
+		this.personTypeId = personTypeId;
 	}
 
 }

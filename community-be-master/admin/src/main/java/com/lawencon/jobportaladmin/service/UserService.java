@@ -2,26 +2,59 @@ package com.lawencon.jobportaladmin.service;
 
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.ConnHandler;
+import com.lawencon.jobportaladmin.dao.FileDao;
+import com.lawencon.jobportaladmin.dao.PersonTypeDao;
 import com.lawencon.jobportaladmin.dao.ProfileDao;
+import com.lawencon.jobportaladmin.dao.RoleDao;
 import com.lawencon.jobportaladmin.dao.UserDao;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.login.LoginReqDto;
 import com.lawencon.jobportaladmin.dto.login.LoginResDto;
+import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
+import com.lawencon.jobportaladmin.model.File;
+import com.lawencon.jobportaladmin.model.PersonType;
+import com.lawencon.jobportaladmin.model.Profile;
+import com.lawencon.jobportaladmin.model.Role;
 import com.lawencon.jobportaladmin.model.User;
 
 @Service
 public class UserService implements UserDetailsService{
 
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
+	
+	
 	@Autowired
 	private ProfileDao profileDao;
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private PrincipalService principalService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleDao roleDao;
+	
+	@Autowired
+	private PersonTypeDao personTypeDao;
+	
+	@Autowired
+	private FileDao fileDao;
 	
 	
 	public LoginResDto login(LoginReqDto loginData) {
@@ -41,6 +74,46 @@ public class UserService implements UserDetailsService{
 		}
 		
 		return loginRes;
+	}
+	
+	public InsertResDto registerUser(UserInsertReqDto userData) {
+		final InsertResDto insertResDto = new InsertResDto();
+		
+		try {
+			em().getTransaction().begin();
+			User newUser = new User();
+			
+			newUser.setUserEmail(userData.getUserEmail());
+			
+			final Role role = roleDao.getById(Role.class, userData.getRoleId());
+			newUser.setRole(role);
+			final PersonType personType = personTypeDao.getById(PersonType.class, userData.getPersonTypeId());
+			
+			Profile profile = new Profile();
+			profile.setFullName(userData.getFullName());
+			profile.setAddress(userData.getAddress());
+			profile.setPhoneNumber(userData.getPhoneNumber());
+			profile.setPersonType(personType);
+			profile.setCreatedBy(principalService.getAuthPrincipal());
+			
+			File photo = new File();
+			photo.setFileName(userData.getPhotoName());
+			photo.setFileExtension(userData.getExtensionName());
+			photo.setCreatedBy(principalService.getAuthPrincipal());
+			
+			photo = fileDao.save(photo);
+			profile =profileDao.save(profile);
+			newUser.setProfile(profile);
+						
+			
+			insertResDto.setMessage("Insert User Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		return insertResDto;
 	}
 
 	@Override
