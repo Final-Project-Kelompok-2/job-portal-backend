@@ -56,6 +56,7 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 				+ "	tcd.file_type_id = tft.id  "
 				+ "WHERE  "
 				+ "	tcd.user_id  = :candidate";
+
 		final List<?>documentObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();

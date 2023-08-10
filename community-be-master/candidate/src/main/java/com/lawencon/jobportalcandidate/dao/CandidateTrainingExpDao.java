@@ -36,6 +36,7 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
+
 		final List<?> trainingObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();

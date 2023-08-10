@@ -36,6 +36,7 @@ public class CandidateFamilyDao extends AbstractJpaDao{
 				+ "WHERE  "
 				+ "	user_id = :candidate"
 				;
+
 		final List<?>familyObjs = em().createNativeQuery(sql)
 				.setParameter("candidate", id)
 				.getResultList();
