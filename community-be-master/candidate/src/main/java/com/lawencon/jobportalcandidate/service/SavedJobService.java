@@ -3,8 +3,11 @@ package com.lawencon.jobportalcandidate.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
 import com.lawencon.jobportalcandidate.dao.SavedJobDao;
@@ -17,6 +20,10 @@ import com.lawencon.jobportalcandidate.model.SavedJob;
 
 public class SavedJobService {
 
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
+	
 	@Autowired
 	private SavedJobDao savedJobDao;
 
@@ -53,17 +60,28 @@ public class SavedJobService {
 	public InsertResDto insertSavedJob(SavedJobInsertReqDto mysavedjob) {
 		final SavedJob savedjob = new SavedJob();
 
-		final Job job = jobDao.getById(Job.class, mysavedjob.getJobId());
-		savedjob.setJob(job);
+		InsertResDto result = null;
+		
+		try {
+			em().getTransaction().begin();
+			
+			final Job job = jobDao.getById(Job.class, mysavedjob.getJobId());
+			savedjob.setJob(job);
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, mysavedjob.getUserId());
+			savedjob.setCandidateUser(candidate);
+			savedjob.setCreatedBy("ID Principal");
+			
+			savedJobDao.save(savedjob);
 
-		final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, mysavedjob.getUserId());
-		savedjob.setCandidateUser(candidate);
-
-		savedJobDao.save(savedjob);
-
-		final InsertResDto result = new InsertResDto();
-		result.setId(null);
-		result.setMessage("Job has been added to your Saved Jobs");
+			result = new InsertResDto();
+			result.setId(null);
+			result.setMessage("Job has been added to your Saved Jobs");
+			
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+		}
+		
 		return result;
 	}
 }
