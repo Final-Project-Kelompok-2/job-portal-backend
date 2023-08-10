@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.jobportalcandidate.dao.MartialStatusDao;
 import com.lawencon.jobportalcandidate.dto.maritalstatus.MaritalResDto;
 import com.lawencon.jobportalcandidate.model.MaritalStatus;
 
+@Service
 public class MaritalStatusService {
 
 	@Autowired
