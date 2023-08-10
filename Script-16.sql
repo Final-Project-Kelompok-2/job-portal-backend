@@ -125,28 +125,30 @@ ALTER TABLE t_person_type ADD CONSTRAINT type_code_bk
 	UNIQUE (type_code);
 
 CREATE TABLE t_candidate_profile (
+	CREATE TABLE t_candidate_profile (
 	id VARCHAR(36) NOT NULL,
-	salutation VARCHAR(4) NOT NULL,
+	salutation VARCHAR(4) ,
 	fullname VARCHAR(50) NOT NULL,
-	gender VARCHAR(10) NOT NULL,
-	experience VARCHAR(10) NOT NULL,
-	expected_salary float NOT NULL,
-	phone_number VARCHAR(20) NOT NULL,
-	mobile_number VARCHAR(20) NOT NULL,
-	nik VARCHAR(50) NOT NULL,
-	birth_date date NOT NULL,
-	birth_place VARCHAR(20) NOT NULL,
-	marital_status_id VARCHAR(36) NOT NULL,
-	religion_id VARCHAR(36) NOT NULL,
-	person_type_id VARCHAR(36) NOT NULL,
-	file_id VARCHAR(36) NOT NULL,
-	candidate_status_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	gender VARCHAR(10) ,
+	experience VARCHAR(10) ,
+	expected_salary float ,
+	phone_number VARCHAR(20),
+	mobile_number VARCHAR(20) ,
+	nik VARCHAR(50) ,
+	birth_date date ,
+	birth_place VARCHAR(20) ,
+	marital_status_id VARCHAR(36) ,
+	religion_id VARCHAR(36) ,
+	person_type_id VARCHAR(36) ,
+	file_id VARCHAR(36) ,
+	candidate_status_id VARCHAR(36) ,
+	created_by int NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by int,
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
+);
 );
 
 ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_profile_pk
@@ -989,5 +991,3 @@ insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_
 --	tcp.id = tcu.profile_id 
 --WHERE 	;
 --job, company, employment type, applicant
-
-

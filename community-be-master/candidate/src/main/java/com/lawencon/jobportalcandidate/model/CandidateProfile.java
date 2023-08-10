@@ -14,34 +14,34 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_candidate_profile")
 public class CandidateProfile extends BaseEntity {
 
-	@Column(name = "salutation", length = 4, nullable = false)
+	@Column(name = "salutation", length = 4)
 	private String salutation;
 
 	@Column(name = "fullname", length = 50, nullable = false)
 	private String fullname;
 
-	@Column(name = "gender", length = 10, nullable = false)
+	@Column(name = "gender", length = 10)
 	private String gender;
 
-	@Column(name = "experience", length = 10, nullable = false)
+	@Column(name = "experience", length = 10)
 	private String experience;
 
-	@Column(name = "expected_salary", nullable = false)
+	@Column(name = "expected_salary")
 	private Float expectedSalary;
 
-	@Column(name = "phone_number", length = 20, nullable = false)
+	@Column(name = "phone_number", length = 20)
 	private String phoneNumber;
 
-	@Column(name = "mobile_number", length = 20, nullable = false)
+	@Column(name = "mobile_number", length = 20)
 	private String mobileNumber;
 
-	@Column(name = "nik", length = 50, nullable = false)
+	@Column(name = "nik", length = 50)
 	private String nik;
 
-	@Column(name = "birth_date", nullable = false)
+	@Column(name = "birth_date")
 	private LocalDate birthDate;
 
-	@Column(name = "birth_place", length = 20, nullable = false)
+	@Column(name = "birth_place")
 	private String birthPlace;
 
 	@OneToOne
