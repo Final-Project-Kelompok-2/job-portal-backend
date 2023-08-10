@@ -1,11 +1,14 @@
 package com.lawencon.jobportalcandidate.dto.applicant;
 
-public class ApplicantInsertResDto {
+public class ApplicantResDto {
 	private String id;
 	private String applicantCode;
 	private String jobId;
+	private String jobName;
+	private String companyName;
 	private String appliedDate;
 	private String statusId;
+	private String statusName;
 	private String candidateId;
 
 	public String getId() {
@@ -55,4 +58,29 @@ public class ApplicantInsertResDto {
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
 	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
 }
