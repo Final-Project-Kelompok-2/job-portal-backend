@@ -12,9 +12,11 @@ import com.lawencon.jobportalcandidate.dto.candidateprojectexp.CandidateProjectE
 import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpInsertReqDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
 
 public class CandidateMasterInsertReqDto {
+	private CandidateUserInsertReqDto candidateUser;
 	private CandidateProfileInsertReqDto candidateProfile;
 	private CandidateAddressInsertReqDto candidateAddress;
 	private List<CandidateDocumentInsertReqDto> candidateDocuments;
@@ -26,6 +28,14 @@ public class CandidateMasterInsertReqDto {
 	private List<CandidateSkillInsertReqDto> candidateSkill;
 	private List<CandidateTrainingExpInsertReqDto> candidateTrainingExp;
 	private List<CandidateWorkExpInsertReqDto> candidateWorkExp;
+
+	public CandidateUserInsertReqDto getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUserInsertReqDto candidateUser) {
+		this.candidateUser = candidateUser;
+	}
 
 	public CandidateProfileInsertReqDto getCandidateProfile() {
 		return candidateProfile;
