@@ -23,7 +23,6 @@ import com.lawencon.jobportaladmin.dto.login.LoginResDto;
 import com.lawencon.jobportaladmin.dto.token.TokenReqDto;
 import com.lawencon.jobportaladmin.service.UserService;
 
-
 @RestController
 @RequestMapping("login")
 public class LoginController {
@@ -67,6 +66,6 @@ public class LoginController {
 		
 		return new ResponseEntity<>(loginRes, HttpStatus.OK);
 	}
-	
-	
+
 }
+

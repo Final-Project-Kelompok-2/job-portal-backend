@@ -13,13 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.lawencon.jobportaladmin.dto.token.TokenReqDto;
 
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter{

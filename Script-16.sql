@@ -1195,3 +1195,9 @@ INSERT INTO t_assigned_job_question (id, job_id, question_id, created_by, create
 	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0);
 	
 --CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+SELECT tu.id , tu.user_password,  tu.is_active, tu.profile_id,  tp.full_name,  tr.role_code  FROM t_user tu INNER JOIN t_role tr ON tr.id = tu.role_id  INNER JOIN t_profile tp ON tp.id = tu.profile_id  WHERE tu.user_email = :email 
+ 
+ select * from t_profile tp ;
+select * from t_file;
+select * from t_religion tr ;
