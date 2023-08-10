@@ -1,5 +1,6 @@
 package com.lawencon.jobportalcandidate.service;
 
+
 import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
@@ -22,6 +23,7 @@ import com.lawencon.jobportalcandidate.dao.CandidateTrainingExpDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.CandidateWorkExpDao;
 import com.lawencon.jobportalcandidate.dao.FileDao;
+import com.lawencon.jobportalcandidate.dao.FileTypeDao;
 import com.lawencon.jobportalcandidate.dao.MartialStatusDao;
 import com.lawencon.jobportalcandidate.dao.PersonTypeDao;
 import com.lawencon.jobportalcandidate.dao.ReligionDao;
@@ -70,14 +72,17 @@ public class CandidateService {
 	private CandidateTrainingExpDao candidateTrainingDao;
 	@Autowired
 	private CandidateWorkExpDao candidateWorkExpDao;
+  @Autowired
+  private FileTypeDao fileTypeDao;
+	@Autowired
+	private FileDao fileDao;
 	@Autowired
 	private MartialStatusDao maritalStatusDao;
 	@Autowired
 	private ReligionDao religionDao;
 	@Autowired
 	private PersonTypeDao personTypeDao;
-	@Autowired
-	private FileDao fileDao;
+
 
 	public InsertResDto InsertCandidate(CandidateMasterInsertReqDto data) {
 		InsertResDto result = null;

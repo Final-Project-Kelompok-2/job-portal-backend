@@ -16,6 +16,9 @@ import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserUpdateReqD
 import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
 
 public class CandidateMasterUpdateReqDto {
+
+	private String candidateId;
+
 	private CandidateUserUpdateReqDto candidateUser;
 	private CandidateProfileUpdateReqDto candidateProfile;
 	private CandidateAddressUpdateReqDto candidateAddress;
@@ -28,6 +31,59 @@ public class CandidateMasterUpdateReqDto {
 	private List<CandidateSkillUpdateReqDto> candidateSkill;
 	private List<CandidateTrainingExpUpdateReqDto> candidateTrainingExp;
 	private List<CandidateWorkExpUpdateReqDto> candidateWorkExp;
+
+	
+	public String getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(String candidateId) {
+		this.candidateId = candidateId;
+	}
+
+	public void setCandidateProfile(CandidateProfileUpdateReqDto candidateProfile) {
+		this.candidateProfile = candidateProfile;
+	}
+
+	public void setCandidateAddress(CandidateAddressUpdateReqDto candidateAddress) {
+		this.candidateAddress = candidateAddress;
+	}
+
+	public void setCandidateDocuments(List<CandidateDocumentUpdateReqDto> candidateDocuments) {
+		this.candidateDocuments = candidateDocuments;
+	}
+
+	public void setCandidateEducations(List<CandidateEducationUpdateReqDto> candidateEducations) {
+		this.candidateEducations = candidateEducations;
+	}
+
+	public void setCandidateFamily(List<CandidateFamilyUpdateReqDto> candidateFamily) {
+		this.candidateFamily = candidateFamily;
+	}
+
+	public void setCandidateLanguage(List<CandidateLanguageUpdateReqDto> candidateLanguage) {
+		this.candidateLanguage = candidateLanguage;
+	}
+
+	public void setCandidateProjectExp(List<CandidateProjectExpUpdateReqDto> candidateProjectExp) {
+		this.candidateProjectExp = candidateProjectExp;
+	}
+
+	public void setCandidateReferences(List<CandidateReferencesUpdateReqDto> candidateReferences) {
+		this.candidateReferences = candidateReferences;
+	}
+
+	public void setCandidateSkill(List<CandidateSkillUpdateReqDto> candidateSkill) {
+		this.candidateSkill = candidateSkill;
+	}
+
+	public void setCandidateTrainingExp(List<CandidateTrainingExpUpdateReqDto> candidateTrainingExp) {
+		this.candidateTrainingExp = candidateTrainingExp;
+	}
+
+	public void setCandidateWorkExp(List<CandidateWorkExpUpdateReqDto> candidateWorkExp) {
+		this.candidateWorkExp = candidateWorkExp;
+	}
 
 	public CandidateProfileUpdateReqDto getCandidateProfile() {
 		return candidateProfile;

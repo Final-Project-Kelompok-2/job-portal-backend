@@ -29,6 +29,14 @@ public class CandidateMasterInsertReqDto {
 	private List<CandidateTrainingExpInsertReqDto> candidateTrainingExp;
 	private List<CandidateWorkExpInsertReqDto> candidateWorkExp;
 
+	public CandidateUserInsertReqDto getCandidateUser() {
+		return candidateUser;
+	}
+
+	public void setCandidateUser(CandidateUserInsertReqDto candidateUser) {
+		this.candidateUser = candidateUser;
+	}
+
 	public CandidateProfileInsertReqDto getCandidateProfile() {
 		return candidateProfile;
 	}
