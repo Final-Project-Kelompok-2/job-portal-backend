@@ -32,6 +32,8 @@ public class AssignedJobQuestionService {
 	private JobDao jobDao;
 	@Autowired
 	private QuestionDao questionDao;
+	@Autowired
+	private PrincipalService principalService;
 	
 	public List<AssignedJobQuestionResDto> getAssignedJobQuestionByJob(String jobId){
 		final List<AssignedJobQuestion> assignedJobQuestion = assignedJobQuestionDao.getByJob(jobId);
@@ -57,6 +59,7 @@ public class AssignedJobQuestionService {
 			final Question question = questionDao.getById(Question.class, data.getQuestionId());
 			jobQuestion.setJob(job);
 			jobQuestion.setQuestion(question);
+			jobQuestion.setCreatedBy(principalService.getAuthPrincipal());
 			final AssignedJobQuestion jobQuestionId = assignedJobQuestionDao.save(jobQuestion);
 			insertRes.setId(jobQuestionId.getId());
 			insertRes.setMessage("Assigned Job Question Insert Success");

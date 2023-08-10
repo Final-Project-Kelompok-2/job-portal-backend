@@ -43,6 +43,9 @@ public class JobService {
 	@Autowired
 	private FileDao fileDao;
 	
+	@Autowired
+	private PrincipalService principalService;
+	
 	public List<JobResDto> getAllJobs() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getAll(Job.class);
@@ -90,10 +93,10 @@ public class JobService {
 			final File file = new File();
 			file.setFileName(jobDto.getFile());
 			file.setFileExtension(jobDto.getFileExtension());
-			file.setCreatedBy("ID Principal");
+			file.setCreatedBy(principalService.getAuthPrincipal());
 			fileDao.save(file);
 			job.setJobPicture(file);
-			job.setCreatedBy("ID Principal");
+			job.setCreatedBy(principalService.getAuthPrincipal());
 			jobDao.save(job);
 
 			result = new InsertResDto();
@@ -131,7 +134,7 @@ public class JobService {
 				final File file = new File();
 				file.setFileName(jobDto.getFile());
 				file.setFileExtension(jobDto.getFileExtension());
-				file.setCreatedBy("ID Principal");
+				file.setCreatedBy(principalService.getAuthPrincipal());
 				fileDao.save(file);
 				job.setJobPicture(file);
 				fileDao.deleteById(File.class, jobDto.getFileId());

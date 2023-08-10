@@ -1201,3 +1201,7 @@ SELECT tu.id , tu.user_password,  tu.is_active, tu.profile_id,  tp.full_name
  select * from t_profile tp ;
 select * from t_file;
 select * from t_religion tr ;
+select * from t_question_option tqo ;
+select * from t_question tq ;
+
+
