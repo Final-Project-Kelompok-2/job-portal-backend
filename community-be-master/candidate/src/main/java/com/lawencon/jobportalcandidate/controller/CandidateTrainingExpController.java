@@ -34,6 +34,7 @@ public class CandidateTrainingExpController {
 	public ResponseEntity<List<CandidateTrainingExpResDto>> getTrainingExpByCandidate(@RequestParam("id")String id){
 		final List<CandidateTrainingExpResDto> result = candidateTrainingExpService.getAllTrainingExpByCandidate(id);
 		return new ResponseEntity<>(result,HttpStatus.OK);
+
 	}
 	
 	@PostMapping

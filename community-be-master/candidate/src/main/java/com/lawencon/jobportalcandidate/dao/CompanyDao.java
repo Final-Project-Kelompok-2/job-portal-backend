@@ -13,6 +13,7 @@ import com.lawencon.jobportalcandidate.model.File;
 
 @Repository
 public class CompanyDao extends AbstractJpaDao {
+
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
@@ -50,4 +51,5 @@ public class CompanyDao extends AbstractJpaDao {
 		
 		return company;
 	}
+
 }

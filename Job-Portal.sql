@@ -854,6 +854,11 @@ select * from t_employment_type tet ;
 --DELETE FROM t_saved_job ;
 --DELETE FROM t_job;
 --DELETE FROM t_company;
-
- 
+select * from t_applicant ta ;
+select * from t_candidate_address tca ;
+select * from t_hiring_status ths ;
+select * from t_applicant ta ;
 --CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
+

@@ -1,26 +1,18 @@
 package com.lawencon.jobportalcandidate.util;
 
+import java.util.Random;
+
 public class GenerateCode {
-	public static String generateTicket(int limit) {
+	
+		public static String generateCode() {
 
-		final  String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		         + "0123456789"
-		         + "abcdefghijklmnopqrstuvxyz";
-		 
-
-		final  StringBuilder sb = new StringBuilder(limit);
-		 
-		  for (int i = 0; i < limit; i++) {
-		 
-
-		final  int index
-		    = (int)(AlphaNumericString.length()
-		      * Math.random());
-		 
-		   sb.append(AlphaNumericString
-		      .charAt(index));
-		  }
-		 
-		  return sb.toString().toUpperCase();
+		 final String alphaNumericStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890123456789";
+		 String randomizeStr = "";
+		 final Random random = new Random();
+		 for (int i = 0; i < 5; i++) {
+			 final int indexCharacter = random.nextInt(alphaNumericStr.length());
+			 randomizeStr += alphaNumericStr.charAt(indexCharacter);
+		 }
+		 return randomizeStr;
 		 }
 }
