@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.service.CandidateService;
 
 @RestController
@@ -32,8 +32,8 @@ public class CandidateUserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<InsertResDto> insert(@RequestBody CandidateMasterInsertReqDto data) {
-		final InsertResDto result = candidateService.InsertCandidate(data);
+	public ResponseEntity<InsertResDto> insert(@RequestBody CandidateUserInsertReqDto data) {
+		final InsertResDto result = candidateService.insertCandidate(data);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	

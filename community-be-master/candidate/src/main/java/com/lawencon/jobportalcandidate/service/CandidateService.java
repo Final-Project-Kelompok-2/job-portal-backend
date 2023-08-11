@@ -14,33 +14,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.config.JwtConfig;
+import com.lawencon.jobportalcandidate.constant.PersonTypes;
 import com.lawencon.jobportalcandidate.dao.CandidateProfileDao;
 import com.lawencon.jobportalcandidate.dao.CandidateStatusDao;
-import com.lawencon.jobportalcandidate.dao.CandidateTrainingExpDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
-import com.lawencon.jobportalcandidate.dao.CandidateWorkExpDao;
 import com.lawencon.jobportalcandidate.dao.FileDao;
-import com.lawencon.jobportalcandidate.dao.FileTypeDao;
 import com.lawencon.jobportalcandidate.dao.MartialStatusDao;
 import com.lawencon.jobportalcandidate.dao.PersonTypeDao;
 import com.lawencon.jobportalcandidate.dao.ReligionDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
-
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserResDto;
-
 import com.lawencon.jobportalcandidate.login.LoginReqDto;
 import com.lawencon.jobportalcandidate.login.LoginResDto;
-
 import com.lawencon.jobportalcandidate.model.CandidateProfile;
 import com.lawencon.jobportalcandidate.model.CandidateStatus;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
@@ -48,6 +43,7 @@ import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.MaritalStatus;
 import com.lawencon.jobportalcandidate.model.PersonType;
 import com.lawencon.jobportalcandidate.model.Religion;
+import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -82,6 +78,9 @@ public class CandidateService implements UserDetailsService{
 	private PersonTypeDao personTypeDao;
 	
 	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
 	private PrincipalService<String> principalService;
 	
 	public CandidateMasterResDto getCandidateProfile(String id) {
@@ -114,55 +113,50 @@ public class CandidateService implements UserDetailsService{
 		return data;
 	}
 
-	public InsertResDto InsertCandidate(CandidateMasterInsertReqDto data) {
-		InsertResDto result = null;
+	public InsertResDto insertCandidate(CandidateUserInsertReqDto data) {
+		final InsertResDto result = new InsertResDto();
+		
 		try {
 			em().getTransaction().begin();
-
+			
 			final CandidateProfile candidateProfile = new CandidateProfile();
-			candidateProfile.setFullname(data.getCandidateProfile().getFullname());
-			candidateProfile.setCreatedBy(principalService.getAuthPrincipal());
-			candidateProfileDao.save(candidateProfile);
+			candidateProfile.setFullname(data.getProfile().getFullname());
+			final PersonType personType = personTypeDao.getByCode("CND");
+			candidateProfile.setPersonType(personType);
+//			candidateProfile.setCreatedBy(principalService.getAuthPrincipal());
+			candidateProfileDao.saveNoLogin(candidateProfile,()-> GenerateCode.generateCode());
 
-			final CandidateUser candidateuser = new CandidateUser();
-			candidateuser.setUserEmail(data.getCandidateUser().getUserEmail());
-			candidateuser.setUserPassword(data.getCandidateUser().getUserPassword());
-			candidateuser.setCandidateProfile(candidateProfile);
-			candidateuser.setCreatedBy(principalService.getAuthPrincipal());
+			CandidateUser candidateUser = new CandidateUser();
+			candidateUser.setUserEmail(data.getUserEmail());
+			
+			
+			final String encodedPassword = passwordEncoder.encode(data.getUserPassword());
+			
+			candidateUser.setUserPassword(encodedPassword);
+			candidateUser.setCandidateProfile(candidateProfile);
+//			candidateUser.setCreatedBy(principalService.getAuthPrincipal());
+			candidateUser = candidateUserDao.saveNoLogin(candidateUser,()-> GenerateCode.generateCode());
 
-			candidateUserDao.save(candidateuser);
-
-//			final String jobInsertCandidateAPI = "http://localhost:8080/candidate-user";
-//			
-//			final HttpHeaders headers = new HttpHeaders();
-//		    headers.setContentType(MediaType.APPLICATION_JSON);
+			final String jobInsertCandidateAPI = "http://localhost:8080/candidate-user";
+			
+			final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.APPLICATION_JSON);
 //		    headers.setBearerAuth(JwtConfig.get());
-//			
-//			final RequestEntity<JobInsertReqDto> jobInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(jobDto);
-//			
-//			final ResponseEntity<InsertResDto> responseCandidate  =restTemplate.exchange(jobInsert,InsertResDto.class);
-//			
+			
+			final RequestEntity<CandidateUserInsertReqDto> candidateInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(data);
+			
+			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateInsert,InsertResDto.class);
+			
+			if(responseAdmin.getStatusCode().equals(HttpStatus.CREATED)){
+				result.setId(candidateUser.getId());
+				result.setMessage("Welcome new Member!");
+				em().getTransaction().commit();
+			}
+			else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
 		
-//			if(responseCandidate.getStatusCode().equals(HttpStatus.CREATED)){
-				
-//				result = new InsertResDto();
-//				result.setId(job.getId());
-//				result.setMessage("New job vacancy added!");
-//				em().getTransaction().commit();
-//			}
-//			else {
-//				em().getTransaction().rollback();
-//				
-//				throw new RuntimeException("Insert Failed");
-//				
-//			}
-			
-			result = new InsertResDto();
-			result.setId(candidateuser.getId());
-			result.setMessage("Welcome new Member!");
-
-			em().getTransaction().commit();
-			
+		}
 			
 		} catch (Exception e) {
 			em().getTransaction().rollback();
