@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.company;
 
 public class CompanyResDto {
+	
 	private String id;
 	private String companyCode;
 	private String companyName;

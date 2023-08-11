@@ -8,9 +8,6 @@ public class CandidateEducationResDto {
 	private Float cgpa;
 	private String startYear;
 	private String endYear;
-	private String candidateId;
-	
-	
 
 	public String getId() {
 		return id;
@@ -58,14 +55,6 @@ public class CandidateEducationResDto {
 
 	public void setEndYear(String endYear) {
 		this.endYear = endYear;
-	}
-
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
 	}
 
 	public Float getCgpa() {

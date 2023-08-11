@@ -47,7 +47,6 @@ public class CandidateFamilyService {
 			family.setOccupation(families.get(i).getOccupation());
 			family.setBirthDate(families.get(i).getBirthDate().toString());
 			family.setBirthPlace(families.get(i).getBirthPlace());
-			family.setCandidateId(families.get(i).getCandidateUser().getId());
 			
 			familiesDto.add(family);
 		}
@@ -69,7 +68,7 @@ public class CandidateFamilyService {
 			family.setBirthDate(LocalDate.parse(data.getBirthDate().toString()));
 			family.setBirthPlace(data.getBirthPlace());
 			
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			family.setCandidateUser(candidate);
 			
 			candidateFamilyDao.save(family);
@@ -101,7 +100,7 @@ public class CandidateFamilyService {
 			family.setBirthDate(LocalDate.parse(data.getBirthDate().toString()));
 			family.setBirthPlace(data.getBirthPlace());
 			
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			family.setCandidateUser(candidate);
 			candidateFamilyDao.saveAndFlush(family);
 			

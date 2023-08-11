@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.candidatedocument;
 
 public class CandidateDocumentInsertReqDto {
+	
 	private String docName;
 	private String candidateId;
 	private String fileId;

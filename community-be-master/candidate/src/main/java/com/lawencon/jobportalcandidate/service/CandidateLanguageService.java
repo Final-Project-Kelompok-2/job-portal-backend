@@ -37,12 +37,12 @@ public class CandidateLanguageService {
 		final List<CandidateLanguageResDto> candidateLanguageResList = new ArrayList<>();
 		for (int i = 0; i < candidateLanguage.size(); i++) {
 			final CandidateLanguageResDto language = new CandidateLanguageResDto();
-			language.setCandidateId(candidateLanguage.get(i).getCandidateUser().getId());
 			language.setLanguageName(candidateLanguage.get(i).getLanguageName());
 			language.setId(candidateLanguage.get(i).getId());
 			language.setListeningRate(candidateLanguage.get(i).getListeningRate());
 			language.setSpeakingRate(candidateLanguage.get(i).getSpeakingRate());
 			language.setWritingRate(candidateLanguage.get(i).getWritingRate());
+			
 			candidateLanguageResList.add(language);
 		}
 		return candidateLanguageResList;
@@ -57,7 +57,7 @@ public class CandidateLanguageService {
 			candidateLanguage.setListeningRate(data.getLanguageName());
 			candidateLanguage.setSpeakingRate(data.getSpeakingRate());
 			candidateLanguage.setWritingRate(data.getWritingRate());
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			candidateLanguage.setCandidateUser(candidateUser);
 			candidateLanguage.setCreatedBy("ID Principal");
 			final CandidateLanguage languageId = candidateLanguageDao.save(candidateLanguage);
@@ -79,7 +79,7 @@ public class CandidateLanguageService {
 			candidateLanguage.setListeningRate(data.getLanguageName());
 			candidateLanguage.setSpeakingRate(data.getSpeakingRate());
 			candidateLanguage.setWritingRate(data.getWritingRate());
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			candidateLanguage.setCandidateUser(candidateUser);
 			candidateLanguage.setUpdatedBy("ID Principal");
 			final CandidateLanguage languageId = candidateLanguageDao.saveAndFlush(candidateLanguage);

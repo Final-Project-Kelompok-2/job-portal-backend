@@ -48,7 +48,6 @@ public class CandidateWorkExpService {
 			work.setLastSalary(works.get(i).getLastSalary());
 			work.setStartDate(works.get(i).getStartDate().toString());
 			work.setEndDate(works.get(i).getEndDate().toString());
-			work.setCandidateId(works.get(i).getCandidateUser().getId());
 
 			worksDto.add(work);
 		}
@@ -72,7 +71,7 @@ public class CandidateWorkExpService {
 			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
 			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			work.setCandidateUser(candidate);
 			work.setCreatedBy("ID Principal");
 
@@ -107,7 +106,7 @@ public class CandidateWorkExpService {
 			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
 			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			work.setCandidateUser(candidate);
 			work.setUpdatedBy("ID Principal");
 

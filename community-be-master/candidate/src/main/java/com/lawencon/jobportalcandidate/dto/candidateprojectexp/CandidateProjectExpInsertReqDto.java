@@ -1,12 +1,12 @@
 package com.lawencon.jobportalcandidate.dto.candidateprojectexp;
 
 public class CandidateProjectExpInsertReqDto {
+	
 	private String projectName;
 	private String projectUrl;
 	private String description;
 	private String startDate;
 	private String endDate;
-	private String candidateId;
 
 	public String getProjectName() {
 		return projectName;
@@ -46,14 +46,6 @@ public class CandidateProjectExpInsertReqDto {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
 	}
 
 }
