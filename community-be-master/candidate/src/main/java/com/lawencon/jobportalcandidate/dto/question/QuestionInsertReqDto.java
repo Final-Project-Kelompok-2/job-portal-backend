@@ -1,8 +1,9 @@
-package com.lawencon.jobportaladmin.dto.question;
+package com.lawencon.jobportalcandidate.dto.question;
 
 import java.util.List;
 
-import com.lawencon.jobportaladmin.dto.questionoption.QuestionOptionInsertReqDto;
+import com.lawencon.jobportalcandidate.dto.questionoption.QuestionOptionInsertReqDto;
+
 
 
 public class QuestionInsertReqDto {

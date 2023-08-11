@@ -748,9 +748,6 @@ ALTER TABLE t_review_detail ADD CONSTRAINT t_review_id_fk
 FOREIGN KEY(review_id)
 REFERENCES t_review(id);
 
-
-
-
 CREATE TABLE t_assesment(
 	id varchar(36) NOT NULL,
 	assesment_date timestamp NOT NULL,
@@ -785,7 +782,6 @@ ALTER TABLE t_interview ADD CONSTRAINT t_interview_pk PRIMARY KEY(id);
 ALTER TABLE t_interview ADD CONSTRAINT t_interview_applicant_fk
 FOREIGN KEY(applicant_id)
 REFERENCES t_applicant(id);
-
 
 CREATE TABLE t_mcu(
 	id varchar(36) NOT NULL,
@@ -1022,3 +1018,12 @@ ON
 	tet.id = tj.employment_type_id
 
 --				 WHERE 
+
+select * from t_candidate_user;
+select * from t_candidate_documents tcd ;
+select * from t_candidate_address tca ;
+select * from t_applicant ta ;
+select * from t_review tr ;
+select * from t_interview ti ;
+select * from t_hiring_status ths;
+

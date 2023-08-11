@@ -23,7 +23,6 @@ public class JobController {
 	
 	@Autowired
 	private JobService jobService;
-
 	
 	@GetMapping
 	public ResponseEntity<List<JobResDto>> getAll(){
@@ -34,8 +33,6 @@ public class JobController {
 	@PostMapping
 	public ResponseEntity<InsertResDto> insertJob(@RequestBody JobInsertReqDto job){
 		InsertResDto  response = jobService.insertJob(job);	
-		
-		
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 	

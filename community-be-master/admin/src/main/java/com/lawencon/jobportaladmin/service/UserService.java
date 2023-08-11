@@ -36,7 +36,7 @@ public class UserService implements UserDetailsService{
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	
+
 	@Autowired
 	private ProfileDao profileDao;
 

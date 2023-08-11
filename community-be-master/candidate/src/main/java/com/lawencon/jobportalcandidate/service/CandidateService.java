@@ -1,16 +1,24 @@
 package com.lawencon.jobportalcandidate.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportalcandidate.dao.CandidateProfileDao;
 import com.lawencon.jobportalcandidate.dao.CandidateStatusDao;
 import com.lawencon.jobportalcandidate.dao.CandidateTrainingExpDao;
@@ -48,6 +56,9 @@ public class CandidateService implements UserDetailsService{
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
@@ -121,11 +132,38 @@ public class CandidateService implements UserDetailsService{
 
 			candidateUserDao.save(candidateuser);
 
+//			final String jobInsertCandidateAPI = "http://localhost:8080/candidate-user";
+//			
+//			final HttpHeaders headers = new HttpHeaders();
+//		    headers.setContentType(MediaType.APPLICATION_JSON);
+//		    headers.setBearerAuth(JwtConfig.get());
+//			
+//			final RequestEntity<JobInsertReqDto> jobInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(jobDto);
+//			
+//			final ResponseEntity<InsertResDto> responseCandidate  =restTemplate.exchange(jobInsert,InsertResDto.class);
+//			
+		
+//			if(responseCandidate.getStatusCode().equals(HttpStatus.CREATED)){
+				
+//				result = new InsertResDto();
+//				result.setId(job.getId());
+//				result.setMessage("New job vacancy added!");
+//				em().getTransaction().commit();
+//			}
+//			else {
+//				em().getTransaction().rollback();
+//				
+//				throw new RuntimeException("Insert Failed");
+//				
+//			}
+			
 			result = new InsertResDto();
 			result.setId(candidateuser.getId());
 			result.setMessage("Welcome new Member!");
 
 			em().getTransaction().commit();
+			
+			
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
@@ -212,8 +250,14 @@ public class CandidateService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		final CandidateUser candidateUser = candidateUserDao.getByUsername(username);
+
+		if (candidateUser != null) {
+			return new org.springframework.security.core.userdetails.User(username, candidateUser.getUserPassword(),
+					new ArrayList<>());
+		}
+
+		throw new UsernameNotFoundException("Email / Password salah");
 	}
 
 }
