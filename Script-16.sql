@@ -141,7 +141,7 @@ CREATE TABLE t_candidate_profile (
 	person_type_id VARCHAR(36) ,
 	file_id VARCHAR(36) ,
 	candidate_status_id VARCHAR(36) ,
-	created_by int NOT NULL,
+	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by int,
 	updated_at timestamp,
@@ -966,7 +966,6 @@ insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_
 (uuid_generate_v4(),'S-004','MCU',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-005','OFFERING',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-006','HIRED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
-
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 --
 --
@@ -1026,4 +1025,8 @@ select * from t_applicant ta ;
 select * from t_review tr ;
 select * from t_interview ti ;
 select * from t_hiring_status ths;
+select * from t_question;
+select * from t_question_option tqo ;
+SELECT * FROM t_person_type tpt ;
 
+select * from t_candidate_profile tcp ;

@@ -98,6 +98,8 @@ public class UserService implements UserDetailsService{
 			profile.setPersonType(personType);
 			profile.setCreatedBy(principalService.getAuthPrincipal());
 			
+			
+			
 			File photo = new File();
 			photo.setFileName(userData.getPhotoName());
 			photo.setFileExtension(userData.getExtensionName());
@@ -107,9 +109,10 @@ public class UserService implements UserDetailsService{
 			profile =profileDao.save(profile);
 			newUser.setProfile(profile);
 			
-			
-			
+				
 			insertResDto.setMessage("Insert User Success");
+			
+			
 			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
