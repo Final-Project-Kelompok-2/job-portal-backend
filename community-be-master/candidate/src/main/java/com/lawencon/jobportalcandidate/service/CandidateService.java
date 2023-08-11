@@ -56,14 +56,6 @@ public class CandidateService implements UserDetailsService{
 	private CandidateStatusDao candidateStatusDao;
 
 	@Autowired
-	private CandidateTrainingExpDao candidateTrainingDao;
-	@Autowired
-	private CandidateWorkExpDao candidateWorkExpDao;
-    @Autowired
-    private FileTypeDao fileTypeDao;
-
-
-	@Autowired
 	private FileDao fileDao;
 	
 	@Autowired
