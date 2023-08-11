@@ -5,7 +5,6 @@ import com.lawencon.jobportaladmin.dto.candidateprofile.CandidateProfileInsertRe
 public class CandidateUserInsertReqDto {
 
 	private String userEmail;
-	private String userPassword;
 	private CandidateProfileInsertReqDto profile;
 
 	public String getUserEmail() {
@@ -14,14 +13,6 @@ public class CandidateUserInsertReqDto {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
 	}
 
 	public CandidateProfileInsertReqDto getProfile() {

@@ -18,6 +18,7 @@ import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferenc
 import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateReferences;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.security.principal.PrincipalService;
 
 public class CandidateReferencesService {
 
@@ -30,6 +31,9 @@ public class CandidateReferencesService {
 	
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 	
 	public List<CandidateReferencesResDto> getReferencesByCandidate(String id) {
 		final List<CandidateReferencesResDto> referencesDto = new ArrayList<>();
@@ -66,7 +70,7 @@ public class CandidateReferencesService {
 			reference.setEmail(data.getEmail());
 			reference.setCompany(data.getCompany());
 			reference.setDescription(data.getDescription());
-			
+			reference.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			reference.setCandidateUser(candidate);
 			
@@ -96,7 +100,7 @@ public class CandidateReferencesService {
 			reference.setEmail(data.getEmail());
 			reference.setCompany(data.getCompany());
 			reference.setDescription(data.getDescription());
-			
+			reference.setUpdatedBy(principalService.getAuthPrincipal());
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			reference.setCandidateUser(candidate);
 			

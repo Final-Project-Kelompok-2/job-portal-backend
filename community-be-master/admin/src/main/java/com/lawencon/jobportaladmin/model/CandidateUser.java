@@ -14,8 +14,6 @@ public class CandidateUser extends BaseEntity {
 	@Column(name = "user_email", length = 50, nullable = false)
 	private String userEmail;
 
-	@Column(name = "user_password", nullable = false)
-	private String userPassword;
 
 	@OneToOne
 	@JoinColumn(name = "profile_id")
@@ -27,14 +25,6 @@ public class CandidateUser extends BaseEntity {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
 	}
 
 	public CandidateProfile getCandidateProfile() {

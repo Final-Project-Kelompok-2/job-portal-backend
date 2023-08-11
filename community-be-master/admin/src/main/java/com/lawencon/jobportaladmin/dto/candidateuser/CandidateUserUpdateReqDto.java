@@ -6,7 +6,6 @@ public class CandidateUserUpdateReqDto {
 
 	private String id;
 	private String userEmail;
-	private String userPassword;
 	private CandidateProfileUpdateReqDto profile;
 
 	public String getId() {
@@ -23,14 +22,6 @@ public class CandidateUserUpdateReqDto {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
 	}
 
 	public CandidateProfileUpdateReqDto getProfile() {
