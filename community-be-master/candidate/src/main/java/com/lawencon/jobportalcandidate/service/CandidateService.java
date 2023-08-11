@@ -11,30 +11,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.jobportalcandidate.dao.CandidateAddressDao;
-import com.lawencon.jobportalcandidate.dao.CandidateDocumentsDao;
-import com.lawencon.jobportalcandidate.dao.CandidateEducationDao;
-import com.lawencon.jobportalcandidate.dao.CandidateFamilyDao;
-import com.lawencon.jobportalcandidate.dao.CandidateLanguageDao;
 import com.lawencon.jobportalcandidate.dao.CandidateProfileDao;
-import com.lawencon.jobportalcandidate.dao.CandidateProjectExpDao;
-import com.lawencon.jobportalcandidate.dao.CandidateReferencesDao;
-import com.lawencon.jobportalcandidate.dao.CandidateSkillDao;
 import com.lawencon.jobportalcandidate.dao.CandidateStatusDao;
-import com.lawencon.jobportalcandidate.dao.CandidateTrainingExpDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
-import com.lawencon.jobportalcandidate.dao.CandidateWorkExpDao;
 import com.lawencon.jobportalcandidate.dao.FileDao;
-import com.lawencon.jobportalcandidate.dao.FileTypeDao;
 import com.lawencon.jobportalcandidate.dao.MartialStatusDao;
 import com.lawencon.jobportalcandidate.dao.PersonTypeDao;
 import com.lawencon.jobportalcandidate.dao.ReligionDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterInsertReqDto;
+import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
+import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
+
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserResDto;
+
 import com.lawencon.jobportalcandidate.login.LoginReqDto;
 import com.lawencon.jobportalcandidate.login.LoginResDto;
+
 import com.lawencon.jobportalcandidate.model.CandidateProfile;
 import com.lawencon.jobportalcandidate.model.CandidateStatus;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
@@ -53,26 +48,13 @@ public class CandidateService implements UserDetailsService{
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
-	@Autowired
-	private CandidateAddressDao candidateAddressDao;
-	@Autowired
-	private CandidateDocumentsDao candidateDocumentDao;
-	@Autowired
-	private CandidateEducationDao candidateEducationDao;
-	@Autowired
-	private CandidateFamilyDao candidateFamilyDao;
-	@Autowired
-	private CandidateLanguageDao candidateLanguageDao;
+	
 	@Autowired
 	private CandidateProfileDao candidateProfileDao;
-	@Autowired
-	private CandidateProjectExpDao candidateProjectExpDao;
-	@Autowired
-	private CandidateReferencesDao candidateReferencesDao;
-	@Autowired
-	private CandidateSkillDao candidateSkillDao;
+	
 	@Autowired
 	private CandidateStatusDao candidateStatusDao;
+
 	@Autowired
 	private CandidateTrainingExpDao candidateTrainingDao;
 	@Autowired
@@ -80,16 +62,51 @@ public class CandidateService implements UserDetailsService{
     @Autowired
     private FileTypeDao fileTypeDao;
 
+
 	@Autowired
 	private FileDao fileDao;
+	
 	@Autowired
 	private MartialStatusDao maritalStatusDao;
+	
 	@Autowired
 	private ReligionDao religionDao;
+	
 	@Autowired
 	private PersonTypeDao personTypeDao;
+	
 	@Autowired
 	private PrincipalService<String> principalService;
+	
+	public CandidateMasterResDto getCandidateProfile(String id) {
+		final CandidateMasterResDto data = new CandidateMasterResDto();
+		
+		final CandidateUserResDto candidateuserDto = new CandidateUserResDto();
+		final CandidateUser candidateuser = candidateUserDao.getById(CandidateUser.class, id);
+		candidateuserDto.setId(candidateuser.getId());
+		candidateuserDto.setUserEmail(candidateuser.getUserEmail());
+		candidateuserDto.setUserPassword(candidateuser.getUserPassword());
+		
+		final CandidateProfileResDto candidateprofileDto = new CandidateProfileResDto();
+		final CandidateProfile candidateprofile = candidateProfileDao.getById(CandidateProfile.class, candidateuser.getCandidateProfile().getId());
+		candidateprofileDto.setId(candidateprofile.getId());
+		candidateprofileDto.setFullname(candidateprofile.getFullname());
+		candidateprofileDto.setGender(candidateprofile.getGender());
+		candidateprofileDto.setExperience(candidateprofile.getExperience());
+		candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary().toString());
+		candidateprofileDto.setPhoneNumber(candidateprofile.getPhoneNumber());
+		candidateprofileDto.setMobileNumber(candidateprofile.getMobileNumber());
+		candidateprofileDto.setNik(candidateprofile.getNik());
+		candidateprofileDto.setBirthDate(candidateprofile.getBirthDate().toString());
+		candidateprofileDto.setBirthPlace(candidateprofile.getBirthPlace());
+		candidateprofileDto.setMaritalStatusId(candidateprofile.getMaritalStatus().getId());
+		data.setCandidateProfile(candidateprofileDto);
+		
+		candidateuserDto.setProfileId(candidateprofile.getId());
+		data.setCandidateUser(candidateuserDto);
+		
+		return data;
+	}
 
 	public InsertResDto InsertCandidate(CandidateMasterInsertReqDto data) {
 		InsertResDto result = null;
