@@ -29,6 +29,8 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 
 	@Autowired
 	private List<RequestMatcher> matchers;
+	
+
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, 
@@ -41,10 +43,12 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 			if (header != null) {
 				final String jwt = header.replaceFirst("Bearer ", "");
 				try {					
+					
 					final Map<String, Object> map = jwtService.parseJwt(jwt);
 					
 					final Authentication auth = new UsernamePasswordAuthenticationToken(map.get("id"), null);
 				 	SecurityContextHolder.getContext().setAuthentication(auth);
+				 	
 					
 				} catch (Exception e) {
 					e.printStackTrace() ;

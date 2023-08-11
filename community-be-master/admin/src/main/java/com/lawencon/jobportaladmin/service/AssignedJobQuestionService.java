@@ -18,6 +18,7 @@ import com.lawencon.jobportaladmin.dto.assignedjobquestion.AssignedJobQuestionRe
 import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
 import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.Question;
+import com.lawencon.security.principal.PrincipalService;
 
 
 @Service
@@ -33,7 +34,7 @@ public class AssignedJobQuestionService {
 	@Autowired
 	private QuestionDao questionDao;
 	@Autowired
-	private PrincipalService principalService;
+	private PrincipalService<String> principalService;
 	
 	public List<AssignedJobQuestionResDto> getAssignedJobQuestionByJob(String jobId){
 		final List<AssignedJobQuestion> assignedJobQuestion = assignedJobQuestionDao.getByJob(jobId);

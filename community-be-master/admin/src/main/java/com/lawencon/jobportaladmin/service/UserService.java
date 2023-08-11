@@ -26,6 +26,7 @@ import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Profile;
 import com.lawencon.jobportaladmin.model.Role;
 import com.lawencon.jobportaladmin.model.User;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -42,7 +43,7 @@ public class UserService implements UserDetailsService{
 	private UserDao userDao;
 	
 	@Autowired
-	private PrincipalService principalService;
+	private PrincipalService<String> principalService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -104,7 +105,8 @@ public class UserService implements UserDetailsService{
 			photo = fileDao.save(photo);
 			profile =profileDao.save(profile);
 			newUser.setProfile(profile);
-						
+			
+			
 			
 			insertResDto.setMessage("Insert User Success");
 			em().getTransaction().commit();
