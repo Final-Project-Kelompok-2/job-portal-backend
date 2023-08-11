@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.dao;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,5 +138,56 @@ public class JobDao extends AbstractJpaDao  {
 		}
 		
 		return jobs;
+	}
+	
+	public Job getByCode(String code) {
+		final String sql = "SELECT j.id,j.jobCode,j.jobName, "
+				+ "j.Company.companyName, j.Company.companyCode, j.startDate,j.endDate, "
+				+ "j.description , j.expectedSalaryMin,j.expectedSalaryMax, "
+				+ "j.employmentType.employmentTypeCode, j.employmentType.employmentTypeName, "
+				+ "j.jobPicture.fileName , j.jobPicture.id , j.jobPicture.fileExtension, "
+				+ "j.createdBy , j.createdAt , j.isActive, j.version  "
+				+ " FROM Job j "
+				+ " WHERE j.jobCode = :code";
+		
+		final Object jobObj = em().createQuery(sql)
+				.setParameter("code", code)
+				.getSingleResult();
+		
+		final Object[] jobArr = (Object[]) jobObj;
+		final Job job = new Job();
+		job.setId(jobArr[0].toString());
+		job.setJobCode(jobArr[1].toString());
+		job.setJobName(jobArr[2].toString());
+		
+		final Company company = new Company();
+		company.setCompanyName(jobArr[3].toString());
+		company.setCompanyCode(jobArr[4].toString());
+		job.setCompany(company);
+		
+		job.setStartDate(LocalDate.parse(jobArr[5].toString()));
+		job.setEndDate(LocalDate.parse(jobArr[6].toString()));
+		job.setDescription(jobArr[7].toString());
+		job.setExpectedSalaryMin(Integer.valueOf(jobArr[8].toString()));
+		job.setExpectedSalaryMax(Integer.valueOf(jobArr[9].toString()));
+		
+		final EmploymentType type = new EmploymentType();
+		type.setEmploymentTypeCode(jobArr[10].toString());
+		type.setEmploymentTypeName(jobArr[11].toString());
+		job.setEmploymentType(type);
+		
+		final File file = new File();
+		file.setFileName(jobArr[12].toString());
+		file.setId(jobArr[13].toString());
+		file.setFileExtension(jobArr[14].toString());
+		job.setJobPicture(file);
+		
+		job.setCreatedBy(jobArr[15].toString());
+		job.setCreatedAt(LocalDateTime.parse(jobArr[16].toString()));
+		job.setIsActive(Boolean.valueOf(jobArr[17].toString()));
+		job.setVersion(Integer.valueOf(jobArr[18].toString()));
+		
+		
+		return job;
 	}
 }
