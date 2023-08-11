@@ -3,12 +3,13 @@ package com.lawencon.jobportalcandidate.dto.job;
 public class JobInsertReqDto {
 
 	private String jobName;
+	private String jobCode;
 	private String companyId;
 	private String startDate;
 	private String endDate;
 	private String description;
-	private String expectedSalaryMin;
-	private String expectedSalaryMax;
+	private Integer expectedSalaryMin;
+	private Integer expectedSalaryMax;
 	private String employmentTypeId;
 	private String file;
 	private String fileExtension;
@@ -53,22 +54,6 @@ public class JobInsertReqDto {
 		this.description = description;
 	}
 
-	public String getExpectedSalaryMin() {
-		return expectedSalaryMin;
-	}
-
-	public void setExpectedSalaryMin(String expectedSalaryMin) {
-		this.expectedSalaryMin = expectedSalaryMin;
-	}
-
-	public String getExpectedSalaryMax() {
-		return expectedSalaryMax;
-	}
-
-	public void setExpectedSalaryMax(String expectedSalaryMax) {
-		this.expectedSalaryMax = expectedSalaryMax;
-	}
-
 	public String getEmploymentTypeId() {
 		return employmentTypeId;
 	}
@@ -91,6 +76,30 @@ public class JobInsertReqDto {
 
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
+	}
+
+	public Integer getExpectedSalaryMin() {
+		return expectedSalaryMin;
+	}
+
+	public void setExpectedSalaryMin(Integer expectedSalaryMin) {
+		this.expectedSalaryMin = expectedSalaryMin;
+	}
+
+	public Integer getExpectedSalaryMax() {
+		return expectedSalaryMax;
+	}
+
+	public void setExpectedSalaryMax(Integer expectedSalaryMax) {
+		this.expectedSalaryMax = expectedSalaryMax;
+	}
+
+	public String getJobCode() {
+		return jobCode;
+	}
+
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
 	}
 
 }

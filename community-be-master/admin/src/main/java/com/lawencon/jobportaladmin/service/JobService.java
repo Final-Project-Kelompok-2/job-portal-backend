@@ -7,13 +7,21 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportaladmin.dao.CompanyDao;
 import com.lawencon.jobportaladmin.dao.EmploymentTypeDao;
 import com.lawencon.jobportaladmin.dao.FileDao;
 import com.lawencon.jobportaladmin.dao.JobDao;
+import com.lawencon.jobportaladmin.dao.UserDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.job.JobInsertReqDto;
@@ -23,6 +31,8 @@ import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.EmploymentType;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.Job;
+import com.lawencon.jobportaladmin.model.User;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -46,6 +56,12 @@ public class JobService {
 	
 	@Autowired
 	private PrincipalService<String> principalService;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	public List<JobResDto> getAllJobs() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
@@ -72,21 +88,29 @@ public class JobService {
 	}
 
 	public InsertResDto insertJob(JobInsertReqDto jobDto) {
-		final Job job = new Job();
+	
 
 		InsertResDto result = null;
 
 		try {
 			em().getTransaction().begin();
+			final Job job = new Job();
 			job.setJobName(jobDto.getJobName());
-
+			
 			final Company company = companyDao.getById(Company.class, jobDto.getCompanyId());
 			job.setCompany(company);
 			job.setStartDate(LocalDate.parse(jobDto.getStartDate()));
 			job.setEndDate(LocalDate.parse(jobDto.getEndDate()));
 			job.setDescription(jobDto.getDescription());
-			job.setExpectedSalaryMin(Integer.valueOf(jobDto.getExpectedSalaryMin()));
-			job.setExpectedSalaryMax(Integer.valueOf(jobDto.getExpectedSalaryMax()));
+			job.setJobCode(GenerateCode.generateCode());
+			jobDto.setJobCode(job.getJobCode());
+			
+			final User hr = userDao.getById(User.class, jobDto.getHrId());
+			final User pic = userDao.getById(User.class, jobDto.getPicId());
+			job.setHr(hr);
+			job.setPic(pic);
+			job.setExpectedSalaryMin(jobDto.getExpectedSalaryMin());
+			job.setExpectedSalaryMax(jobDto.getExpectedSalaryMax());
 
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);
@@ -100,10 +124,31 @@ public class JobService {
 			job.setCreatedBy(principalService.getAuthPrincipal());
 			jobDao.save(job);
 
-			result = new InsertResDto();
-			result.setId(job.getId());
-			result.setMessage("New job vacancy added!");
-			em().getTransaction().commit();
+			
+			final String jobInsertCandidateAPI = "http://localhost:8081/jobs";
+			
+			final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.APPLICATION_JSON);
+		    headers.setBearerAuth(JwtConfig.get());
+			
+			final RequestEntity<JobInsertReqDto> jobInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(jobDto);
+			
+			final ResponseEntity<InsertResDto> responseCandidate  =restTemplate.exchange(jobInsert,InsertResDto.class);
+			
+		
+			if(responseCandidate.getStatusCode().equals(HttpStatus.CREATED)){
+				
+				result = new InsertResDto();
+				result.setId(job.getId());
+				result.setMessage("New job vacancy added!");
+				em().getTransaction().commit();
+			}
+			else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+				
+			}
+	
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 		}
