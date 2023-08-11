@@ -3,24 +3,49 @@ package com.lawencon.jobportalcandidate.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lawencon.base.ConnHandler;
+import com.lawencon.jobportalcandidate.dao.CompanyDao;
+import com.lawencon.jobportalcandidate.dao.EmploymentTypeDao;
+import com.lawencon.jobportalcandidate.dao.FileDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
+import com.lawencon.jobportalcandidate.dto.InsertResDto;
+import com.lawencon.jobportalcandidate.dto.job.JobInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.job.JobResDto;
+import com.lawencon.jobportalcandidate.model.Company;
+import com.lawencon.jobportalcandidate.model.EmploymentType;
+import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
+import com.lawencon.jobportalcandidate.util.DateUtil;
 
 @Service
 public class JobService {
 
 	@Autowired
 	private JobDao jobDao;
-	
+
+	@Autowired
+	private CompanyDao companyDao;
+
+	@Autowired
+	private EmploymentTypeDao employmentTypeDao;
+
+	@Autowired
+	private FileDao fileDao;
+
+	private EntityManager em() {
+		return ConnHandler.getManager();
+	}
+
 	public List<JobResDto> getJobs() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getAll(Job.class);
-		
-		for (int i=0; i<jobs.size(); i++) {
+
+		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
 			job.setJobName(jobs.get(i).getJobName());
@@ -33,18 +58,18 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			
+
 			jobsDto.add(job);
 		}
-		
+
 		return jobsDto;
 	}
-	
+
 	public List<JobResDto> getJobsByCompany(String code) {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByCompany(code);
-		
-		for (int i=0; i<jobs.size(); i++) {
+
+		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
 			job.setJobName(jobs.get(i).getJobName());
@@ -57,18 +82,18 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			
+
 			jobsDto.add(job);
 		}
-		
+
 		return jobsDto;
 	}
-	
+
 	public List<JobResDto> getJobsBySalary(Float salary) {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getBySalary(salary);
-		
-		for (int i=0; i<jobs.size(); i++) {
+
+		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
 			job.setJobName(jobs.get(i).getJobName());
@@ -81,13 +106,56 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			
+
 			jobsDto.add(job);
 		}
-		
+
 		return jobsDto;
 	}
-	
-	
+
+	public InsertResDto insertJob(JobInsertReqDto job) {
+
+		final InsertResDto insertResDto = new InsertResDto();
+
+		try {
+			em().getTransaction().begin();
+
+			Job newJob = new Job();
+			newJob.setJobName(job.getJobName());
+			newJob.setJobCode(job.getJobCode());
+			
+			final Company company = companyDao.getById(Company.class, job.getCompanyId());
+			newJob.setCompany(company);
+			newJob.setStartDate(DateUtil.parseStringToLocalDate(job.getStartDate()));
+			newJob.setEndDate(DateUtil.parseStringToLocalDate(job.getEndDate()));
+			newJob.setDescription(job.getDescription());
+			newJob.setExpectedSalaryMin(job.getExpectedSalaryMin());
+			newJob.setExpectedSalaryMax(job.getExpectedSalaryMax());
+
+			final EmploymentType employmentType = employmentTypeDao.getById(EmploymentType.class,
+					job.getEmploymentTypeId());
+			newJob.setEmploymentType(employmentType);
+
+			File photo = new File();
+			photo.setFileName(job.getFile());
+			photo.setFileExtension(job.getFileExtension());
+
+			photo = fileDao.save(photo);
+			newJob.setJobPicture(photo);
+			newJob = jobDao.save(newJob);
+			
+			insertResDto.setId(newJob.getId());
+			insertResDto.setMessage("Insert job success");
+			em().getTransaction().commit();
+
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+			throw new RuntimeException("Insert Failed");
+		}
+
+		return insertResDto;
+
+	}
 
 }

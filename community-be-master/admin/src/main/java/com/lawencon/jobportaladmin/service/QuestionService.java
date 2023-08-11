@@ -34,11 +34,7 @@ public class QuestionService {
 	
 	@Autowired
 	private AssignedJobQuestionDao assignedJobQuestionDao;
-	
-	@Autowired
-	private PrincipalService<String> principalService;
-	
-	
+
 	
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -56,7 +52,6 @@ public class QuestionService {
 				Question newQuestion = new Question();
 				newQuestion.setQuestionDetail(question.getQuestionDetail());
 				newQuestion.setQuestionCode(GenerateCode.generateCode());
-				newQuestion.setCreatedBy(principalService.getAuthPrincipal());
 
 				newQuestion = questionDao.save(newQuestion);
 				
@@ -67,7 +62,6 @@ public class QuestionService {
 					newOption.setOptionLabel(option.getOptionLabel());
 					newOption.setIsCorrect(option.getIsCorrect());
 					newOption.setQuestion(newQuestion);
-					newOption.setCreatedBy(principalService.getAuthPrincipal());
 					newOption = questionOptionDao.save(newOption);
 				}
 			}

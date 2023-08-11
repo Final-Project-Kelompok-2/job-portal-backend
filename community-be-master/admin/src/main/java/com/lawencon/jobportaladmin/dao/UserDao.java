@@ -1,5 +1,8 @@
 package com.lawencon.jobportaladmin.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -60,7 +63,52 @@ public class UserDao extends AbstractJpaDao{
 			}
 			
 			return userGet;
-	
 	}
+	
+	
+	public List<User> getByRoleCode(String roleCode){
+		final String sql = "SELECT tu.id ,"
+				+ " tu.is_active, " 
+				+ "	tu.profile_id, "
+				+ " tp.full_name, "
+				+ " tr.role_code,"
+				+ " tp.photo_id "
+				+ " FROM t_user tu"
+				+ " INNER JOIN t_role tr ON tr.id = tu.role_id "
+				+ " INNER JOIN t_profile tp ON tp.id = tu.profile_id " 
+				+ " WHERE tr.role_code = :roleCode";
+		
+		
+		final List<?> userObjs = em().createNativeQuery(sql).setParameter("roleCode", roleCode).getResultList();
+		
+		final List<User>users = new ArrayList<>();
+		if(userObjs.size()>0) {
+			for(Object userObj:userObjs) {
+				final Object[]userObjArr = (Object[])userObj;
+				final User userGet = new User();
+				userGet.setId(userObjArr[0].toString());
+				userGet.setIsActive(Boolean.valueOf(userObjArr[1].toString()));
+				
+				final Profile profile = new Profile();
+				profile.setId(userObjArr[2].toString());
+				profile.setFullName(userObjArr[3].toString());
+				
+				final Role role = new Role();
+				role.setRoleCode(userObjArr[4].toString());
+				userGet.setRole(role);
+				
+				final File photo = new File();
+				photo.setId(userObjArr[5].toString());
+				
+				profile.setPhoto(photo);
+				userGet.setProfile(profile);
+			
+				users.add(userGet);
+			}
+		}
+		
+		return users;
+	}
+	
 	
 }

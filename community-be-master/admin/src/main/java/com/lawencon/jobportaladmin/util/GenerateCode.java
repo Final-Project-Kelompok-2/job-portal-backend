@@ -3,6 +3,7 @@ package com.lawencon.jobportaladmin.util;
 import java.util.Random;
 
 public class GenerateCode {
+	
 		public static String generateCode() {
 
 		 final String alphaNumericStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890123456789";

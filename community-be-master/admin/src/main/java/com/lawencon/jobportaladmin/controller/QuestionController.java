@@ -19,7 +19,6 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
-	
 	@PostMapping
 	public ResponseEntity<InsertResDto> insertQuestion(@RequestBody QuestionsInsertReqDto data) {
 		final InsertResDto response = questionService.insertQuestion(data);

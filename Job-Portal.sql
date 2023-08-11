@@ -759,14 +759,14 @@ INSERT INTO t_candidate_references (id, fullname, relationship, occupation, phon
 
 --SELECT * FROM t_employment_type tet;
 INSERT INTO t_employment_type (id,employment_type_code,employment_type_name,created_by,created_at,updated_by,updated_at,is_active,ver) VALUES
-	(uuid_generate_v4(),'ET-01','INTERN',1,NOW(),1,NOW(),TRUE,1),
+	('fe23ee8e-757f-4546-83e8-66694fcf8e51','ET-01','INTERN',1,NOW(),1,NOW(),TRUE,1),
 	(uuid_generate_v4(),'ET-02','PART TIME',1,NOW(),1,NOW(),TRUE,1),
 	(uuid_generate_v4(),'ET-03','CONTRACT',1,NOW(),1,NOW(),TRUE,1),
 	(uuid_generate_v4(),'ET-04','FULL TIME',1,NOW(),1,NOW(),TRUE,1);
 
 --SELECT * FROM t_company tc;
 INSERT INTO t_company (id, company_code, company_name, address, company_url, company_phone, photo_id, created_by, created_at, is_active, ver) VALUES 
-	(uuid_generate_v4(), 'LWC', 'PT. Lawencon International', 'Pakuwon Tower, Jakarta', 'www.lawencon.com', '08151321554', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0),
+	('a2fa60d7-89ca-478b-a851-542138b87d56', 'LWC', 'PT. Lawencon International', 'Pakuwon Tower, Jakarta', 'www.lawencon.com', '08151321554', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0),
 	(uuid_generate_v4(), 'SHP', 'PT. Shopee Indonesia', 'Pakuwon Tower, Jakarta', 'www.shopee.com', '08156541554', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0),
 	(uuid_generate_v4(), 'LWS', 'PT. Lawson International', 'Menteng Tower, Bandung', 'www.lawson.com', '08151378954', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0),
 	(uuid_generate_v4(), 'KBJ', 'PT. Kebinekaan Jaya', 'Graha Tower, Jakarta', 'www.bhineka.com', '08151300054', (SELECT id FROM t_file WHERE filename = 'CompanyPhoto'), 1, now(), true, 0);
@@ -835,4 +835,25 @@ INSERT INTO t_assigned_job_question (id, job_id, question_id, created_by, create
 	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0);
 	
 
+select * from t_candidate_user;
+select * from t_candidate_profile tcp ;
+select * from t_candidate_address tca ;
+
+select * from t_candidate_profile tcp ;
+select * from t_job tj ;
+
+SELECT tu.id , tu.user_password,  tu.is_active, 	tu.profile_id,  tp.fullname,  tp.file_id  FROM t_candidate_user tu INNER JOIN t_candidate_profile tp ON tp.id = tu.profile_id  WHERE tu.user_email = :email ;
+select * from t_company tc ;
+ select * from t_job;
+
+select * from t_employment_type tet ;
+
+--DELETE FROM t_employment_type ;
+--DELETE FROM t_applicant ;
+--DELETE FROM t_assigned_job_question ;
+--DELETE FROM t_saved_job ;
+--DELETE FROM t_job;
+--DELETE FROM t_company;
+
+ 
 --CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
