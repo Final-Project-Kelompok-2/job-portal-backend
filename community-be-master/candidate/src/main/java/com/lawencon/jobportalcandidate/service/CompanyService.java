@@ -10,8 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CompanyDao;
+import com.lawencon.jobportalcandidate.dao.FileDao;
+import com.lawencon.jobportalcandidate.dto.InsertResDto;
+import com.lawencon.jobportalcandidate.dto.UpdateResDto;
+import com.lawencon.jobportalcandidate.dto.company.CompanyInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.company.CompanyResDto;
+import com.lawencon.jobportalcandidate.dto.company.CompanyUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.Company;
+import com.lawencon.jobportalcandidate.model.File;
 
 @Service
 public class CompanyService {
@@ -22,7 +28,8 @@ public class CompanyService {
 	
 	@Autowired
 	private CompanyDao companyDao;
-
+	@Autowired
+	private FileDao fileDao;
 	public List<CompanyResDto> getAllCompany() {
 		final List<Company> company = companyDao.getAll(Company.class);
 		final List<CompanyResDto> companyResList = new ArrayList<>();
@@ -41,6 +48,65 @@ public class CompanyService {
 		}
 		
 		return companyResList;
+	}
+	public InsertResDto insertCompany(CompanyInsertReqDto data) {
+		final Company company = new Company();
+		final InsertResDto insertRes = new InsertResDto();
+		try {
+			em().getTransaction().begin();
+			company.setCompanyName(data.getCompanyName());
+			company.setCompanyCode(data.getCompanyCode());
+			company.setCompanyPhone(data.getCompanyPhone());
+			if (data.getCompanyUrl() != null) {
+				company.setCompanyUrl(data.getCompanyUrl());
+			}
+			final File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
+			file.setCreatedBy("Id principal");
+			fileDao.save(file);
+			company.setCreatedBy("Id Principal");
+			final Company companyId = companyDao.save(company);
+			insertRes.setId(companyId.getId());
+			insertRes.setMessage("Company Insert Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			em().getTransaction().rollback();
+			
+		}
+
+		return insertRes;
+	}
+	
+	public UpdateResDto updateCompany(CompanyUpdateReqDto data) {
+		final Company company = companyDao.getById(Company.class, data.getId());
+		final UpdateResDto updateRes = new UpdateResDto();
+		try {
+			em().getTransaction().begin();
+			company.setCompanyName(data.getCompanyName());
+			company.setCompanyCode(data.getCompanyCode());
+			company.setCompanyPhone(data.getCompanyPhone());
+			if (data.getCompanyUrl() != null) {
+				company.setCompanyUrl(data.getCompanyUrl());
+			}
+			final File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
+			file.setCreatedBy("Id principal");
+			fileDao.save(file);
+			company.setCreatedBy("Id Principal");
+			final Company companyId = companyDao.saveAndFlush(company);
+			updateRes.setVersion(companyId.getVersion());
+			updateRes.setMessage("Company Update Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			em().getTransaction().rollback();
+			
+		}
+
+		return updateRes;
 	}
 
 }
