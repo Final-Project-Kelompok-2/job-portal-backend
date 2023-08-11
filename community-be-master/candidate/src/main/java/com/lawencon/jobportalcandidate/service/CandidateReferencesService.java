@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CandidateReferencesDao;
@@ -20,6 +21,7 @@ import com.lawencon.jobportalcandidate.model.CandidateReferences;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.security.principal.PrincipalService;
 
+@Service
 public class CandidateReferencesService {
 
 	private EntityManager em() {

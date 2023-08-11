@@ -35,6 +35,7 @@ public class CandidateTrainingExpController {
 		final List<CandidateTrainingExpResDto> result = candidateTrainingExpService.getAllTrainingExpByCandidate(id);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 
+	}
 	
 	@PostMapping
 	public ResponseEntity<InsertResDto> insert(@RequestBody CandidateTrainingExpInsertReqDto data) {

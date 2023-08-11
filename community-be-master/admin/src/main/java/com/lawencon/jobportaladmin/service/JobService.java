@@ -145,6 +145,7 @@ public class JobService {
 			}
 			else {
 				em().getTransaction().rollback();
+				
 				throw new RuntimeException("Insert Failed");
 				
 			}
