@@ -16,6 +16,7 @@ import com.lawencon.jobportaladmin.model.Applicant;
 
 @Service
 public class ApplicantService {
+	
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}

@@ -61,7 +61,7 @@ public class ApplicantService {
 		final InsertResDto insertRes = new InsertResDto();
 		try {
 			em().getTransaction().begin();
-			applicant.setApplicantCode(GenerateCode.generateTicket(5));
+			applicant.setApplicantCode(GenerateCode.generateCode());
 			applicant.setAppliedDate(currentDate);
 
 			final Job job = jobDao.getById(Job.class, data.getJobId());
