@@ -41,7 +41,6 @@ public class CandidateSkillService {
 			final CandidateSkillResDto skill = new CandidateSkillResDto();
 			skill.setId(skills.get(i).getId());
 			skill.setSkillName(skills.get(i).getSkillName());
-			skill.setCandidateId(skills.get(i).getCandidateUser().getId());
 			
 			skillsDto.add(skill);
 		}
@@ -58,7 +57,7 @@ public class CandidateSkillService {
 			em().getTransaction().begin();
 			skill.setSkillName(data.getSkillName());
 			
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			skill.setCandidateUser(candidate);
 			
 			candidateSkillDao.save(skill);
@@ -85,7 +84,7 @@ public class CandidateSkillService {
 			skill.setId(data.getId());
 			skill.setSkillName(data.getSkillName());
 			
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			skill.setCandidateUser(candidate);
 			
 			candidateSkillDao.save(skill);

@@ -4,7 +4,6 @@ public class QuestionOptionInsertReqDto {
 
 	private String optionLabel;
 	private Boolean isCorrect;
-	private String questionId;
 
 	public String getOptionLabel() {
 		return optionLabel;
@@ -22,12 +21,6 @@ public class QuestionOptionInsertReqDto {
 		this.isCorrect = isCorrect;
 	}
 
-	public String getQuestionId() {
-		return questionId;
-	}
-
-	public void setQuestionId(String questionId) {
-		this.questionId = questionId;
-	}
+	
 
 }

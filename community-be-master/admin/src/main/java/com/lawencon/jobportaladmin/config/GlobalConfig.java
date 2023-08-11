@@ -15,7 +15,6 @@ public class GlobalConfig {
 		return new RestTemplate();
 	}
 	
-
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {

@@ -7,10 +7,7 @@ public class CandidateEducationUpdateReqDto {
 	private String majors;
 	private Float cgpa;
 	private String startYear;
-	private String endYear;
-	private String candidateId;
-	
-	
+	private String endYear;	
 
 	public String getId() {
 		return id;
@@ -68,11 +65,4 @@ public class CandidateEducationUpdateReqDto {
 		this.endYear = endYear;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }

@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.candidatereferences;
 
 public class CandidateReferencesInsertReqDto {
+	
 	private String fullname;
 	private String relationship;
 	private String occupation;
@@ -8,8 +9,7 @@ public class CandidateReferencesInsertReqDto {
 	private String email;
 	private String company;
 	private String description;
-	private String candidateId;
-
+	
 	public String getFullname() {
 		return fullname;
 	}
@@ -64,14 +64,6 @@ public class CandidateReferencesInsertReqDto {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
 	}
 
 }

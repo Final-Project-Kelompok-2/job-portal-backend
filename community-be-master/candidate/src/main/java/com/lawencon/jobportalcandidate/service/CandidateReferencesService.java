@@ -45,7 +45,6 @@ public class CandidateReferencesService {
 			reference.setEmail(references.get(i).getEmail());
 			reference.setCompany(references.get(i).getCompany());
 			reference.setDescription(references.get(i).getDescription());
-			reference.setCandidateId(references.get(i).getCandidateUser().getId());
 			
 			referencesDto.add(reference);
 		}
@@ -68,7 +67,7 @@ public class CandidateReferencesService {
 			reference.setCompany(data.getCompany());
 			reference.setDescription(data.getDescription());
 			
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			reference.setCandidateUser(candidate);
 			
 			result = new InsertResDto();
@@ -98,7 +97,7 @@ public class CandidateReferencesService {
 			reference.setCompany(data.getCompany());
 			reference.setDescription(data.getDescription());
 			
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			reference.setCandidateUser(candidate);
 			
 			result = new UpdateResDto();

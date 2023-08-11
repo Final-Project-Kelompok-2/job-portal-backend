@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.candidateworkexp;
 
 public class CandidateWorkExpInsertReqDto {
+	
 	private String positionName;
 	private String companyName;
 	private String address;
@@ -9,8 +10,7 @@ public class CandidateWorkExpInsertReqDto {
 	private Float lastSalary;
 	private String startDate;
 	private String endDate;
-	private String candidateId;
-
+	
 	public String getPositionName() {
 		return positionName;
 	}
@@ -73,14 +73,6 @@ public class CandidateWorkExpInsertReqDto {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
 	}
 
 }

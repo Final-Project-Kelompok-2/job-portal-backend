@@ -47,7 +47,6 @@ public class CandidateEducationService {
 			education.setCgpa(educations.get(i).getCgpa());
 			education.setStartYear(educations.get(i).getStartYear().toString());
 			education.setEndYear(educations.get(i).getEndYear().toString());
-			education.setCandidateId(educations.get(i).getCandidateUser().getId());
 
 			educationsDto.add(education);
 		}
@@ -70,7 +69,7 @@ public class CandidateEducationService {
 			education.setStartYear(LocalDate.parse(data.getStartYear().toString()));
 			education.setEndYear(LocalDate.parse(data.getEndYear().toString()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			education.setCandidateUser(candidate);
 			education.setCreatedBy("ID Principal");
 			candidateEducationDao.save(education);
@@ -102,7 +101,7 @@ public class CandidateEducationService {
 			education.setStartYear(LocalDate.parse(data.getStartYear()));
 			education.setEndYear(LocalDate.parse(data.getEndYear()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			education.setCandidateUser(candidate);
 			education.setUpdatedBy("ID Principal");
 			candidateEducationDao.saveAndFlush(education);

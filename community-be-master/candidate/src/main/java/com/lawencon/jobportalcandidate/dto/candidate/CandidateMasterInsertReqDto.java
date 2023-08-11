@@ -125,6 +125,4 @@ public class CandidateMasterInsertReqDto {
 		this.candidateWorkExp = candidateWorkExp;
 	}
 
-
-
 }

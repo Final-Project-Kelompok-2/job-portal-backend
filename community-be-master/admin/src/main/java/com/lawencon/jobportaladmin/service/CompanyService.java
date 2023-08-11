@@ -30,6 +30,9 @@ public class CompanyService {
 	private CompanyDao companyDao;
 	@Autowired
 	private FileDao fileDao;
+	@Autowired
+	private PrincipalService principalService;
+	
 
 	public List<CompanyResDto> getAllCompany() {
 		final List<Company> company = companyDao.getAll(Company.class);
@@ -64,9 +67,9 @@ public class CompanyService {
 			final File file = new File();
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy("Id principal");
+			file.setCreatedBy(principalService.getAuthPrincipal());
 			fileDao.save(file);
-			company.setCreatedBy("Id Principal");
+			company.setCreatedBy(principalService.getAuthPrincipal());
 			final Company companyId = companyDao.save(company);
 			insertRes.setId(companyId.getId());
 			insertRes.setMessage("Company Insert Success");
@@ -91,13 +94,18 @@ public class CompanyService {
 			if (data.getCompanyUrl() != null) {
 				company.setCompanyUrl(data.getCompanyUrl());
 			}
+			
 			final File file = new File();
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy("Id principal");
+			file.setCreatedBy(principalService.getAuthPrincipal());
+			
 			fileDao.save(file);
-			company.setCreatedBy("Id Principal");
+			company.setPhoto(file);
+			company.setUpdatedBy(principalService.getAuthPrincipal());
+			
 			final Company companyId = companyDao.saveAndFlush(company);
+			
 			updateRes.setVersion(companyId.getVersion());
 			updateRes.setMessage("Company Update Success");
 			em().getTransaction().commit();

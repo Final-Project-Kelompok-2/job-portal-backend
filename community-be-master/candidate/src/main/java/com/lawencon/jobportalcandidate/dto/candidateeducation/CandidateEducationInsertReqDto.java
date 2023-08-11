@@ -8,7 +8,6 @@ public class CandidateEducationInsertReqDto {
 	private Float cgpa;
 	private String startYear;
 	private String endYear;
-	private String candidateId;
 
 	public String getDegreeName() {
 		return degreeName;
@@ -58,14 +57,4 @@ public class CandidateEducationInsertReqDto {
 		this.endYear = endYear;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
-	
-	
-	
 }

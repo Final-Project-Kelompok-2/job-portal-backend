@@ -1,12 +1,12 @@
 package com.lawencon.jobportalcandidate.dto.candidatelanguage;
 
 public class CandidateLanguageInsertReqDto {
+	
 	private String languageName;
 	private String writingRate;
 	private String speakingRate;
 	private String listeningRate;
-	private String candidateId;
-
+	
 	public String getLanguageName() {
 		return languageName;
 	}
@@ -37,14 +37,6 @@ public class CandidateLanguageInsertReqDto {
 
 	public void setListeningRate(String listeningRate) {
 		this.listeningRate = listeningRate;
-	}
-
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
 	}
 
 }
