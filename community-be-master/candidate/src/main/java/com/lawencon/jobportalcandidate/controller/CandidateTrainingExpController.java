@@ -31,10 +31,10 @@ public class CandidateTrainingExpController {
 	private CandidateTrainingExpService candidateTrainingExpService;
 	
 	@GetMapping
-	public ResponseEntity<List<CandidateTrainingExpResDto>> getTrainingByCandidate(@RequestParam("id") String id) {
-		final List<CandidateTrainingExpResDto> response = candidateTrainingExpService.getAllTrainingExpByCandidate(id);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+	public ResponseEntity<List<CandidateTrainingExpResDto>> getTrainingExpByCandidate(@RequestParam("id")String id){
+		final List<CandidateTrainingExpResDto> result = candidateTrainingExpService.getAllTrainingExpByCandidate(id);
+		return new ResponseEntity<>(result,HttpStatus.OK);
+
 	
 	@PostMapping
 	public ResponseEntity<InsertResDto> insert(@RequestBody CandidateTrainingExpInsertReqDto data) {
