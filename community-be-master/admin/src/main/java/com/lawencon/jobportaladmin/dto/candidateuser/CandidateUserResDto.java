@@ -4,7 +4,7 @@ public class CandidateUserResDto {
 
 	private String id;
 	private String userEmail;
-	private String userPassword;
+
 	private String profileId;
 
 	public String getId() {
@@ -23,13 +23,7 @@ public class CandidateUserResDto {
 		this.userEmail = userEmail;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
-	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
 
 	public String getProfileId() {
 		return profileId;

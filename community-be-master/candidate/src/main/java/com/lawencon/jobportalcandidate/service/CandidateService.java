@@ -38,6 +38,7 @@ import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.MaritalStatus;
 import com.lawencon.jobportalcandidate.model.PersonType;
 import com.lawencon.jobportalcandidate.model.Religion;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateService {
@@ -82,6 +83,8 @@ public class CandidateService {
 	private ReligionDao religionDao;
 	@Autowired
 	private PersonTypeDao personTypeDao;
+	@Autowired
+	private PrincipalService<String> principalService;
 
 
 	public InsertResDto InsertCandidate(CandidateMasterInsertReqDto data) {
@@ -91,14 +94,14 @@ public class CandidateService {
 
 			final CandidateProfile candidateProfile = new CandidateProfile();
 			candidateProfile.setFullname(data.getCandidateProfile().getFullname());
-			candidateProfile.setCreatedBy("ID Principal");
+			candidateProfile.setCreatedBy(principalService.getAuthPrincipal());
 			candidateProfileDao.save(candidateProfile);
 
 			final CandidateUser candidateuser = new CandidateUser();
 			candidateuser.setUserEmail(data.getCandidateUser().getUserEmail());
 			candidateuser.setUserPassword(data.getCandidateUser().getUserPassword());
 			candidateuser.setCandidateProfile(candidateProfile);
-			candidateuser.setCreatedBy("ID Principal");
+			candidateuser.setCreatedBy(principalService.getAuthPrincipal());
 
 			candidateUserDao.save(candidateuser);
 
@@ -146,7 +149,7 @@ public class CandidateService {
 				final File file = new File();
 				file.setFileName(data.getFile());
 				file.setFileExtension(data.getFileExtension());
-				file.setCreatedBy("ID Principal");
+				file.setCreatedBy(principalService.getAuthPrincipal());
 				fileDao.save(file);
 				profile.setFile(file);
 				fileDao.deleteById(File.class, data.getFileId());
@@ -154,7 +157,7 @@ public class CandidateService {
 			 
 			final CandidateStatus candidatestatus = candidateStatusDao.getById(CandidateStatus.class, data.getCandidateStatusId());
 			profile.setCandidateStatus(candidatestatus);
-			profile.setUpdatedBy("ID Principal");
+			profile.setUpdatedBy(principalService.getAuthPrincipal());
 			candidateProfileDao.saveAndFlush(profile);
 			
 			result = new UpdateResDto();

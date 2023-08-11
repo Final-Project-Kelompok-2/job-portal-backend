@@ -13,7 +13,7 @@ import com.lawencon.jobportalcandidate.dto.persontype.PersonTypeGetResDto;
 import com.lawencon.jobportalcandidate.service.PersonTypeService;
 
 @RestController
-@RequestMapping("person-type")
+@RequestMapping("person-types")
 public class PersonTypeController {
 
 	@Autowired

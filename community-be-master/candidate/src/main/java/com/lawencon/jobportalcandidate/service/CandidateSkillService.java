@@ -19,6 +19,7 @@ import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillResDto;
 import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateSkill;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateSkillService {
@@ -32,6 +33,9 @@ public class CandidateSkillService {
 	
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 	
 	public List<CandidateSkillResDto> getSkillsByCandidate(String id) {
 		final List<CandidateSkillResDto> skillsDto = new ArrayList<>();
@@ -59,7 +63,7 @@ public class CandidateSkillService {
 			
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			skill.setCandidateUser(candidate);
-			
+			skill.setCreatedBy(principalService.getAuthPrincipal());
 			candidateSkillDao.save(skill);
 			
 			result = new InsertResDto();
@@ -86,7 +90,7 @@ public class CandidateSkillService {
 			
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			skill.setCandidateUser(candidate);
-			
+			skill.setUpdatedBy(principalService.getAuthPrincipal());
 			candidateSkillDao.save(skill);
 			
 			result = new UpdateResDto();

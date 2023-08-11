@@ -23,6 +23,7 @@ import com.lawencon.jobportalcandidate.model.CandidateDocuments;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.FileType;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateDocumentService {
@@ -38,6 +39,8 @@ public class CandidateDocumentService {
 	private FileTypeDao fileTypeDao;
 	@Autowired
 	private FileDao fileDao;
+	@Autowired
+	private PrincipalService<String> principalService;
 	
 	public List<CandidateDocumentResDto> getCandidateDocumentByCandidate(String id){
 		final List<CandidateDocuments> candidateDocuments = candidateDocumentDao.getCandidateDocumentsByCandidate(id);
@@ -69,11 +72,11 @@ public class CandidateDocumentService {
 			final File file = new File();
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy("ID Principal");
+			file.setCreatedBy(principalService.getAuthPrincipal());
 			fileDao.save(file);
 
 			candidateDocument.setFile(file);
-			candidateDocument.setCreatedBy("ID Principal");
+			candidateDocument.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateDocuments candidateDocumentId = candidateDocumentDao.save(candidateDocument);
 			insertRes.setId(candidateDocumentId.getId());
 			insertRes.setMessage("Document Insert Success");
@@ -103,11 +106,11 @@ public class CandidateDocumentService {
 			final File file = new File();
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy("ID Principal");
+			file.setCreatedBy(principalService.getAuthPrincipal());
 			fileDao.save(file);
 
 			candidateDocument.setFile(file);
-			candidateDocument.setCreatedBy("ID Principal");
+			candidateDocument.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateDocuments candidateDocumentId = candidateDocumentDao.saveAndFlush(candidateDocument);
 			fileDao.deleteById(File.class, candidateDocument.getFile().getId());
 			updateResDto.setVersion(candidateDocumentId.getVersion());

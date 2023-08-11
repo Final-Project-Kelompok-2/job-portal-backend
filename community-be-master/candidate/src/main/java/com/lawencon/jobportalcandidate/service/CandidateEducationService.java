@@ -20,6 +20,7 @@ import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducation
 import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducationUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateEducation;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateEducationService {
@@ -33,6 +34,8 @@ public class CandidateEducationService {
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	public List<CandidateEducationResDto> getEducationByCandidate(String id) {
 		final List<CandidateEducationResDto> educationsDto = new ArrayList<>();
@@ -71,7 +74,7 @@ public class CandidateEducationService {
 
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			education.setCandidateUser(candidate);
-			education.setCreatedBy("ID Principal");
+			education.setCreatedBy(principalService.getAuthPrincipal());
 			candidateEducationDao.save(education);
 
 			result = new InsertResDto();
@@ -103,7 +106,7 @@ public class CandidateEducationService {
 
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			education.setCandidateUser(candidate);
-			education.setUpdatedBy("ID Principal");
+			education.setUpdatedBy(principalService.getAuthPrincipal());
 			candidateEducationDao.saveAndFlush(education);
 
 			result = new UpdateResDto();

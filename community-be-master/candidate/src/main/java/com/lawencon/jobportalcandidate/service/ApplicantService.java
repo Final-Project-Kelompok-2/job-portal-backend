@@ -20,6 +20,7 @@ import com.lawencon.jobportalcandidate.model.Applicant;
 import com.lawencon.jobportalcandidate.model.HiringStatus;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class ApplicantService {
@@ -33,6 +34,8 @@ public class ApplicantService {
 	private JobDao jobDao;
 	@Autowired
 	private HiringStatusDao hiringStatusDao;
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	public List<ApplicantResDto> getApplicantByCandidate(String id) {
 		final List<Applicant> applicantList = applicantDao.getApplicantByCandidate(id);
@@ -66,7 +69,7 @@ public class ApplicantService {
 
 			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, data.getStatusId());
 			applicant.setStatus(hiringStatus);
-			applicant.setCreatedBy("Id principal");
+			applicant.setCreatedBy(principalService.getAuthPrincipal());
 			final Applicant applicantId = applicantDao.save(applicant);
 			insertRes.setId(applicantId.getId());
 			insertRes.setMessage("Applicant Insert Success");

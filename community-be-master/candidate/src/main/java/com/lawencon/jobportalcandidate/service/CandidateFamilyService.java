@@ -20,6 +20,7 @@ import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyResDto
 import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateFamily;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateFamilyService {
@@ -33,6 +34,8 @@ public class CandidateFamilyService {
 	
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	@Autowired
+	private PrincipalService<String> principalService;
 	
 	public List<CandidateFamilyResDto> getFamilyByCandidate(String id) {
 		final List<CandidateFamilyResDto> familiesDto = new ArrayList<>();
@@ -67,7 +70,7 @@ public class CandidateFamilyService {
 			family.setOccupation(data.getOccupation());
 			family.setBirthDate(LocalDate.parse(data.getBirthDate().toString()));
 			family.setBirthPlace(data.getBirthPlace());
-			
+			family.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			family.setCandidateUser(candidate);
 			
@@ -99,7 +102,7 @@ public class CandidateFamilyService {
 			family.setOccupation(data.getOccupation());
 			family.setBirthDate(LocalDate.parse(data.getBirthDate().toString()));
 			family.setBirthPlace(data.getBirthPlace());
-			
+			family.setUpdatedBy(principalService.getAuthPrincipal());
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			family.setCandidateUser(candidate);
 			candidateFamilyDao.saveAndFlush(family);

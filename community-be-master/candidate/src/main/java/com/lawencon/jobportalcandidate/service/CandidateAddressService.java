@@ -19,6 +19,7 @@ import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressResD
 import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateAddress;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateAddressService {
@@ -32,6 +33,9 @@ public class CandidateAddressService {
 	@Autowired
 	private CandidateAddressDao candidateAddressDao;
 
+	@Autowired
+	private PrincipalService<String> principalService;
+	
 	public List<CandidateAddressResDto> getAllByCandidate(String id){
 		final List<CandidateAddressResDto> candidateAddressResList = new ArrayList<>();
 		final List<CandidateAddress> candidateAddress = candidateAddressDao.getByCandidateId(id);
@@ -63,7 +67,7 @@ public class CandidateAddressService {
 			candidateAddress.setResidenceType(data.getResidenceType());
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			candidateAddress.setCandidateUser(candidateUser);
-			candidateAddress.setCreatedBy("Id Principal");
+			candidateAddress.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateAddress candidateAddressId = candidateAddressDao.save(candidateAddress);
 			insertResDto.setId(candidateAddressId.getId());
 			insertResDto.setMessage("Insert Candidate Address Success");
@@ -88,7 +92,7 @@ public class CandidateAddressService {
 			candidateAddress.setResidenceType(data.getResidenceType());
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
 			candidateAddress.setCandidateUser(candidateUser);
-			candidateAddress.setCreatedBy("Id Principal");
+			candidateAddress.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateAddress candidateAddressId = candidateAddressDao.save(candidateAddress);
 			
 			updateResDto.setMessage("Update Candidate Address Success");

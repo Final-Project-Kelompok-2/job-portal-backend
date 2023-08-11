@@ -18,7 +18,7 @@ import com.lawencon.jobportalcandidate.dto.applicant.ApplicantResDto;
 import com.lawencon.jobportalcandidate.service.ApplicantService;
 
 @RestController
-@RequestMapping("applicant")
+@RequestMapping("applicants")
 public class ApplicantController {
 
 	@Autowired
