@@ -19,6 +19,7 @@ import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobResDto;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.SavedJob;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class SavedJobService {
@@ -35,6 +36,9 @@ public class SavedJobService {
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	public List<SavedJobResDto> getSavedJobByCandidate(String id) {
 		final List<SavedJobResDto> savedjobsDto = new ArrayList<>();
@@ -70,9 +74,9 @@ public class SavedJobService {
 			
 			final Job job = jobDao.getById(Job.class, mysavedjob.getJobId());
 			savedjob.setJob(job);
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, mysavedjob.getUserId());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			savedjob.setCandidateUser(candidate);
-			savedjob.setCreatedBy("ID Principal");
+			savedjob.setCreatedBy(principalService.getAuthPrincipal());
 			
 			savedJobDao.save(savedjob);
 

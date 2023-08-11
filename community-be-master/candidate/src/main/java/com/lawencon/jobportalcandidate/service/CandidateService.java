@@ -1,6 +1,5 @@
 package com.lawencon.jobportalcandidate.service;
 
-
 import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
@@ -72,8 +71,8 @@ public class CandidateService {
 	private CandidateTrainingExpDao candidateTrainingDao;
 	@Autowired
 	private CandidateWorkExpDao candidateWorkExpDao;
-  @Autowired
-  private FileTypeDao fileTypeDao;
+	@Autowired
+	private FileTypeDao fileTypeDao;
 	@Autowired
 	private FileDao fileDao;
 	@Autowired
@@ -82,7 +81,6 @@ public class CandidateService {
 	private ReligionDao religionDao;
 	@Autowired
 	private PersonTypeDao personTypeDao;
-
 
 	public InsertResDto InsertCandidate(CandidateMasterInsertReqDto data) {
 		InsertResDto result = null;
@@ -117,7 +115,7 @@ public class CandidateService {
 
 	public UpdateResDto updateCandidateProfile(CandidateProfileUpdateReqDto data) {
 		UpdateResDto result = null;
-		
+
 		try {
 			em().getTransaction().begin();
 
@@ -135,13 +133,13 @@ public class CandidateService {
 			profile.setBirthPlace(data.getBirthPlace());
 			final MaritalStatus status = maritalStatusDao.getById(MaritalStatus.class, data.getMaritalStatusId());
 			profile.setMaritalStatus(status);
-			
+
 			final Religion religion = religionDao.getById(Religion.class, data.getReligionId());
 			profile.setReligion(religion);
-			
+
 			final PersonType type = personTypeDao.getById(PersonType.class, data.getPersonTypeId());
 			profile.setPersonType(type);
-			
+
 			if (data.getFile() != null) {
 				final File file = new File();
 				file.setFileName(data.getFile());
@@ -151,22 +149,23 @@ public class CandidateService {
 				profile.setFile(file);
 				fileDao.deleteById(File.class, data.getFileId());
 			}
-			 
-			final CandidateStatus candidatestatus = candidateStatusDao.getById(CandidateStatus.class, data.getCandidateStatusId());
+
+			final CandidateStatus candidatestatus = candidateStatusDao.getById(CandidateStatus.class,
+					data.getCandidateStatusId());
 			profile.setCandidateStatus(candidatestatus);
 			profile.setUpdatedBy("ID Principal");
 			candidateProfileDao.saveAndFlush(profile);
-			
+
 			result = new UpdateResDto();
 			result.setVersion(profile.getVersion());
 			result.setMessage("Education has been updated");
-		
+
 			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 

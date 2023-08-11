@@ -20,6 +20,7 @@ import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainin
 import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateTrainingExp;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateTrainingExpService {
@@ -29,8 +30,12 @@ public class CandidateTrainingExpService {
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
 	@Autowired
 	private CandidateTrainingExpDao trainingDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	public List<CandidateTrainingExpResDto> getAllTrainingExpByCandidate(String id) {
 		final List<CandidateTrainingExpResDto> trainingExpResList = new ArrayList<>();
@@ -54,13 +59,13 @@ public class CandidateTrainingExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateTrainingExp trainingExp = new CandidateTrainingExp();
-			trainingExp.setCreatedBy("ID Principal");
+			trainingExp.setCreatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());
 			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
 			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			trainingExp.setCandidateUser(candidateUser);
 
 			final CandidateTrainingExp trainingId = trainingDao.save(trainingExp);
@@ -80,13 +85,13 @@ public class CandidateTrainingExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateTrainingExp trainingExp = trainingDao.getById(CandidateTrainingExp.class, data.getId());
-			trainingExp.setUpdatedBy("ID Principal");
+			trainingExp.setUpdatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());
 			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
 			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			trainingExp.setCandidateUser(candidateUser);
 
 			final CandidateTrainingExp trainingId = trainingDao.save(trainingExp);
