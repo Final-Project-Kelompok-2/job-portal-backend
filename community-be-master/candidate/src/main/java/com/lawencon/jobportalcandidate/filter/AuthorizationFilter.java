@@ -1,4 +1,4 @@
-package com.lawencon.jobportaladmin.filter;
+package com.lawencon.jobportalcandidate.filter;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,6 +55,7 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 					final Authentication auth = new UsernamePasswordAuthenticationToken(id.getBody(),null);
 					SecurityContextHolder.getContext().setAuthentication(auth);
 					JwtConfig.set(jwt);
+						
 
 				} catch (Exception e) {
 					e.printStackTrace() ;

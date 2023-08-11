@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
@@ -21,7 +24,12 @@ import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterInsertReqDto
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
+
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserResDto;
+
+import com.lawencon.jobportalcandidate.login.LoginReqDto;
+import com.lawencon.jobportalcandidate.login.LoginResDto;
+
 import com.lawencon.jobportalcandidate.model.CandidateProfile;
 import com.lawencon.jobportalcandidate.model.CandidateStatus;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
@@ -32,7 +40,7 @@ import com.lawencon.jobportalcandidate.model.Religion;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
-public class CandidateService {
+public class CandidateService implements UserDetailsService{
 
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -46,7 +54,15 @@ public class CandidateService {
 	
 	@Autowired
 	private CandidateStatusDao candidateStatusDao;
-	
+
+	@Autowired
+	private CandidateTrainingExpDao candidateTrainingDao;
+	@Autowired
+	private CandidateWorkExpDao candidateWorkExpDao;
+    @Autowired
+    private FileTypeDao fileTypeDao;
+
+
 	@Autowired
 	private FileDao fileDao;
 	
@@ -177,6 +193,32 @@ public class CandidateService {
 		}
 
 		return result;
+	}
+	
+	
+	public LoginResDto login(LoginReqDto loginData) {
+		final CandidateUser user = candidateUserDao.getByUsername(loginData.getUserEmail());
+		final LoginResDto loginRes = new LoginResDto();
+		
+		if(!user.getIsActive()) {
+			loginRes.setMessage("Akun anda nonaktif");
+			return loginRes;
+		}
+		else {
+			loginRes.setUserId(user.getId());
+			loginRes.setFullName(user.getCandidateProfile().getFullname());
+			loginRes.setProfileId(user.getCandidateProfile().getId());
+			loginRes.setPhotoId(user.getCandidateProfile().getFile().getId());
+		}
+		
+		return loginRes;
+	}
+	
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.lawencon.jobportaladmin.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -21,6 +22,7 @@ import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.login.LoginReqDto;
 import com.lawencon.jobportaladmin.dto.login.LoginResDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
+import com.lawencon.jobportaladmin.dto.user.UsersResDto;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Profile;
@@ -34,7 +36,6 @@ public class UserService implements UserDetailsService{
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	
 	
 	@Autowired
 	private ProfileDao profileDao;
@@ -117,6 +118,22 @@ public class UserService implements UserDetailsService{
 		
 		return insertResDto;
 	}
+	
+	public List<UsersResDto> getUsersByRoleCode(String roleCode){
+		final List<UsersResDto> usersDto=  new ArrayList<>();
+		final List<User> usersDb = userDao.getByRoleCode(roleCode);
+		
+		for(int i=0;i<usersDb.size();i++) {
+			final UsersResDto userDto = new UsersResDto();
+			userDto.setId(usersDb.get(i).getId());
+			userDto.setFullName(usersDb.get(i).getProfile().getFullName());
+			userDto.setRole(usersDb.get(i).getRole().getRoleName());
+			usersDto.add(userDto);
+			
+		}
+		return usersDto;
+	}
+	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -44,12 +44,13 @@ public class CompanyService {
 			companyRes.setCompanyName(company.get(i).getCompanyName());
 			companyRes.setCompanyCode(company.get(i).getCompanyCode());
 			companyRes.setCompanyPhone(company.get(i).getCompanyPhone());
+			
 			if (company.get(i).getCompanyUrl() != null) {
 				companyRes.setCompanyUrl(company.get(i).getCompanyUrl());
 			}
 			companyRes.setPhotoId(company.get(i).getPhoto().getId());
 			companyResList.add(companyRes);
-
+			
 		}
 		return companyResList;
 	}

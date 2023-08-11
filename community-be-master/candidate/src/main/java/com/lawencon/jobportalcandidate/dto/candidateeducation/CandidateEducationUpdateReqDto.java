@@ -1,13 +1,16 @@
 package com.lawencon.jobportalcandidate.dto.candidateeducation;
 
 public class CandidateEducationUpdateReqDto {
+	
 	private String id;
 	private String degreeName;
 	private String instituitionName;
 	private String majors;
 	private Float cgpa;
 	private String startYear;
-	private String endYear;	
+	private String endYear;
+	private String candidateId;
+
 
 	public String getId() {
 		return id;
@@ -65,4 +68,11 @@ public class CandidateEducationUpdateReqDto {
 		this.endYear = endYear;
 	}
 
+	public String getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(String candidateId) {
+		this.candidateId = candidateId;
+	}
 }

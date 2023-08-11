@@ -29,8 +29,6 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 
 	@Autowired
 	private List<RequestMatcher> matchers;
-	
-
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, 
