@@ -42,7 +42,7 @@ public class CandidateProjectExpService {
 			projectExpRes.setProjectName(projectExp.get(i).getProjectName());
 			projectExpRes.setProjectUrl(projectExp.get(i).getProjectUrl());
 			projectExpRes.setId(projectExp.get(i).getId());
-			projectExpRes.setCandidateId(projectExp.get(i).getCandidateUser().getId());
+			
 			projectExpResList.add(projectExpRes);
 		}
 		
@@ -59,7 +59,7 @@ public class CandidateProjectExpService {
 			projectExp.setProjectUrl(data.getProjectUrl());
 			projectExp.setStartDate(LocalDateTime.parse(data.getStartDate()));
 			projectExp.setEndDate(LocalDateTime.parse(data.getEndDate()));
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			projectExp.setCandidateUser(candidateUser);
 			projectExp.setCreatedBy("ID Principal");
 			final CandidateProjectExp projectExpId = projectExpDao.save(projectExp);
@@ -83,7 +83,7 @@ public class CandidateProjectExpService {
 			projectExp.setProjectUrl(data.getProjectUrl());
 			projectExp.setStartDate(LocalDateTime.parse(data.getStartDate()));
 			projectExp.setEndDate(LocalDateTime.parse(data.getEndDate()));
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			projectExp.setCandidateUser(candidateUser);
 			projectExp.setUpdatedBy("ID Principal");
 			final CandidateProjectExp projectExpId = projectExpDao.saveAndFlush(projectExp);

@@ -43,7 +43,6 @@ public class CandidateAddressService {
 			addressRes.setPostalCode(candidateAddress.get(i).getPostalCode());
 			addressRes.setProvince(candidateAddress.get(i).getProvince());
 			addressRes.setResidenceType(candidateAddress.get(i).getResidenceType());
-			addressRes.setCandidateId(candidateAddress.get(i).getCandidateUser().getId());
 			addressRes.setId(candidateAddress.get(i).getId());
 			candidateAddressResList.add(addressRes);
 		}
@@ -62,7 +61,7 @@ public class CandidateAddressService {
 			candidateAddress.setProvince(data.getProvince());
 			candidateAddress.setPostalCode(data.getPostalCode());
 			candidateAddress.setResidenceType(data.getResidenceType());
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			candidateAddress.setCandidateUser(candidateUser);
 			candidateAddress.setCreatedBy("Id Principal");
 			final CandidateAddress candidateAddressId = candidateAddressDao.save(candidateAddress);

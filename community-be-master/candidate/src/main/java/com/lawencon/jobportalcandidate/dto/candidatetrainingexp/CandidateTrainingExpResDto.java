@@ -1,14 +1,14 @@
 package com.lawencon.jobportalcandidate.dto.candidatetrainingexp;
 
 public class CandidateTrainingExpResDto {
+	
 	private String id;
 	private String organizationName;
 	private String trainingName;
 	private String description;
 	private String startDate;
 	private String endDate;
-	private String candidateId;
-
+	
 	public String getId() {
 		return id;
 	}
@@ -57,11 +57,4 @@ public class CandidateTrainingExpResDto {
 		this.endDate = endDate;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }

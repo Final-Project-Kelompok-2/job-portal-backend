@@ -1,10 +1,10 @@
 package com.lawencon.jobportalcandidate.dto.candidateskill;
 
 public class CandidateSkillUpdateReqDto {
+	
 	private String id;
 	private String skillName;
-	private String candidateId;
-
+	
 	public String getId() {
 		return id;
 	}
@@ -21,11 +21,4 @@ public class CandidateSkillUpdateReqDto {
 		this.skillName = skillName;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }

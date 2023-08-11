@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.candidateaddress;
 
 public class CandidateAddressUpdateReqDto {
+	
 	private String id;
 	private String address;
 	private String residenceType;
@@ -73,4 +74,5 @@ public class CandidateAddressUpdateReqDto {
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
 	}
+
 }

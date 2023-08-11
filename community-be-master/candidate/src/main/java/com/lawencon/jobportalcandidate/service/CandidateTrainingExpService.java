@@ -43,7 +43,7 @@ public class CandidateTrainingExpService {
 			trainingExpRes.setDescription(trainingExp.get(i).getDescription());
 			trainingExpRes.setStartDate(trainingExp.get(i).getStartDate().toString());
 			trainingExpRes.setEndDate(trainingExp.get(i).getEndDate().toString());
-			trainingExpRes.setCandidateId(trainingExp.get(i).getCandidateUser().getId());
+			
 			trainingExpResList.add(trainingExpRes);
 		}
 		return trainingExpResList;
@@ -60,7 +60,7 @@ public class CandidateTrainingExpService {
 			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
 			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			trainingExp.setCandidateUser(candidateUser);
 
 			final CandidateTrainingExp trainingId = trainingDao.save(trainingExp);
@@ -86,7 +86,7 @@ public class CandidateTrainingExpService {
 			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
 			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			trainingExp.setCandidateUser(candidateUser);
 
 			final CandidateTrainingExp trainingId = trainingDao.save(trainingExp);
