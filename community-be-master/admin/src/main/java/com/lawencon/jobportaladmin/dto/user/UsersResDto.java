@@ -2,6 +2,7 @@ package com.lawencon.jobportaladmin.dto.user;
 
 public class UsersResDto {
 
+	private String id;
 	private String email;
 	private String fullName;
 	private String role;
@@ -28,6 +29,14 @@ public class UsersResDto {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

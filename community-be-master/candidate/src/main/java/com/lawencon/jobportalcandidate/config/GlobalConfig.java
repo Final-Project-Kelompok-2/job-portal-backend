@@ -1,4 +1,4 @@
-package com.lawencon.jobportaladmin.config;
+package com.lawencon.jobportalcandidate.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
