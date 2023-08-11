@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.CandidateWorkExpDao;
+import com.lawencon.jobportalcandidate.dto.DeleteResDto;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
@@ -19,6 +20,7 @@ import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpResD
 import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.CandidateWorkExp;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateWorkExpService {
@@ -32,6 +34,9 @@ public class CandidateWorkExpService {
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	public List<CandidateWorkExpResDto> getWorkByCandidate(String id) {
 		final List<CandidateWorkExpResDto> worksDto = new ArrayList<>();
@@ -71,9 +76,9 @@ public class CandidateWorkExpService {
 			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
 			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			work.setCandidateUser(candidate);
-			work.setCreatedBy("ID Principal");
+			work.setCreatedBy(principalService.getAuthPrincipal());
 
 			candidateWorkExpDao.save(work);
 
@@ -106,9 +111,9 @@ public class CandidateWorkExpService {
 			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
 			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			work.setCandidateUser(candidate);
-			work.setUpdatedBy("ID Principal");
+			work.setUpdatedBy(principalService.getAuthPrincipal());
 
 			candidateWorkExpDao.saveAndFlush(work);
 
@@ -122,6 +127,15 @@ public class CandidateWorkExpService {
 		}
 
 		return result;
+	}
+	
+	public DeleteResDto deleteWorkExperience(String id) {
+		candidateWorkExpDao.deleteById(CandidateWorkExp.class, id);
+		
+		final DeleteResDto response = new DeleteResDto();
+		response.setMessage("Working Experience Has Been Removed");
+		
+		return response;
 	}
 }
 
