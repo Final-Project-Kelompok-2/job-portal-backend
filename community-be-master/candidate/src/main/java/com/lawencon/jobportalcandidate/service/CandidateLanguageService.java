@@ -19,6 +19,7 @@ import com.lawencon.jobportalcandidate.dto.candidatelanguage.CandidateLanguageRe
 import com.lawencon.jobportalcandidate.dto.candidatelanguage.CandidateLanguageUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateLanguage;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateLanguageService {
@@ -31,6 +32,9 @@ public class CandidateLanguageService {
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 	
 	public List<CandidateLanguageResDto> getCandidateLanguageByCandidate(String id) {
 		final List<CandidateLanguage> candidateLanguage = candidateLanguageDao.getLanguageByCandidate(id);
@@ -59,7 +63,7 @@ public class CandidateLanguageService {
 			candidateLanguage.setWritingRate(data.getWritingRate());
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			candidateLanguage.setCandidateUser(candidateUser);
-			candidateLanguage.setCreatedBy("ID Principal");
+			candidateLanguage.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateLanguage languageId = candidateLanguageDao.save(candidateLanguage);
 			insertRes.setId(languageId.getId());
 			insertRes.setMessage("Insert Candidate Language Success");
@@ -81,7 +85,7 @@ public class CandidateLanguageService {
 			candidateLanguage.setWritingRate(data.getWritingRate());
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			candidateLanguage.setCandidateUser(candidateUser);
-			candidateLanguage.setUpdatedBy("ID Principal");
+			candidateLanguage.setUpdatedBy(principalService.getAuthPrincipal());
 			final CandidateLanguage languageId = candidateLanguageDao.saveAndFlush(candidateLanguage);
 			
 			updateResDto.setMessage("Update Candidate Language Success");

@@ -20,7 +20,6 @@ import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobResDto;
 import com.lawencon.jobportalcandidate.service.SavedJobService;
 
-
 @RestController
 @RequestMapping("savedjobs")
 public class SavedJobsController {

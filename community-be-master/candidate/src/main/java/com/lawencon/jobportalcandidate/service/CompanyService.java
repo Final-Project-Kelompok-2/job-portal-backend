@@ -65,6 +65,7 @@ public class CompanyService {
 			file.setFileExtension(data.getFileExtension());
 			file.setCreatedBy("Id principal");
 			fileDao.save(file);
+			
 			company.setCreatedBy("Id Principal");
 			final Company companyId = companyDao.save(company);
 			insertRes.setId(companyId.getId());

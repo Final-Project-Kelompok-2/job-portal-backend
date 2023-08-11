@@ -13,7 +13,7 @@ import com.lawencon.jobportalcandidate.dto.employmenttype.EmploymentTypeGetResDt
 import com.lawencon.jobportalcandidate.service.EmploymentTypeService;
 
 @RestController
-@RequestMapping("employment-type")
+@RequestMapping("employment-types")
 public class EmploymentTypeController {
 
 	@Autowired
