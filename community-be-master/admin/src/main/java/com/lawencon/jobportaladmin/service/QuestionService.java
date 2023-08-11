@@ -21,6 +21,7 @@ import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
 import com.lawencon.jobportaladmin.model.Question;
 import com.lawencon.jobportaladmin.model.QuestionOption;
 import com.lawencon.jobportaladmin.util.GenerateCode;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class QuestionService {
@@ -35,7 +36,9 @@ public class QuestionService {
 	private AssignedJobQuestionDao assignedJobQuestionDao;
 	
 	@Autowired
-	private PrincipalService principalService;
+	private PrincipalService<String> principalService;
+	
+	
 	
 	private EntityManager em() {
 		return ConnHandler.getManager();

@@ -18,6 +18,7 @@ import com.lawencon.jobportaladmin.dto.company.CompanyResDto;
 import com.lawencon.jobportaladmin.dto.company.CompanyUpdateReqDto;
 import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.File;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CompanyService {
@@ -31,7 +32,7 @@ public class CompanyService {
 	@Autowired
 	private FileDao fileDao;
 	@Autowired
-	private PrincipalService principalService;
+	private PrincipalService<String> principalService;
 	
 
 	public List<CompanyResDto> getAllCompany() {

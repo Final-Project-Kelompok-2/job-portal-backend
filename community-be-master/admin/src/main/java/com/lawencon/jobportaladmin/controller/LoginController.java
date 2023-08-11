@@ -52,8 +52,10 @@ public class LoginController {
 		final HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 		
+	    //deklarasi
 		final RequestEntity<TokenReqDto> token = RequestEntity.post(tokenURl).headers(headers).body(tokenReqDto);
 		
+		//hit api
 		final ResponseEntity<String> response = restTemplate.exchange(token,String.class);
 		System.out.println(response.getBody());
 

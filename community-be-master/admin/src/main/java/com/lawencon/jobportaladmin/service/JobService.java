@@ -23,6 +23,7 @@ import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.EmploymentType;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.Job;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class JobService {
@@ -44,7 +45,7 @@ public class JobService {
 	private FileDao fileDao;
 	
 	@Autowired
-	private PrincipalService principalService;
+	private PrincipalService<String> principalService;
 	
 	public List<JobResDto> getAllJobs() {
 		final List<JobResDto> jobsDto = new ArrayList<>();

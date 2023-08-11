@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -43,8 +47,11 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 					final HttpHeaders headers = new HttpHeaders();
 				    headers.setContentType(MediaType.APPLICATION_JSON);
 					headers.setBearerAuth(jwt);
+					
 					final RequestEntity<Object> tokenChecker= RequestEntity.post(tokenURl).headers(headers).body(null);
-					restTemplate.exchange(tokenChecker, Boolean.class);
+					final ResponseEntity<String> id = restTemplate.exchange(tokenChecker, String.class);
+					final Authentication auth = new UsernamePasswordAuthenticationToken(id.getBody(),null);
+					SecurityContextHolder.getContext().setAuthentication(auth);
 					
 				} catch (Exception e) {
 					e.printStackTrace() ;
