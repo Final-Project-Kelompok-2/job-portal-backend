@@ -81,4 +81,6 @@ public class ApplicantDao extends AbstractJpaDao {
 		return applicantList;
 	}
 
+	
+	
 }

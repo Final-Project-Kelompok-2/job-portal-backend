@@ -235,7 +235,9 @@ public class CandidateService implements UserDetailsService{
 			loginRes.setUserId(user.getId());
 			loginRes.setFullName(user.getCandidateProfile().getFullname());
 			loginRes.setProfileId(user.getCandidateProfile().getId());
-			loginRes.setPhotoId(user.getCandidateProfile().getFile().getId());
+			if(user.getCandidateProfile().getFile()!=null) {				
+				loginRes.setPhotoId(user.getCandidateProfile().getFile().getId());
+			}
 		}
 		
 		return loginRes;
