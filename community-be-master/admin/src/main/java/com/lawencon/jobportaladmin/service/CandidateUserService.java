@@ -16,7 +16,6 @@ import com.lawencon.jobportaladmin.model.CandidateProfile;
 import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.util.GenerateCode;
-import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class CandidateUserService {
@@ -27,8 +26,6 @@ public class CandidateUserService {
 	@Autowired
 	private CandidateProfileDao candidateProfileDao;
 	
-	@Autowired
-	private PrincipalService<String> principalService;
 	
 	@Autowired
 	private PersonTypeDao personTypeDao;

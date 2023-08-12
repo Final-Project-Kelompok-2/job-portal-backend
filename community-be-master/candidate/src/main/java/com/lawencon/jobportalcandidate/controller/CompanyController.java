@@ -22,16 +22,16 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyService companyService;
-	
+
 	@GetMapping
 	public ResponseEntity<List<CompanyResDto>> getCompanies() {
 		final List<CompanyResDto> response = companyService.getAllCompany();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<InsertResDto> insertCompany(@RequestBody CompanyInsertReqDto companyData){
+	public ResponseEntity<InsertResDto> insertCompany(@RequestBody CompanyInsertReqDto companyData) {
 		final InsertResDto response = companyService.insertCompany(companyData);
-		return new ResponseEntity<>(response,HttpStatus.CREATED);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 }
