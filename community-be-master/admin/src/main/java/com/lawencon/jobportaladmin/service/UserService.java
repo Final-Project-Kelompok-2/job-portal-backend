@@ -28,6 +28,7 @@ import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Profile;
 import com.lawencon.jobportaladmin.model.Role;
 import com.lawencon.jobportaladmin.model.User;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -39,6 +40,7 @@ public class UserService implements UserDetailsService{
 
 	@Autowired
 	private ProfileDao profileDao;
+	
 
 	@Autowired
 	private UserDao userDao;
@@ -57,6 +59,9 @@ public class UserService implements UserDetailsService{
 	
 	@Autowired
 	private FileDao fileDao;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	
 	public LoginResDto login(LoginReqDto loginData) {
@@ -86,9 +91,15 @@ public class UserService implements UserDetailsService{
 			User newUser = new User();
 			
 			newUser.setUserEmail(userData.getUserEmail());
-			
+
 			final Role role = roleDao.getById(Role.class, userData.getRoleId());
 			newUser.setRole(role);
+			
+			final String generatePassword = GenerateCode.generateCode();
+			final String encodedPassword = passwordEncoder.encode(generatePassword);
+
+			newUser.setUserPassword(encodedPassword);
+			
 			final PersonType personType = personTypeDao.getById(PersonType.class, userData.getPersonTypeId());
 			
 			Profile profile = new Profile();
@@ -96,20 +107,27 @@ public class UserService implements UserDetailsService{
 			profile.setAddress(userData.getAddress());
 			profile.setPhoneNumber(userData.getPhoneNumber());
 			profile.setPersonType(personType);
-			profile.setCreatedBy(principalService.getAuthPrincipal());
-			
-			
 			
 			File photo = new File();
 			photo.setFileName(userData.getPhotoName());
 			photo.setFileExtension(userData.getExtensionName());
-			photo.setCreatedBy(principalService.getAuthPrincipal());
 			
 			photo = fileDao.save(photo);
-			profile =profileDao.save(profile);
-			newUser.setProfile(profile);
 			
-				
+			profile.setPhoto(photo);
+			
+			profile = profileDao.save(profile);
+			newUser.setProfile(profile);
+			newUser= userDao.save(newUser);
+			
+			final String emailSubject = "Job Portal Account Registration";
+			final String emailbody = "Halo " + userData.getFullName() + ", "
+					+ " Akun kamu dengan Role : "+ role.getRoleName() + "berhasil dibuat. Silahkan login dengan menggunakan "
+					+ "password yang sudah diberikan : "
+					+ " Email : " + userData.getUserEmail() 
+					+ " Password : " + generatePassword;
+			emailService.sendEmail(userData.getUserEmail(), emailSubject, emailbody);
+			
 			insertResDto.setMessage("Insert User Success");
 			
 			
