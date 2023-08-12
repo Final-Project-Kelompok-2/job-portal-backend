@@ -10,8 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.dao.ApplicantDao;
+import com.lawencon.jobportaladmin.dao.CandidateUserDao;
+import com.lawencon.jobportaladmin.dao.HiringStatusDao;
+import com.lawencon.jobportaladmin.dao.JobDao;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.applicant.ApplicantInsertReqDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantResDto;
 import com.lawencon.jobportaladmin.model.Applicant;
+import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.model.HiringStatus;
+import com.lawencon.jobportaladmin.model.Job;
+import com.lawencon.jobportaladmin.util.DateUtil;
 
 
 @Service
@@ -23,6 +32,15 @@ public class ApplicantService {
 
 	@Autowired
 	private ApplicantDao applicantDao;
+	
+	@Autowired
+	private JobDao jobDao;
+	
+	@Autowired
+	private HiringStatusDao hiringStatusDao;
+	
+	@Autowired
+	private CandidateUserDao candidateUserDao;
 
 	
 	public List<ApplicantResDto> getAllApplicantByJob(String id) {
@@ -41,5 +59,37 @@ public class ApplicantService {
 			applicantListRes.add(applicantRes);
 		}
 		return applicantListRes;
+	}
+	
+	public InsertResDto insertApplicant(ApplicantInsertReqDto applicantData) {
+		final InsertResDto resDto = new InsertResDto();
+		
+		try {
+			em().getTransaction().begin();
+			 Applicant newApplicant = new Applicant();
+			newApplicant.setApplicantCode(applicantData.getApplicantCode());
+			
+			final Job job = jobDao.getByCode(applicantData.getJobCode());
+			newApplicant.setJob(job);
+			
+			newApplicant.setAppliedDate(DateUtil.parseStringToLocalDateTime(applicantData.getAppliedDate()));
+			
+			final HiringStatus hiringStatus = hiringStatusDao.getByCode(applicantData.getStatusCode());
+			newApplicant.setStatus(hiringStatus);
+			
+			final CandidateUser candidateUser = candidateUserDao.getByEmail(applicantData.getCandidateEmail());
+			newApplicant.setCandidate(candidateUser);
+			
+			newApplicant = applicantDao.save(newApplicant);
+			resDto.setId(newApplicant.getId());
+			resDto.setMessage("Insert Applicant Success");
+			em().getTransaction().commit();
+			
+			
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+		}
+		
+		return resDto;
 	}
 }

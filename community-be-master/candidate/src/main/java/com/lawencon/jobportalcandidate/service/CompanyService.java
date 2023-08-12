@@ -50,27 +50,34 @@ public class CompanyService {
 		return companyResList;
 	}
 	public InsertResDto insertCompany(CompanyInsertReqDto data) {
-		final Company company = new Company();
+		
 		final InsertResDto insertRes = new InsertResDto();
 		try {
 			em().getTransaction().begin();
+			Company company = new Company();
 			company.setCompanyName(data.getCompanyName());
 			company.setCompanyCode(data.getCompanyCode());
 			company.setCompanyPhone(data.getCompanyPhone());
+			company.setAddress(data.getAddress());
+			
 			if (data.getCompanyUrl() != null) {
 				company.setCompanyUrl(data.getCompanyUrl());
 			}
+			
 			final File file = new File();
 			file.setFileName(data.getFileName());
 			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy("Id principal");
 			fileDao.save(file);
 			
-			company.setCreatedBy("Id Principal");
-			final Company companyId = companyDao.save(company);
-			insertRes.setId(companyId.getId());
-			insertRes.setMessage("Company Insert Success");
+			company.setPhoto(file);
+			
+			company = companyDao.save(company);
+			
+			insertRes.setId(company.getId());
+			insertRes.setMessage("Insert Company Success");
+			
 			em().getTransaction().commit();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			em().getTransaction().rollback();

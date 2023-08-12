@@ -12,7 +12,6 @@ public class DateUtil {
 	}
 	
 	public static LocalDate parseStringToLocalDate(String date) {
-		final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
 		final LocalDate dateInput = LocalDate.parse(date);
 		return dateInput;
 	}

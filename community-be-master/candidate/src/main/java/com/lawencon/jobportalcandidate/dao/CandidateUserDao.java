@@ -44,13 +44,16 @@ public class CandidateUserDao extends AbstractJpaDao{
 				profile.setFullname(userArr[4].toString());
 				
 				final File photo = new File();
-				photo.setId(userArr[5].toString());
-				
-				profile.setFile(photo);
+				if(userArr[5]!=null) {
+					photo.setId(userArr[5].toString());
+					profile.setFile(photo);
+				}
 				userGet.setCandidateProfile(profile);
 			}
 			
 			return userGet;
 	}
+	
+	
 	
 }

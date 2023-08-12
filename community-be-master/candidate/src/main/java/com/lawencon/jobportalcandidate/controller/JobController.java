@@ -42,7 +42,6 @@ public class JobController {
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 	
-	
 	@PostMapping
 	public ResponseEntity<InsertResDto> insertJob(@RequestBody JobInsertReqDto job){
 		final InsertResDto response = jobService.insertJob(job);

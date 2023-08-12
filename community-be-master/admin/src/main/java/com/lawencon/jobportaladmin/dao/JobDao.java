@@ -245,4 +245,20 @@ public class JobDao extends AbstractJpaDao{
 		
 		return jobs;
 	}
+	
+	public Job getByCode (String jobCode) {
+		final String sql = "SELECT "
+				+ " j.id, "
+				+ " j.jobName, "
+				+ " j.jobCode, "
+				+ " j.version "
+				+ " FROM Job j"
+				+ " WHERE j.jobCode = :jobCode";
+		
+		final Job job = em().createQuery(sql,Job.class)
+				.setParameter("jobCode", jobCode)
+				.getSingleResult();
+		
+		return job;
+	}
 }
