@@ -1,7 +1,7 @@
 package com.lawencon.jobportalcandidate.dao;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +74,6 @@ public class ApplicantDao extends AbstractJpaDao{
 	}
 	
 	public List<Applicant> getApplicantByCandidate(String id){
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		final String sql = "SELECT  "
 				+ "	ta.id, "
 				+ "	ta.applicant_code , "
@@ -110,7 +109,7 @@ public class ApplicantDao extends AbstractJpaDao{
 				
 				applicant.setId(applicantArr[0].toString());
 				applicant.setApplicantCode(applicantArr[1].toString());
-				applicant.setAppliedDate(LocalDateTime.parse(applicantArr[2].toString(),formatter));
+				applicant.setAppliedDate(Timestamp.valueOf(applicantArr[2].toString()).toLocalDateTime());
 				 
 				final HiringStatus hiringStatus = new HiringStatus();
 				hiringStatus.setId(applicantArr[3].toString());

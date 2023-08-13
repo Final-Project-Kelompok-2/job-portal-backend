@@ -29,7 +29,6 @@ import com.lawencon.jobportaladmin.model.Profile;
 import com.lawencon.jobportaladmin.model.Role;
 import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.GenerateCode;
-import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -41,12 +40,8 @@ public class UserService implements UserDetailsService{
 	@Autowired
 	private ProfileDao profileDao;
 	
-
 	@Autowired
 	private UserDao userDao;
-	
-	@Autowired
-	private PrincipalService<String> principalService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -122,14 +117,13 @@ public class UserService implements UserDetailsService{
 			
 			final String emailSubject = "Job Portal Account Registration";
 			final String emailbody = "Halo " + userData.getFullName() + ", "
-					+ " Akun kamu dengan Role : "+ role.getRoleName() + "berhasil dibuat. Silahkan login dengan menggunakan "
+					+ " Akun kamu dengan Role : "+ role.getRoleName() + " berhasil dibuat. Silahkan login dengan menggunakan "
 					+ "password yang sudah diberikan : "
 					+ " Email : " + userData.getUserEmail() 
 					+ " Password : " + generatePassword;
 			emailService.sendEmail(userData.getUserEmail(), emailSubject, emailbody);
 			
 			insertResDto.setMessage("Insert User Success");
-			
 			
 			em().getTransaction().commit();
 		} catch (Exception e) {
@@ -149,8 +143,9 @@ public class UserService implements UserDetailsService{
 			userDto.setId(usersDb.get(i).getId());
 			userDto.setFullName(usersDb.get(i).getProfile().getFullName());
 			userDto.setRole(usersDb.get(i).getRole().getRoleName());
-			usersDto.add(userDto);
-			
+			userDto.setEmail(usersDb.get(i).getUserEmail());
+			userDto.setRole(usersDb.get(i).getRole().getRoleName());
+			usersDto.add(userDto);	
 		}
 		return usersDto;
 	}

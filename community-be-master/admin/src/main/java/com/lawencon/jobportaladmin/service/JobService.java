@@ -86,6 +86,28 @@ public class JobService {
 		
 		return jobsDto;
 	}
+	
+	public List<JobResDto> getByPrincipal() {
+		final List<JobResDto> jobsDto = new ArrayList<>();
+		final List<Job> jobs = jobDao.getByPerson(principalService.getAuthPrincipal());
+
+		for (int i = 0; i < jobs.size(); i++) {
+			final JobResDto job = new JobResDto();
+			job.setId(jobs.get(i).getId());
+			job.setJobName(jobs.get(i).getJobName());
+			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
+			job.setAddress(jobs.get(i).getCompany().getAddress());
+			job.setStartDate(jobs.get(i).getStartDate().toString());
+			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setDescription(jobs.get(i).getDescription());
+			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
+			job.setFileId(jobs.get(i).getJobPicture().getId());
+			jobsDto.add(job);
+		}
+		return jobsDto;
+	}
 
 	public InsertResDto insertJob(JobInsertReqDto jobDto) {
 	
@@ -99,10 +121,13 @@ public class JobService {
 			
 			final Company company = companyDao.getById(Company.class, jobDto.getCompanyId());
 			job.setCompany(company);
+			jobDto.setCompanyCode(company.getCompanyCode());
+			
 			job.setStartDate(LocalDate.parse(jobDto.getStartDate()));
 			job.setEndDate(LocalDate.parse(jobDto.getEndDate()));
 			job.setDescription(jobDto.getDescription());
 			job.setJobCode(GenerateCode.generateCode());
+			
 			jobDto.setJobCode(job.getJobCode());
 			
 			final User hr = userDao.getById(User.class, jobDto.getHrId());
@@ -114,6 +139,7 @@ public class JobService {
 
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);
+			jobDto.setEmploymentTypeCode(type.getEmploymentTypeCode());
 
 			final File file = new File();
 			file.setFileName(jobDto.getFile());
@@ -124,7 +150,6 @@ public class JobService {
 			job.setCreatedBy(principalService.getAuthPrincipal());
 			jobDao.save(job);
 
-			
 			final String jobInsertCandidateAPI = "http://localhost:8081/jobs";
 			
 			final HttpHeaders headers = new HttpHeaders();

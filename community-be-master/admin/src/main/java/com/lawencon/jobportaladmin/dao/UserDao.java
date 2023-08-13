@@ -67,10 +67,12 @@ public class UserDao extends AbstractJpaDao{
 	
 	
 	public List<User> getByRoleCode(String roleCode){
-		final String sql = "SELECT tu.id ,"
+		final String sql = "SELECT tu.id,"
+				+ " tu.user_email,"
 				+ " tu.is_active, " 
 				+ "	tu.profile_id, "
 				+ " tp.full_name, "
+				+ "	tr.role_name,"
 				+ " tr.role_code,"
 				+ " tp.photo_id "
 				+ " FROM t_user tu"
@@ -87,18 +89,20 @@ public class UserDao extends AbstractJpaDao{
 				final Object[]userObjArr = (Object[])userObj;
 				final User userGet = new User();
 				userGet.setId(userObjArr[0].toString());
-				userGet.setIsActive(Boolean.valueOf(userObjArr[1].toString()));
+				userGet.setUserEmail(userObjArr[1].toString());
+				userGet.setIsActive(Boolean.valueOf(userObjArr[2].toString()));
 				
 				final Profile profile = new Profile();
-				profile.setId(userObjArr[2].toString());
-				profile.setFullName(userObjArr[3].toString());
+				profile.setId(userObjArr[3].toString());
+				profile.setFullName(userObjArr[4].toString());
 				
 				final Role role = new Role();
-				role.setRoleCode(userObjArr[4].toString());
+				role.setRoleName(userObjArr[5].toString());
+				role.setRoleCode(userObjArr[6].toString());
 				userGet.setRole(role);
 				
 				final File photo = new File();
-				photo.setId(userObjArr[5].toString());
+				photo.setId(userObjArr[7].toString());
 				
 				profile.setPhoto(photo);
 				userGet.setProfile(profile);

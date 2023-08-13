@@ -53,6 +53,7 @@ public class CompanyService {
 			companyRes.setCompanyName(company.get(i).getCompanyName());
 			companyRes.setCompanyCode(company.get(i).getCompanyCode());
 			companyRes.setCompanyPhone(company.get(i).getCompanyPhone());
+			companyRes.setAddress(company.get(i).getAddress());
 
 			if (company.get(i).getCompanyUrl() != null) {
 				companyRes.setCompanyUrl(company.get(i).getCompanyUrl());

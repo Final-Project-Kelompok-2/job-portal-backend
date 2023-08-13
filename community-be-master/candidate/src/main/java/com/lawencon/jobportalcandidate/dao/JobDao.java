@@ -82,6 +82,8 @@ public class JobDao extends AbstractJpaDao  {
 		return jobs;
 	}
 	
+	
+	
 	public List<Job> getBySalary(Float salary) {
 		final List<Job> jobs = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

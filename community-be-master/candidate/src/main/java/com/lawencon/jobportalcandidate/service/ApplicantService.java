@@ -22,8 +22,10 @@ import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.HiringStatusDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
+import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.applicant.ApplicantInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.applicant.ApplicantResDto;
+import com.lawencon.jobportalcandidate.dto.applicant.ApplicantUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.Applicant;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.HiringStatus;
@@ -50,8 +52,8 @@ public class ApplicantService {
 	@Autowired
 	private CandidateUserDao candidateUserDao;
 
-	public List<ApplicantResDto> getApplicantByCandidate(String id) {
-		final List<Applicant> applicantList = applicantDao.getApplicantByCandidate(id);
+	public List<ApplicantResDto> getApplicantByCandidate() {
+		final List<Applicant> applicantList = applicantDao.getApplicantByCandidate(principalService.getAuthPrincipal());
 		final List<ApplicantResDto> applicantListRes = new ArrayList<>();
 		for (int i = 0; i < applicantList.size(); i++) {
 			final ApplicantResDto applicantRes = new ApplicantResDto();
@@ -69,35 +71,35 @@ public class ApplicantService {
 	}
 
 	public InsertResDto insertApplicant(ApplicantInsertReqDto data) {
-		final LocalDateTime currentDate = LocalDateTime.now();
-		final Applicant applicant = new Applicant();
 		final InsertResDto insertRes = new InsertResDto();
-		
+
 		try {
 			em().getTransaction().begin();
+			final LocalDateTime currentDate = LocalDateTime.now();
+
+			Applicant applicant = new Applicant();
 			applicant.setApplicantCode(GenerateCode.generateCode());
-			
 			data.setApplicantCode(applicant.getApplicantCode());
+
 			applicant.setAppliedDate(currentDate);
+			data.setAppliedDate(applicant.getAppliedDate().toString());
 
 			final Job job = jobDao.getById(Job.class, data.getJobId());
 			applicant.setJob(job);
-			
 			data.setJobCode(job.getJobCode());
 
-			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, data.getStatusId());
+			final HiringStatus hiringStatus = hiringStatusDao
+					.getByCode(com.lawencon.jobportalcandidate.constant.HiringStatus.APPLIED.statusCode);
 			applicant.setStatus(hiringStatus);
-			
 			data.setStatusCode(hiringStatus.getStatusCode());
-			applicant.setCreatedBy(principalService.getAuthPrincipal());
-			
-			final String id = JwtConfig.get();
-			
+
+			final String id = principalService.getAuthPrincipal();
+
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, id);
 			applicant.setCandidate(candidate);
-			
 			data.setCandidateEmail(candidate.getUserEmail());
-			final Applicant applicantId = applicantDao.save(applicant);
+
+			applicant = applicantDao.save(applicant);
 
 			final String applicantInsertAdminAPI = "http://localhost:8080/applicants";
 
@@ -105,20 +107,20 @@ public class ApplicantService {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
 
-			final RequestEntity<ApplicantInsertReqDto> applicantInsert = RequestEntity.post(applicantInsertAdminAPI)
+			final RequestEntity<ApplicantInsertReqDto> applicantInsert = RequestEntity.patch(applicantInsertAdminAPI)
 					.headers(headers).body(data);
 
 			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(applicantInsert,
 					InsertResDto.class);
 
 			if (responseAdmin.getStatusCode().equals(HttpStatus.CREATED)) {
-				insertRes.setId(applicantId.getId());
+				insertRes.setId(applicant.getId());
 				insertRes.setMessage("Applicant Insert Success");
 				em().getTransaction().commit();
+
 			} else {
 				em().getTransaction().rollback();
 				throw new RuntimeException("Insert Failed");
-
 			}
 
 		} catch (Exception e) {
@@ -127,6 +129,32 @@ public class ApplicantService {
 		}
 
 		return insertRes;
+	}
+
+	public UpdateResDto updateApplicant(ApplicantUpdateReqDto updateData) {
+		final UpdateResDto resDto = new UpdateResDto();
+
+		try {
+			em().getTransaction().begin();
+			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
+			final HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
+
+			applicant.setStatus(hiringStatus);
+			applicant = applicantDao.saveAndFlush(applicant);
+
+			resDto.setVersion(applicant.getVersion());
+			resDto.setMessage("Update Application Success");
+
+			em().getTransaction().commit();
+		} catch (Exception e) {
+
+			em().getTransaction().rollback();
+			e.printStackTrace();
+
+		}
+
+		return resDto;
+
 	}
 
 }

@@ -15,7 +15,6 @@ public class ApplicantInsertReqDto {
 		this.applicantCode = applicantCode;
 	}
 
-
 	public String getAppliedDate() {
 		return appliedDate;
 	}
