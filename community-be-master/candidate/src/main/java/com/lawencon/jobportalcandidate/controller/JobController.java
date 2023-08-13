@@ -47,8 +47,7 @@ public class JobController {
 		final InsertResDto response = jobService.insertJob(job);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
-	
-	
+
 	
 	
 }

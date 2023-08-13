@@ -1,11 +1,10 @@
 package com.lawencon.jobportalcandidate.dto.applicant;
 
 public class ApplicantInsertReqDto {
-	private String applicantCode;
 	private String jobId;
+	private String applicantCode;
 	private String jobCode;
 	private String appliedDate;
-	private String statusId;
 	private String statusCode;
 	private String candidateEmail;
 
@@ -32,16 +31,6 @@ public class ApplicantInsertReqDto {
 	public void setAppliedDate(String appliedDate) {
 		this.appliedDate = appliedDate;
 	}
-
-	public String getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(String statusId) {
-		this.statusId = statusId;
-	}
-
-	
 
 	public String getJobCode() {
 		return jobCode;

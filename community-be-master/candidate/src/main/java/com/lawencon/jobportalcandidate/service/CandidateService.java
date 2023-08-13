@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.jobportalcandidate.constant.PersonTypes;
 import com.lawencon.jobportalcandidate.dao.CandidateProfileDao;
 import com.lawencon.jobportalcandidate.dao.CandidateStatusDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
@@ -120,27 +121,23 @@ public class CandidateService implements UserDetailsService{
 			
 			final CandidateProfile candidateProfile = new CandidateProfile();
 			candidateProfile.setFullname(data.getProfile().getFullname());
-			final PersonType personType = personTypeDao.getByCode("CND");
+			final PersonType personType = personTypeDao.getByCode(PersonTypes.CANDIDATE.typeCode);
 			candidateProfile.setPersonType(personType);
-//			candidateProfile.setCreatedBy(principalService.getAuthPrincipal());
 			candidateProfileDao.saveNoLogin(candidateProfile,()-> GenerateCode.generateCode());
 
 			CandidateUser candidateUser = new CandidateUser();
 			candidateUser.setUserEmail(data.getUserEmail());
-			
-			
+	
 			final String encodedPassword = passwordEncoder.encode(data.getUserPassword());
 			
 			candidateUser.setUserPassword(encodedPassword);
 			candidateUser.setCandidateProfile(candidateProfile);
-//			candidateUser.setCreatedBy(principalService.getAuthPrincipal());
 			candidateUser = candidateUserDao.saveNoLogin(candidateUser,()-> GenerateCode.generateCode());
 
 			final String jobInsertCandidateAPI = "http://localhost:8080/candidate-user";
 			
 			final HttpHeaders headers = new HttpHeaders();
 		    headers.setContentType(MediaType.APPLICATION_JSON);
-//		    headers.setBearerAuth(JwtConfig.get());
 			
 			final RequestEntity<CandidateUserInsertReqDto> candidateInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(data);
 			

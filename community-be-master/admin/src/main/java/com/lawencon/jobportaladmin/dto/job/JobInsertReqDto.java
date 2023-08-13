@@ -5,6 +5,7 @@ public class JobInsertReqDto {
 	private String jobName;
 	private String jobCode;
 	private String companyId;
+	private String companyCode;
 	private String startDate;
 	private String endDate;
 	private String description;
@@ -13,6 +14,7 @@ public class JobInsertReqDto {
 	private Integer expectedSalaryMin;
 	private Integer expectedSalaryMax;
 	private String employmentTypeId;
+	private String employmentTypeCode;
 	private String file;
 	private String fileExtension;
 
@@ -55,8 +57,6 @@ public class JobInsertReqDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
 
 	public String getEmploymentTypeId() {
 		return employmentTypeId;
@@ -120,6 +120,22 @@ public class JobInsertReqDto {
 
 	public void setJobCode(String jobCode) {
 		this.jobCode = jobCode;
+	}
+
+	public String getEmploymentTypeCode() {
+		return employmentTypeCode;
+	}
+
+	public void setEmploymentTypeCode(String employmentTypeCode) {
+		this.employmentTypeCode = employmentTypeCode;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
 }

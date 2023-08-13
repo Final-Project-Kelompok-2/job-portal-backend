@@ -21,6 +21,7 @@ import com.lawencon.jobportalcandidate.model.EmploymentType;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.util.DateUtil;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class JobService {
@@ -36,6 +37,9 @@ public class JobService {
 
 	@Autowired
 	private FileDao fileDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -112,6 +116,8 @@ public class JobService {
 
 		return jobsDto;
 	}
+	
+	
 
 	public InsertResDto insertJob(JobInsertReqDto job) {
 
@@ -124,16 +130,16 @@ public class JobService {
 			newJob.setJobName(job.getJobName());
 			newJob.setJobCode(job.getJobCode());
 			
-			final Company company = companyDao.getById(Company.class, job.getCompanyId());
+			final Company company = companyDao.getByCode(job.getCompanyCode());
 			newJob.setCompany(company);
+			
 			newJob.setStartDate(DateUtil.parseStringToLocalDate(job.getStartDate()));
 			newJob.setEndDate(DateUtil.parseStringToLocalDate(job.getEndDate()));
 			newJob.setDescription(job.getDescription());
 			newJob.setExpectedSalaryMin(job.getExpectedSalaryMin());
 			newJob.setExpectedSalaryMax(job.getExpectedSalaryMax());
 
-			final EmploymentType employmentType = employmentTypeDao.getById(EmploymentType.class,
-					job.getEmploymentTypeId());
+			final EmploymentType employmentType = employmentTypeDao.getByCode(job.getEmploymentTypeCode());
 			newJob.setEmploymentType(employmentType);
 
 			File photo = new File();

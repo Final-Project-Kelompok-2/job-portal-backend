@@ -1,7 +1,5 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -22,9 +20,6 @@ public class HiringStatusDao extends AbstractJpaDao  {
 				+ "	hs.id, "
 				+ "	hs.statusCode, "
 				+ " hs.statusName, "
-				+ "	hs.createdBy, "
-				+ "	hs.createdAt, "
-				+ "	hs.isActive, "
 				+ "	hs.version "
 				+ "FROM "
 				+ "	HiringStatus hs "
@@ -42,10 +37,7 @@ public class HiringStatusDao extends AbstractJpaDao  {
 			hiringStatus.setId(hiringStatusArr[0].toString());
 			hiringStatus.setStatusCode(hiringStatusArr[1].toString());
 			hiringStatus.setStatusName(hiringStatusArr[2].toString());
-			hiringStatus.setCreatedBy(hiringStatusArr[3].toString());
-			hiringStatus.setCreatedAt(LocalDateTime.parse(hiringStatusArr[4].toString()));
-			hiringStatus.setIsActive(Boolean.valueOf(hiringStatusArr[5].toString()));
-			hiringStatus.setVersion(Integer.valueOf(hiringStatusArr[6].toString()));
+			hiringStatus.setVersion(Integer.valueOf(hiringStatusArr[3].toString()));
 		}
 		
 		return hiringStatus;

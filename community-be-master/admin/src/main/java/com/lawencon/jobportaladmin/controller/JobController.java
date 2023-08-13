@@ -36,5 +36,10 @@ public class JobController {
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 	
+	@GetMapping("/person")
+	public ResponseEntity<List<JobResDto>> getByPrincipal() {
+		final List<JobResDto> data = jobService.getByPrincipal();
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
 	
 }

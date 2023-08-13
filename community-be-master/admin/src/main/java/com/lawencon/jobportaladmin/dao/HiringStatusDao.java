@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.model.HiringStatus;
-import com.lawencon.jobportaladmin.model.Job;
 
 @Repository
 public class HiringStatusDao extends AbstractJpaDao{
@@ -26,9 +25,19 @@ public class HiringStatusDao extends AbstractJpaDao{
 				+ " FROM HiringStatus hs"
 				+ " WHERE hs.statusCode = :statusCode";
 		
-		final HiringStatus hiringStatus = em().createQuery(sql,HiringStatus.class)
-				.setParameter("statusCode", statusCode)
-				.getSingleResult();
+		final Object hiringStatusObj = this.em().createQuery(sql).setParameter("statusCode", statusCode).getSingleResult();
+		
+		final Object[] hiringStatusArr = (Object[]) hiringStatusObj;
+		HiringStatus hiringStatus = null;
+		
+		if (hiringStatusArr.length > 0) {
+			hiringStatus = new HiringStatus();
+			
+			hiringStatus.setId(hiringStatusArr[0].toString());
+			hiringStatus.setStatusCode(hiringStatusArr[1].toString());
+			hiringStatus.setStatusName(hiringStatusArr[2].toString());
+			hiringStatus.setVersion(Integer.valueOf(hiringStatusArr[3].toString()));
+		}
 		
 		return hiringStatus;
 	}
