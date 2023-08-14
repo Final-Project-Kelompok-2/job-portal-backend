@@ -1,7 +1,5 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -26,35 +24,9 @@ public class PersonTypeDao extends AbstractJpaDao {
 			sqlb.append("WHERE ");
 			sqlb.append(" pt.typeCode = :code");
 		
-		final String sql = "SELECT "
-				+ "	pt.id, "
-				+ "	pt.typeCode, "
-				+ " pt.typeName, "
-				+ "	pt.createdBy, "
-				+ "	pt.createdAt, "
-				+ "	pt.isActive, "
-				+ "	pt.version "
-				+ "FROM "
-				+ "	PersonType pt "
-				+ "WHERE "
-				+ "	pt.typeCode = :code";
-		
-		final Object personTypeObj = this.em().createQuery(sqlb.toString()).setParameter("code", code).getSingleResult();
-		
-		final Object[] personTypeArr = (Object[]) personTypeObj;
-		PersonType personType  = null;
-		
-		if (personTypeArr.length > 0) {
-			personType = new PersonType();
-			
-			personType.setId(personTypeArr[0].toString());
-			personType.setTypeCode(personTypeArr[1].toString());
-			personType.setTypeName(personTypeArr[2].toString());
-			personType.setCreatedBy(personTypeArr[3].toString());
-			personType.setCreatedAt(LocalDateTime.parse(personTypeArr[4].toString()));
-			personType.setIsActive(Boolean.valueOf(personTypeArr[5].toString()));
-			personType.setVersion(Integer.valueOf(personTypeArr[6].toString()));
-		}
+		final PersonType personType = this.em().createQuery(sqlb.toString(), PersonType.class)
+				.setParameter("code", code)
+				.getSingleResult();
 		
 		return personType;
 	}

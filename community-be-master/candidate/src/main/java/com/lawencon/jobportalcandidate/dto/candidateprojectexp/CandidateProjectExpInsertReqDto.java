@@ -7,6 +7,7 @@ public class CandidateProjectExpInsertReqDto {
 	private String description;
 	private String startDate;
 	private String endDate;
+	private String email;
 
 	public String getProjectName() {
 		return projectName;
@@ -46,6 +47,14 @@ public class CandidateProjectExpInsertReqDto {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

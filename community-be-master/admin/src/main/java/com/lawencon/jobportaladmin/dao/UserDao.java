@@ -29,14 +29,14 @@ public class UserDao extends AbstractJpaDao {
 			sqlb.append(" tu.is_active, "); 
 			sqlb.append(" tu.profile_id, ");
 			sqlb.append(" tp.full_name, ");
-			sqlb.append(" tr.role_code,");
+			sqlb.append(" tr.role_code, ");
 			sqlb.append(" tp.photo_id ");
 			sqlb.append("FROM ");
 			sqlb.append(" t_user tu ");
 			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_role tr ON tr.id = tu.role_id");
+			sqlb.append(" t_role tr ON tr.id = tu.role_id ");
 			sqlb.append("INNER JOIN " );
-			sqlb.append(" t_profile tp ON tp.id = tu.profile_id");
+			sqlb.append(" t_profile tp ON tp.id = tu.profile_id ");
 			sqlb.append("WHERE ");
 			sqlb.append(" tu.user_email = :email");
 			
@@ -47,7 +47,7 @@ public class UserDao extends AbstractJpaDao {
 				+ " tp.full_name, "
 				+ " tr.role_code,"
 				+ " tp.photo_id "
-				+ " FROM t_user tu"
+				+ " FROM t_user tu "
 				+ " INNER JOIN t_role tr ON tr.id = tu.role_id "
 				+ " INNER JOIN t_profile tp ON tp.id = tu.profile_id " 
 				+ " WHERE tu.user_email = :email ";

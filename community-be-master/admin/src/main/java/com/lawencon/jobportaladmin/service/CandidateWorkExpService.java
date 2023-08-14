@@ -1,32 +1,25 @@
-package com.lawencon.jobportalcandidate.service;
+package com.lawencon.jobportaladmin.service;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.config.JwtConfig;
-import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
-import com.lawencon.jobportalcandidate.dao.CandidateWorkExpDao;
-import com.lawencon.jobportalcandidate.dto.DeleteResDto;
-import com.lawencon.jobportalcandidate.dto.InsertResDto;
-import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpResDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
-import com.lawencon.jobportalcandidate.model.CandidateUser;
-import com.lawencon.jobportalcandidate.model.CandidateWorkExp;
+import com.lawencon.jobportaladmin.dao.CandidateUserDao;
+import com.lawencon.jobportaladmin.dao.CandidateWorkExpDao;
+import com.lawencon.jobportaladmin.dto.DeleteResDto;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpResDto;
+import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
+import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.model.CandidateWorkExp;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -36,9 +29,6 @@ public class CandidateWorkExpService {
 		return ConnHandler.getManager();
 	}
 
-	@Autowired
-	private RestTemplate restTemplate;
-	
 	@Autowired
 	private CandidateWorkExpDao candidateWorkExpDao;
 
@@ -81,37 +71,18 @@ public class CandidateWorkExpService {
 			work.setResponsibility(data.getResponsibility());
 			work.setReasonLeave(data.getReasonLeave());
 			work.setLastSalary(data.getLastSalary());
-			work.setStartDate(Timestamp.valueOf(data.getStartDate().toString()).toLocalDateTime());
-			work.setEndDate(Timestamp.valueOf(data.getEndDate().toString()).toLocalDateTime());
+			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
+			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
-			data.setEmail(candidate.getUserEmail());
+			final CandidateUser candidate = candidateUserDao.getByEmail(data.getEmail());
 			work.setCandidateUser(candidate);
 			work.setCreatedBy(principalService.getAuthPrincipal());
 
 			candidateWorkExpDao.save(work);
 			
-			final String candidateWorkAPI = "http://localhost:8080/candidate-works";
-
-			final HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			
-			headers.setBearerAuth(JwtConfig.get());
-			
-			final RequestEntity<CandidateWorkExpInsertReqDto> candidateWorkInsert = RequestEntity
-					.post(candidateWorkAPI).headers(headers).body(data);
-			
-			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateWorkInsert,
-					InsertResDto.class);
-			
-			if (responseAdmin.getStatusCode().equals(HttpStatus.CREATED)) {
-				result.setId(work.getId());
-				result.setMessage("Working Experience record added!");
-				em().getTransaction().commit();
-			} else {
-				em().getTransaction().rollback();
-				throw new RuntimeException("Insert Failed");
-			}
+			result.setId(work.getId());
+			result.setMessage("Working Experience record added!");
+			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
@@ -134,8 +105,8 @@ public class CandidateWorkExpService {
 			work.setResponsibility(data.getResponsibility());
 			work.setReasonLeave(data.getReasonLeave());
 			work.setLastSalary(data.getLastSalary());
-			work.setStartDate(Timestamp.valueOf(data.getStartDate().toString()).toLocalDateTime());
-			work.setEndDate(Timestamp.valueOf(data.getEndDate().toString()).toLocalDateTime());
+			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
+			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			work.setCandidateUser(candidate);
