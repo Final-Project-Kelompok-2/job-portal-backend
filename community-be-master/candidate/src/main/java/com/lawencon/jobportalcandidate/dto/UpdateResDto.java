@@ -4,6 +4,7 @@ public class UpdateResDto {
 
 	private Integer version;
 	private String message;
+	
 
 	public Integer getVersion() {
 		return version;

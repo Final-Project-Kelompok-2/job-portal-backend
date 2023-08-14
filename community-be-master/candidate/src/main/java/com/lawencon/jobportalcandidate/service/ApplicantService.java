@@ -146,6 +146,7 @@ public class ApplicantService {
 			resDto.setMessage("Update Application Success");
 
 			em().getTransaction().commit();
+			
 		} catch (Exception e) {
 
 			em().getTransaction().rollback();
