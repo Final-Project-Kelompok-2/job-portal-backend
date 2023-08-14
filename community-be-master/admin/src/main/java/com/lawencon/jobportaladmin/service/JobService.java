@@ -17,20 +17,24 @@ import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.config.JwtConfig;
+import com.lawencon.jobportaladmin.dao.BenefitDao;
 import com.lawencon.jobportaladmin.dao.CompanyDao;
 import com.lawencon.jobportaladmin.dao.EmploymentTypeDao;
 import com.lawencon.jobportaladmin.dao.FileDao;
 import com.lawencon.jobportaladmin.dao.JobDao;
+import com.lawencon.jobportaladmin.dao.OwnedBenefitDao;
 import com.lawencon.jobportaladmin.dao.UserDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.job.JobInsertReqDto;
 import com.lawencon.jobportaladmin.dto.job.JobResDto;
 import com.lawencon.jobportaladmin.dto.job.JobUpdateReqDto;
+import com.lawencon.jobportaladmin.model.Benefit;
 import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.EmploymentType;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.Job;
+import com.lawencon.jobportaladmin.model.OwnedBenefit;
 import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
@@ -62,6 +66,12 @@ public class JobService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private BenefitDao benefitDao;
+	
+	@Autowired
+	private OwnedBenefitDao ownedBenefitDao;
 	
 	public List<JobResDto> getAllJobs() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
@@ -116,7 +126,7 @@ public class JobService {
 
 		try {
 			em().getTransaction().begin();
-			final Job job = new Job();
+			Job job = new Job();
 			job.setJobName(jobDto.getJobName());
 			
 			final Company company = companyDao.getById(Company.class, jobDto.getCompanyId());
@@ -136,19 +146,31 @@ public class JobService {
 			job.setPic(pic);
 			job.setExpectedSalaryMin(jobDto.getExpectedSalaryMin());
 			job.setExpectedSalaryMax(jobDto.getExpectedSalaryMax());
+			
+			
 
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);
 			jobDto.setEmploymentTypeCode(type.getEmploymentTypeCode());
 
-			final File file = new File();
+			 File file = new File();
 			file.setFileName(jobDto.getFile());
 			file.setFileExtension(jobDto.getFileExtension());
 			file.setCreatedBy(principalService.getAuthPrincipal());
-			fileDao.save(file);
+			file = fileDao.save(file);
 			job.setJobPicture(file);
 			job.setCreatedBy(principalService.getAuthPrincipal());
-			jobDao.save(job);
+			job = jobDao.save(job);
+			
+			if(jobDto.getBenefits().size()>0) {
+				for(int i =0;i<jobDto.getBenefits().size();i++) {
+					OwnedBenefit ownedBenefit = new OwnedBenefit();
+					final Benefit benefit = benefitDao.getById(Benefit.class, jobDto.getBenefits().get(i).getBenefitId());
+					ownedBenefit.setBenefit(benefit);
+					ownedBenefit.setJob(job);
+					ownedBenefit = ownedBenefitDao.save(ownedBenefit);
+				}
+			}
 
 			final String jobInsertCandidateAPI = "http://localhost:8081/jobs";
 			
