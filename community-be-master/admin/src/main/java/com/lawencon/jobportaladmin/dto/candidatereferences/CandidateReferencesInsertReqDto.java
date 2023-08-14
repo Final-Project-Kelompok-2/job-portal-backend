@@ -8,7 +8,7 @@ public class CandidateReferencesInsertReqDto {
 	private String email;
 	private String company;
 	private String description;
-	private String candidateId;
+	private String candidateEmail;
 
 	public String getFullname() {
 		return fullname;
@@ -66,12 +66,14 @@ public class CandidateReferencesInsertReqDto {
 		this.description = description;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
+	public String getCandidateEmail() {
+		return candidateEmail;
 	}
 
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
+	public void setCandidateEmail(String candidateEmail) {
+		this.candidateEmail = candidateEmail;
 	}
+
+
 
 }

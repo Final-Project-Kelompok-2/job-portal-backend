@@ -29,8 +29,7 @@ public class CandidateFamilyDao extends AbstractJpaDao{
 				+ "	degree_name, "
 				+ "	occupation, "
 				+ "	birth_date, "
-				+ "	birth_place, "
-
+				+ "	birth_place "
 				+ "FROM  "
 				+ "	t_candidate_family tcf  "
 				+ "WHERE  "

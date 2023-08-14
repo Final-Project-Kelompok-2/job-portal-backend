@@ -4,10 +4,19 @@ public class CandidateDocumentInsertReqDto {
 	
 	private String docName;
 	private String candidateId;
-	private String fileId;
-	private String fileTypeId;
+	private String email;
+	private String fileTypeCode;
 	private String fileName;
 	private String fileExtension;
+
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getFileName() {
 		return fileName;
@@ -41,20 +50,16 @@ public class CandidateDocumentInsertReqDto {
 		this.candidateId = candidateId;
 	}
 
-	public String getFileId() {
-		return fileId;
+	public String getFileTypeCode() {
+		return fileTypeCode;
 	}
 
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setFileTypeCode(String fileTypeCode) {
+		this.fileTypeCode = fileTypeCode;
 	}
 
-	public String getFileTypeId() {
-		return fileTypeId;
-	}
 
-	public void setFileTypeId(String fileTypeId) {
-		this.fileTypeId = fileTypeId;
-	}
+
+	
 
 }

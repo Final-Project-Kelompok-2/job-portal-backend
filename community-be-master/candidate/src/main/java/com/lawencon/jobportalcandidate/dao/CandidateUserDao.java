@@ -24,7 +24,7 @@ public class CandidateUserDao extends AbstractJpaDao{
 				+ "	tu.profile_id, "
 				+ " tp.fullname, "
 				+ " tp.file_id "
-				+ " FROM t_candidate_user tu"
+				+ " FROM t_candidate_user tu "
 				+ " INNER JOIN t_candidate_profile tp ON tp.id = tu.profile_id " 
 				+ " WHERE tu.user_email = :email ";
 

@@ -1,10 +1,29 @@
 package com.lawencon.jobportaladmin.dto.candidatedocument;
 
 public class CandidateDocumentInsertReqDto {
+
 	private String docName;
 	private String candidateId;
-	private String fileId;
-	private String fileTypeId;
+	private String email;
+	private String fileTypeCode;
+	private String fileName;
+	private String fileExtension;
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
 
 	public String getDocName() {
 		return docName;
@@ -22,20 +41,22 @@ public class CandidateDocumentInsertReqDto {
 		this.candidateId = candidateId;
 	}
 
-	public String getFileId() {
-		return fileId;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setFileId(String fileId) {
-		this.fileId = fileId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getFileTypeId() {
-		return fileTypeId;
+	public String getFileTypeCode() {
+		return fileTypeCode;
 	}
 
-	public void setFileTypeId(String fileTypeId) {
-		this.fileTypeId = fileTypeId;
+	public void setFileTypeCode(String fileTypeCode) {
+		this.fileTypeCode = fileTypeCode;
 	}
+
+
 
 }

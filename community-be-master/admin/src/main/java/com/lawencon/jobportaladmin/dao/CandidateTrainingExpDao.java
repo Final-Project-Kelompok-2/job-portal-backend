@@ -1,7 +1,6 @@
 package com.lawencon.jobportaladmin.dao;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 	
 	public List<CandidateTrainingExp> getByCandidate(String id) {
 		final List<CandidateTrainingExp> trainings = new ArrayList<>();
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	
 			
 		final StringBuilder sql = new StringBuilder();
 				sql.append ("SELECT ");
@@ -49,8 +48,8 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 				training.setOrganizationName(trainingArr[1].toString());
 				training.setTrainingName(trainingArr[2].toString());
 				training.setDescription(trainingArr[3].toString());
-				training.setStartDate(LocalDateTime.parse(trainingArr[4].toString(), formatter));
-				training.setEndDate(LocalDateTime.parse(trainingArr[5].toString(), formatter));
+				training.setStartDate(Timestamp.valueOf(trainingArr[4].toString()).toLocalDateTime());
+				training.setEndDate(Timestamp.valueOf(trainingArr[5].toString()).toLocalDateTime());
 				
 				trainings.add(training);
 			}

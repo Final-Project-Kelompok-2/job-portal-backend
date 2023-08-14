@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.service;
+package com.lawencon.jobportaladmin.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,26 +7,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.config.JwtConfig;
-import com.lawencon.jobportalcandidate.dao.CandidateTrainingExpDao;
-import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
-import com.lawencon.jobportalcandidate.dto.DeleteResDto;
-import com.lawencon.jobportalcandidate.dto.InsertResDto;
-import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpResDto;
-import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpUpdateReqDto;
-import com.lawencon.jobportalcandidate.model.CandidateTrainingExp;
-import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportaladmin.dao.CandidateTrainingExpDao;
+import com.lawencon.jobportaladmin.dao.CandidateUserDao;
+import com.lawencon.jobportaladmin.dto.DeleteResDto;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.candidatetrainingexp.CandidateTrainingExpInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatetrainingexp.CandidateTrainingExpResDto;
+import com.lawencon.jobportaladmin.dto.candidatetrainingexp.CandidateTrainingExpUpdateReqDto;
+import com.lawencon.jobportaladmin.model.CandidateTrainingExp;
+import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -34,14 +27,14 @@ public class CandidateTrainingExpService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	@Autowired
-	private RestTemplate restTemplate;
+
+
 	@Autowired
 	private CandidateUserDao candidateUserDao;
-	
+
 	@Autowired
 	private CandidateTrainingExpDao trainingDao;
-	
+
 	@Autowired
 	private PrincipalService<String> principalService;
 
@@ -56,41 +49,32 @@ public class CandidateTrainingExpService {
 			trainingExpRes.setDescription(trainingExp.get(i).getDescription());
 			trainingExpRes.setStartDate(trainingExp.get(i).getStartDate().toString());
 			trainingExpRes.setEndDate(trainingExp.get(i).getEndDate().toString());
-			
+
 			trainingExpResList.add(trainingExpRes);
 		}
 		return trainingExpResList;
 	}
 
 	public InsertResDto insertCandidateTrainingExp(CandidateTrainingExpInsertReqDto data) {
-		 InsertResDto insertRes = null;
+		InsertResDto insertRes = null;
 		try {
 			em().getTransaction().begin();
 			final CandidateTrainingExp trainingExp = new CandidateTrainingExp();
 			trainingExp.setCreatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
-			trainingExp.setDescription(data.getDescription());
 			trainingExp.setOrganizationName(data.getOrganizationName());
 			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
 			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
-
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			trainingExp.setDescription(data.getDescription());
+			final CandidateUser candidateUser = candidateUserDao.getByEmail(data.getEmail());
 			trainingExp.setCandidateUser(candidateUser);
-			data.setEmail(candidateUser.getUserEmail());
+
 			final CandidateTrainingExp trainingId = trainingDao.save(trainingExp);
-			
-			final String candidateTrainingApi = "http://localhost:8080/training-experiences";
-			final HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.setBearerAuth(JwtConfig.get());
 			insertRes = new InsertResDto();
-			final RequestEntity<CandidateTrainingExpInsertReqDto>trainingInsert = RequestEntity.post(candidateTrainingApi).headers(headers).body(data);
-			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(trainingInsert, InsertResDto.class);
-			if(responseAdmin.getStatusCode().equals(HttpStatus.CREATED)){
-				insertRes.setId(trainingId.getId());
-				insertRes.setMessage("Training Exp record added!");
-				em().getTransaction().commit();
-			}
+			insertRes.setId(trainingId.getId());
+			insertRes.setMessage("Training Exp record added!");
+			em().getTransaction().commit();
+
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
@@ -98,7 +82,7 @@ public class CandidateTrainingExpService {
 
 		return insertRes;
 	}
-	
+
 	public UpdateResDto updateCandidateTrainingExp(CandidateTrainingExpUpdateReqDto data) {
 		final UpdateResDto updateRes = new UpdateResDto();
 		try {
@@ -110,11 +94,12 @@ public class CandidateTrainingExpService {
 			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
 			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
 
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
+					principalService.getAuthPrincipal());
 			trainingExp.setCandidateUser(candidateUser);
 
 			final CandidateTrainingExp trainingId = trainingDao.save(trainingExp);
-			
+
 			updateRes.setMessage("Candidate Training Exp Insert Success");
 			updateRes.setVersion(trainingId.getVersion());
 			em().getTransaction().commit();
@@ -125,11 +110,10 @@ public class CandidateTrainingExpService {
 
 		return updateRes;
 	}
-	
-	
+
 	public DeleteResDto deleteCandidateTrainingExp(String id) {
 		trainingDao.deleteById(CandidateTrainingExp.class, id);
-		
+
 		final DeleteResDto deleteRes = new DeleteResDto();
 		deleteRes.setMessage("Delete Candidate Training Exp Success");
 		return deleteRes;

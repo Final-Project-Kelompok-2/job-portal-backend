@@ -7,7 +7,7 @@ public class CandidateFamilyInsertReqDto {
 	private String occupation;
 	private String birthDate;
 	private String birthPlace;
-	private String candidateId;
+	private String email;
 	public String getFullname() {
 		return fullname;
 	}
@@ -44,12 +44,13 @@ public class CandidateFamilyInsertReqDto {
 	public void setBirthPlace(String birthPlace) {
 		this.birthPlace = birthPlace;
 	}
-	public String getCandidateId() {
-		return candidateId;
+	public String getEmail() {
+		return email;
 	}
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
 	
 	
 

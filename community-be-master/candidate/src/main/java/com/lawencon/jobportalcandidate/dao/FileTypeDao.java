@@ -31,7 +31,7 @@ public class FileTypeDao extends AbstractJpaDao {
 				+ "	ft.typeCode, "
 				+ " ft.typeName, "
 				+ "	ft.createdBy, "
-				+ "	ft.createAt, "
+				+ "	ft.createdAt, "
 				+ "	ft.isActive, "
 				+ "	ft.version "
 				+ "FROM "
@@ -39,7 +39,7 @@ public class FileTypeDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	ft.typeCode = :code";
 		
-		final Object fileTypeObj = this.em().createQuery(sqlb.toString())
+		final Object fileTypeObj = this.em().createQuery(sql)
 				.setParameter("code", code)
 				.getSingleResult();
 		

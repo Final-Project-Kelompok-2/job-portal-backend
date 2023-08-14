@@ -5,7 +5,7 @@ public class CandidateLanguageInsertReqDto {
 	private String writingRate;
 	private String speakingRate;
 	private String listeningRate;
-	private String candidateId;
+	private String email;
 
 	public String getLanguageName() {
 		return languageName;
@@ -39,12 +39,14 @@ public class CandidateLanguageInsertReqDto {
 		this.listeningRate = listeningRate;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
+
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

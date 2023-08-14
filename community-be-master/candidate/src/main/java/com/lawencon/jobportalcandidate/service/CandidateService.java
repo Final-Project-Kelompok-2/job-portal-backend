@@ -99,20 +99,25 @@ public class CandidateService implements UserDetailsService {
 		candidateprofileDto.setFullname(candidateprofile.getFullname());
 		candidateprofileDto.setGender(candidateprofile.getGender());
 		candidateprofileDto.setExperience(candidateprofile.getExperience());
-		if (candidateprofile.getExpectedSalary() != null) {
+
+		if(candidateprofile.getExpectedSalary() != null) {
 			candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary().toString());
 		}
+		
 		candidateprofileDto.setPhoneNumber(candidateprofile.getPhoneNumber());
 		candidateprofileDto.setMobileNumber(candidateprofile.getMobileNumber());
 		candidateprofileDto.setNik(candidateprofile.getNik());
-		if (candidateprofile.getBirthDate() != null) {
+		if(candidateprofile.getBirthDate() != null) {
 			candidateprofileDto.setBirthDate(candidateprofile.getBirthDate().toString());
 		}
+		
 		candidateprofileDto.setBirthPlace(candidateprofile.getBirthPlace());
-		if (candidateprofile.getMaritalStatus() != null) {
+		if(candidateprofile.getMaritalStatus() != null) {
 			candidateprofileDto.setMaritalStatusId(candidateprofile.getMaritalStatus().getId());
-			data.setCandidateProfile(candidateprofileDto);
 		}
+		
+		data.setCandidateProfile(candidateprofileDto);
+		
 
 		candidateuserDto.setProfileId(candidateprofile.getId());
 		data.setCandidateUser(candidateuserDto);
