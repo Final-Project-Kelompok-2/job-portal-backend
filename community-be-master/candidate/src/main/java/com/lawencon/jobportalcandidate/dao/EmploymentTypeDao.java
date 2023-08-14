@@ -18,6 +18,20 @@ public class EmploymentTypeDao extends AbstractJpaDao {
 	}
 	
 	public EmploymentType getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append ("et.id, ");
+			sqlb.append ("et.employmentTypeCode, ");
+			sqlb.append (" et.employmentTypeName, ");
+			sqlb.append ("et.createdBy, ");
+			sqlb.append ("et.createdAt, ");
+			sqlb.append ("et.isActive, ");
+			sqlb.append ("et.version ");
+			sqlb.append ("FROM ");
+			sqlb.append ("EmploymentType et ");
+			sqlb.append ("WHERE ");
+			sqlb.append ("et.employmentTypeCode = :code");
+		
 		final String sql = "SELECT "
 				+ "	et.id, "
 				+ "	et.employmentTypeCode, "
@@ -31,7 +45,9 @@ public class EmploymentTypeDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	et.employmentTypeCode = :code";
 		
-		final Object empTypeObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
+		final Object empTypeObj = this.em().createQuery(sqlb.toString())
+				.setParameter("code", code)
+				.getSingleResult();
 		
 		final Object[] empTypeArr = (Object[]) empTypeObj;
 		EmploymentType empType = null;

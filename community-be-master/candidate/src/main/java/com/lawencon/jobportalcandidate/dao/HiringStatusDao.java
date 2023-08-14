@@ -16,6 +16,14 @@ public class HiringStatusDao extends AbstractJpaDao  {
 	}
 		
 	public HiringStatus getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" hs ");
+			sqlb.append("FROM ");
+			sqlb.append(" HiringStatus hs");
+			sqlb.append("WHERE ");
+			sqlb.append(" hs.statusCode = :statusCode");
+			
 		final String sql = "SELECT "
 				+ "	hs.id, "
 				+ "	hs.statusCode, "
@@ -26,7 +34,9 @@ public class HiringStatusDao extends AbstractJpaDao  {
 				+ "WHERE "
 				+ "	hs.statusCode = :code";
 		
-		final Object hiringStatusObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
+		final Object hiringStatusObj = this.em().createQuery(sqlb.toString())
+				.setParameter("code", code)
+				.getSingleResult();
 		
 		final Object[] hiringStatusArr = (Object[]) hiringStatusObj;
 		HiringStatus hiringStatus = null;

@@ -19,12 +19,12 @@ public class ReligionDao extends AbstractJpaDao {
 
 	public Religion getByCode(String code) {
 		final StringBuilder sqlb = new StringBuilder();
-		sqlb.append("SELECT ");
-		sqlb.append(" tr ");
-		sqlb.append("FROM ");
-		sqlb.append(" Religion tr ");
-		sqlb.append("WHERE ");
-		sqlb.append(" tr.religionCode = :code");
+			sqlb.append("SELECT ");
+			sqlb.append(" tr ");
+			sqlb.append("FROM ");
+			sqlb.append(" Religion tr ");
+			sqlb.append("WHERE ");
+			sqlb.append(" tr.religionCode = :code");
 
 		final Object religionObj = em().createQuery(sqlb.toString()).setParameter("code", code).getSingleResult();
 		final Object[] religionArr = (Object[]) religionObj;
