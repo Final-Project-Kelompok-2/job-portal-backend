@@ -42,7 +42,6 @@ public class ApplicantController {
 	
 	@PatchMapping
 	public ResponseEntity<UpdateResDto> updateApplicant(@RequestBody ApplicantUpdateReqDto updateData){
-		
 		final UpdateResDto response = applicantService.updateApplicant(updateData);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

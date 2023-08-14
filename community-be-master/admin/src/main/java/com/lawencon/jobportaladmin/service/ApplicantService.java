@@ -112,38 +112,36 @@ public class ApplicantService {
 			em().getTransaction().begin();
 			Applicant applicant = applicantDao.getById(Applicant.class, updateData.getApplicantId());
 			updateData.setApplicantCode(applicant.getApplicantCode());
+
 			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, updateData.getStatusId());
-			updateData.setStatusCode(hiringStatus.getStatusCode());
-
 			applicant.setStatus(hiringStatus);
+			updateData.setStatusCode(hiringStatus.getStatusCode());
+			
 			applicant = applicantDao.saveAndFlush(applicant);
-
+			
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
-
-			final RequestEntity<ApplicantUpdateReqDto> applicantUpdate = RequestEntity.patch(updateApplicantAPI)
-					.headers(headers).body(updateData);
-
-			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(applicantUpdate,
-					UpdateResDto.class);
+			 
+			final RequestEntity<ApplicantUpdateReqDto> applicantUpdate = RequestEntity.patch(updateApplicantAPI).headers(headers).body(updateData);
+			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(applicantUpdate, UpdateResDto.class);
 
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
+
 				resDto.setVersion(applicant.getVersion());
 				resDto.setMessage("Update Application Success");
 				em().getTransaction().commit();
+				
 			} else {
+				
 				em().getTransaction().rollback();
 				throw new RuntimeException("Update Failed");
-
 			}
 
 		} catch (Exception e) {
-
 			em().getTransaction().rollback();
 			e.printStackTrace();
-
 		}
 
 		return resDto;

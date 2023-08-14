@@ -968,5 +968,24 @@ select * from t_hiring_status ths ;
 select * from t_job;
 select * from t_candidate_profile;
 select * from t_hiring_status ths ;
+select * from t_assigned_job_question tajq ;
+select * from t_candidate_address tca ;
 
+select * from t_job;	
+select * from t_hiring_status;
 
+select * from t_review;
+select * from t_assesment ta ;	
+select * from t_hiring_status ths ;	
+select * from t_applicant ta ;
+select * from t_assesment ta ;
+
+select * from t_interview ti ;
+
+select * from t_applicant ta ;
+
+select * from t_mcu;
+select * from t_file_type tft;
+select * from t_file;
+select * from t_mcu;
+select * from t_candidate_documents tcd ;

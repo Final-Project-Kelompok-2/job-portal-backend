@@ -30,7 +30,7 @@ public class ApplicantController {
 	public ResponseEntity<InsertResDto> insert(@RequestBody ApplicantInsertReqDto data) {
 		final InsertResDto result = applicantService.insertApplicant(data);
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
-	}
+	}	
 	
 	@GetMapping
 	public ResponseEntity<List<ApplicantResDto>> getByCandidate() {
