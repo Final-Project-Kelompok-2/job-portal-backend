@@ -18,6 +18,14 @@ public class PersonTypeDao extends AbstractJpaDao {
 	}
 		
 	public PersonType getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" pt ");
+			sqlb.append("FROM ");
+			sqlb.append(" PersonType pt ");
+			sqlb.append("WHERE ");
+			sqlb.append(" pt.typeCode = :code");
+		
 		final String sql = "SELECT "
 				+ "	pt.id, "
 				+ "	pt.typeCode, "
@@ -31,7 +39,7 @@ public class PersonTypeDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	pt.typeCode = :code";
 		
-		final Object personTypeObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
+		final Object personTypeObj = this.em().createQuery(sqlb.toString()).setParameter("code", code).getSingleResult();
 		
 		final Object[] personTypeArr = (Object[]) personTypeObj;
 		PersonType personType  = null;

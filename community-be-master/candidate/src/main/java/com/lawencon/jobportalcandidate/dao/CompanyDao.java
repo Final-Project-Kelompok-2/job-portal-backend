@@ -19,13 +19,22 @@ public class CompanyDao extends AbstractJpaDao {
 	}
 	
 	public Company getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT c.id ,c.companyCode,c.companyName, ");
+			sqlb.append( " c.address,c.companyUrl,c.companyPhone,c.photo.id, ");
+			sqlb.append("c.photo.fileName,c.photo.fileExtension, ");
+			sqlb.append( "c.createdBy,c.createdAt , c.isActive, c.version ");
+			sqlb.append( "FROM Company c ");
+			sqlb.append( "WHERE c.companyCode = : code ");
+		
 		final String sql = "SELECT c.id ,c.companyCode,c.companyName, "
 				+ " c.address,c.companyUrl,c.companyPhone,c.photo.id, "
 				+ "c.photo.fileName,c.photo.fileExtension, "
 				+ "c.createdBy,c.createdAt , c.isActive, c.version "
 				+ "FROM Company c "
 				+ "WHERE c.companyCode = : code ";
-		final Object companyObj = em().createQuery(sql)
+		
+		final Object companyObj = em().createQuery(sqlb.toString())
 				.setParameter("code", code)
 				.getSingleResult();
 		

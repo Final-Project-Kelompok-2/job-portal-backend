@@ -28,7 +28,33 @@ public class SavedJobDao extends AbstractJpaDao {
 	public List<SavedJob> getByCandidate(String id) {
 		final List<SavedJob> savedjobs = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tsj.id AS saved_id, ");
+			sqlb.append(" tj.id AS job_id, ");
+			sqlb.append(" job_name, ");
+			sqlb.append(" job_picture_id, ");
+			sqlb.append(" company_name, ");
+			sqlb.append(" tc.address, ");
+			sqlb.append(" start_date, ");
+			sqlb.append(" end_date, ");
+			sqlb.append(" expected_salary_min, ");
+			sqlb.append(" expected_salary_max, ");
+			sqlb.append(" employment_type_name, ");
+			sqlb.append(" user_id ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_saved_job tsj ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_job tj ON tj.id = tsj.job_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_candidate_user tcu ON tcu.id = tsj.user_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" user_id = :candidate");
+			
 		final String sql = "SELECT "
 				+ "	tsj.id AS saved_id, "
 				+ "	tj.id AS job_id, "
@@ -55,7 +81,7 @@ public class SavedJobDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
-		final List<?> savedJobObjs = em().createNativeQuery(sql)
+		final List<?> savedJobObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		
