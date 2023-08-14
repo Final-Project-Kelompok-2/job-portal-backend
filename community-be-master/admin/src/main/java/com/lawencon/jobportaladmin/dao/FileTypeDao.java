@@ -32,7 +32,7 @@ public class FileTypeDao extends AbstractJpaDao{
 				+ "	ft.typeCode, "
 				+ " ft.typeName, "
 				+ "	ft.createdBy, "
-				+ "	ft.createAt, "
+				+ "	ft.createdAt, "
 				+ "	ft.isActive, "
 				+ "	ft.version "
 				+ "FROM "
@@ -40,7 +40,7 @@ public class FileTypeDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	ft.typeCode = :code";
 		
-		final Object fileTypeObj = this.em().createQuery(sqlb.toString()).setParameter("code", code).getSingleResult();
+		final Object fileTypeObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
 		
 		final Object[] fileTypeArr = (Object[]) fileTypeObj;
 		FileType fileType = null;
@@ -53,8 +53,8 @@ public class FileTypeDao extends AbstractJpaDao{
 			fileType.setTypeName(fileTypeArr[2].toString());
 			fileType.setCreatedBy(fileTypeArr[3].toString());
 			fileType.setCreatedAt(LocalDateTime.parse(fileTypeArr[4].toString()));
-			fileType.setIsActive(Boolean.valueOf(fileTypeArr[7].toString()));
-			fileType.setVersion(Integer.valueOf(fileTypeArr[8].toString()));
+			fileType.setIsActive(Boolean.valueOf(fileTypeArr[5].toString()));
+			fileType.setVersion(Integer.valueOf(fileTypeArr[6].toString()));
 		}
 		
 		return fileType;

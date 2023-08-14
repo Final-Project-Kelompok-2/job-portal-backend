@@ -34,9 +34,9 @@ public class UserDao extends AbstractJpaDao {
 			sqlb.append("FROM ");
 			sqlb.append(" t_user tu ");
 			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_role tr ON tr.id = tu.role_id");
+			sqlb.append(" t_role tr ON tr.id = tu.role_id ");
 			sqlb.append("INNER JOIN " );
-			sqlb.append(" t_profile tp ON tp.id = tu.profile_id");
+			sqlb.append(" t_profile tp ON tp.id = tu.profile_id ");
 			sqlb.append("WHERE ");
 			sqlb.append(" tu.user_email = :email");
 			

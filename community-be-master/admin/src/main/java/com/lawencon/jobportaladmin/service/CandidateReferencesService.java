@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.service;
+package com.lawencon.jobportaladmin.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,26 +6,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.config.JwtConfig;
-import com.lawencon.jobportalcandidate.dao.CandidateReferencesDao;
-import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
-import com.lawencon.jobportalcandidate.dto.DeleteResDto;
-import com.lawencon.jobportalcandidate.dto.InsertResDto;
-import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesResDto;
-import com.lawencon.jobportalcandidate.dto.candidatereferences.CandidateReferencesUpdateReqDto;
-import com.lawencon.jobportalcandidate.model.CandidateReferences;
-import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportaladmin.dao.CandidateReferencesDao;
+import com.lawencon.jobportaladmin.dao.CandidateUserDao;
+import com.lawencon.jobportaladmin.dto.DeleteResDto;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.candidatereferences.CandidateReferencesInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatereferences.CandidateReferencesResDto;
+import com.lawencon.jobportaladmin.dto.candidatereferences.CandidateReferencesUpdateReqDto;
+import com.lawencon.jobportaladmin.model.CandidateReferences;
+import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -34,19 +27,16 @@ public class CandidateReferencesService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	@Autowired
-	private RestTemplate restTemplate;
 	
 	@Autowired
 	private CandidateReferencesDao candidateRefDao;
 	
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+
 	
 	@Autowired
 	private PrincipalService<String> principalService;
-	
-
 	
 	public List<CandidateReferencesResDto> getReferencesByCandidate(String id) {
 		final List<CandidateReferencesResDto> referencesDto = new ArrayList<>();
@@ -84,25 +74,18 @@ public class CandidateReferencesService {
 			reference.setCompany(data.getCompany());
 			reference.setDescription(data.getDescription());
 			reference.setCreatedBy(principalService.getAuthPrincipal());
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			final CandidateUser candidate = candidateUserDao.getByEmail(data.getCandidateEmail());
 			reference.setCandidateUser(candidate);
-			data.setCandidateEmail(candidate.getUserEmail());
-			final CandidateReferences refId =  candidateRefDao.save(reference);
-			
-			final String candidateReferenceApi = "http://localhost:8080/candidate-references";
-			final HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.setBearerAuth(JwtConfig.get());
+			final CandidateReferences  refId = candidateRefDao.save(reference);
 			result = new InsertResDto();
-			final RequestEntity<CandidateReferencesInsertReqDto>referenceInsert = RequestEntity.post(candidateReferenceApi).headers(headers).body(data);
-			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(referenceInsert, InsertResDto.class);
-			if(responseAdmin.getStatusCode().equals(HttpStatus.CREATED)){
-				result.setId(refId.getId());
-				result.setMessage("Reference record added!");
-				em().getTransaction().commit();
-			}
+			result.setId(refId.getId());
+			result.setMessage("Reference record added!");
+			
+			em().getTransaction().commit();
 		} catch (Exception e) {
+			
 			em().getTransaction().rollback();
+			e.printStackTrace();
 		}
 		
 		return result;

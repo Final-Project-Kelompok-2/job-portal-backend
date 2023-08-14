@@ -1,14 +1,22 @@
 package com.lawencon.jobportalcandidate.service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportalcandidate.dao.CandidateDocumentsDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.FileDao;
@@ -32,6 +40,8 @@ public class CandidateDocumentService {
 	}
 
 	@Autowired
+	private RestTemplate restTemplate;
+	@Autowired
 	private CandidateDocumentsDao candidateDocumentDao;
 	@Autowired
 	private CandidateUserDao candidateUserDao;
@@ -43,7 +53,7 @@ public class CandidateDocumentService {
 	private PrincipalService<String> principalService;
 	
 	public List<CandidateDocumentResDto> getCandidateDocumentByCandidate(String id){
-		final List<CandidateDocuments> candidateDocuments = candidateDocumentDao.getCandidateDocumentsByCandidate(id);
+		final List<CandidateDocuments> candidateDocuments = candidateDocumentDao.getByCandidateEmail(id);
 		final List<CandidateDocumentResDto> candidateDocumentResList = new ArrayList<>();
 		for(int i = 0 ; i < candidateDocuments.size() ; i++) {
 			final CandidateDocumentResDto document = new CandidateDocumentResDto();
@@ -61,12 +71,13 @@ public class CandidateDocumentService {
 
 		final InsertResDto insertRes = new InsertResDto();
 		try {
+			em().getTransaction().begin();
 			final CandidateDocuments candidateDocument = new CandidateDocuments();
 			candidateDocument.setDocName(data.getDocName());
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, data.getCandidateId());
+			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			candidateDocument.setCandidateUser(candidateUser);
-
-			final FileType fileType = fileTypeDao.getById(FileType.class, data.getFileTypeId());
+			data.setEmail(candidateUser.getUserEmail());
+			final FileType fileType = fileTypeDao.getByCode(data.getFileTypeCode());
 			candidateDocument.setFileType(fileType);
 
 			final File file = new File();
@@ -78,9 +89,20 @@ public class CandidateDocumentService {
 			candidateDocument.setFile(file);
 			candidateDocument.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateDocuments candidateDocumentId = candidateDocumentDao.save(candidateDocument);
-			insertRes.setId(candidateDocumentId.getId());
-			insertRes.setMessage("Document Insert Success");
-			em().getTransaction().commit();
+	
+			
+			final String candidateDocumentApi = "http://localhost:8080/candidate-documents";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final RequestEntity<CandidateDocumentInsertReqDto>documentInsert = RequestEntity.post(candidateDocumentApi).headers(headers).body(data);
+			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(documentInsert, InsertResDto.class);
+			if(responseAdmin.getStatusCode().equals(HttpStatus.CREATED)){
+				insertRes.setId(candidateDocumentId.getId());
+				insertRes.setMessage("Document Insert Success !");
+				em().getTransaction().commit();
+			}
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.service;
+package com.lawencon.jobportaladmin.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,26 +7,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.config.JwtConfig;
-import com.lawencon.jobportalcandidate.dao.CandidateFamilyDao;
-import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
-import com.lawencon.jobportalcandidate.dto.DeleteResDto;
-import com.lawencon.jobportalcandidate.dto.InsertResDto;
-import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyResDto;
-import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyUpdateReqDto;
-import com.lawencon.jobportalcandidate.model.CandidateFamily;
-import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportaladmin.dao.CandidateFamilyDao;
+import com.lawencon.jobportaladmin.dao.CandidateUserDao;
+import com.lawencon.jobportaladmin.dto.DeleteResDto;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.candidatefamily.CandidateFamilyInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidatefamily.CandidateFamilyResDto;
+import com.lawencon.jobportaladmin.dto.candidatefamily.CandidateFamilyUpdateReqDto;
+import com.lawencon.jobportaladmin.model.CandidateFamily;
+import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -36,8 +29,7 @@ public class CandidateFamilyService {
 		return ConnHandler.getManager();
 	}
 	
-	@Autowired
-	private RestTemplate restTemplate;
+
 	@Autowired
 	private CandidateFamilyDao candidateFamilyDao;
 	
@@ -69,7 +61,7 @@ public class CandidateFamilyService {
 	public InsertResDto insertFamily(CandidateFamilyInsertReqDto data) {
 		final CandidateFamily family = new CandidateFamily();
 
-		InsertResDto result =new InsertResDto();
+		InsertResDto result = null;
 		
 		try {
 			em().getTransaction().begin();
@@ -80,29 +72,18 @@ public class CandidateFamilyService {
 			family.setBirthDate(LocalDate.parse(data.getBirthDate().toString()));
 			family.setBirthPlace(data.getBirthPlace());
 			family.setCreatedBy(principalService.getAuthPrincipal());
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			final CandidateUser candidate = candidateUserDao.getByEmail(data.getEmail());
 			family.setCandidateUser(candidate);
-			data.setEmail(candidate.getUserEmail());
+			
 			final CandidateFamily familyId = candidateFamilyDao.save(family);
 			
-//			result = new InsertResDto();
-//			result.setId(family.getId());
-//			result.setMessage("Family record added!");
-			
-			final String candidateFamilyApi = "http://localhost:8080/candidate-family";
-			final HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.setBearerAuth(JwtConfig.get());
-			
-			final RequestEntity<CandidateFamilyInsertReqDto>familyInsert = RequestEntity.post(candidateFamilyApi).headers(headers).body(data);
-			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(familyInsert, InsertResDto.class);
-			if(responseAdmin.getStatusCode().equals(HttpStatus.CREATED)){
-				result.setId(familyId.getId());
-				result.setMessage("Family Insert Success !");
-				em().getTransaction().commit();
-			}
+			result = new InsertResDto();
+			result.setId(familyId.getId());
+			result.setMessage("Family record added!");
 			
 		
+			
+			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 		}

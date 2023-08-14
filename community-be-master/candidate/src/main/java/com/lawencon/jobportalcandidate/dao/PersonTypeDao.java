@@ -39,7 +39,7 @@ public class PersonTypeDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	pt.typeCode = :code";
 		
-		final Object personTypeObj = this.em().createQuery(sqlb.toString()).setParameter("code", code).getSingleResult();
+		final Object personTypeObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
 		
 		final Object[] personTypeArr = (Object[]) personTypeObj;
 		PersonType personType  = null;
