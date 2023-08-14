@@ -17,10 +17,20 @@ public class RoleDao extends AbstractJpaDao {
 		return ConnHandler.getManager();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Role> getByCode() {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tr.id, ");
+			sqlb.append(" tr.role_name, ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_role tr ");
+			sqlb.append("WHERE ");
+			sqlb.append(" tr.role_code != 'ADM'");
+			
 		final String sql = "SELECT tr.id, tr.role_name FROM t_role tr WHERE tr.role_code != 'ADM' ";
 
-		final List<Role> roles = em().createNativeQuery(sql, Role.class).getResultList();
+		final List<Role> roles = em().createNativeQuery(sqlb.toString(), Role.class).getResultList();
 		return roles;
 
 	}

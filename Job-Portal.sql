@@ -127,9 +127,9 @@ CREATE TABLE t_candidate_profile (
 	person_type_id VARCHAR(36) ,
 	file_id VARCHAR(36) ,
 	candidate_status_id VARCHAR(36) ,
-	created_by int NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by int,
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -833,32 +833,3 @@ INSERT INTO t_assigned_job_question (id, job_id, question_id, created_by, create
 	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q1FSD'), 1, now(), true, 0),
 	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q2FSD'), 1, now(), true, 0),
 	(uuid_generate_v4(), (SELECT id FROM t_job WHERE job_code = 'FSD'), (SELECT id FROM t_question WHERE question_code = 'Q3FSD'), 1, now(), true, 0);
-	
-
-select * from t_candidate_user;
-select * from t_candidate_profile tcp ;
-select * from t_candidate_address tca ;
-
-select * from t_candidate_profile tcp ;
-select * from t_job tj ;
-
-SELECT tu.id , tu.user_password,  tu.is_active, 	tu.profile_id,  tp.fullname,  tp.file_id  FROM t_candidate_user tu INNER JOIN t_candidate_profile tp ON tp.id = tu.profile_id  WHERE tu.user_email = :email ;
-select * from t_company tc ;
- select * from t_job;
-
-select * from t_employment_type tet ;
-
---DELETE FROM t_employment_type ;
---DELETE FROM t_applicant ;
---DELETE FROM t_assigned_job_question ;
---DELETE FROM t_saved_job ;
---DELETE FROM t_job;
---DELETE FROM t_company;
-select * from t_applicant ta ;
-select * from t_candidate_address tca ;
-select * from t_hiring_status ths ;
-select * from t_applicant ta ;
---CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-
-
