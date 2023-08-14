@@ -21,21 +21,22 @@ public class CandidateReferencesDao extends AbstractJpaDao{
 	public List<CandidateReferences> getByCandidate(String id) {
 		final List<CandidateReferences> references = new ArrayList<>();
 		
-		final String sql = "SELECT "
-				+ "	tcr.id AS ref_id, "
-				+ "	fullname, "
-				+ "	relationship, "
-				+ "	occupation, "
-				+ "	phone_number, "
-				+ "	email, "
-				+ "	company, "
-				+ "	description "
-				+ "FROM "
-				+ "	t_candidate_references tcr "
-				+ "WHERE "
-				+ "	user_id = :candidate";
+		final StringBuilder sql = new StringBuilder();
+				sql.append ("SELECT ");
+				sql.append ("	tcr.id AS ref_id, ");
+				sql.append ("	fullname, ");
+				sql.append ("	relationship, ");
+				sql.append ("	occupation, ");
+				sql.append ("	phone_number, ");
+				sql.append ("	email, ");
+				sql.append ("	company, ");
+				sql.append ("	description ");
+				sql.append ("FROM ");
+				sql.append ("	t_candidate_references tcr ");
+				sql.append ("WHERE ");
+				sql.append ("	user_id = :candidate");
 		
-		final List<?> refObjs = em().createNativeQuery(sql)
+		final List<?> refObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		

@@ -24,22 +24,23 @@ public class CandidateWorkExpDao extends AbstractJpaDao{
 		final List<CandidateWorkExp> works = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		
-		final String sql = "SELECT"
-				+ "	tcwe.id AS work_id,"
-				+ "	position_name,"
-				+ "	company_name,"
-				+ "	address,"
-				+ "	responsibility,"
-				+ "	reason_leave,"
-				+ "	last_salary,"
-				+ "	start_date,"
-				+ "	end_date"
-				+ "FROM "
-				+ "	t_candidate_work_exp tcwe"
-				+ "WHERE "
-				+ "	user_id = :candidate";
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append ("SELECT");
+				sql.append ("	tcwe.id AS work_id,");
+				sql.append ("	position_name,");
+				sql.append ("	company_name,");
+				sql.append ("	address,");
+				sql.append ("	responsibility,");
+				sql.append ("	reason_leave,");
+				sql.append ("	last_salary,");
+				sql.append ("	start_date,");
+				sql.append ("	end_date");
+				sql.append ("FROM ");
+				sql.append ("	t_candidate_work_exp tcwe");
+				sql.append ("WHERE ");
+				sql.append ("	user_id = :candidate");
 		
-		final List<?> workObjs = em().createNativeQuery(sql)
+		final List<?> workObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		

@@ -19,14 +19,15 @@ public class CandidateProfileDao extends AbstractJpaDao{
 	
 	public CandidateProfile getProfileByNik(String nik) {
 		
-		final String sql = "SELECT "
-				+ "	cp "
-				+ "FROM "
-				+ "	CandidateProfile cp "
-				+ "WHERE "
-				+ "	cp.nik = :nik";
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append("SELECT ");
+				sql.append ("	cp ");
+				sql.append ("FROM ");
+				sql.append ("	CandidateProfile cp ");
+				sql.append ("WHERE ");
+				sql.append ("	cp.nik = :nik");
 		
-		final Object profileObj = em().createQuery(sql)
+		final Object profileObj = em().createQuery(sql.toString())
 				.setParameter("nik", nik)
 				.getSingleResult();
 		

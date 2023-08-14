@@ -22,20 +22,21 @@ public class CandidateFamilyDao extends AbstractJpaDao{
 	
 	public List<CandidateFamily>getFamilyByCandidate(String id){
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		final String sql = "SELECT  "
-				+ "	tcf.id, "
-				+ "	fullname, "
-				+ "	relationship, "
-				+ "	degree_name, "
-				+ "	occupation, "
-				+ "	birth_date, "
-				+ "	birth_place, "
-				+ "FROM  "
-				+ "	t_candidate_family tcf  "
-				+ "WHERE  "
-				+ "	user_id = :candidate"
-				;
-		final List<?>familyObjs = em().createNativeQuery(sql)
+		final StringBuilder sql = new StringBuilder();
+				sql.append ("SELECT  ");
+				sql.append ("	tcf.id, ");
+				sql.append ("	fullname, ");
+				sql.append ("	relationship, ");
+				sql.append ("	degree_name, ");
+				sql.append ("	occupation, ");
+				sql.append ("	birth_date, ");
+				sql.append ("	birth_place, ");
+				sql.append ("FROM  ");
+				sql.append ("	t_candidate_family tcf  ");
+				sql.append ("WHERE  ");
+				sql.append ("	user_id = :candidate");
+				
+		final List<?>familyObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateFamily> candidateFamilyList = new ArrayList<>();

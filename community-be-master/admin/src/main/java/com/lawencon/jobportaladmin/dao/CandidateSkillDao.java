@@ -21,14 +21,15 @@ public class CandidateSkillDao extends AbstractJpaDao{
 	public List<CandidateSkill> getByCandidate(String id) {
 		final List<CandidateSkill> skills = new ArrayList<>();
 		
-		final String sql = "SELECT "
-				+ "	tcs.id AS skill_id, "
-				+ "	skill_name "
-				+ "FROM "
-				+ "	t_candidate_skill tcs "
-				+ "WHERE "
-				+ "	user_id = :candidate";
-		final List<?> skillObjs = em().createNativeQuery(sql)
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append ("SELECT ");
+				sql.append ("	tcs.id AS skill_id, ");
+				sql.append ("	skill_name ");
+				sql.append ("FROM ");
+				sql.append ("	t_candidate_skill tcs ");
+				sql.append ("WHERE ");
+				sql.append ("	user_id = :candidate");
+		final List<?> skillObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		
