@@ -14,7 +14,6 @@ import com.lawencon.jobportalcandidate.model.CandidateStatus;
 @Service
 public class CandidateStatusService {
 	
-	
 	@Autowired
 	private CandidateStatusDao statusDao;
 	public List<CandidateStatusResDto> getAll(){

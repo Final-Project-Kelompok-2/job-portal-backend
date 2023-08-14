@@ -6,9 +6,16 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportalcandidate.dao.CandidateSkillDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dto.DeleteResDto;
@@ -27,6 +34,9 @@ public class CandidateSkillService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	@Autowired
 	private CandidateSkillDao candidateSkillDao;
@@ -52,27 +62,44 @@ public class CandidateSkillService {
 		return skillsDto;
 	}
 	
-	public InsertResDto insertSkill(CandidateSkillInsertReqDto data) {
-		final CandidateSkill skill = new CandidateSkill();
-		
-		InsertResDto result = null; 
-		
+	public InsertResDto insertSkill(CandidateSkillInsertReqDto data) {		
+		final InsertResDto result = new InsertResDto();
 		try {
 			em().getTransaction().begin();
+			final CandidateSkill skill = new CandidateSkill();
 			skill.setSkillName(data.getSkillName());
 			
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			data.setEmail(candidate.getUserEmail());
 			skill.setCandidateUser(candidate);
 			skill.setCreatedBy(principalService.getAuthPrincipal());
+			
 			candidateSkillDao.save(skill);
 			
-			result = new InsertResDto();
-			result.setId(skill.getId());
-			result.setMessage("Skill record added!");
+			final String candidateSkillAPI = "http://localhost:8080/candidate-skills";
+
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
 			
-			em().getTransaction().commit();
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final RequestEntity<CandidateSkillInsertReqDto> candidateSkillInsert = RequestEntity
+					.post(candidateSkillAPI).headers(headers).body(data);
+			
+			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateSkillInsert,
+					InsertResDto.class);
+			
+			if (responseAdmin.getStatusCode().equals(HttpStatus.CREATED)) {
+				result.setId(skill.getId());
+				result.setMessage("Skill has been added");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+			}
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
 		}
 		
 		return result;

@@ -3,7 +3,6 @@ package com.lawencon.jobportaladmin.dto.candidateskill;
 public class CandidateSkillResDto {
 	private String id;
 	private String skillName;
-	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -19,13 +18,5 @@ public class CandidateSkillResDto {
 
 	public void setSkillName(String skillName) {
 		this.skillName = skillName;
-	}
-
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
 	}
 }

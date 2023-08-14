@@ -24,7 +24,7 @@ import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpUpda
 import com.lawencon.jobportalcandidate.service.CandidateWorkExpService;
 
 @RestController
-@RequestMapping("working-experiences")
+@RequestMapping("candidate-works")
 public class CandidateWorkExperienceController {
 
 	@Autowired

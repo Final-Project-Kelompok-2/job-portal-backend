@@ -24,7 +24,7 @@ import com.lawencon.jobportalcandidate.dto.candidateskill.CandidateSkillUpdateRe
 import com.lawencon.jobportalcandidate.service.CandidateSkillService;
 
 @RestController
-@RequestMapping("skills")
+@RequestMapping("candidate-skills")
 public class CandidateSkillController {
 
 	@Autowired

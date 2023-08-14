@@ -1,15 +1,22 @@
 package com.lawencon.jobportalcandidate.service;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.CandidateWorkExpDao;
 import com.lawencon.jobportalcandidate.dto.DeleteResDto;
@@ -29,6 +36,9 @@ public class CandidateWorkExpService {
 		return ConnHandler.getManager();
 	}
 
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	@Autowired
 	private CandidateWorkExpDao candidateWorkExpDao;
 
@@ -61,34 +71,50 @@ public class CandidateWorkExpService {
 	}
 
 	public InsertResDto insertWorksExperience(CandidateWorkExpInsertReqDto data) {
-		final CandidateWorkExp work = new CandidateWorkExp();
-
-		InsertResDto result = null;
-
+		final InsertResDto result = new InsertResDto();
 		try {
 			em().getTransaction().begin();
+			final CandidateWorkExp work = new CandidateWorkExp();
 			work.setPositionName(data.getPositionName());
 			work.setCompanyName(data.getCompanyName());
 			work.setAddress(data.getAddress());
 			work.setResponsibility(data.getResponsibility());
 			work.setReasonLeave(data.getReasonLeave());
 			work.setLastSalary(data.getLastSalary());
-			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
-			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
+			work.setStartDate(Timestamp.valueOf(data.getStartDate().toString()).toLocalDateTime());
+			work.setEndDate(Timestamp.valueOf(data.getEndDate().toString()).toLocalDateTime());
 
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			data.setEmail(candidate.getUserEmail());
 			work.setCandidateUser(candidate);
 			work.setCreatedBy(principalService.getAuthPrincipal());
 
 			candidateWorkExpDao.save(work);
+			
+			final String candidateWorkAPI = "http://localhost:8080/candidate-works";
 
-			result = new InsertResDto();
-			result.setId(work.getId());
-			result.setMessage("Working Experience record added!");
-
-			em().getTransaction().commit();
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final RequestEntity<CandidateWorkExpInsertReqDto> candidateWorkInsert = RequestEntity
+					.post(candidateWorkAPI).headers(headers).body(data);
+			
+			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateWorkInsert,
+					InsertResDto.class);
+			
+			if (responseAdmin.getStatusCode().equals(HttpStatus.CREATED)) {
+				result.setId(work.getId());
+				result.setMessage("Working Experience record added!");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+			}
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
 		}
 
 		return result;
@@ -108,8 +134,8 @@ public class CandidateWorkExpService {
 			work.setResponsibility(data.getResponsibility());
 			work.setReasonLeave(data.getReasonLeave());
 			work.setLastSalary(data.getLastSalary());
-			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
-			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
+			work.setStartDate(Timestamp.valueOf(data.getStartDate().toString()).toLocalDateTime());
+			work.setEndDate(Timestamp.valueOf(data.getEndDate().toString()).toLocalDateTime());
 
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			work.setCandidateUser(candidate);

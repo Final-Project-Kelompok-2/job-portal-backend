@@ -7,6 +7,7 @@ public class ApplicantUpdateReqDto {
 	private String statusId;
 	private String statusCode;
 
+
 	public String getApplicantId() {
 		return applicantId;
 	}

@@ -7,9 +7,16 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportalcandidate.dao.CandidateEducationDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dto.DeleteResDto;
@@ -28,12 +35,16 @@ public class CandidateEducationService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Autowired
 	private CandidateEducationDao candidateEducationDao;
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
 	@Autowired
 	private PrincipalService<String> principalService;
 
@@ -50,6 +61,7 @@ public class CandidateEducationService {
 			education.setCgpa(educations.get(i).getCgpa());
 			education.setStartYear(educations.get(i).getStartYear().toString());
 			education.setEndYear(educations.get(i).getEndYear().toString());
+			education.setCandidateId(educations.get(i).getCandidateUser().getId());
 
 			educationsDto.add(education);
 		}
@@ -58,13 +70,10 @@ public class CandidateEducationService {
 	}
 
 	public InsertResDto insertEducation(CandidateEducationInsertReqDto data) {
-		final CandidateEducation education = new CandidateEducation();
-
-		InsertResDto result = null;
-
+		final InsertResDto insertResDto = new InsertResDto();
 		try {
 			em().getTransaction().begin();
-
+			final CandidateEducation education = new CandidateEducation();
 			education.setDegreeName(data.getDegreeName());
 			education.setInstitutionName(data.getInstituitionName());
 			education.setMajors(data.getMajors());
@@ -72,21 +81,40 @@ public class CandidateEducationService {
 			education.setStartYear(LocalDate.parse(data.getStartYear().toString()));
 			education.setEndYear(LocalDate.parse(data.getEndYear().toString()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			data.setEmail(candidate.getUserEmail());
 			education.setCandidateUser(candidate);
 			education.setCreatedBy(principalService.getAuthPrincipal());
+			
 			candidateEducationDao.save(education);
 
-			result = new InsertResDto();
-			result.setId(education.getId());
-			result.setMessage("Education has been added");
+			final String candidateEducationAPI = "http://localhost:8080/candidate-educations";
 
-			em().getTransaction().commit();
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final RequestEntity<CandidateEducationInsertReqDto> candidateEducationInsert = RequestEntity
+					.post(candidateEducationAPI).headers(headers).body(data);
+			
+			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateEducationInsert,
+					InsertResDto.class);
+			
+			if (responseAdmin.getStatusCode().equals(HttpStatus.CREATED)) {
+				insertResDto.setId(education.getId());
+				insertResDto.setMessage("Education has been added");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+			}
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
 		}
 
-		return result;
+		return insertResDto;
 	}
 
 	public UpdateResDto updateEducation(CandidateEducationUpdateReqDto data) {
@@ -104,7 +132,7 @@ public class CandidateEducationService {
 			education.setStartYear(LocalDate.parse(data.getStartYear()));
 			education.setEndYear(LocalDate.parse(data.getEndYear()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, "ID Principal");
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			education.setCandidateUser(candidate);
 			education.setUpdatedBy(principalService.getAuthPrincipal());
 			candidateEducationDao.saveAndFlush(education);

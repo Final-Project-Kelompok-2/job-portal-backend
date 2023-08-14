@@ -159,10 +159,8 @@ public class JobService {
 			final RequestEntity<JobInsertReqDto> jobInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(jobDto);
 			
 			final ResponseEntity<InsertResDto> responseCandidate  =restTemplate.exchange(jobInsert,InsertResDto.class);
-			
 		
 			if(responseCandidate.getStatusCode().equals(HttpStatus.CREATED)){
-				
 				result = new InsertResDto();
 				result.setId(job.getId());
 				result.setMessage("New job vacancy added!");
