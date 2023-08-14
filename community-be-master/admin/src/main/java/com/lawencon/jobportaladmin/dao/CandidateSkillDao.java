@@ -21,14 +21,15 @@ public class CandidateSkillDao extends AbstractJpaDao{
 	public List<CandidateSkill> getByCandidate(String id) {
 		final List<CandidateSkill> skills = new ArrayList<>();
 		
-		final String sql = "SELECT "
-				+ "	tcs.id AS skill_id, "
-				+ "	skill_name "
-				+ "FROM "
-				+ "	t_candidate_skill tcs "
-				+ "WHERE "
-				+ "	user_id = :candidate";
-		final List<?> skillObjs = em().createNativeQuery(sql)
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append ("SELECT ");
+				sql.append ("	tcs.id AS skill_id, ");
+				sql.append ("	skill_name ");
+				sql.append ("FROM ");
+				sql.append ("	t_candidate_skill tcs ");
+				sql.append ("WHERE ");
+				sql.append ("	user_id = :candidate");
+		final List<?> skillObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		
@@ -44,6 +45,19 @@ public class CandidateSkillDao extends AbstractJpaDao{
 		}
 		
 		return skills;
+	}
+	
+	public List<CandidateSkill> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cs ");
+		sql.append("FROM CandidateSkill cs ");
+		sql.append("INNER JOIN CandidateUser cu");
+		sql.append("WHERE cu.userEmail = :email");
+		
+		final List<CandidateSkill>skillList = em().createQuery(sql.toString(),CandidateSkill.class)
+				.setParameter("email", email)
+				.getResultList();
+		return skillList;
 	}
 	
 }

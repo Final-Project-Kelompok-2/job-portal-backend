@@ -23,24 +23,25 @@ public class CandidateEducationDao extends AbstractJpaDao{
 	
 	public List<CandidateEducation> getEducationByCandidate(String id){
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-		final String sql = "SELECT  "
-				+ "	tce.id, "
-				+ "	degree_name, "
-				+ "	instituition_name, "
-				+ "	majors, "
-				+ "	cgpa, "
-				+ "	start_year, "
-				+ "	end_year, "
-				+ "	user_id, "
-				+ "FROM  "
-				+ "	t_candidate_education tce  "
-				+ "INNER JOIN  "
-				+ "	t_candidate_user tcu  "
-				+ "ON "
-				+ "	tcu.id = tce.user_id "
-				+ "WHERE  "
-				+ "	tce.user_id  = :candidate" ;
-		final List<?>educationObjs = em().createNativeQuery(sql)
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append ("SELECT  ");
+				sql.append ("	tce.id, ");
+				sql.append ("	degree_name, ");
+				sql.append ("	instituition_name, ");
+				sql.append ("	majors, ");
+				sql.append ("	cgpa, ");
+				sql.append ("	start_year, ");
+				sql.append ("	end_year, ");
+				sql.append ("	user_id, ");
+				sql.append ("FROM  ");
+				sql.append ("	t_candidate_education tce  ");
+				sql.append ("INNER JOIN  ");
+				sql.append ("	t_candidate_user tcu  ");
+				sql.append ("ON ");
+				sql.append ("	tcu.id = tce.user_id ");
+				sql.append ("WHERE  ");
+				sql.append ("	tce.user_id  = :candidate"); 
+		final List<?>educationObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateEducation> educationList = new ArrayList<>();
@@ -64,6 +65,18 @@ public class CandidateEducationDao extends AbstractJpaDao{
 				educationList.add(candidateEducation);
 			}
 		}
+		return educationList;
+	}
+	
+	public List<CandidateEducation> getByCandidateEmail(String email) {
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ce ");
+		sql.append("FROM CandidateEducation ce ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		
+		final List<CandidateEducation> educationList = em().createQuery(sql.toString(), CandidateEducation.class)
+				.setParameter("email", email).getResultList();
 		return educationList;
 	}
 	

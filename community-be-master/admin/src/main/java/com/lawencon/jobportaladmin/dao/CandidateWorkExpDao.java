@@ -1,6 +1,6 @@
 package com.lawencon.jobportaladmin.dao;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,22 +24,23 @@ public class CandidateWorkExpDao extends AbstractJpaDao{
 		final List<CandidateWorkExp> works = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		
-		final String sql = "SELECT"
-				+ "	tcwe.id AS work_id,"
-				+ "	position_name,"
-				+ "	company_name,"
-				+ "	address,"
-				+ "	responsibility,"
-				+ "	reason_leave,"
-				+ "	last_salary,"
-				+ "	start_date,"
-				+ "	end_date"
-				+ "FROM "
-				+ "	t_candidate_work_exp tcwe"
-				+ "WHERE "
-				+ "	user_id = :candidate";
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append ("SELECT");
+				sql.append ("	tcwe.id AS work_id,");
+				sql.append ("	position_name,");
+				sql.append ("	company_name,");
+				sql.append ("	address,");
+				sql.append ("	responsibility,");
+				sql.append ("	reason_leave,");
+				sql.append ("	last_salary,");
+				sql.append ("	start_date,");
+				sql.append ("	end_date");
+				sql.append ("FROM ");
+				sql.append ("	t_candidate_work_exp tcwe");
+				sql.append ("WHERE ");
+				sql.append ("	user_id = :candidate");
 		
-		final List<?> workObjs = em().createNativeQuery(sql)
+		final List<?> workObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		
@@ -54,13 +55,24 @@ public class CandidateWorkExpDao extends AbstractJpaDao{
 				work.setResponsibility(workArr[4].toString());
 				work.setReasonLeave(workArr[5].toString());
 				work.setLastSalary(Float.valueOf(workArr[6].toString()));
-				work.setStartDate(LocalDateTime.parse(workArr[7].toString(), formatter));
-				work.setEndDate(LocalDateTime.parse(workArr[8].toString(), formatter));
+				work.setStartDate(LocalDate.parse(workArr[7].toString(), formatter));
+				work.setEndDate(LocalDate.parse(workArr[8].toString(), formatter));
 			}
 		}
 		
 		return works;
 	}
 	
+	public List<CandidateWorkExp> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cwe ");
+		sql.append("FROM CandidateWorkExp cwe ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		final List<CandidateWorkExp>workExpList = em().createQuery(sql.toString(), CandidateWorkExp.class)
+				.setParameter("email", email)
+				.getResultList();
+		return workExpList;
+	}
 	
 }

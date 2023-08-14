@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.service;
+package com.lawencon.jobportaladmin.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,26 +6,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.config.JwtConfig;
-import com.lawencon.jobportalcandidate.dao.CandidateAddressDao;
-import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
-import com.lawencon.jobportalcandidate.dto.DeleteResDto;
-import com.lawencon.jobportalcandidate.dto.InsertResDto;
-import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressResDto;
-import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressUpdateReqDto;
-import com.lawencon.jobportalcandidate.model.CandidateAddress;
-import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportaladmin.dao.CandidateAddressDao;
+import com.lawencon.jobportaladmin.dao.CandidateUserDao;
+import com.lawencon.jobportaladmin.dto.DeleteResDto;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.candidateaddress.CandidateAddressInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateaddress.CandidateAddressResDto;
+import com.lawencon.jobportaladmin.dto.candidateaddress.CandidateAddressUpdateReqDto;
+import com.lawencon.jobportaladmin.model.CandidateAddress;
+import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -36,21 +29,18 @@ public class CandidateAddressService {
 	}
 
 	@Autowired
-	private RestTemplate restTemplate;
-
-	@Autowired
 	private CandidateUserDao candidateUserDao;
-
+	
 	@Autowired
 	private CandidateAddressDao candidateAddressDao;
 
 	@Autowired
 	private PrincipalService<String> principalService;
-
-	public List<CandidateAddressResDto> getAllByCandidate(String id) {
+	
+	public List<CandidateAddressResDto> getAllByCandidate(String id){
 		final List<CandidateAddressResDto> candidateAddressResList = new ArrayList<>();
-		final List<CandidateAddress> candidateAddress = candidateAddressDao.getByCandidateId(id);
-		for (int i = 0; i < candidateAddress.size(); i++) {
+		final List<CandidateAddress> candidateAddress = candidateAddressDao.testStringBuilder(id);
+		for(int i = 0 ; i < candidateAddress.size() ; i++) {
 			final CandidateAddressResDto addressRes = new CandidateAddressResDto();
 			addressRes.setAddress(candidateAddress.get(i).getAddress());
 			addressRes.setCity(candidateAddress.get(i).getCity());
@@ -63,7 +53,8 @@ public class CandidateAddressService {
 		}
 		return candidateAddressResList;
 	}
-
+	
+	
 	public InsertResDto insertCandidateAddress(CandidateAddressInsertReqDto data) {
 		final InsertResDto insertResDto = new InsertResDto();
 		try {
@@ -75,44 +66,21 @@ public class CandidateAddressService {
 			candidateAddress.setProvince(data.getProvince());
 			candidateAddress.setPostalCode(data.getPostalCode());
 			candidateAddress.setResidenceType(data.getResidenceType());
-
-			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
-					principalService.getAuthPrincipal());
-			data.setEmail(candidateUser.getUserEmail());
+			final CandidateUser candidateUser = candidateUserDao.getByEmail(data.getEmail());
 			candidateAddress.setCandidateUser(candidateUser);
-			candidateAddress.setCreatedBy(principalService.getAuthPrincipal());
-
+			candidateAddress.setCreatedBy(candidateUser.getId());
+			
 			candidateAddressDao.save(candidateAddress);
+			
+			em().getTransaction().commit();
 
-			final String candidateAddressAPI = "http://localhost:8080/candidate-address";
-
-			final HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-
-			headers.setBearerAuth(JwtConfig.get());
-
-			final RequestEntity<CandidateAddressInsertReqDto> candidateAddressInsert = RequestEntity
-					.post(candidateAddressAPI).headers(headers).body(data);
-
-			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateAddressInsert,
-					InsertResDto.class);
-
-			if (responseAdmin.getStatusCode().equals(HttpStatus.CREATED)) {
-				insertResDto.setId(candidateAddress.getId());
-				insertResDto.setMessage("Insert Candidate Address Success");
-				em().getTransaction().commit();
-			} else {
-				em().getTransaction().rollback();
-				throw new RuntimeException("Insert Failed");
-			}
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 		}
-
 		return insertResDto;
 	}
-
+	
 	public UpdateResDto updateCandidateAdress(CandidateAddressUpdateReqDto data) {
 		final UpdateResDto updateResDto = new UpdateResDto();
 		try {
@@ -128,7 +96,7 @@ public class CandidateAddressService {
 			candidateAddress.setCandidateUser(candidateUser);
 			candidateAddress.setCreatedBy(principalService.getAuthPrincipal());
 			final CandidateAddress candidateAddressId = candidateAddressDao.save(candidateAddress);
-
+			
 			updateResDto.setMessage("Update Candidate Address Success");
 			updateResDto.setVersion(candidateAddressId.getVersion());
 			em().getTransaction().commit();
@@ -138,7 +106,7 @@ public class CandidateAddressService {
 		}
 		return updateResDto;
 	}
-
+	
 	public DeleteResDto deleteCandidateAddress(String id) {
 		candidateAddressDao.deleteById(CandidateAddress.class, id);
 		final DeleteResDto deleteRes = new DeleteResDto();

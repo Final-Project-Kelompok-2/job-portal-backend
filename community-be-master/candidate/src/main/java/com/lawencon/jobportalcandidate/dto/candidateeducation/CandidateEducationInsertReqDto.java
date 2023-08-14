@@ -8,6 +8,7 @@ public class CandidateEducationInsertReqDto {
 	private Float cgpa;
 	private String startYear;
 	private String endYear;
+	private String email;
 
 	public String getDegreeName() {
 		return degreeName;
@@ -55,6 +56,14 @@ public class CandidateEducationInsertReqDto {
 
 	public void setEndYear(String endYear) {
 		this.endYear = endYear;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

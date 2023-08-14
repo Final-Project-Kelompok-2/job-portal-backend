@@ -15,11 +15,19 @@ public class ReviewDao extends AbstractJpaDao{
 		return ConnHandler.getManager();
 	}
 	
-	
 	public Review getByApplicant(String id) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tr.notes, ");
+			sqlb.append(" tr.score ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_review tr");
+			sqlb.append("WHERE ");
+			sqlb.append(" tr.applicant_id = :id");
+		
 		final String sql ="SELECT tr.notes,tr.score FROM t_review tr WHERE tr.applicant_id = :id";
 		
-		final Object reviewObj = em().createNativeQuery(sql)
+		final Object reviewObj = em().createNativeQuery(sqlb.toString())
 				.setParameter("id", id)
 				.getSingleResult();
 		

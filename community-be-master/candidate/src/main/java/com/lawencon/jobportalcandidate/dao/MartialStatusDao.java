@@ -16,14 +16,24 @@ public class MartialStatusDao extends AbstractJpaDao {
 		return ConnHandler.getManager();
 	}
 	public MaritalStatus getByCode(String code) {
+		
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" ms ");
+			sqlb.append("FROM ");
+			sqlb.append(" MaritalStatus ms ");
+			sqlb.append("WHERE ");
+			sqlb.append(" ms.maritalCode = :code");
+		
 		final String sql = "SELECT ms.id,ms.maritalCode,ms.maritalName, "
 				+ "ms.createdBy,ms.createdAt,ms.isActive,ms.version  "
 				+ "FROM MaritalStatus ms "
 				+ "WHERE ms.maritalCode = :code ";
 		
-		final Object maritalObj = em().createQuery(sql)
+		final Object maritalObj = em().createQuery(sqlb.toString())
 				.setParameter("code", code)
 				.getSingleResult();
+		
 		final Object[] maritalArr = (Object[]) maritalObj;
 		final MaritalStatus marital = new MaritalStatus();
 		marital.setId(maritalArr[0].toString());

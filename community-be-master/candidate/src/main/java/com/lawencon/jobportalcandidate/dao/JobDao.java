@@ -28,6 +28,33 @@ public class JobDao extends AbstractJpaDao  {
 		final List<Job> jobs = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tj.id AS job_id, ");
+			sqlb.append(" job_name, ");
+			sqlb.append(" company_name, ");
+			sqlb.append(" address, ");
+			sqlb.append(" start_date, ");
+			sqlb.append(" end_date, ");
+			sqlb.append(" hr_id, ");
+			sqlb.append(" pic_id, ");
+			sqlb.append(" expected_salary_min, ");
+			sqlb.append(" expected_salary_max, ");
+			sqlb.append(" employment_type_name, ");
+			sqlb.append(" job_picture_id ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_job tj ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_user tu ON tu.id = tj.hr_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" Wt_user tu2 ON tu2.id = tj.pic_id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" company_code = :companycode");
+		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"
 				+ "	job_name,"
@@ -48,7 +75,7 @@ public class JobDao extends AbstractJpaDao  {
 				+ "WHERE "
 				+ "	company_code = :companycode";
 		
-		final List<?> jobObjs = em().createNativeQuery(sql)
+		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("companycode", code)
 				.getResultList();
 		

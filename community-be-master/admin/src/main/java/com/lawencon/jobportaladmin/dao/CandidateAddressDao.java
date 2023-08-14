@@ -1,5 +1,7 @@
 package com.lawencon.jobportaladmin.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -18,30 +20,31 @@ public class CandidateAddressDao extends AbstractJpaDao{
 	}
 	
 	public CandidateAddress getByCandidateId(String id){
-		final String sql = "SELECT  "
-				+ "	tca.id, "
-				+ "	address, "
-				+ "	residence_type, "
-				+ "	country, "
-				+ "	province, "
-				+ "	city, "
-				+ "	postal_code, "
-				+ "	user_id,"
-				+ " tcp.fullname "
-				+ "FROM  "
-				+ "	t_candidate_address tca  "
-				+ "INNER JOIN  "
-				+ "	t_candidate_user tcu  "
-				+ "ON  "
-				+ "	tcu.id = tca.user_id  "
-				+ "INNER JOIN "
-				+ "	t_candidate_profile tcp  "
-				+ "ON "
-				+ "	tcp.id = tcu.profile_id  "
-				+ "WHERE  "
-				+ "	tca.user_id  = :candidate";
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append("SELECT  ");
+				sql.append( "tca.id, ");
+				sql.append ("address, ");
+				sql.append ("residence_type, ");
+				sql.append ("country, ");
+				sql.append ("province, ");
+				sql.append ("city, ");
+				sql.append ("postal_code, ");
+				sql.append ("user_id,");
+				sql.append (" tcp.fullname ");
+				sql.append ("FROM  ");
+				sql.append ("	t_candidate_address tca  ");
+				sql.append ("INNER JOIN  ");
+				sql.append ("	t_candidate_user tcu  ");
+				sql.append ("ON  ");
+				sql.append ("	tcu.id = tca.user_id  ");
+				sql.append ("INNER JOIN ");
+				sql.append ("	t_candidate_profile tcp  ");
+				sql.append ("ON ");
+				sql.append ("	tcp.id = tcu.profile_id  ");
+				sql.append ("WHERE  ");
+				sql.append ("	tca.user_id  = :candidate");
 		
-		final Object candidateAddressObjs = em().createNativeQuery(sql)
+		final Object candidateAddressObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getSingleResult();
 		
@@ -72,6 +75,22 @@ public class CandidateAddressDao extends AbstractJpaDao{
 
 		
 		
+	}
+	
+	
+	public List<CandidateAddress> testStringBuilder(String id){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ");
+		sql.append("ca "); 
+		sql.append("FROM "); 
+		sql.append("CandidateAddress ca ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE ca.candidateUser = : id");
+		
+		final List<CandidateAddress> addressList = em().createQuery(sql.toString(),CandidateAddress.class)
+				.setParameter("id", id)
+				.getResultList();
+		return addressList;
 	}
 	
 	

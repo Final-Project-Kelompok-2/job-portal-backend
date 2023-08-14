@@ -24,39 +24,40 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 	
 	
 	public List<CandidateDocuments> getCandidateDocumentsByCandidate (String id){
-		final String sql = "SELECT  "
-				+ "	tcd.id, "
-				+ "	doc_name, "
-				+ "	tcu.id, "
-				+ "	tcp.id, "
-				+ "	tcp.fullname, "
-				+ "	tf.id, "
-				+ "	tf.filename, "
-				+ "	tf.file_extension, "
-				+ "	tft.id, "
-				+ "	tft.type_code, "
-				+ "	tft.type_name "
-				+ "FROM  "
-				+ "	t_candidate_documents tcd  "
-				+ "INNER JOIN  "
-				+ "	t_candidate_user tcu  "
-				+ "ON "
-				+ "	tcd.user_id  = tcu.id  "
-				+ "INNER JOIN  "
-				+ "	t_candidate_profile tcp  "
-				+ "ON  "
-				+ "	tcp.id = tcu.profile_id  "
-				+ "INNER JOIN  "
-				+ "	t_file tf 	 "
-				+ "ON  "
-				+ "	tf.id = tcp.file_id  "
-				+ "INNER JOIN  "
-				+ "	t_file_type tft  "
-				+ "ON  "
-				+ "	tcd.file_type_id = tft.id  "
-				+ "WHERE  "
-				+ "	tcd.user_id  = :candidate";
-		final List<?>documentObjs = em().createNativeQuery(sql)
+		final StringBuilder sql = new StringBuilder(); 
+				sql.append("SELECT  ");
+				sql.append ("	tcd.id, ");
+				sql.append ("	doc_name, ");
+				sql.append ("	tcu.id, ");
+				sql.append ("	tcp.id, ");
+				sql.append ("	tcp.fullname, ");
+				sql.append ("	tf.id, ");
+				sql.append ("	tf.filename, ");
+				sql.append ("	tf.file_extension, ");
+				sql.append ("	tft.id, ");
+				sql.append ("	tft.type_code, ");
+				sql.append ("	tft.type_name ");
+				sql.append ("FROM  ");
+				sql.append ("	t_candidate_documents tcd  ");
+				sql.append ("INNER JOIN  ");
+				sql.append ("	t_candidate_user tcu  ");
+				sql.append ("ON ");
+				sql.append ("	tcd.user_id  = tcu.id  ");
+				sql.append ("INNER JOIN  ");
+				sql.append ("	t_candidate_profile tcp  ");
+				sql.append ("ON  ");
+				sql.append ("	tcp.id = tcu.profile_id  ");
+				sql.append ("INNER JOIN  ");
+				sql.append ("	t_file tf 	 ");
+				sql.append ("ON  ");
+				sql.append ("	tf.id = tcp.file_id  ");
+				sql.append ("INNER JOIN  ");
+				sql.append ("	t_file_type tft  ");
+				sql.append ("ON  ");
+				sql.append ("	tcd.file_type_id = tft.id  ");
+				sql.append ("WHERE  ");
+				sql.append ("	tcd.user_id  = :candidate");
+		final List<?>documentObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateDocuments> candidateDocumentsList = new ArrayList<>();
@@ -94,5 +95,20 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 		}
 		
 		return candidateDocumentsList;
+	}
+	
+	public List<CandidateDocuments> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cd ");
+		sql.append("FROM ");
+		sql.append("CandidateDocuments cd ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		
+		final List<CandidateDocuments> documentList = em().createNamedQuery(sql.toString(), CandidateDocuments.class)
+				.setParameter("email", email)
+				.getResultList();
+		return documentList;
+		
 	}
 }

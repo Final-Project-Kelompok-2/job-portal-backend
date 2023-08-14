@@ -18,6 +18,14 @@ public class FileTypeDao extends AbstractJpaDao {
 	}
 	
 	public FileType getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" ft ");
+			sqlb.append("FROM ");
+			sqlb.append(" FileType ft ");
+			sqlb.append("WHERE ");
+			sqlb.append(" ft.typeCode = :code");
+		
 		final String sql = "SELECT "
 				+ "	ft.id, "
 				+ "	ft.typeCode, "
@@ -31,7 +39,9 @@ public class FileTypeDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	ft.typeCode = :code";
 		
-		final Object fileTypeObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
+		final Object fileTypeObj = this.em().createQuery(sqlb.toString())
+				.setParameter("code", code)
+				.getSingleResult();
 		
 		final Object[] fileTypeArr = (Object[]) fileTypeObj;
 		FileType fileType = null;

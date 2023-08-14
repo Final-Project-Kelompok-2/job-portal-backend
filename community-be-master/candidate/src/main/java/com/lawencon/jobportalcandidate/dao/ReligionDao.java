@@ -17,11 +17,20 @@ public class ReligionDao extends AbstractJpaDao  {
 	}
 	
 	public Religion getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tr ");
+			sqlb.append("FROM ");
+			sqlb.append(" Religion tr ");
+			sqlb.append("WHERE ");
+			sqlb.append(" tr.religionCode = :code");
+
 		final String sql = "SELECT r.id,r.religionCode, "
 				+ "r.religionName,r.createdBy,r.createdAt,r.isActive,r.version "
 				+ "FROM Religion r "
 				+ "WHERE r.religionCode = :code ";
-		final Object religionObj = em().createQuery(sql)
+		
+		final Object religionObj = em().createQuery(sqlb.toString())
 				.setParameter("code", code)
 				.getSingleResult();
 		

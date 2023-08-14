@@ -20,18 +20,19 @@ public class CandidateLanguageDao extends AbstractJpaDao{
 	}
 	
 	public List<CandidateLanguage>getLanguageByCandidate(String id){
-		final String sql = "SELECT  "
-				+ "	id, "
-				+ "	language_name, "
-				+ "	writing_rate, "
-				+ "	speaking_rate, "
-				+ "	listening_rate, "
-				+ "	user_id "
-				+ "FROM  "
-				+ "	t_candidate_language tcl "
-				+ " WHERE"
-				+ " user_id = :candidate ";
-		final List<?> languageObjs = em().createNativeQuery(sql)
+		final StringBuilder sql = new StringBuilder();
+				sql.append("SELECT  ");
+				sql.append ("	id, ");
+				sql.append ("	language_name, ");
+				sql.append ("	writing_rate, ");
+				sql.append ("	speaking_rate, ");
+				sql.append ("	listening_rate, ");
+				sql.append ("	user_id ");
+				sql.append ("FROM  ");
+				sql.append ("	t_candidate_language tcl ");
+				sql.append (" WHERE");
+				sql.append (" user_id = :candidate ");
+		final List<?> languageObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		final List<CandidateLanguage> candidateLanguageList = new ArrayList<>();
@@ -56,6 +57,18 @@ public class CandidateLanguageDao extends AbstractJpaDao{
 		}
 		return candidateLanguageList;
 		
+	}
+	public List<CandidateLanguage>getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cl ");
+		sql.append("FROM CandidateLanguage cl ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email ");
+		
+		final List<CandidateLanguage>languageList = em().createQuery(sql.toString(), CandidateLanguage.class)
+				.setParameter("email", email)
+				.getResultList();
+		return languageList;
 	}
 	
 }

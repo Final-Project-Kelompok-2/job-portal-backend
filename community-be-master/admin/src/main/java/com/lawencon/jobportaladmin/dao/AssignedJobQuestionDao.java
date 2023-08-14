@@ -45,4 +45,31 @@ public class AssignedJobQuestionDao extends AbstractJpaDao {
 		return assignedJobQuestions;
 		
 	}
+	
+	public List<AssignedJobQuestion> getByJobCode(String code){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT tq.id, tq.question_detail FROM t_assigned_job_question tajq ");
+		sql.append(" INNER JOIN t_question tq on tq.id =tajq.question_id");
+		sql.append("INNER JOIN t_job tj ON tajq.job_id = tj.id ");
+		sql.append(" WHERE tj.job_code =:code ");
+final List<?> assignedJobQuestionObjs = em().createNativeQuery(sql.toString()).setParameter("code", code).getResultList();
+		
+		final List<AssignedJobQuestion> assignedJobQuestions = new ArrayList<>();
+		
+		if(assignedJobQuestionObjs.size()>0) {
+			for(Object assignedJobQuestionObj: assignedJobQuestionObjs) {
+				final Object[] assignedJobQuestionObjArr= (Object[]) assignedJobQuestionObj;
+				
+				final AssignedJobQuestion assignedJobQuestion = new AssignedJobQuestion();
+				
+				final Question question = new Question();
+				question.setId(assignedJobQuestionObjArr[0].toString());
+				question.setQuestionDetail(assignedJobQuestionObjArr[1].toString());
+				
+				assignedJobQuestion.setQuestion(question);
+				assignedJobQuestions.add(assignedJobQuestion);
+			}
+		}
+		return assignedJobQuestions;
+	}
 }
