@@ -59,4 +59,17 @@ public class CandidateReferencesDao extends AbstractJpaDao{
 		return references;
 	}
 	
+	public List<CandidateReferences> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cf ");
+		sql.append("FROM CandidateReferences cf ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		
+		final List<CandidateReferences> referencesList = em().createQuery(sql.toString(),CandidateReferences.class)
+				.setParameter("email", email)
+				.getResultList();
+		return referencesList;
+	}
+	
 }

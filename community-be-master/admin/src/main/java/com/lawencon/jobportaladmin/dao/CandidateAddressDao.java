@@ -1,5 +1,7 @@
 package com.lawencon.jobportaladmin.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -72,6 +74,20 @@ public class CandidateAddressDao extends AbstractJpaDao{
 
 		
 		
+	}
+	public List<CandidateAddress> testStringBuilder(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ");
+		sql.append("ca "); 
+		sql.append("FROM "); 
+		sql.append("CandidateAddress ca ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = : email");
+		
+		final List<CandidateAddress> addressList = em().createQuery(sql.toString(),CandidateAddress.class)
+				.setParameter("email", email)
+				.getResultList();
+		return addressList;
 	}
 	
 	

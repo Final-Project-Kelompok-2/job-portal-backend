@@ -60,4 +60,17 @@ public class CandidateFamilyDao extends AbstractJpaDao{
 		return candidateFamilyList;
 		
 	}
+	
+	public List<CandidateFamily>getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cf ");
+		sql.append("FROM CandidateFamily ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email ");
+		
+		final List<CandidateFamily> familyList = em().createQuery(sql.toString(), CandidateFamily.class)
+				.setParameter("email", email).getResultList();
+		return familyList;
+		
+	}
 }

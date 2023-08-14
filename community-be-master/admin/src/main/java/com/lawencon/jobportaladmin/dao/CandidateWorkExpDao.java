@@ -62,5 +62,16 @@ public class CandidateWorkExpDao extends AbstractJpaDao{
 		return works;
 	}
 	
+	public List<CandidateWorkExp> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cwe ");
+		sql.append("FROM CandidateWorkExp cwe ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		final List<CandidateWorkExp>workExpList = em().createQuery(sql.toString(), CandidateWorkExp.class)
+				.setParameter("email", email)
+				.getResultList();
+		return workExpList;
+	}
 	
 }
