@@ -1,7 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +21,19 @@ public class CandidateWorkExpDao extends AbstractJpaDao {
 	
 	public List<CandidateWorkExp> getByCandidate(String id) {
 		final List<CandidateWorkExp> works = new ArrayList<>();
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		
-		final String sql = "SELECT"
-				+ "	tcwe.id AS work_id,"
-				+ "	position_name,"
-				+ "	company_name,"
-				+ "	address,"
-				+ "	responsibility,"
-				+ "	reason_leave,"
-				+ "	last_salary,"
-				+ "	start_date,"
-				+ "	end_date"
+		final String sql = "SELECT "
+				+ "	tcwe.id AS work_id, "
+				+ "	position_name, "
+				+ "	company_name, "
+				+ "	address, "
+				+ "	responsibility, "
+				+ "	reason_leave, "
+				+ "	last_salary, "
+				+ "	start_date, "
+				+ "	end_date "
 				+ "FROM "
-				+ "	t_candidate_work_exp tcwe"
+				+ "	t_candidate_work_exp tcwe "
 				+ "WHERE "
 				+ "	user_id = :candidate";
 		
@@ -54,8 +52,10 @@ public class CandidateWorkExpDao extends AbstractJpaDao {
 				work.setResponsibility(workArr[4].toString());
 				work.setReasonLeave(workArr[5].toString());
 				work.setLastSalary(Float.valueOf(workArr[6].toString()));
-				work.setStartDate(LocalDate.parse(workArr[7].toString(), formatter));
-				work.setEndDate(LocalDate.parse(workArr[8].toString(), formatter));
+				work.setStartDate(Timestamp.valueOf(workArr[7].toString()).toLocalDateTime());
+				work.setEndDate(Timestamp.valueOf(workArr[8].toString()).toLocalDateTime());
+				
+				works.add(work);
 			}
 		}
 		

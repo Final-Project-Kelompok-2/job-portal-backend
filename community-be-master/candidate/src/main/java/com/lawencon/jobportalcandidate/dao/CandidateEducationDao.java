@@ -1,7 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +21,21 @@ public class CandidateEducationDao extends AbstractJpaDao {
 	}
 
 	public List<CandidateEducation> getEducationByCandidate(String id) {
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-		final String sql = "SELECT  " + "	tce.id, " + "	degree_name, " + "	instituition_name, " + "	majors, "
-				+ "	cgpa, " + "	start_year, " + "	end_year, " + "	user_id, " + "FROM  "
-				+ "	t_candidate_education tce  " + "INNER JOIN  " + "	t_candidate_user tcu  " + "ON "
-				+ "	tcu.id = tce.user_id " + "WHERE  " + "	tce.user_id  = :candidate";
+		final String sql = "SELECT  	"
+				+ "	tce.id, 	"
+				+ "	degree_name, 	"
+				+ "	institution_name, 	"
+				+ "	majors, "
+				+ "	cgpa, 	"
+				+ "	start_year, 	"
+				+ "	end_year, 	"
+				+ "	user_id "
+				+ "FROM  "
+				+ "	t_candidate_education tce  "
+				+ "INNER JOIN  	"
+				+ "	t_candidate_user tcu  ON tcu.id = tce.user_id "
+				+ "WHERE  	"
+				+ "	tce.user_id  = :candidate";
 
 		final List<?> educationObjs = em().createNativeQuery(sql).setParameter("candidate", id).getResultList();
 		final List<CandidateEducation> educationList = new ArrayList<>();
@@ -40,8 +49,8 @@ public class CandidateEducationDao extends AbstractJpaDao {
 				candidateEducation.setInstitutionName(educationArr[2].toString());
 				candidateEducation.setMajors(educationArr[3].toString());
 				candidateEducation.setCgpa(Float.valueOf(educationArr[4].toString()));
-				candidateEducation.setStartYear(LocalDate.parse(educationArr[5].toString(), formatter));
-				candidateEducation.setEndYear(LocalDate.parse(educationArr[6].toString(), formatter));
+				candidateEducation.setStartYear(LocalDate.parse(educationArr[5].toString()));
+				candidateEducation.setEndYear(LocalDate.parse(educationArr[6].toString()));
 
 				final CandidateUser candidateUser = new CandidateUser();
 				candidateUser.setId(educationArr[7].toString());

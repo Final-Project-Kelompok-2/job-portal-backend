@@ -27,7 +27,7 @@ public class PersonTypeDao extends AbstractJpaDao {
 		final String sql = "SELECT " + "	pt.id, " + "	pt.typeCode, " + " pt.typeName, " + "	pt.version "
 				+ "FROM " + "	PersonType pt " + "WHERE " + "	pt.typeCode = :code";
 
-		final Object personTypeObj = this.em().createQuery(sqlb.toString()).setParameter("code", code)
+		final Object personTypeObj = this.em().createQuery(sql).setParameter("code", code)
 				.getSingleResult();
 
 		final Object[] personTypeArr = (Object[]) personTypeObj;

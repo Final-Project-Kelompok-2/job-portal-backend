@@ -1,4 +1,4 @@
-package com.lawencon.jobportalcandidate.controller;
+package com.lawencon.jobportaladmin.controller;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lawencon.jobportalcandidate.dto.DeleteResDto;
-import com.lawencon.jobportalcandidate.dto.InsertResDto;
-import com.lawencon.jobportalcandidate.dto.UpdateResDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpResDto;
-import com.lawencon.jobportalcandidate.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
-import com.lawencon.jobportalcandidate.service.CandidateWorkExpService;
+import com.lawencon.jobportaladmin.dto.DeleteResDto;
+import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpResDto;
+import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
+import com.lawencon.jobportaladmin.service.CandidateWorkExpService;
 
 @RestController
 @RequestMapping("candidate-works")

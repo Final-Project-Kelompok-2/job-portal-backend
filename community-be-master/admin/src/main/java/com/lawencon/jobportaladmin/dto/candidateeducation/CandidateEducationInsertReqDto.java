@@ -9,6 +9,7 @@ public class CandidateEducationInsertReqDto {
 	private String startYear;
 	private String endYear;
 	private String candidateId;
+	private String email;
 
 	public String getDegreeName() {
 		return degreeName;
@@ -64,6 +65,14 @@ public class CandidateEducationInsertReqDto {
 
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

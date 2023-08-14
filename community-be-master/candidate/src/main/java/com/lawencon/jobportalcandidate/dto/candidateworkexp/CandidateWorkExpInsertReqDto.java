@@ -10,6 +10,7 @@ public class CandidateWorkExpInsertReqDto {
 	private Float lastSalary;
 	private String startDate;
 	private String endDate;
+	private String email;
 	
 	public String getPositionName() {
 		return positionName;
@@ -73,6 +74,14 @@ public class CandidateWorkExpInsertReqDto {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

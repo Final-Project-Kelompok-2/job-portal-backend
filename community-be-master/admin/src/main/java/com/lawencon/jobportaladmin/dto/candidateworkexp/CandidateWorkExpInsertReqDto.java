@@ -10,6 +10,7 @@ public class CandidateWorkExpInsertReqDto {
 	private String startDate;
 	private String endDate;
 	private String candidateId;
+	private String email;
 
 	public String getPositionName() {
 		return positionName;
@@ -81,6 +82,14 @@ public class CandidateWorkExpInsertReqDto {
 
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

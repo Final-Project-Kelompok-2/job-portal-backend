@@ -9,7 +9,8 @@ public class CandidateAddressInsertReqDto {
 	private String city;
 	private String postalCode;
 	private String candidateId;
-
+	private String email;
+	
 	public String getAddress() {
 		return address;
 	}
@@ -64,6 +65,14 @@ public class CandidateAddressInsertReqDto {
 
 	public void setCandidateId(String candidateId) {
 		this.candidateId = candidateId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

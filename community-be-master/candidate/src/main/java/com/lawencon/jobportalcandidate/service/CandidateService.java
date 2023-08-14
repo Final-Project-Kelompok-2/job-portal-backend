@@ -47,113 +47,122 @@ import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
-public class CandidateService implements UserDetailsService{
+public class CandidateService implements UserDetailsService {
 
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
-	
+
 	@Autowired
 	private CandidateProfileDao candidateProfileDao;
-	
+
 	@Autowired
 	private CandidateStatusDao candidateStatusDao;
 
 	@Autowired
 	private FileDao fileDao;
-	
+
 	@Autowired
 	private MartialStatusDao maritalStatusDao;
-	
+
 	@Autowired
 	private ReligionDao religionDao;
-	
+
 	@Autowired
 	private PersonTypeDao personTypeDao;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private PrincipalService<String> principalService;
-	
+
 	public CandidateMasterResDto getCandidateProfile(String id) {
 		final CandidateMasterResDto data = new CandidateMasterResDto();
-		
+
 		final CandidateUserResDto candidateuserDto = new CandidateUserResDto();
 		final CandidateUser candidateuser = candidateUserDao.getById(CandidateUser.class, id);
 		candidateuserDto.setId(candidateuser.getId());
 		candidateuserDto.setUserEmail(candidateuser.getUserEmail());
 		candidateuserDto.setUserPassword(candidateuser.getUserPassword());
-		
+
 		final CandidateProfileResDto candidateprofileDto = new CandidateProfileResDto();
-		final CandidateProfile candidateprofile = candidateProfileDao.getById(CandidateProfile.class, candidateuser.getCandidateProfile().getId());
+		final CandidateProfile candidateprofile = candidateProfileDao.getById(CandidateProfile.class,
+				candidateuser.getCandidateProfile().getId());
 		candidateprofileDto.setId(candidateprofile.getId());
 		candidateprofileDto.setFullname(candidateprofile.getFullname());
 		candidateprofileDto.setGender(candidateprofile.getGender());
 		candidateprofileDto.setExperience(candidateprofile.getExperience());
-		candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary().toString());
+		if (candidateprofile.getExpectedSalary() != null) {
+			candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary().toString());
+		}
 		candidateprofileDto.setPhoneNumber(candidateprofile.getPhoneNumber());
 		candidateprofileDto.setMobileNumber(candidateprofile.getMobileNumber());
 		candidateprofileDto.setNik(candidateprofile.getNik());
-		candidateprofileDto.setBirthDate(candidateprofile.getBirthDate().toString());
+		if (candidateprofile.getBirthDate() != null) {
+			candidateprofileDto.setBirthDate(candidateprofile.getBirthDate().toString());
+		}
 		candidateprofileDto.setBirthPlace(candidateprofile.getBirthPlace());
-		candidateprofileDto.setMaritalStatusId(candidateprofile.getMaritalStatus().getId());
-		data.setCandidateProfile(candidateprofileDto);
-		
+		if (candidateprofile.getMaritalStatus() != null) {
+			candidateprofileDto.setMaritalStatusId(candidateprofile.getMaritalStatus().getId());
+			data.setCandidateProfile(candidateprofileDto);
+		}
+
 		candidateuserDto.setProfileId(candidateprofile.getId());
 		data.setCandidateUser(candidateuserDto);
-		
+		data.setCandidateProfile(candidateprofileDto);
+
 		return data;
 	}
 
 	public InsertResDto insertCandidate(CandidateUserInsertReqDto data) {
 		final InsertResDto result = new InsertResDto();
-		
+
 		try {
 			em().getTransaction().begin();
-			
+
 			final CandidateProfile candidateProfile = new CandidateProfile();
 			candidateProfile.setFullname(data.getProfile().getFullname());
 			final PersonType personType = personTypeDao.getByCode(PersonTypes.CANDIDATE.typeCode);
 			candidateProfile.setPersonType(personType);
-			candidateProfileDao.saveNoLogin(candidateProfile,()-> GenerateCode.generateCode());
+			candidateProfileDao.saveNoLogin(candidateProfile, () -> GenerateCode.generateCode());
 
 			CandidateUser candidateUser = new CandidateUser();
 			candidateUser.setUserEmail(data.getUserEmail());
-	
+
 			final String encodedPassword = passwordEncoder.encode(data.getUserPassword());
-			
+
 			candidateUser.setUserPassword(encodedPassword);
 			candidateUser.setCandidateProfile(candidateProfile);
-			candidateUser = candidateUserDao.saveNoLogin(candidateUser,()-> GenerateCode.generateCode());
+			candidateUser = candidateUserDao.saveNoLogin(candidateUser, () -> GenerateCode.generateCode());
 
 			final String jobInsertCandidateAPI = "http://localhost:8080/candidate-user";
-			
+
 			final HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.APPLICATION_JSON);
-			
-			final RequestEntity<CandidateUserInsertReqDto> candidateInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(data);
-			
-			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateInsert,InsertResDto.class);
-			
-			if(responseAdmin.getStatusCode().equals(HttpStatus.CREATED)){
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			final RequestEntity<CandidateUserInsertReqDto> candidateInsert = RequestEntity.post(jobInsertCandidateAPI)
+					.headers(headers).body(data);
+
+			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(candidateInsert,
+					InsertResDto.class);
+
+			if (responseAdmin.getStatusCode().equals(HttpStatus.CREATED)) {
 				result.setId(candidateUser.getId());
 				result.setMessage("Welcome new Member!");
 				em().getTransaction().commit();
-			}
-			else {
+			} else {
 				em().getTransaction().rollback();
 				throw new RuntimeException("Insert Failed");
-		
-		}
-			
+
+			}
+
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
@@ -217,28 +226,25 @@ public class CandidateService implements UserDetailsService{
 
 		return result;
 	}
-	
-	
+
 	public LoginResDto login(LoginReqDto loginData) {
 		final CandidateUser user = candidateUserDao.getByUsername(loginData.getUserEmail());
 		final LoginResDto loginRes = new LoginResDto();
-		
-		if(!user.getIsActive()) {
+
+		if (!user.getIsActive()) {
 			loginRes.setMessage("Akun anda nonaktif");
 			return loginRes;
-		}
-		else {
+		} else {
 			loginRes.setUserId(user.getId());
 			loginRes.setFullName(user.getCandidateProfile().getFullname());
 			loginRes.setProfileId(user.getCandidateProfile().getId());
-			if(user.getCandidateProfile().getFile()!=null) {				
+			if (user.getCandidateProfile().getFile() != null) {
 				loginRes.setPhotoId(user.getCandidateProfile().getFile().getId());
 			}
 		}
-		
+
 		return loginRes;
 	}
-	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
