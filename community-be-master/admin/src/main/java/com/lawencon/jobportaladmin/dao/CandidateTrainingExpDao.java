@@ -58,4 +58,16 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 		return trainings;
 	}
 	
+	public List<CandidateTrainingExp> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cte ");
+		sql.append("FROM CandidateTrainingExp cte ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		final List<CandidateTrainingExp> trainingExpList = em().createQuery(sql.toString(),CandidateTrainingExp.class)
+				.setParameter("email", email)
+				.getResultList();
+		return trainingExpList;
+	}
+	
 }

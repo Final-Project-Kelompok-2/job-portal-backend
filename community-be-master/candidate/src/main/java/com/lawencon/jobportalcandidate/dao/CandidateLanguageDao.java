@@ -58,4 +58,17 @@ public class CandidateLanguageDao extends AbstractJpaDao{
 		return candidateLanguageList;
 		
 	}
+	
+	public List<CandidateLanguage>getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cl ");
+		sql.append("FROM CandidateLanguage cl ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email ");
+		
+		final List<CandidateLanguage>languageList = em().createQuery(sql.toString(), CandidateLanguage.class)
+				.setParameter("email", email)
+				.getResultList();
+		return languageList;
+	}
 }

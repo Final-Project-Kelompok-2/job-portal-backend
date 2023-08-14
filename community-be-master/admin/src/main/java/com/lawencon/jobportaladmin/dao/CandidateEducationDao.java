@@ -67,4 +67,16 @@ public class CandidateEducationDao extends AbstractJpaDao{
 		return educationList;
 	}
 	
+	public List<CandidateEducation> getByCandidateEmail(String email) {
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ce ");
+		sql.append("FROM CandidateEducation ce ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		
+		final List<CandidateEducation> educationList = em().createQuery(sql.toString(), CandidateEducation.class)
+				.setParameter("email", email).getResultList();
+		return educationList;
+	}
+	
 }

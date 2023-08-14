@@ -59,5 +59,30 @@ public class CandidateAddressDao extends AbstractJpaDao {
 		return candidateAddressList;
 
 	}
+	
+	public List<CandidateAddress> getByCandidateEmail(String email){
+		final String sql = "SELECT ca "
+				+ "FROM CandidateAddress ca "
+				+ "WHERE ca.candidateEmail = : email";
+		final List<CandidateAddress> addressList = em().createQuery(sql,CandidateAddress.class)
+				.setParameter("email", email)
+				.getResultList();
+		return addressList;
+	}
+	
+	public List<CandidateAddress> testStringBuilder(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ");
+		sql.append("ca "); 
+		sql.append("FROM "); 
+		sql.append("CandidateAddress ca ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = : email");
+		
+		final List<CandidateAddress> addressList = em().createQuery(sql.toString(),CandidateAddress.class)
+				.setParameter("email", email)
+				.getResultList();
+		return addressList;
+	}
 
 }

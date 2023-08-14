@@ -57,4 +57,16 @@ public class CandidateProjectExpDao extends AbstractJpaDao{
 		
 		return projects;
 	}
+	
+	public List<CandidateProjectExp> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cpe ");
+		sql.append("FROM CandidateProjectExp cpe ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email ");
+		final List<CandidateProjectExp> projectExpList = em().createQuery(sql.toString(),CandidateProjectExp.class)
+				.setParameter("email", email)
+				.getResultList();
+		return projectExpList;
+	}
 }

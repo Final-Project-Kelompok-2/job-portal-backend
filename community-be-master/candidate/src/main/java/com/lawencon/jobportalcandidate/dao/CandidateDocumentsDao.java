@@ -96,4 +96,19 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 		
 		return candidateDocumentsList;
 	}
+	
+	public List<CandidateDocuments> getByCandidateEmail(String email){
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT cd ");
+		sql.append("FROM ");
+		sql.append("CandidateDocuments cd ");
+		sql.append("INNER JOIN CandidateUser cu ");
+		sql.append("WHERE cu.userEmail = :email");
+		
+		final List<CandidateDocuments> documentList = em().createNamedQuery(sql.toString(), CandidateDocuments.class)
+				.setParameter("email", email)
+				.getResultList();
+		return documentList;
+		
+	}
 }
