@@ -38,7 +38,7 @@ public class ApplicantDao extends AbstractJpaDao{
 				+ "FROM "
 				+ "	Applicant a "
 				+ "WHERE "
-				+ "	a.applicantCode = :code";
+				+ "	a.applicantCode = :code";
 		
 		final Object applicantObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
 		

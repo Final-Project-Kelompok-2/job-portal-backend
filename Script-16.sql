@@ -968,5 +968,10 @@ select * from t_hiring_status ths ;
 select * from t_job;
 select * from t_candidate_profile;
 select * from t_hiring_status ths ;
-
-
+select * from t_question;
+SELECT 
+	*
+FROM 
+	t_marital_status tms
+WHERE 
+	marital_code = 'MRD';

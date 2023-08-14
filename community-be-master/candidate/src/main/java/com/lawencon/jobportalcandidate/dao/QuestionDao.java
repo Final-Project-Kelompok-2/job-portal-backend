@@ -18,14 +18,13 @@ public class QuestionDao extends AbstractJpaDao{
 		return ConnHandler.getManager();
 	}
 	
-	
 	public Question getByCode(String code) {
 		final String sql = "SELECT q.id, q.questionCode,q.questionDetail, "
 				+ "q.createdBy , q.createdAt , q.isActive , q.version "
 				+ "FROM Question q "
 				+ "WHERE q.questionCode = :code";
 		final Object questionObj = em().createQuery(sql)
-				.setParameter("", code)
+				.setParameter("code", code)
 				.getSingleResult();
 		
 		final Object[] questionArr = (Object[]) questionObj;

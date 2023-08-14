@@ -20,11 +20,21 @@ public class OwnedBenefitDao extends AbstractJpaDao {
 	}
 	
 	public List<OwnedBenefit> getByJob(String id) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tb.benefit_name ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_owned_benefit tob ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_benefit tb ON tob.benefit_id = tb.id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" tob.job_id = :id");
+			
 		final String sql = "SELECT tb.benefit_name from t_owned_benefit tob " 
 				+ " INNER JOIN t_benefit tb ON tob.benefit_id = tb.id "
 				+ " WHERE tob.job_id = :id";
 
-		final List<?> ownedBenefitObjs = em().createNativeQuery(sql)
+		final List<?> ownedBenefitObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("id", id)
 				.getResultList();
 

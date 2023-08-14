@@ -28,33 +28,60 @@ public class JobDao extends AbstractJpaDao{
 		final List<Job> jobs = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tj.id AS job_id, ");
+			sqlb.append(" job_name, ");
+			sqlb.append(" company_name, ");
+			sqlb.append(" address, ");
+			sqlb.append(" start_date, ");
+			sqlb.append(" end_date, ");
+			sqlb.append(" hr_id, ");
+			sqlb.append(" pic_id, ");
+			sqlb.append(" expected_salary_min, ");
+			sqlb.append(" expected_salary_max, ");
+			sqlb.append(" employment_type_name, ");
+			sqlb.append(" job_picture_id ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_job tj ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_user tu ON tu.id = tj.hr_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" Wt_user tu2 ON tu2.id = tj.pic_id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" company_code = :companycode");
+			
 		final String sql = "SELECT "
-				+ "	tj.id AS job_id,"
-				+ "	job_name,"
-				+ "	company_name,"
-				+ "	address,"
-				+ "	start_date,"
-				+ "	end_date,"
-				+ " hr_id,"
-				+ " pic_id,"
-				+ "	expected_salary_min,"
-				+ "	expected_salary_max,"
-				+ "	employment_type_name,"
+				+ "	tj.id AS job_id, "
+				+ "	job_name, "
+				+ "	company_name, "
+				+ "	address, "
+				+ "	start_date, "
+				+ "	end_date, "
+				+ " hr_id, "
+				+ " pic_id, "
+				+ "	expected_salary_min, "
+				+ "	expected_salary_max, "
+				+ "	employment_type_name, "
 				+ "	job_picture_id "
 				+ "FROM "
 				+ "	t_job tj "
 				+ "INNER JOIN "
 				+ "	t_company tc ON tc.id = tj.company_id "
-				+ "INNER JOIN"
+				+ "INNER JOIN "
 				+ "	t_employment_type tet ON tet.id = tj.employment_type_id "
-				+ "INNER JOIN"
+				+ "INNER JOIN "
 				+ "	t_user tu ON tu.id = tj.hr_id "
-				+ "INNER JOIN"
+				+ "INNER JOIN "
 				+ "	t_user tu2 ON tu2.id = tj.pic_id "
 				+ "WHERE "
 				+ "	company_code = :companycode";
 			
-		final List<?> jobObjs = em().createNativeQuery(sql)
+		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("companycode", code)
 				.getResultList();
 		
@@ -100,6 +127,30 @@ public class JobDao extends AbstractJpaDao{
 	
 	public List<Job> getByPerson(String id) {
 		final List<Job> jobs = new ArrayList<>();
+		
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tj.id AS job_id, ");
+			sqlb.append(" job_name, ");
+			sqlb.append(" company_name, ");
+			sqlb.append(" address, ");
+			sqlb.append(" start_date, ");
+			sqlb.append(" end_date, ");
+			sqlb.append(" hr_id, ");
+			sqlb.append(" pic_id, ");
+			sqlb.append(" expected_salary_min, ");
+			sqlb.append(" expected_salary_max, ");
+			sqlb.append(" employment_type_name, ");
+			sqlb.append(" job_picture_id ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_job tj ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" tj.hr_id = :id");
+		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"
 				+ "	job_name,"
@@ -120,7 +171,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	tj.hr_id = :id";
 
-		final List<?> jobObjs = em().createNativeQuery(sql)
+		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("id", id)
 				.getResultList();
 		
@@ -159,6 +210,33 @@ public class JobDao extends AbstractJpaDao{
 		final List<Job> jobs = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tj.id AS job_id, ");
+			sqlb.append(" job_name, ");
+			sqlb.append(" company_name, ");
+			sqlb.append(" address, ");
+			sqlb.append(" start_date, ");
+			sqlb.append(" end_date, ");
+			sqlb.append(" hr_id, ");
+			sqlb.append(" pic_id, ");
+			sqlb.append(" expected_salary_min, ");
+			sqlb.append(" expected_salary_max, ");
+			sqlb.append(" employment_type_name, ");
+			sqlb.append(" job_picture_id ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_job tj ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_user tu ON tu.id = tj.hr_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_user tu2 ON tu2.id = tj.pic_id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" tj.hr_id = :hrid");
+		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"
 				+ "	job_name,"
@@ -185,7 +263,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	hr_id = :hrid";
 			
-		final List<?> jobObjs = em().createNativeQuery(sql)
+		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("hrid", id)
 				.getResultList();
 		
@@ -233,6 +311,33 @@ public class JobDao extends AbstractJpaDao{
 		final List<Job> jobs = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" tj.id AS job_id, ");
+			sqlb.append(" job_name, ");
+			sqlb.append(" company_name, ");
+			sqlb.append(" address, ");
+			sqlb.append(" start_date, ");
+			sqlb.append(" end_date, ");
+			sqlb.append(" hr_id, ");
+			sqlb.append(" pic_id, ");
+			sqlb.append(" expected_salary_min, ");
+			sqlb.append(" expected_salary_max, ");
+			sqlb.append(" employment_type_name, ");
+			sqlb.append(" job_picture_id ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_job tj ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_user tu ON tu.id = tj.hr_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_user tu2 ON tu2.id = tj.pic_id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" pic_id = :picid");
+		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"
 				+ "	job_name,"
@@ -259,7 +364,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	pic_id = :picid";
 			
-		final List<?> jobObjs = em().createNativeQuery(sql)
+		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("picid", id)
 				.getResultList();
 		
@@ -304,6 +409,14 @@ public class JobDao extends AbstractJpaDao{
 	}
 	
 	public Job getByCode (String jobCode) {
+		final StringBuilder sqlb = new StringBuilder();
+			sqlb.append("SELECT ");
+			sqlb.append(" j ");
+			sqlb.append("FROM ");
+			sqlb.append(" Job j");
+			sqlb.append("WHERE ");
+			sqlb.append(" j.jobCode = :jobCode");
+		
 		final String sql = "SELECT "
 				+ " j.id, "
 				+ " j.jobName, "
@@ -312,19 +425,18 @@ public class JobDao extends AbstractJpaDao{
 				+ " FROM Job j"
 				+ " WHERE j.jobCode = :jobCode";
 		
-		final Object jobObj = this.em().createQuery(sql).setParameter("jobCode", jobCode).getSingleResult();
+		final Object jobObj = this.em().createQuery(sqlb.toString()).setParameter("jobCode", jobCode).getSingleResult();
 		
 		final Object[] jobArr = (Object[]) jobObj;
 		Job job = null;
 		
 		if (jobArr.length > 0) {
 			job = new Job();
-			
+	
 			job.setId(jobArr[0].toString());
 			job.setJobName(jobArr[1].toString());
 			job.setJobCode(jobArr[2].toString());
 			job.setVersion(Integer.valueOf(jobArr[3].toString()));
-			
 		}
 		
 		return job;
