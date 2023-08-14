@@ -1,5 +1,9 @@
 package com.lawencon.jobportaladmin.dto.job;
 
+import java.util.List;
+
+import com.lawencon.jobportaladmin.dto.ownedbenefit.OwnedBenefitInsertReqDto;
+
 public class JobInsertReqDto {
 
 	private String jobName;
@@ -13,6 +17,7 @@ public class JobInsertReqDto {
 	private String picId;
 	private Integer expectedSalaryMin;
 	private Integer expectedSalaryMax;
+	private List<OwnedBenefitInsertReqDto> benefits;
 	private String employmentTypeId;
 	private String employmentTypeCode;
 	private String file;
@@ -136,6 +141,14 @@ public class JobInsertReqDto {
 
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
+	}
+
+	public List<OwnedBenefitInsertReqDto> getBenefits() {
+		return benefits;
+	}
+
+	public void setBenefits(List<OwnedBenefitInsertReqDto> benefits) {
+		this.benefits = benefits;
 	}
 
 }

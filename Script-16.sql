@@ -968,7 +968,6 @@ select * from t_hiring_status ths ;
 select * from t_job;
 select * from t_candidate_profile;
 select * from t_hiring_status ths ;
-
 select * from t_assigned_job_question tajq ;
 select * from t_candidate_address tca ;
 
@@ -990,12 +989,13 @@ select * from t_file_type tft;
 select * from t_file;
 select * from t_mcu;
 select * from t_candidate_documents tcd ;
+select * from t_benefit tb ;
 
-select * from t_question;
-SELECT 
-	*
-FROM 
-	t_marital_status tms
-WHERE 
-	marital_code = 'MRD';
+select * from t_owned_benefit tob ;
+select * from t_mcu;
+select * from t_file;
+select * from t_hiring_status ths ;
+select * from t_applicant ta ;
+
+select * from t_offering_letter tol ;
 

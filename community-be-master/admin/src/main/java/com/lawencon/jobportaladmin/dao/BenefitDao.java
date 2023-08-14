@@ -11,20 +11,23 @@ import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.model.Benefit;
 
 @Repository
-public class BenefitDao extends AbstractJpaDao{
+public class BenefitDao extends AbstractJpaDao {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	public List<Benefit> getByCode(String code){
+
+	public List<Benefit> getByCode(String code) {
 		final StringBuilder sql = new StringBuilder();
 		sql.append("SELECT b ");
 		sql.append("FROM Benefit b ");
 		sql.append("WHERE b.benefitCode = :code ");
-	final List<Benefit> benefitList = em().createQuery(sql.toString(),Benefit.class)
-			.setParameter("code", code)
-			.getResultList();
-	return benefitList;
-		
+		final List<Benefit> benefitList = em().createQuery(sql.toString(), Benefit.class).setParameter("code", code)
+				.getResultList();
+		return benefitList;
+
 	}
 	
+	
+
+
 }

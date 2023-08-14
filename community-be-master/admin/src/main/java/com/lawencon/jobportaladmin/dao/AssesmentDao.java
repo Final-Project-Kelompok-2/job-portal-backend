@@ -30,7 +30,7 @@ public class AssesmentDao extends AbstractJpaDao {
 				+ "WHERE ta.applicant_id = :applicantId";
 
 		try {
-			final Object assObj = ConnHandler.getManager().createNativeQuery(sql).setParameter("applicantId", applicantId)
+			final Object assObj = em().createNativeQuery(sql).setParameter("applicantId", applicantId)
 					.getSingleResult();
 
 			final Object[] assArr = (Object[]) assObj;
