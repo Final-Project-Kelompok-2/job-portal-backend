@@ -24,19 +24,20 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 		final List<CandidateTrainingExp> trainings = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			
-		final String sql = "SELECT "
-				+ "	tcte.id AS training_id, "
-				+ "	organization_name, "
-				+ "	training_name, "
-				+ "	description, "
-				+ "	start_date, "
-				+ "	end_date "
-				+ "FROM "
-				+ "	t_candidate_training_exp tcte "
-				+ "WHERE "
-				+ "	user_id = :candidate";
+		final StringBuilder sql = new StringBuilder();
+				sql.append ("SELECT ");
+				sql.append ("	tcte.id AS training_id, ");
+				sql.append ("	organization_name, ");
+				sql.append ("	training_name, ");
+				sql.append ("	description, ");
+				sql.append ("	start_date, ");
+				sql.append ("	end_date ");
+				sql.append ("FROM ");
+				sql.append ("	t_candidate_training_exp tcte ");
+				sql.append ("WHERE ");
+				sql.append ("	user_id = :candidate");
 		
-		final List<?> trainingObjs = em().createNativeQuery(sql)
+		final List<?> trainingObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
 				.getResultList();
 		
