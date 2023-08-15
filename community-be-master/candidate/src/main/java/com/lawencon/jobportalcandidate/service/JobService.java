@@ -154,7 +154,6 @@ public class JobService {
 			newJob.setJobPicture(photo);
 			newJob = jobDao.save(newJob);
 			
-
 			if(job.getQuestions()!=null) {
 
 				for(int i=0;i<job.getQuestions().size();i++) {

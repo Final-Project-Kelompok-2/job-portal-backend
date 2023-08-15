@@ -94,7 +94,7 @@ public class UserDao extends AbstractJpaDao {
 			sqlb.append(" tr.role_code, ");
 			sqlb.append(" tp.photo_id ");
 			sqlb.append("FROM ");
-			sqlb.append(" t_user tu");
+			sqlb.append(" t_user tu ");
 			sqlb.append("INNER JOIN ");
 			sqlb.append(" t_role tr ON tr.id = tu.role_id ");
 			sqlb.append("INNER JOIN ");

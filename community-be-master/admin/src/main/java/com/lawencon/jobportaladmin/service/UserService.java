@@ -123,6 +123,7 @@ public class UserService implements UserDetailsService{
 					+ " Password : " + generatePassword;
 			emailService.sendEmail(userData.getUserEmail(), emailSubject, emailbody);
 			
+			insertResDto.setId(newUser.getId());
 			insertResDto.setMessage("Insert User Success");
 			
 			em().getTransaction().commit();
