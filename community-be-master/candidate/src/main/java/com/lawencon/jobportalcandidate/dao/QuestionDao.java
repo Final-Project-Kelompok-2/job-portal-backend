@@ -31,7 +31,7 @@ public class QuestionDao extends AbstractJpaDao{
 				+ "FROM Question q "
 				+ "WHERE q.questionCode = :code";
 		
-		final Object questionObj = em().createQuery(sqlb.toString())
+		final Object questionObj = em().createQuery(sql)
 				.setParameter("code", code)
 				.getSingleResult();
 		

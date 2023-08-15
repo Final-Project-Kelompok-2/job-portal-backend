@@ -17,24 +17,28 @@ import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.config.JwtConfig;
+import com.lawencon.jobportaladmin.dao.AssignedJobQuestionDao;
 import com.lawencon.jobportaladmin.dao.BenefitDao;
 import com.lawencon.jobportaladmin.dao.CompanyDao;
 import com.lawencon.jobportaladmin.dao.EmploymentTypeDao;
 import com.lawencon.jobportaladmin.dao.FileDao;
 import com.lawencon.jobportaladmin.dao.JobDao;
 import com.lawencon.jobportaladmin.dao.OwnedBenefitDao;
+import com.lawencon.jobportaladmin.dao.QuestionDao;
 import com.lawencon.jobportaladmin.dao.UserDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.job.JobInsertReqDto;
 import com.lawencon.jobportaladmin.dto.job.JobResDto;
 import com.lawencon.jobportaladmin.dto.job.JobUpdateReqDto;
+import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
 import com.lawencon.jobportaladmin.model.Benefit;
 import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.EmploymentType;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.OwnedBenefit;
+import com.lawencon.jobportaladmin.model.Question;
 import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
@@ -72,6 +76,13 @@ public class JobService {
 	
 	@Autowired
 	private OwnedBenefitDao ownedBenefitDao;
+	
+	@Autowired
+	private QuestionDao questionDao;
+	
+	@Autowired
+	private AssignedJobQuestionDao assignedJobQuestionDao;
+	
 	
 	public List<JobResDto> getAllJobs() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
@@ -168,7 +179,18 @@ public class JobService {
 					final Benefit benefit = benefitDao.getById(Benefit.class, jobDto.getBenefits().get(i).getBenefitId());
 					ownedBenefit.setBenefit(benefit);
 					ownedBenefit.setJob(job);
-					ownedBenefit = ownedBenefitDao.save(ownedBenefit);
+					ownedBenefitDao.save(ownedBenefit);
+				}
+			}
+			
+			if(jobDto.getQuestions().size()>0) {
+				for(int i =0;i<jobDto.getQuestions().size();i++) {
+					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
+					final Question question = questionDao.getById(Question.class, jobDto.getQuestions().get(i).getQuestionId());
+					assignQuestion.setQuestion(question);
+					assignQuestion.setJob(job);
+					jobDto.getQuestions().get(i).setQuestionCode(question.getQuestionCode());
+					assignedJobQuestionDao.save(assignQuestion);
 				}
 			}
 

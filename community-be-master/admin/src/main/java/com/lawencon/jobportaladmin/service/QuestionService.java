@@ -48,6 +48,21 @@ public class QuestionService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
+	
+	public List<QuestionResDto> getAll(){
+		final List<QuestionResDto> questionsDto = new ArrayList<>();
+		final List<Question> questions = questionDao.getAll(Question.class);
+		
+		for(int i=0;i<questions.size();i++) {
+			final QuestionResDto questionDto = new QuestionResDto();
+			questionDto.setId(questions.get(i).getId());
+			questionDto.setQuestionDetail(questions.get(i).getQuestionDetail());
+			questionsDto.add(questionDto);
+		}
+		
+		return questionsDto;
+		
+	}
 
 	public InsertResDto insertQuestion(QuestionsInsertReqDto newQuestions) {
 		final InsertResDto insertRes = new InsertResDto();

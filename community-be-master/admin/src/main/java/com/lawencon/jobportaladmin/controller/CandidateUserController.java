@@ -19,12 +19,16 @@ public class CandidateUserController {
 	@Autowired
 	private CandidateUserService candidateUserService;
 	
-	
 	@PostMapping
 	public ResponseEntity<InsertResDto> insertCandidateUser(@RequestBody CandidateUserInsertReqDto candidate){
 		final InsertResDto response = candidateUserService.insertCandidateuser(candidate);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
-		
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<InsertResDto> insertCandidateUserFromAdmin(@RequestBody CandidateUserInsertReqDto candidate){
+		final InsertResDto response = candidateUserService.insertCandidateFromAdmin(candidate);
+		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 	
 }
