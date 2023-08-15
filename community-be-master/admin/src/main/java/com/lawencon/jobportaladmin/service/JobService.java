@@ -131,10 +131,7 @@ public class JobService {
 	}
 
 	public InsertResDto insertJob(JobInsertReqDto jobDto) {
-	
-
 		InsertResDto result = null;
-
 		try {
 			em().getTransaction().begin();
 			Job job = new Job();
@@ -183,6 +180,7 @@ public class JobService {
 				}
 			}
 			
+
 			if(jobDto.getQuestions()!= null) {
 				for(int i =0;i<jobDto.getQuestions().size();i++) {
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
@@ -212,7 +210,6 @@ public class JobService {
 			}
 			else {
 				em().getTransaction().rollback();
-				
 				throw new RuntimeException("Insert Failed");
 				
 			}

@@ -137,8 +137,8 @@ public class JobService {
 			final Company company = companyDao.getByCode(job.getCompanyCode());
 			newJob.setCompany(company);
 			
-			newJob.setStartDate(DateUtil.parseStringToLocalDate(job.getStartDate()));
-			newJob.setEndDate(DateUtil.parseStringToLocalDate(job.getEndDate()));
+			newJob.setStartDate(DateUtil.parseStringToLocalDate(job.getStartDate().toString()));
+			newJob.setEndDate(DateUtil.parseStringToLocalDate(job.getEndDate().toString()));
 			newJob.setDescription(job.getDescription());
 			newJob.setExpectedSalaryMin(job.getExpectedSalaryMin());
 			newJob.setExpectedSalaryMax(job.getExpectedSalaryMax());
@@ -154,7 +154,9 @@ public class JobService {
 			newJob.setJobPicture(photo);
 			newJob = jobDao.save(newJob);
 			
+
 			if(job.getQuestions()!=null) {
+
 				for(int i=0;i<job.getQuestions().size();i++) {
 					final Question question = questionDao.getByCode(job.getQuestions().get(i).getQuestionCode());
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
@@ -171,7 +173,6 @@ public class JobService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
-			throw new RuntimeException("Insert Failed");
 		}
 
 		return insertResDto;
