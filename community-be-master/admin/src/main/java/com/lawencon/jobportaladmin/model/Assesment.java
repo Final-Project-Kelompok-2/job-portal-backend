@@ -20,7 +20,10 @@ public class Assesment extends BaseEntity {
 
 	@Column(name = "assesment_location", length = 50, nullable = false,unique=true)
 	private String assesmentLocation;
-
+	
+	@Column(name ="notes",nullable = true)
+	private String notes;
+	
 	@OneToOne
 	@JoinColumn(name = "applicant_id")
 	private Applicant applicant;
