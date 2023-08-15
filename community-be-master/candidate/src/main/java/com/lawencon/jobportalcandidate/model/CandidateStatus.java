@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_candidate_status")
 public class CandidateStatus extends BaseEntity {
 
-	@Column(name = "status_code", length = 5, nullable = false)
+	@Column(name = "status_code", length = 5, nullable = false,unique = true)
 	private String statusCode;
 
 	@Column(name = "status_name", length = 20, nullable = false)
