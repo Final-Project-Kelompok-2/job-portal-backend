@@ -37,7 +37,7 @@ public class ApplicantController {
 	@GetMapping 
 	public ResponseEntity<List<ApplicantResDto>> getByJob(@RequestParam String jobId){
 		final List<ApplicantResDto> response = applicantService.getAllApplicantByJob(jobId);
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
+		return new ResponseEntity<>(response, HttpStatus.CREATED); 
 	}
 	
 	@PatchMapping
