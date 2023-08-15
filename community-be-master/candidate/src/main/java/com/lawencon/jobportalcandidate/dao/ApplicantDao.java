@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.dao;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.model.Applicant;
+import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.Company;
 import com.lawencon.jobportalcandidate.model.HiringStatus;
 import com.lawencon.jobportalcandidate.model.Job;
@@ -23,43 +25,17 @@ public class ApplicantDao extends AbstractJpaDao{
 	}
 	
 	public Applicant getByCode(String code) {
-		final String sql = "SELECT a FROM Applicant as a WHERE applicantCode = :codes";
+		final String sql = "SELECT a FROM Applicant a WHERE applicantCode = :code ";
 		
-		final Applicant applicant = em().createQuery(sql,Applicant.class)
-				.setParameter("codes", code)
+//		final String sql = "SELECT a FROM Applicant a WHERE applicantCode = 'Y8RI6'";
+		
+		final Applicant applicant = this.em().createQuery(sql,Applicant.class)
+				.setParameter("code", code)
 				.getSingleResult();
 		
 		return applicant;
-		
-//		final Object[] applicantArr = (Object[]) applicantObj;
-//		Applicant applicant  = null;
-//		
-//		if (applicantArr.length > 0) {
-//			applicant = new Applicant();
-//			
-//			applicant.setId(applicantArr[0].toString());
-//			applicant.setApplicantCode(applicantArr[1].toString());
-//			applicant.setAppliedDate(LocalDateTime.parse(applicantArr[2].toString()));
-//			
-//			final Job job = new Job();
-//			job.setId(applicantArr[3].toString());
-//			applicant.setJob(job);
-//			
-//			final HiringStatus hiringStatus = new HiringStatus();
-//			hiringStatus.setId(applicantArr[4].toString());
-//			applicant.setStatus(hiringStatus);
-//			
-//			final CandidateUser candidate = new CandidateUser();
-//			candidate.setId(applicantArr[5].toString());
-//			applicant.setCandidate(candidate);
-//			
-//			applicant.setCreatedBy(applicantArr[6].toString());
-//			applicant.setCreatedAt(LocalDateTime.parse(applicantArr[7].toString()));
-//			applicant.setIsActive(Boolean.valueOf(applicantArr[8].toString()));
-//			applicant.setVersion(Integer.valueOf(applicantArr[9].toString()));
-//		}
-		
-		
+	
+
 	}
 	
 	public List<Applicant> getApplicantByCandidate(String id){
