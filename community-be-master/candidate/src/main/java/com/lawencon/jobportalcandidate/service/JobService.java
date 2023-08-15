@@ -9,19 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.jobportalcandidate.dao.AssignedJobQuestionDao;
 import com.lawencon.jobportalcandidate.dao.CompanyDao;
 import com.lawencon.jobportalcandidate.dao.EmploymentTypeDao;
 import com.lawencon.jobportalcandidate.dao.FileDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
+import com.lawencon.jobportalcandidate.dao.QuestionDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.job.JobInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.job.JobResDto;
+import com.lawencon.jobportalcandidate.model.AssignedJobQuestion;
 import com.lawencon.jobportalcandidate.model.Company;
 import com.lawencon.jobportalcandidate.model.EmploymentType;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
+import com.lawencon.jobportalcandidate.model.Question;
 import com.lawencon.jobportalcandidate.util.DateUtil;
-import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class JobService {
@@ -37,9 +40,12 @@ public class JobService {
 
 	@Autowired
 	private FileDao fileDao;
-	
+
 	@Autowired
-	private PrincipalService<String> principalService;
+	private QuestionDao questionDao;
+
+	@Autowired
+	private AssignedJobQuestionDao assignedJobQuestionDao;
 
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -116,8 +122,6 @@ public class JobService {
 
 		return jobsDto;
 	}
-	
-	
 
 	public InsertResDto insertJob(JobInsertReqDto job) {
 
@@ -149,6 +153,16 @@ public class JobService {
 			photo = fileDao.save(photo);
 			newJob.setJobPicture(photo);
 			newJob = jobDao.save(newJob);
+			
+			if(job.getQuestions().size()>0) {
+				for(int i=0;i<job.getQuestions().size();i++) {
+					final Question question = questionDao.getByCode(job.getQuestions().get(i).getQuestionCode());
+					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
+					assignQuestion.setQuestion(question);
+					assignQuestion.setJob(newJob);
+					assignedJobQuestionDao.save(assignQuestion);
+				}
+			}
 			
 			insertResDto.setId(newJob.getId());
 			insertResDto.setMessage("Insert job success");

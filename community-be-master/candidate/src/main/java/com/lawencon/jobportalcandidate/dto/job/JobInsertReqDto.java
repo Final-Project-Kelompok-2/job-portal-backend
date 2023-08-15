@@ -1,5 +1,9 @@
 package com.lawencon.jobportalcandidate.dto.job;
 
+import java.util.List;
+
+import com.lawencon.jobportalcandidate.dto.assignedjobquestion.AssignedJobQuestionInsertReqDto;
+
 public class JobInsertReqDto {
 
 	private String jobName;
@@ -8,6 +12,7 @@ public class JobInsertReqDto {
 	private String startDate;
 	private String endDate;
 	private String description;
+	private List<AssignedJobQuestionInsertReqDto> questions;
 	private Integer expectedSalaryMin;
 	private Integer expectedSalaryMax;
 	private String employmentTypeCode;
@@ -100,6 +105,14 @@ public class JobInsertReqDto {
 
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
+	}
+
+	public List<AssignedJobQuestionInsertReqDto> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<AssignedJobQuestionInsertReqDto> questions) {
+		this.questions = questions;
 	}
 
 }
