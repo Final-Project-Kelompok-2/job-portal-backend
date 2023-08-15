@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name ="t_question")
 public class Question extends BaseEntity{
 
-	@Column(name ="question_code", length = 5, nullable = false)
+	@Column(name ="question_code", length = 5, nullable = false,unique = true)
 	private String questionCode;
 	
 	@Column(name ="question_detail",  nullable = false)

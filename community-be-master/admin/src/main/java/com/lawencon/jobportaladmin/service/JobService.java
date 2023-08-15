@@ -134,6 +134,7 @@ public class JobService {
 
 		InsertResDto result = new InsertResDto();
 
+
 		try {
 			em().getTransaction().begin();
 			Job job = new Job();
@@ -168,8 +169,10 @@ public class JobService {
 			job.setJobPicture(file);
 			job = jobDao.save(job);
 
+
 			if (jobDto.getBenefits() != null) {
 				for (int i = 0; i < jobDto.getBenefits().size(); i++) {
+
 					OwnedBenefit ownedBenefit = new OwnedBenefit();
 					final Benefit benefit = benefitDao.getById(Benefit.class,
 							jobDto.getBenefits().get(i).getBenefitId());
@@ -179,8 +182,10 @@ public class JobService {
 				}
 			}
 
+
 			if (jobDto.getQuestions() !=null) {
 				for (int i = 0; i < jobDto.getQuestions().size(); i++) {
+
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
 					final Question question = questionDao.getById(Question.class,
 							jobDto.getQuestions().get(i).getQuestionId());

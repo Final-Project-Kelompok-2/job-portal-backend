@@ -1,6 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +47,8 @@ public class CandidateProjectExpDao extends AbstractJpaDao{
 				project.setProjectName(projectArr[1].toString());
 				project.setProjectUrl(projectArr[2].toString());
 				project.setDescription(projectArr[3].toString());
-				project.setStartDate(Timestamp.valueOf(projectArr[4].toString()).toLocalDateTime());
-				project.setEndDate(Timestamp.valueOf(projectArr[5].toString()).toLocalDateTime());
+				project.setStartDate(LocalDate.parse(projectArr[4].toString()));
+				project.setEndDate(LocalDate.parse(projectArr[5].toString()));
 				
 				projects.add(project);
 			}

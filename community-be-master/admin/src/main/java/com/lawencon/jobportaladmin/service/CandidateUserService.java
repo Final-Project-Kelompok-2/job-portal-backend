@@ -1,8 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.persistence.EntityManager;
 
@@ -88,7 +86,7 @@ public class CandidateUserService {
 
 	@Autowired
 	private CandidateTrainingExpDao candidateTrainingDao;
-	
+
 	@Autowired
 	private CandidateWorkExpDao candidateWorkExpDao;
 
@@ -163,7 +161,7 @@ public class CandidateUserService {
 			candidateUserDao.save(candidateUser);
 
 			// Candidate Addresses
-			if (candidateData.getCandidateAddress().size() > 0) {
+			if (candidateData.getCandidateAddress() != null) {
 				for (int i = 0; i < candidateData.getCandidateAddress().size(); i++) {
 					final CandidateAddress candidateAddress = new CandidateAddress();
 					candidateAddress.setAddress(candidateData.getCandidateAddress().get(i).getAddress());
@@ -183,7 +181,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Documents
-			if (candidateData.getCandidateDocuments().size() > 0) {
+			if (candidateData.getCandidateDocuments() != null) {
 				for (int i = 0; i < candidateData.getCandidateDocuments().size(); i++) {
 					final CandidateDocuments candidateDocument = new CandidateDocuments();
 					candidateDocument.setDocName(candidateData.getCandidateDocuments().get(i).getDocName());
@@ -209,7 +207,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Educations
-			if (candidateData.getCandidateEducations().size() > 0) {
+			if (candidateData.getCandidateEducations() != null) {
 				for (int i = 0; i < candidateData.getCandidateEducations().size(); i++) {
 					final CandidateEducation education = new CandidateEducation();
 					education.setDegreeName(candidateData.getCandidateEducations().get(i).getDegreeName());
@@ -232,7 +230,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Families
-			if (candidateData.getCandidateFamily().size() > 0) {
+			if (candidateData.getCandidateFamily() != null) {
 				for (int i = 0; i < candidateData.getCandidateFamily().size(); i++) {
 					final CandidateFamily family = new CandidateFamily();
 					family.setFullname(candidateData.getCandidateFamily().get(i).getFullname());
@@ -253,7 +251,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Languages
-			if (candidateData.getCandidateLanguage().size() > 0) {
+			if (candidateData.getCandidateLanguage() != null) {
 				for (int i = 0; i < candidateData.getCandidateLanguage().size(); i++) {
 					final CandidateLanguage candidateLanguage = new CandidateLanguage();
 					candidateLanguage.setLanguageName(candidateData.getCandidateLanguage().get(i).getLanguageName());
@@ -271,18 +269,18 @@ public class CandidateUserService {
 			}
 
 			// Candidate Projects
-			if (candidateData.getCandidateProjectExp().size() > 0) {
+			if (candidateData.getCandidateProjectExp() != null) {
 				for (int i = 0; i < candidateData.getCandidateProjectExp().size(); i++) {
 					final CandidateProjectExp projectExp = new CandidateProjectExp();
 					projectExp.setProjectName(candidateData.getCandidateProjectExp().get(i).getProjectName());
 					projectExp.setDescription(candidateData.getCandidateProjectExp().get(i).getDescription());
 					projectExp.setProjectUrl(candidateData.getCandidateProjectExp().get(i).getProjectUrl());
 					projectExp.setStartDate(
-							Timestamp.valueOf(candidateData.getCandidateProjectExp().get(i).getStartDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateProjectExp().get(i).getStartDate().toString())
+									);
 					projectExp.setEndDate(
-							Timestamp.valueOf(candidateData.getCandidateProjectExp().get(i).getEndDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateProjectExp().get(i).getEndDate().toString())
+									);
 
 					final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
 							candidateUser.getId());
@@ -294,7 +292,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate References
-			if (candidateData.getCandidateReferences().size() > 0) {
+			if (candidateData.getCandidateReferences() != null) {
 				for (int i = 0; i < candidateData.getCandidateReferences().size(); i++) {
 					final CandidateReferences reference = new CandidateReferences();
 					reference.setFullName(candidateData.getCandidateReferences().get(i).getFullname());
@@ -315,7 +313,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Skills
-			if (candidateData.getCandidateSkill().size() > 0) {
+			if (candidateData.getCandidateSkill() != null) {
 				for (int i = 0; i < candidateData.getCandidateSkill().size(); i++) {
 					final CandidateSkill skill = new CandidateSkill();
 					skill.setSkillName(candidateData.getCandidateSkill().get(i).getSkillName());
@@ -330,17 +328,19 @@ public class CandidateUserService {
 			}
 
 			// Candidate Training
-			if (candidateData.getCandidateTrainingExp().size() > 0) {
+			if (candidateData.getCandidateTrainingExp() != null) {
 				for (int i = 0; i < candidateData.getCandidateTrainingExp().size(); i++) {
 					final CandidateTrainingExp trainingExp = new CandidateTrainingExp();
 					trainingExp.setCreatedBy(principalService.getAuthPrincipal());
 					trainingExp.setTrainingName(candidateData.getCandidateTrainingExp().get(i).getTrainingName());
 					trainingExp
 							.setOrganizationName(candidateData.getCandidateTrainingExp().get(i).getOrganizationName());
-					trainingExp.setStartDate(LocalDateTime
-							.parse(candidateData.getCandidateTrainingExp().get(i).getStartDate().toString()));
-					trainingExp.setEndDate(LocalDateTime
-							.parse(candidateData.getCandidateTrainingExp().get(i).getEndDate().toString()));
+					trainingExp.setStartDate(
+							LocalDate.parse(candidateData.getCandidateTrainingExp().get(i).getStartDate().toString())
+									);
+					trainingExp.setEndDate(
+							LocalDate.parse(candidateData.getCandidateTrainingExp().get(i).getEndDate().toString())
+									);
 					trainingExp.setDescription(candidateData.getCandidateTrainingExp().get(i).getDescription());
 
 					final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
@@ -354,7 +354,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Works
-			if (candidateData.getCandidateWorkExp().size() > 0) {
+			if (candidateData.getCandidateWorkExp() != null) {
 				for (int i = 0; i < candidateData.getCandidateWorkExp().size(); i++) {
 					final CandidateWorkExp work = new CandidateWorkExp();
 					work.setPositionName(candidateData.getCandidateWorkExp().get(i).getPositionName());
@@ -364,11 +364,11 @@ public class CandidateUserService {
 					work.setReasonLeave(candidateData.getCandidateWorkExp().get(i).getReasonLeave());
 					work.setLastSalary(candidateData.getCandidateWorkExp().get(i).getLastSalary());
 					work.setStartDate(
-							Timestamp.valueOf(candidateData.getCandidateWorkExp().get(i).getStartDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateWorkExp().get(i).getStartDate().toString())
+									);
 					work.setEndDate(
-							Timestamp.valueOf(candidateData.getCandidateWorkExp().get(i).getEndDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateWorkExp().get(i).getEndDate().toString())
+									);
 
 					final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
 							candidateUser.getId());

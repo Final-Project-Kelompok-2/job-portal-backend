@@ -11,7 +11,7 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(name = "t_candidate_user")
 public class CandidateUser extends BaseEntity{
-	@Column(name = "user_email",length = 50, nullable = false)
+	@Column(name = "user_email",length = 50, nullable = false,unique = true)
 	private String userEmail;
 	
 	@Column(name = "user_password",nullable = false)
