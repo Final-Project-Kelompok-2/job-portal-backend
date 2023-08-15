@@ -180,7 +180,8 @@ public class JobService {
 				}
 			}
 			
-			if(jobDto.getQuestions() != null) {
+
+			if(jobDto.getQuestions()!= null) {
 				for(int i =0;i<jobDto.getQuestions().size();i++) {
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
 					final Question question = questionDao.getById(Question.class, jobDto.getQuestions().get(i).getQuestionId());

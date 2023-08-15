@@ -13,7 +13,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_company")
 public class Company extends BaseEntity{
 	
-	@Column(name ="company_code", length = 5, nullable = false)
+	@Column(name ="company_code", length = 5, nullable = false,unique = true)
 	private String companyCode;
 	
 	@Column(name = "company_name",length = 30, nullable = false)

@@ -154,7 +154,9 @@ public class JobService {
 			newJob.setJobPicture(photo);
 			newJob = jobDao.save(newJob);
 			
-			if(job.getQuestions() != null) {
+
+			if(job.getQuestions()!=null) {
+
 				for(int i=0;i<job.getQuestions().size();i++) {
 					final Question question = questionDao.getByCode(job.getQuestions().get(i).getQuestionCode());
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
