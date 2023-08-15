@@ -1,6 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +23,17 @@ public class CandidateTrainingExpDao extends AbstractJpaDao {
 		final List<CandidateTrainingExp> trainings = new ArrayList<>();
 
 		final StringBuilder sql = new StringBuilder();
-		sql.append("SELECT ")
-		.append("	tcte.id AS training_id, ")
-		.append("	organization_name, ")
-		.append("	training_name, ")
-		.append("	description, ")
-		.append("	start_date, ")
-		.append("	end_date ")
-		.append("FROM ")
-		.append("	t_candidate_training_exp tcte ")
-		.append("WHERE ")
-		.append("	user_id = :candidate");
+			sql.append("SELECT ")
+			.append("	tcte.id AS training_id, ")
+			.append("	organization_name, ")
+			.append("	training_name, ")
+			.append("	description, ")
+			.append("	start_date, ")
+			.append("	end_date ")
+			.append("FROM ")
+			.append("	t_candidate_training_exp tcte ")
+			.append("WHERE ")
+			.append("	user_id = :candidate");
 
 		final List<?> trainingObjs = em().createNativeQuery(sql.toString()).setParameter("candidate", id)
 				.getResultList();
@@ -46,8 +46,8 @@ public class CandidateTrainingExpDao extends AbstractJpaDao {
 				training.setOrganizationName(trainingArr[1].toString());
 				training.setTrainingName(trainingArr[2].toString());
 				training.setDescription(trainingArr[3].toString());
-				training.setStartDate(Timestamp.valueOf(trainingArr[4].toString()).toLocalDateTime());
-				training.setEndDate(Timestamp.valueOf(trainingArr[5].toString()).toLocalDateTime());
+				training.setStartDate(LocalDate.parse(trainingArr[4].toString()));
+				training.setEndDate(LocalDate.parse(trainingArr[5].toString()));
 
 				trainings.add(training);
 			}

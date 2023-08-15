@@ -1,6 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +52,8 @@ public class CandidateWorkExpDao extends AbstractJpaDao {
 				work.setResponsibility(workArr[4].toString());
 				work.setReasonLeave(workArr[5].toString());
 				work.setLastSalary(Float.valueOf(workArr[6].toString()));
-				work.setStartDate(Timestamp.valueOf(workArr[7].toString()).toLocalDateTime());
-				work.setEndDate(Timestamp.valueOf(workArr[8].toString()).toLocalDateTime());
+				work.setStartDate(LocalDate.parse(workArr[7].toString()));
+				work.setEndDate(LocalDate.parse(workArr[8].toString()));
 				
 				works.add(work);
 			}

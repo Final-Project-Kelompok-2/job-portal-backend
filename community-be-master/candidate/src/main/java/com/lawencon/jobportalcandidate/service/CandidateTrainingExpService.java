@@ -1,6 +1,5 @@
 package com.lawencon.jobportalcandidate.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,7 @@ import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainin
 import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainingExpUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateTrainingExp;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportalcandidate.util.DateUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -71,8 +71,8 @@ public class CandidateTrainingExpService {
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setDescription(data.getDescription());
 			trainingExp.setOrganizationName(data.getOrganizationName());
-			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
-			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
+			trainingExp.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			trainingExp.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			trainingExp.setCandidateUser(candidateUser);
@@ -107,8 +107,8 @@ public class CandidateTrainingExpService {
 			trainingExp.setUpdatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());
-			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
-			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
+			trainingExp.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			trainingExp.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			trainingExp.setCandidateUser(candidateUser);
