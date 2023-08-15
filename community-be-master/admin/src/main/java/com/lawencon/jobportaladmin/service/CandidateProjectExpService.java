@@ -1,6 +1,5 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import com.lawencon.jobportaladmin.dto.candidateprojectexp.CandidateProjectExpRe
 import com.lawencon.jobportaladmin.dto.candidateprojectexp.CandidateProjectExpUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateProjectExp;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -64,8 +64,8 @@ public class CandidateProjectExpService {
 			projectExp.setProjectName(data.getProjectName());
 			projectExp.setDescription(data.getDescription());
 			projectExp.setProjectUrl(data.getProjectUrl());
-			projectExp.setStartDate(LocalDate.parse(data.getStartDate().toString()));
-			projectExp.setEndDate(LocalDate.parse(data.getEndDate().toString()));
+			projectExp.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			projectExp.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 
 			final CandidateUser candidateUser = candidateUserDao.getByEmail(data.getEmail());
 			projectExp.setCandidateUser(candidateUser);
@@ -93,11 +93,13 @@ public class CandidateProjectExpService {
 			projectExp.setProjectName(data.getProjectName());
 			projectExp.setDescription(data.getDescription());
 			projectExp.setProjectUrl(data.getProjectUrl());
-			projectExp.setStartDate(LocalDate.parse(data.getStartDate()));
-			projectExp.setEndDate(LocalDate.parse(data.getEndDate()));
+			projectExp.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			projectExp.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
+			
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			projectExp.setCandidateUser(candidateUser);
 			projectExp.setUpdatedBy(principalService.getAuthPrincipal());
+			
 			final CandidateProjectExp projectExpId = projectExpDao.saveAndFlush(projectExp);
 			updateResDto.setVersion(projectExpId.getVersion());
 			updateResDto.setMessage("Candidate Project Exp Update Success");
