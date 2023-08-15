@@ -3,6 +3,8 @@ package com.lawencon.jobportaladmin.dto.interview;
 public class InterviewInsertReqDto {
 
 	private String applicantId;
+	private String applicantCode;
+	private String statusCode;
 	private String interviewDate;
 	private String interviewLocation;
 
@@ -28,6 +30,22 @@ public class InterviewInsertReqDto {
 
 	public void setInterviewLocation(String interviewLocation) {
 		this.interviewLocation = interviewLocation;
+	}
+
+	public String getApplicantCode() {
+		return applicantCode;
+	}
+
+	public void setApplicantCode(String applicantCode) {
+		this.applicantCode = applicantCode;
+	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
 
 }

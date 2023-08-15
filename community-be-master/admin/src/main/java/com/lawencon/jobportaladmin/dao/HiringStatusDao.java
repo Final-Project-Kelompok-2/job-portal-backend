@@ -1,7 +1,5 @@
 package com.lawencon.jobportaladmin.dao;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -36,8 +34,6 @@ public class HiringStatusDao extends AbstractJpaDao{
 				+ " WHERE hs.statusCode = :statusCode";
 		
 		final HiringStatus hiringStatus = this.em().createQuery(sqlb.toString(),HiringStatus.class).setParameter("statusCode", statusCode).getSingleResult();
-		
-	
 		return hiringStatus;
 	}
 	

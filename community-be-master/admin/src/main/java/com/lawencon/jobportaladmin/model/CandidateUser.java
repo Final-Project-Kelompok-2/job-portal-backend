@@ -15,7 +15,6 @@ public class CandidateUser extends BaseEntity {
 	@Column(name = "user_email", length = 50, nullable = false,unique = true)
 	private String userEmail;
 
-
 	@OneToOne
 	@JoinColumn(name = "profile_id")
 	private CandidateProfile candidateProfile;
