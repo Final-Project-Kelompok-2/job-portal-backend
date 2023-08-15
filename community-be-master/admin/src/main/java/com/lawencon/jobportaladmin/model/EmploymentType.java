@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_employment_type")
 public class EmploymentType extends BaseEntity{
 
-	@Column(name = "employment_type_code",length = 5, nullable = false)
+	@Column(name = "employment_type_code",length = 5, nullable = false,unique = true)
 	private String employmentTypeCode;
 	
 	@Column(name = "employment_type_name",length = 20, nullable = false)

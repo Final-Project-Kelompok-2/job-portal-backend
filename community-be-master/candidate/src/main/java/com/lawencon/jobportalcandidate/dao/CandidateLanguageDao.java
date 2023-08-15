@@ -20,42 +20,42 @@ public class CandidateLanguageDao extends AbstractJpaDao{
 	}
 	
 	public List<CandidateLanguage>getLanguageByCandidate(String id){
-		final String sql = "SELECT  "
-				+ "	id, "
-				+ "	language_name, "
-				+ "	writing_rate, "
-				+ "	speaking_rate, "
-				+ "	listening_rate, "
-				+ "	user_id "
-				+ "FROM  "
-				+ "	t_candidate_language tcl "
-				+ " WHERE"
-				+ " user_id = :candidate ";
-
-		final List<?> languageObjs = em().createNativeQuery(sql)
-				.setParameter("candidate", id)
-				.getResultList();
-		final List<CandidateLanguage> candidateLanguageList = new ArrayList<>();
-		if(languageObjs.size() > 0) {
-			for(Object languageObj : languageObjs) {
-				final Object[] languageArr = (Object[]) languageObj;
-				final CandidateLanguage candidateLanguage = new CandidateLanguage();
-				
-				candidateLanguage.setId(languageArr[0].toString());
-				candidateLanguage.setLanguageName(languageArr[1].toString());
-				candidateLanguage.setWritingRate(languageArr[2].toString());
-				candidateLanguage.setSpeakingRate(languageArr[3].toString());
-				candidateLanguage.setListeningRate(languageArr[4].toString());
-				
-				final CandidateUser candidateUser = new CandidateUser();
-				candidateUser.setId(languageArr[5].toString());
-				candidateLanguage.setCandidateUser(candidateUser);
-				
-				candidateLanguageList.add(candidateLanguage);
-				
+			final StringBuilder sql = new StringBuilder();
+			sql.append("SELECT  ")
+			.append ("	id, ")
+			.append ("	language_name, ")
+			.append ("	writing_rate, ")
+			.append ("	speaking_rate, ")
+			.append ("	listening_rate, ")
+			.append ("	user_id ")
+			.append ("FROM  ")
+			.append ("	t_candidate_language tcl ")
+			.append (" WHERE")
+			.append (" user_id = :candidate ");
+			final List<?> languageObjs = em().createNativeQuery(sql.toString())
+			.setParameter("candidate", id)
+			.getResultList();
+			final List<CandidateLanguage> candidateLanguageList = new ArrayList<>();
+			if(languageObjs.size() > 0) {
+				for(Object languageObj : languageObjs) {
+					final Object[] languageArr = (Object[]) languageObj;
+					final CandidateLanguage candidateLanguage = new CandidateLanguage();
+			
+					candidateLanguage.setId(languageArr[0].toString());
+					candidateLanguage.setLanguageName(languageArr[1].toString());
+					candidateLanguage.setWritingRate(languageArr[2].toString());
+					candidateLanguage.setSpeakingRate(languageArr[3].toString());
+					candidateLanguage.setListeningRate(languageArr[4].toString());
+			
+					final CandidateUser candidateUser = new CandidateUser();
+					candidateUser.setId(languageArr[5].toString());
+					candidateLanguage.setCandidateUser(candidateUser);
+			
+					candidateLanguageList.add(candidateLanguage);
+			
+				}
 			}
-		}
-		return candidateLanguageList;
+				return candidateLanguageList;
 		
 	}
 	

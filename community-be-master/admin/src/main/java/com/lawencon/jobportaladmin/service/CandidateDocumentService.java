@@ -6,11 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,16 +14,14 @@ import com.lawencon.jobportaladmin.dao.CandidateDocumentsDao;
 import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.FileDao;
 import com.lawencon.jobportaladmin.dao.FileTypeDao;
+import com.lawencon.jobportaladmin.dto.DeleteResDto;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
-import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.candidatedocument.CandidateDocumentInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidatedocument.CandidateDocumentResDto;
-import com.lawencon.jobportaladmin.dto.candidatedocument.CandidateDocumentUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateDocuments;
 import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.FileType;
-
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -53,13 +46,13 @@ public class CandidateDocumentService {
 	public List<CandidateDocumentResDto> getCandidateDocumentByCandidate(String id) {
 		final List<CandidateDocuments> candidateDocuments = candidateDocumentDao.getCandidateDocumentsByCandidate(id);
 		final List<CandidateDocumentResDto> candidateDocumentResList = new ArrayList<>();
-		for (int i = 0; i < candidateDocuments.size(); i++) {
+		for(int i = 0 ; i < candidateDocuments.size() ; i++) {
 			final CandidateDocumentResDto document = new CandidateDocumentResDto();
-			document.setCandidateId(candidateDocuments.get(i).getCandidateUser().getId());
+			document.setCandidateId(candidateDocuments.get(i).getCandidateUser().getUserEmail());
 			document.setDocName(candidateDocuments.get(i).getDocName());
 			document.setId(candidateDocuments.get(i).getId());
 			document.setFileId(candidateDocuments.get(i).getFile().getId());
-			document.setFileTypeId(candidateDocuments.get(i).getFileType().getId());
+			document.setFileTypeId(candidateDocuments.get(i).getFileType().getTypeName());
 			candidateDocumentResList.add(document);
 		}
 		return candidateDocumentResList;
@@ -134,11 +127,11 @@ public class CandidateDocumentService {
 //		return updateResDto;
 //	}
 //
-//	public DeleteResDto deleteDCandidateDocument(String id) {
-//		candidateDocumentDao.deleteById(CandidateDocuments.class, id);
-//		final DeleteResDto deleteRes = new DeleteResDto();
-//		deleteRes.setMessage("Delete Candidate Document Success");
-//		return deleteRes;
-//	}
+	public DeleteResDto deleteDCandidateDocument(String id) {
+		candidateDocumentDao.deleteById(CandidateDocuments.class, id);
+		final DeleteResDto deleteRes = new DeleteResDto();
+		deleteRes.setMessage("Delete Candidate Document Success");
+		return deleteRes;
+	}
 
 }
