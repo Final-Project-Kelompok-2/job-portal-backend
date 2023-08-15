@@ -27,16 +27,16 @@ public class CandidateUserDao extends AbstractJpaDao{
 	
 
 		
-		final Object candidateUserObj = this.em().createQuery(sql).setParameter("candidateEmail", candidateEmail).getSingleResult();
+		final CandidateUser candidateUser = this.em().createQuery(sql,CandidateUser.class).setParameter("candidateEmail", candidateEmail).getSingleResult();
 		
-		final Object[] candidateUserArr = (Object[]) candidateUserObj;
-		CandidateUser candidateUser = null;
-		
-		if (candidateUserArr.length > 0) {
-			candidateUser = new CandidateUser();
-			candidateUser.setId(candidateUserArr[0].toString());
-			candidateUser.setVersion(Integer.valueOf(candidateUserArr[1].toString()));
-		}
+//		final Object[] candidateUserArr = (Object[]) candidateUserObj;
+//		CandidateUser candidateUser = null;
+//		
+//		if (candidateUserArr.length > 0) {
+//			candidateUser = new CandidateUser();
+//			candidateUser.setId(candidateUserArr[0].toString());
+//			candidateUser.setVersion(Integer.valueOf(candidateUserArr[1].toString()));
+//		}
 		
 		return candidateUser;
 		

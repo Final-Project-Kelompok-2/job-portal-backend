@@ -110,7 +110,7 @@ public class ApplicantService {
 
 		try {
 			em().getTransaction().begin();
-			Applicant applicant = applicantDao.getById(Applicant.class, updateData.getApplicantId());
+			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
 			updateData.setApplicantCode(applicant.getApplicantCode());
 
 			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, updateData.getStatusId());

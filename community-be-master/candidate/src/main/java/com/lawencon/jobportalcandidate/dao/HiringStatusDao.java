@@ -24,31 +24,34 @@ public class HiringStatusDao extends AbstractJpaDao  {
 			sqlb.append(" WHERE ");
 			sqlb.append(" hs.statusCode = :statusCode");
 			
-		final String sql = "SELECT "
-				+ "	hs.id, "
-				+ "	hs.statusCode, "
-				+ " hs.statusName, "
-				+ "	hs.version "
-				+ "FROM "
-				+ "	HiringStatus hs "
-				+ "WHERE "
-				+ "	hs.statusCode = :code";
-		
-		final Object hiringStatusObj = this.em().createQuery(sqlb.toString())
-				.setParameter("code", code)
+//		final String sql = "SELECT "
+//				+ "	hs.id, "
+//				+ "	hs.statusCode, "
+//				+ " hs.statusName, "
+//				+ "	hs.version "
+//				+ "FROM "
+//				+ "	HiringStatus hs "
+//				+ "WHERE "
+//				+ "	hs.statusCode = :code";
+//		
+//		final Object hiringStatusObj = this.em().createQuery(sqlb.toString())
+//				.setParameter("code", code)
+//				.getSingleResult();
+		final HiringStatus hiringStatus= this.em().createQuery(sqlb.toString(),HiringStatus.class)
+				.setParameter("statusCode", code)
 				.getSingleResult();
 		
-		final Object[] hiringStatusArr = (Object[]) hiringStatusObj;
-		HiringStatus hiringStatus = null;
-		
-		if (hiringStatusArr.length > 0) {
-			hiringStatus = new HiringStatus();
-			
-			hiringStatus.setId(hiringStatusArr[0].toString());
-			hiringStatus.setStatusCode(hiringStatusArr[1].toString());
-			hiringStatus.setStatusName(hiringStatusArr[2].toString());
-			hiringStatus.setVersion(Integer.valueOf(hiringStatusArr[3].toString()));
-		}
+//		final Object[] hiringStatusArr = (Object[]) hiringStatusObj;
+//		HiringStatus hiringStatus = null;
+//		
+//		if (hiringStatusArr.length > 0) {
+//			hiringStatus = new HiringStatus();
+//			
+//			hiringStatus.setId(hiringStatusArr[0].toString());
+//			hiringStatus.setStatusCode(hiringStatusArr[1].toString());
+//			hiringStatus.setStatusName(hiringStatusArr[2].toString());
+//			hiringStatus.setVersion(Integer.valueOf(hiringStatusArr[3].toString()));
+//		}
 		
 		return hiringStatus;
 	}
