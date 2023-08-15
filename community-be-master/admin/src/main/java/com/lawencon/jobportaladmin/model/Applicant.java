@@ -14,7 +14,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_applicant")
 public class Applicant extends BaseEntity {
 
-	@Column(name = "applicant_code", length = 5, nullable = false)
+	@Column(name = "applicant_code", length = 5, nullable = false,unique=true)
 	private String applicantCode;
 
 	@Column(name = "applied_date", nullable = false)

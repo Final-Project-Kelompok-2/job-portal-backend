@@ -2,10 +2,10 @@ package com.lawencon.jobportalcandidate.constant;
 
 public enum HiringStatus {
 
-	APPLIED("S-001", "APPLIED"),ASSESMENT("S-002", "APPLIED"),
-	INTERVIEWUSER("S-003", "APPLIED"),MCU("S-004", "APPLIED"),
-	OFFERING("S-005", "APPLIED"),HIRED("S-006", "APPLIED"),
-	REJECT("S-007", "APPLIED");
+	APPLIED("S-001", "APPLIED"),ASSESMENT("S-002", "ASSESMENT"),
+	INTERVIEWUSER("S-003", "INTERVIEWUSER"),MCU("S-004", "MCU"),
+	OFFERING("S-005", "OFFERING"),HIRED("S-006", "HIRED"),
+	REJECT("S-007", "REJECT");
 	
 	public final String statusCode;
 	public final String statusName;

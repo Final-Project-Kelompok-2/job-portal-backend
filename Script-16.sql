@@ -989,7 +989,10 @@ select * from t_file_type tft;
 select * from t_file;
 select * from t_mcu;
 select * from t_candidate_documents tcd ;
-select * from t_benefit tb ;
+select * from t_benefit tb ;	
+select * from t_question tq ;
+select * from t_question_option tqo ;
+
 
 select * from t_owned_benefit tob ;
 select * from t_mcu;
@@ -998,4 +1001,23 @@ select * from t_hiring_status ths ;
 select * from t_applicant ta ;
 
 select * from t_offering_letter tol ;
+select * from t_owned_benefit tob ;
+select * from t_job;
 
+
+
+select * from t_assigned_job_question tajq ;
+select * from t_question tq2 ;
+select * from t_question tq ;
+select * from t_hiring_status ths ;
+select * from t_hired th ;
+select * from t_candidate_status tcs ;
+select * from t_candidate_user tcu ;
+select * from t_candidate_profile tcp ;
+select * from t_person_type tpt ;
+select * from t_offering_letter tol ;
+
+select * from t_hired th ;
+select * from t_owned_benefit tob ;
+select * from t_hiring_status ths ;
+select * from t_hired;

@@ -13,33 +13,31 @@ import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.model.CandidateTrainingExp;
 
 @Repository
-public class CandidateTrainingExpDao extends AbstractJpaDao{
+public class CandidateTrainingExpDao extends AbstractJpaDao {
 
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	
+
 	public List<CandidateTrainingExp> getByCandidate(String id) {
 		final List<CandidateTrainingExp> trainings = new ArrayList<>();
-	
-			
-		final String sql = "SELECT "
-				+ "	tcte.id AS training_id, "
-				+ "	organization_name, "
-				+ "	training_name, "
-				+ "	description, "
-				+ "	start_date, "
-				+ "	end_date "
-				+ "FROM "
-				+ "	t_candidate_training_exp tcte "
-				+ "WHERE "
-				+ "	user_id = :candidate";
-		
 
-		final List<?> trainingObjs = em().createNativeQuery(sql)
-				.setParameter("candidate", id)
+		final StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ")
+		.append("	tcte.id AS training_id, ")
+		.append("	organization_name, ")
+		.append("	training_name, ")
+		.append("	description, ")
+		.append("	start_date, ")
+		.append("	end_date ")
+		.append("FROM ")
+		.append("	t_candidate_training_exp tcte ")
+		.append("WHERE ")
+		.append("	user_id = :candidate");
+
+		final List<?> trainingObjs = em().createNativeQuery(sql.toString()).setParameter("candidate", id)
 				.getResultList();
-		
+
 		if (trainingObjs.size() > 0) {
 			for (Object trainingObj : trainingObjs) {
 				final Object[] trainingArr = (Object[]) trainingObj;
@@ -50,11 +48,11 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 				training.setDescription(trainingArr[3].toString());
 				training.setStartDate(Timestamp.valueOf(trainingArr[4].toString()).toLocalDateTime());
 				training.setEndDate(Timestamp.valueOf(trainingArr[5].toString()).toLocalDateTime());
-				
+
 				trainings.add(training);
 			}
 		}
-		
+
 		return trainings;
 	}
 }

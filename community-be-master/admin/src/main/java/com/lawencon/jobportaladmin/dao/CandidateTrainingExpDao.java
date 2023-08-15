@@ -24,17 +24,17 @@ public class CandidateTrainingExpDao extends AbstractJpaDao{
 	
 			
 		final StringBuilder sql = new StringBuilder();
-				sql.append ("SELECT ");
-				sql.append ("	tcte.id AS training_id, ");
-				sql.append ("	organization_name, ");
-				sql.append ("	training_name, ");
-				sql.append ("	description, ");
-				sql.append ("	start_date, ");
-				sql.append ("	end_date ");
-				sql.append ("FROM ");
-				sql.append ("	t_candidate_training_exp tcte ");
-				sql.append ("WHERE ");
-				sql.append ("	user_id = :candidate");
+				sql.append ("SELECT ")
+				.append ("	tcte.id AS training_id, ")
+				.append ("	organization_name, ")
+				.append ("	training_name, ")
+				.append ("	description, ")
+				.append ("	start_date, ")
+				.append ("	end_date ")
+				.append ("FROM ")
+				.append ("	t_candidate_training_exp tcte ")
+				.append ("WHERE ")
+				.append ("	user_id = :candidate");
 		
 		final List<?> trainingObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)

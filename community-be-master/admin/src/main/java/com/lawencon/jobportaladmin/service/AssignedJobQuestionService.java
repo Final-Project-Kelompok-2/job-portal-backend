@@ -56,9 +56,7 @@ public class AssignedJobQuestionService {
 		try {
 			em().getTransaction().begin();
 			final AssignedJobQuestion jobQuestion = new AssignedJobQuestion();
-			final Job job = jobDao.getById(Job.class, data.getJobId());
 			final Question question = questionDao.getById(Question.class, data.getQuestionId());
-			jobQuestion.setJob(job);
 			jobQuestion.setQuestion(question);
 			jobQuestion.setCreatedBy(principalService.getAuthPrincipal());
 			final AssignedJobQuestion jobQuestionId = assignedJobQuestionDao.save(jobQuestion);

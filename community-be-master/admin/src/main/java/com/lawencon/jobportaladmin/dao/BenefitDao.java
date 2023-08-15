@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -26,7 +27,6 @@ public class BenefitDao extends AbstractJpaDao {
 		return benefitList;
 
 	}
-	
 	
 
 

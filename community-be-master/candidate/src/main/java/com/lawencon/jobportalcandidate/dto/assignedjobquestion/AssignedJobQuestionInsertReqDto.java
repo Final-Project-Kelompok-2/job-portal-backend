@@ -2,23 +2,17 @@ package com.lawencon.jobportalcandidate.dto.assignedjobquestion;
 
 public class AssignedJobQuestionInsertReqDto {
 
-	private String jobId;
-	private String questionId;
+	private String questionCode;
 
-	public String getJobId() {
-		return jobId;
+	public String getQuestionCode() {
+		return questionCode;
 	}
 
-	public void setJobId(String jobId) {
-		this.jobId = jobId;
+	public void setQuestionCode(String questionCode) {
+		this.questionCode = questionCode;
 	}
 
-	public String getQuestionId() {
-		return questionId;
-	}
 
-	public void setQuestionId(String questionId) {
-		this.questionId = questionId;
-	}
+	
 
 }
