@@ -6,11 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,15 +15,12 @@ import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.FileDao;
 import com.lawencon.jobportaladmin.dao.FileTypeDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
-import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.candidatedocument.CandidateDocumentInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidatedocument.CandidateDocumentResDto;
-import com.lawencon.jobportaladmin.dto.candidatedocument.CandidateDocumentUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateDocuments;
 import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.FileType;
-
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -39,14 +31,19 @@ public class CandidateDocumentService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
 	@Autowired
 	private CandidateDocumentsDao candidateDocumentDao;
+	
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
 	@Autowired
 	private FileTypeDao fileTypeDao;
+	
 	@Autowired
 	private FileDao fileDao;
+	
 	@Autowired
 	private PrincipalService<String> principalService;
 

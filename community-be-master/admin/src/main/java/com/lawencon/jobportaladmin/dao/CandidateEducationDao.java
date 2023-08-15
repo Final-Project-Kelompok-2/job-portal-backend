@@ -1,7 +1,6 @@
 package com.lawencon.jobportaladmin.dao;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +21,16 @@ public class CandidateEducationDao extends AbstractJpaDao{
 	}
 	
 	public List<CandidateEducation> getEducationByCandidate(String id){
-		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
 		final StringBuilder sql = new StringBuilder(); 
 				sql.append ("SELECT  ");
 				sql.append ("	tce.id, ");
 				sql.append ("	degree_name, ");
-				sql.append ("	instituition_name, ");
+				sql.append ("	institution_name, ");
 				sql.append ("	majors, ");
 				sql.append ("	cgpa, ");
 				sql.append ("	start_year, ");
 				sql.append ("	end_year, ");
-				sql.append ("	user_id, ");
+				sql.append ("	user_id ");
 				sql.append ("FROM  ");
 				sql.append ("	t_candidate_education tce  ");
 				sql.append ("INNER JOIN  ");
@@ -55,8 +53,8 @@ public class CandidateEducationDao extends AbstractJpaDao{
 				candidateEducation.setInstitutionName(educationArr[2].toString());
 				candidateEducation.setMajors(educationArr[3].toString());
 				candidateEducation.setCgpa(Float.valueOf(educationArr[4].toString()));
-				candidateEducation.setStartYear(LocalDate.parse(educationArr[5].toString(),formatter));
-				candidateEducation.setEndYear(LocalDate.parse(educationArr[6].toString(),formatter));
+				candidateEducation.setStartYear(LocalDate.parse(educationArr[5].toString()));
+				candidateEducation.setEndYear(LocalDate.parse(educationArr[6].toString()));
 				
 				final CandidateUser candidateUser = new CandidateUser();
 				candidateUser.setId(educationArr[7].toString());

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.candidate.CandidateMasterInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportaladmin.service.CandidateUserService;
 
@@ -26,7 +27,7 @@ public class CandidateUserController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<InsertResDto> insertCandidateUserFromAdmin(@RequestBody CandidateUserInsertReqDto candidate){
+	public ResponseEntity<InsertResDto> insertCandidateUserFromAdmin(@RequestBody CandidateMasterInsertReqDto candidate){
 		final InsertResDto response = candidateUserService.insertCandidateFromAdmin(candidate);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}

@@ -39,7 +39,7 @@ public class CandidateAddressService {
 	
 	public List<CandidateAddressResDto> getAllByCandidate(String id){
 		final List<CandidateAddressResDto> candidateAddressResList = new ArrayList<>();
-		final List<CandidateAddress> candidateAddress = candidateAddressDao.testStringBuilder(id);
+		final List<CandidateAddress> candidateAddress = candidateAddressDao.getByCandidateId(id);
 		for(int i = 0 ; i < candidateAddress.size() ; i++) {
 			final CandidateAddressResDto addressRes = new CandidateAddressResDto();
 			addressRes.setAddress(candidateAddress.get(i).getAddress());
@@ -108,7 +108,7 @@ public class CandidateAddressService {
 	}
 	
 	public DeleteResDto deleteCandidateAddress(String id) {
-		candidateAddressDao.deleteById(CandidateAddress.class, id);
+		candidateAddressDao.deleteById(CandidateAddress.class, "d1614260-9337-43ce-a1f0-3e86ae24ceaa");
 		final DeleteResDto deleteRes = new DeleteResDto();
 		deleteRes.setMessage("Delete Candidate Address Success");
 		return deleteRes;
