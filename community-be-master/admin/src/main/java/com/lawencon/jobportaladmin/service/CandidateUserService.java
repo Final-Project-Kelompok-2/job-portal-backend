@@ -162,7 +162,7 @@ public class CandidateUserService {
 			candidateUserDao.save(candidateUser);
 
 			// Candidate Addresses
-			if (candidateData.getCandidateAddress().size() > 0) {
+			if (candidateData.getCandidateAddress() != null) {
 				for (int i = 0; i < candidateData.getCandidateAddress().size(); i++) {
 					final CandidateAddress candidateAddress = new CandidateAddress();
 					candidateAddress.setAddress(candidateData.getCandidateAddress().get(i).getAddress());
@@ -182,7 +182,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Documents
-			if (candidateData.getCandidateDocuments().size() > 0) {
+			if (candidateData.getCandidateDocuments() != null) {
 				for (int i = 0; i < candidateData.getCandidateDocuments().size(); i++) {
 					final CandidateDocuments candidateDocument = new CandidateDocuments();
 					candidateDocument.setDocName(candidateData.getCandidateDocuments().get(i).getDocName());
@@ -208,7 +208,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Educations
-			if (candidateData.getCandidateEducations().size() > 0) {
+			if (candidateData.getCandidateEducations() != null) {
 				for (int i = 0; i < candidateData.getCandidateEducations().size(); i++) {
 					final CandidateEducation education = new CandidateEducation();
 					education.setDegreeName(candidateData.getCandidateEducations().get(i).getDegreeName());
@@ -231,7 +231,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Families
-			if (candidateData.getCandidateFamily().size() > 0) {
+			if (candidateData.getCandidateFamily() != null) {
 				for (int i = 0; i < candidateData.getCandidateFamily().size(); i++) {
 					final CandidateFamily family = new CandidateFamily();
 					family.setFullname(candidateData.getCandidateFamily().get(i).getFullname());
@@ -252,7 +252,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Languages
-			if (candidateData.getCandidateLanguage().size() > 0) {
+			if (candidateData.getCandidateLanguage() != null) {
 				for (int i = 0; i < candidateData.getCandidateLanguage().size(); i++) {
 					final CandidateLanguage candidateLanguage = new CandidateLanguage();
 					candidateLanguage.setLanguageName(candidateData.getCandidateLanguage().get(i).getLanguageName());
@@ -270,7 +270,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Projects
-			if (candidateData.getCandidateProjectExp().size() > 0) {
+			if (candidateData.getCandidateProjectExp() != null) {
 				for (int i = 0; i < candidateData.getCandidateProjectExp().size(); i++) {
 					final CandidateProjectExp projectExp = new CandidateProjectExp();
 					projectExp.setProjectName(candidateData.getCandidateProjectExp().get(i).getProjectName());
@@ -293,7 +293,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate References
-			if (candidateData.getCandidateReferences().size() > 0) {
+			if (candidateData.getCandidateReferences() != null) {
 				for (int i = 0; i < candidateData.getCandidateReferences().size(); i++) {
 					final CandidateReferences reference = new CandidateReferences();
 					reference.setFullName(candidateData.getCandidateReferences().get(i).getFullname());
@@ -314,7 +314,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Skills
-			if (candidateData.getCandidateSkill().size() > 0) {
+			if (candidateData.getCandidateSkill() != null) {
 				for (int i = 0; i < candidateData.getCandidateSkill().size(); i++) {
 					final CandidateSkill skill = new CandidateSkill();
 					skill.setSkillName(candidateData.getCandidateSkill().get(i).getSkillName());
@@ -329,7 +329,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Training
-			if (candidateData.getCandidateTrainingExp().size() > 0) {
+			if (candidateData.getCandidateTrainingExp() != null) {
 				for (int i = 0; i < candidateData.getCandidateTrainingExp().size(); i++) {
 					final CandidateTrainingExp trainingExp = new CandidateTrainingExp();
 					trainingExp.setCreatedBy(principalService.getAuthPrincipal());
@@ -355,7 +355,7 @@ public class CandidateUserService {
 			}
 
 			// Candidate Works
-			if (candidateData.getCandidateWorkExp().size() > 0) {
+			if (candidateData.getCandidateWorkExp() != null) {
 				for (int i = 0; i < candidateData.getCandidateWorkExp().size(); i++) {
 					final CandidateWorkExp work = new CandidateWorkExp();
 					work.setPositionName(candidateData.getCandidateWorkExp().get(i).getPositionName());
