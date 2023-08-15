@@ -1,6 +1,6 @@
 package com.lawencon.jobportaladmin.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,23 +12,22 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "t_candidate_project_exp")
-public class CandidateProjectExp extends BaseEntity{
-	@Column(name = "project_name", length=30 , nullable=false)
+public class CandidateProjectExp extends BaseEntity {
+	@Column(name = "project_name", length = 30, nullable = false)
 	private String projectName;
-	
-	@Column(name = "project_url" , nullable=true)
+
+	@Column(name = "project_url", nullable = true)
 	private String projectUrl;
-	
-	@Column(name = "description", nullable=false)
+
+	@Column(name = "description", nullable = false)
 	private String description;
-	
-	@Column(name = "start_date" , nullable=false)
-	private LocalDateTime startDate;
-	
-	
-	@Column(name ="end_date",nullable=false)
-	private LocalDateTime endDate;
-	
+
+	@Column(name = "start_date", nullable = false)
+	private LocalDate startDate;
+
+	@Column(name = "end_date", nullable = false)
+	private LocalDate endDate;
+
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
@@ -57,19 +56,19 @@ public class CandidateProjectExp extends BaseEntity{
 		this.description = description;
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
@@ -80,6 +79,5 @@ public class CandidateProjectExp extends BaseEntity{
 	public void setCandidateUser(CandidateUser candidateUser) {
 		this.candidateUser = candidateUser;
 	}
-	
-	
+
 }

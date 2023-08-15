@@ -1,6 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +63,8 @@ public class CandidateTrainingExpService {
 			trainingExp.setCreatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());
-			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
-			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
+			trainingExp.setStartDate(LocalDate.parse(data.getStartDate().toString()));
+			trainingExp.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 			trainingExp.setDescription(data.getDescription());
 			final CandidateUser candidateUser = candidateUserDao.getByEmail(data.getEmail());
 			trainingExp.setCandidateUser(candidateUser);
@@ -91,8 +91,8 @@ public class CandidateTrainingExpService {
 			trainingExp.setUpdatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());
-			trainingExp.setStartDate(LocalDateTime.parse(data.getStartDate().toString()));
-			trainingExp.setEndDate(LocalDateTime.parse(data.getEndDate().toString()));
+			trainingExp.setStartDate(LocalDate.parse(data.getStartDate().toString()));
+			trainingExp.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
 					principalService.getAuthPrincipal());
