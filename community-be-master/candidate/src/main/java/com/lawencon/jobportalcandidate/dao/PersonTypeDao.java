@@ -1,5 +1,7 @@
 package com.lawencon.jobportalcandidate.dao;
 
+import java.sql.Timestamp;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -38,12 +40,10 @@ public class PersonTypeDao extends AbstractJpaDao {
 				+ "WHERE "
 				+ "	pt.typeCode = :code";
 
-
 //		final PersonType personType = this.em().createQuery(sqlb.toString(), PersonType.class)
 //				.setParameter("code", code)
 //				.getSingleResult();
 
-		
 		return personType;
 	}
 }

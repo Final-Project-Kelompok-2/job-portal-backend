@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,10 +20,10 @@ public class CandidateAddressDao extends AbstractJpaDao{
 		return ConnHandler.getManager();
 	}
 	
-	public CandidateAddress getByCandidateId(String id){
+	public List<CandidateAddress> getByCandidateId(String id){
 		final StringBuilder sql = new StringBuilder(); 
-				sql.append("SELECT  ");
-				sql.append( "tca.id, ");
+				sql.append ("SELECT  ");
+				sql.append ( "tca.id, ");
 				sql.append ("address, ");
 				sql.append ("residence_type, ");
 				sql.append ("country, ");
@@ -50,6 +51,7 @@ public class CandidateAddressDao extends AbstractJpaDao{
 		
 		final Object[] candidateAddressArr = (Object[]) candidateAddressObjs;
 
+		final List<CandidateAddress> addresses = new ArrayList<>();
 		CandidateAddress candidateAddress = null;
 		if(candidateAddressArr.length > 0) {
 			candidateAddress = new CandidateAddress();
@@ -68,30 +70,13 @@ public class CandidateAddressDao extends AbstractJpaDao{
 			candidateUser.setId(candidateAddressArr[7].toString());
 			candidateUser.setCandidateProfile(candidateProfile);
 			candidateAddress.setCandidateUser(candidateUser);
+			
+			addresses.add(candidateAddress);
 		}
 		
 		
-		return candidateAddress;
-
-		
+		return addresses;
 		
 	}
-	
-	
-	public List<CandidateAddress> testStringBuilder(String id){
-		final StringBuilder sql = new StringBuilder();
-		sql.append("SELECT ");
-		sql.append("ca "); 
-		sql.append("FROM "); 
-		sql.append("CandidateAddress ca ");
-		sql.append("INNER JOIN CandidateUser cu ");
-		sql.append("WHERE ca.candidateUser = : id");
-		
-		final List<CandidateAddress> addressList = em().createQuery(sql.toString(),CandidateAddress.class)
-				.setParameter("id", id)
-				.getResultList();
-		return addressList;
-	}
-	
 	
 }

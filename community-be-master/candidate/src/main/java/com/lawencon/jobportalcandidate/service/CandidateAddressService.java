@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -140,9 +142,36 @@ public class CandidateAddressService {
 	}
 
 	public DeleteResDto deleteCandidateAddress(String id) {
-		candidateAddressDao.deleteById(CandidateAddress.class, id);
 		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Address Success");
+		try {
+			em().getTransaction().begin();
+			candidateAddressDao.deleteById(CandidateAddress.class, id);
+			
+			final String candidateAddressAPI = "http://localhost:8080/candidate-address/";
+
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateAddress> httpEntity = new HttpEntity<CandidateAddress>(headers);
+
+			final ResponseEntity<CandidateAddress> responseAdmin = restTemplate.exchange(
+					candidateAddressAPI+id, HttpMethod.DELETE, httpEntity, CandidateAddress.class);
+
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				deleteRes.setMessage("Delete Candidate Address Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+			}
+						
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
 		return deleteRes;
 	}
 }

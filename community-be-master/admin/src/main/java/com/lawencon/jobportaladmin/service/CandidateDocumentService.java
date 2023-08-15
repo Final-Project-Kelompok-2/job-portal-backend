@@ -32,14 +32,19 @@ public class CandidateDocumentService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
 	@Autowired
 	private CandidateDocumentsDao candidateDocumentDao;
+	
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
 	@Autowired
 	private FileTypeDao fileTypeDao;
+	
 	@Autowired
 	private FileDao fileDao;
+	
 	@Autowired
 	private PrincipalService<String> principalService;
 
