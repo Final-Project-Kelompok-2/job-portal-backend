@@ -51,7 +51,7 @@ public class JobDao extends AbstractJpaDao{
 			sqlb.append("INNER JOIN ");
 			sqlb.append(" t_user tu ON tu.id = tj.hr_id ");
 			sqlb.append("INNER JOIN ");
-			sqlb.append(" Wt_user tu2 ON tu2.id = tj.pic_id ");
+			sqlb.append(" t_user tu2 ON tu2.id = tj.pic_id ");
 			sqlb.append("WHERE ");
 			sqlb.append(" company_code = :companycode");
 			
@@ -81,7 +81,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	company_code = :companycode";
 			
-		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
+		final List<?> jobObjs = em().createNativeQuery(sql)
 				.setParameter("companycode", code)
 				.getResultList();
 		
@@ -95,6 +95,7 @@ public class JobDao extends AbstractJpaDao{
 				final Company company = new Company();
 				company.setCompanyName(jobArr[2].toString());
 				company.setAddress(jobArr[3].toString());
+				job.setCompany(company);
 				
 				job.setStartDate(LocalDate.parse(jobArr[4].toString(), formatter));
 				job.setEndDate(LocalDate.parse(jobArr[5].toString(), formatter));
