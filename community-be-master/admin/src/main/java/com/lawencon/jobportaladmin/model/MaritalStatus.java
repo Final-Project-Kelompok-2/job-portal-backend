@@ -10,7 +10,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_marital_status")
 public class MaritalStatus extends BaseEntity {
 
-	@Column(name = "marital_code", length = 5, nullable = false)
+	@Column(name = "marital_code", length = 5, nullable = false,unique = true)
 	private String maritalCode;
 
 	@Column(name = "marital_name", length = 20, nullable = false)

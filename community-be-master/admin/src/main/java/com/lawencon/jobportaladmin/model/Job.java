@@ -14,7 +14,7 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_job")
 public class Job extends BaseEntity{
 
-	@Column(name = "job_code",length = 5, nullable = false)
+	@Column(name = "job_code",length = 5, nullable = false,unique = true)
 	private String jobCode;
 	
 	@Column(name = "job_name",length = 30, nullable = false)

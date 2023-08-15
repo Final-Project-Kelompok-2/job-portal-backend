@@ -6,10 +6,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+
 import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "t_candidate_documents")
+
 public class CandidateDocuments extends BaseEntity {
 
 	@Column(name = "doc_name", length = 30, nullable = false)

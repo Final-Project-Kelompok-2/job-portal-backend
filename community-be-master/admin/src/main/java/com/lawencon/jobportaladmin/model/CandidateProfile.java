@@ -7,11 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_candidate_profile")
+@Table(name = "t_candidate_profile",uniqueConstraints = {@UniqueConstraint(name="nikAndPhoneNumber",columnNames= {"nik","phone_number"})})
 public class CandidateProfile extends BaseEntity {
 
 	@Column(name = "salutation", length = 4, nullable = false)
@@ -35,7 +36,7 @@ public class CandidateProfile extends BaseEntity {
 	@Column(name = "mobile_number", length = 20, nullable = false)
 	private String mobileNumber;
 
-	@Column(name = "nik", length = 50, nullable = false)
+	@Column(name = "nik", length = 50, nullable = false,unique = true)
 	private String nik;
 
 	@Column(name = "birth_date", nullable = false)

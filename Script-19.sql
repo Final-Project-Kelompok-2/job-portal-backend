@@ -168,6 +168,8 @@ ALTER TABLE t_candidate_profile ADD CONSTRAINT candidate_status_fk_t_candidate_p
 	REFERENCES t_candidate_status(id);
 ALTER TABLE t_candidate_profile ADD CONSTRAINT nik_bk
 	UNIQUE (nik);
+ALTER TABLE t_candidate_profile ADD CONSTRAINT nik_bk
+	UNIQUE (nik,phone_number);
 
 CREATE TABLE t_candidate_user ( 
 	id VARCHAR(36) NOT NULL,
@@ -767,6 +769,7 @@ ALTER TABLE t_assesment ADD CONSTRAINT t_assesment_pk PRIMARY KEY(id);
 ALTER TABLE t_assesment ADD CONSTRAINT t_applicant_fk 
 FOREIGN KEY(applicant_id)
 REFERENCES t_applicant(id);
+ALTER TABLE t_assesment ADD CONSTRAINT t_assesment_ck UNIQUE (assesment_date,assesment_location);
 
 
 CREATE TABLE t_interview(
@@ -891,6 +894,27 @@ CREATE TABLE t_blacklist(
 ALTER TABLE t_blacklist  ADD CONSTRAINT t_blacklist_pk PRIMARY KEY(id);
 ALTER TABLE t_blacklist ADD CONSTRAINT email_bk UNIQUE(email);
 
+CREATE TABLE t_employee(
+	id varchar(36) NOT NULL,
+	employee_code varchar(5) NOT NULL,
+	candidate_id varchar(36) NOT NULL,
+	job_id varchar(36) NOT NULL,
+	created_by varchar(36) NOT NULL,
+	created_at timestamp NOT NULL,
+	updated_by varchar(36),
+	updated_at timestamp,
+	is_active boolean NOT NULL,
+	ver int NOT NULL
+);
+ALTER TABLE t_employee ADD CONSTRAINT employee_pk PRIMARY KEY(id);
+ALTER TABLE t_employee ADD CONSTRAINT employee_bk UNIQUE (employee_code);
+ALTER TABLE t_employee ADD CONSTRAINT candidate_fk
+	FOREIGN KEY(candidate_id)
+	REFERENCES t_candidate_user(id);
+ALTER TABLE t_employee ADD CONSTRAINT job_fk
+	FOREIGN KEY(job_id)
+	REFERENCES t_job(id);
+
 INSERT INTO t_role (id,role_code,role_name,created_by,created_at,is_active,ver)
 VALUES
 ( uuid_generate_v4(),'R-001','ADMIN','0',NOW(),TRUE,1),
@@ -935,7 +959,7 @@ VALUES
 SELECT * FROM t_file tf;
 select * from t_user tu;
 SELECT * FROM t_role;
-
+select * from t_job;
 INSERT INTO t_employment_type (id,employment_type_code,employment_type_name,created_by,created_at,is_active,ver)
 VALUES
 ( uuid_generate_v4(),'ET-01','INTERN',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
@@ -970,3 +994,17 @@ insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_
 (uuid_generate_v4(),'S-005','OFFERING',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-006','HIRED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+select * from t_candidate_user tcu ;
+select * from t_role tr ;
+select * from t_job tj ;
+select * from t_user tu ;
+select * from _type tpt ;
+select * from t_file_type tft ;
+select * from t_candidate_documents tcd ;
+select * from t_candidate_family tcf ;
+select * from t_candidate_language tcl ;
+select * from t_company tc ;
+select * from t_candidate_references tcr ;
+select * from t_candidate_training_exp tcte ;
+select * from t_job tj ;
+--select * from 

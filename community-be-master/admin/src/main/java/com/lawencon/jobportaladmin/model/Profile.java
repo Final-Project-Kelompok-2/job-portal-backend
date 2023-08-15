@@ -19,7 +19,7 @@ public class Profile extends BaseEntity{
 	@JoinColumn(name ="photo_id")
 	private File photo;
 	
-	@Column(name ="phone_number",  length = 13, nullable = true)
+	@Column(name ="phone_number",  length = 13, nullable = true,unique = true)
 	private String phoneNumber;
 	
 	@Column(name ="address",  nullable = true)

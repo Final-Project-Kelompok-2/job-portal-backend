@@ -53,15 +53,15 @@ public class CandidateDocumentService {
 	private PrincipalService<String> principalService;
 	
 	public List<CandidateDocumentResDto> getCandidateDocumentByCandidate(String id){
-		final List<CandidateDocuments> candidateDocuments = candidateDocumentDao.getByCandidateEmail(id);
+		final List<CandidateDocuments> candidateDocuments = candidateDocumentDao.getCandidateDocumentsByCandidate(id);
 		final List<CandidateDocumentResDto> candidateDocumentResList = new ArrayList<>();
 		for(int i = 0 ; i < candidateDocuments.size() ; i++) {
 			final CandidateDocumentResDto document = new CandidateDocumentResDto();
-			document.setCandidateId(candidateDocuments.get(i).getCandidateUser().getId());
+			document.setCandidateId(candidateDocuments.get(i).getCandidateUser().getUserEmail());
 			document.setDocName(candidateDocuments.get(i).getDocName());
 			document.setId(candidateDocuments.get(i).getId());
 			document.setFileId(candidateDocuments.get(i).getFile().getId());
-			document.setFileTypeId(candidateDocuments.get(i).getFileType().getId());
+			document.setFileTypeId(candidateDocuments.get(i).getFileType().getTypeName());
 			candidateDocumentResList.add(document);
 		}
 		return candidateDocumentResList;
@@ -145,11 +145,31 @@ public class CandidateDocumentService {
 		return updateResDto;
 	}
 
-	public DeleteResDto deleteDCandidateDocument(String id) {
-		candidateDocumentDao.deleteById(CandidateDocuments.class, id);
-		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Document Success");
-		return deleteRes;
+	public DeleteResDto deleteCandidateDocument(String id) {
+		try {
+			em().getTransaction().begin();
+			candidateDocumentDao.deleteById(CandidateDocuments.class, id);
+			final DeleteResDto deleteRes = new DeleteResDto();
+			deleteRes.setMessage("Delete Candidate Document Success");
+			final String candidateDocumentApi = "http://localhost:8080/candidate-documents/"+id;
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final RequestEntity<Void>documentInsert = RequestEntity.delete(candidateDocumentApi).headers(headers).build();
+			final ResponseEntity<DeleteResDto> responseAdmin = restTemplate.exchange(documentInsert, DeleteResDto.class);
+			if(responseAdmin.getStatusCode().equals(HttpStatus.OK)){
+			
+				deleteRes.setMessage("Delete Candidate Document Success");
+				em().getTransaction().commit();
+			}
+			return deleteRes;
+		}catch(Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 
 }

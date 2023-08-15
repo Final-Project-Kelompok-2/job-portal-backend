@@ -11,7 +11,7 @@ import com.lawencon.base.BaseEntity;
 public class HiringStatus extends BaseEntity{
 
 	
-	@Column(name = "status_code",length = 5, nullable = false)
+	@Column(name = "status_code",length = 5, nullable = false,unique = true)
 	private String statusCode;
 	
 	@Column(name = "status_name",length = 20, nullable = false)
