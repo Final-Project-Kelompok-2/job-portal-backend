@@ -51,32 +51,6 @@ public class EmployeeService {
 		}
 		return employeeRes;
 	}
-	
-	public InsertResDto insertEmployee(EmployeeInsertReqDto data) {
-		InsertResDto insertRes = null;
-		try {
-			em().getTransaction().begin();
-			final Employee employee = new Employee();
-			final CandidateUser candidate = candidateDao.getById(CandidateUser.class, data.getCandidateId()); 
-			employee.setCandidate(candidate);
-			final Job job = jobDao.getById(Job.class, data.getJobId());
-			employee.setJob(job);
-			employee.setEmployeeCode(GenerateCode.generateCode());
-			employee.setCreatedBy(principalService.getAuthPrincipal());
-			final Employee employeeId = employeeDao.save(employee);
-			insertRes = new InsertResDto();
-			insertRes.setId(employeeId.getId());
-			insertRes.setMessage("Employee Insert Success");
-			
-			em().getTransaction().commit();
-			
-		}catch(Exception e) {
-			em().getTransaction().rollback();
-			e.printStackTrace();
-	
-		}
-		return insertRes;
-	}
 
 	
 	

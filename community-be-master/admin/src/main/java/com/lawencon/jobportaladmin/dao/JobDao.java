@@ -129,6 +129,7 @@ public class JobDao extends AbstractJpaDao{
 		final List<Job> jobs = new ArrayList<>();
 		
 		final StringBuilder sqlb = new StringBuilder();
+<<<<<<< HEAD
 			sqlb.append("SELECT ")
 			.append(" tj.id AS job_id, ")
 			.append(" job_name, ")
@@ -150,6 +151,29 @@ public class JobDao extends AbstractJpaDao{
 			.append(" t_employment_type tet ON tet.id = tj.employment_type_id ")
 			.append("WHERE ")
 			.append(" tj.hr_id = :id");
+=======
+			sqlb.append("SELECT ");
+			sqlb.append(" tj.id AS job_id, ");
+			sqlb.append(" tj.job_name, ");
+			sqlb.append(" tc.company_name, ");
+			sqlb.append(" tj.address, ");
+			sqlb.append(" tj.start_date, ");
+			sqlb.append(" tj.end_date, ");
+			sqlb.append(" tj.hr_id, ");
+			sqlb.append(" tj.pic_id, ");
+			sqlb.append(" tj.expected_salary_min, ");
+			sqlb.append(" tj.expected_salary_max, ");
+			sqlb.append(" tj.employment_type_name, ");
+			sqlb.append(" tj.job_picture_id ");
+			sqlb.append("FROM ");
+			sqlb.append(" t_job tj ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
+			sqlb.append("INNER JOIN ");
+			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
+			sqlb.append("WHERE ");
+			sqlb.append(" tj.hr_id = :id");
+>>>>>>> b5519995a3735acc35601bc251620f4dc5cd39b6
 		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"
@@ -171,7 +195,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	tj.hr_id = :id";
 
-		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
+		final List<?> jobObjs = em().createNativeQuery(sql)
 				.setParameter("id", id)
 				.getResultList();
 		
@@ -413,7 +437,7 @@ public class JobDao extends AbstractJpaDao{
 			sqlb.append("SELECT ");
 			sqlb.append(" j ");
 			sqlb.append("FROM ");
-			sqlb.append(" Job j");
+			sqlb.append(" Job j ");
 			sqlb.append("WHERE ");
 			sqlb.append(" j.jobCode = :jobCode");
 		
@@ -425,20 +449,8 @@ public class JobDao extends AbstractJpaDao{
 				+ " FROM Job j"
 				+ " WHERE j.jobCode = :jobCode";
 		
-		final Object jobObj = this.em().createQuery(sqlb.toString()).setParameter("jobCode", jobCode).getSingleResult();
-		
-		final Object[] jobArr = (Object[]) jobObj;
-		Job job = null;
-		
-		if (jobArr.length > 0) {
-			job = new Job();
+		final Job job = this.em().createQuery(sqlb.toString(),Job.class).setParameter("jobCode", jobCode).getSingleResult();
 	
-			job.setId(jobArr[0].toString());
-			job.setJobName(jobArr[1].toString());
-			job.setJobCode(jobArr[2].toString());
-			job.setVersion(Integer.valueOf(jobArr[3].toString()));
-		}
-		
 		return job;
 	}
 }

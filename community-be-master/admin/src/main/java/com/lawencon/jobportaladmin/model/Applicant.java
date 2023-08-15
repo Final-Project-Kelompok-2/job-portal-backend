@@ -72,4 +72,6 @@ public class Applicant extends BaseEntity {
 		this.candidate = candidate;
 	}
 
+
+
 }

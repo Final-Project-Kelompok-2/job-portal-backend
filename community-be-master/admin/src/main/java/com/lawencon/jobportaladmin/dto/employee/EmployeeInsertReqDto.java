@@ -1,23 +1,15 @@
 package com.lawencon.jobportaladmin.dto.employee;
 
 public class EmployeeInsertReqDto {
-	private String jobId;
-	private String candidateId;
+	private String applicantId;
 
-	public String getJobId() {
-		return jobId;
+	public String getApplicantId() {
+		return applicantId;
 	}
 
-	public void setJobId(String jobId) {
-		this.jobId = jobId;
+	public void setApplicantId(String applicantId) {
+		this.applicantId = applicantId;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 
 }

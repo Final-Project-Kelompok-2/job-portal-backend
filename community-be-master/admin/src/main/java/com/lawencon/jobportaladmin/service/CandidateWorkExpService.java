@@ -1,6 +1,5 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpResDto;
 import com.lawencon.jobportaladmin.dto.candidateworkexp.CandidateWorkExpUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.CandidateWorkExp;
+import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -71,8 +71,8 @@ public class CandidateWorkExpService {
 			work.setResponsibility(data.getResponsibility());
 			work.setReasonLeave(data.getReasonLeave());
 			work.setLastSalary(data.getLastSalary());
-			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
-			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
+			work.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			work.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 
 			final CandidateUser candidate = candidateUserDao.getByEmail(data.getEmail());
 			work.setCandidateUser(candidate);
@@ -105,8 +105,8 @@ public class CandidateWorkExpService {
 			work.setResponsibility(data.getResponsibility());
 			work.setReasonLeave(data.getReasonLeave());
 			work.setLastSalary(data.getLastSalary());
-			work.setStartDate(LocalDate.parse(data.getStartDate().toString()));
-			work.setEndDate(LocalDate.parse(data.getEndDate().toString()));
+			work.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			work.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			work.setCandidateUser(candidate);

@@ -40,6 +40,7 @@ import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.OwnedBenefit;
 import com.lawencon.jobportaladmin.model.Question;
 import com.lawencon.jobportaladmin.model.User;
+import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -61,34 +62,33 @@ public class JobService {
 
 	@Autowired
 	private FileDao fileDao;
-	
+
 	@Autowired
 	private PrincipalService<String> principalService;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	private BenefitDao benefitDao;
-	
+
 	@Autowired
 	private OwnedBenefitDao ownedBenefitDao;
-	
+
 	@Autowired
 	private QuestionDao questionDao;
-	
+
 	@Autowired
 	private AssignedJobQuestionDao assignedJobQuestionDao;
-	
-	
+
 	public List<JobResDto> getAllJobs() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getAll(Job.class);
-		
-		for (int i=0; i<jobs.size(); i++) {
+
+		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
 			job.setJobName(jobs.get(i).getJobName());
@@ -101,13 +101,13 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			
+
 			jobsDto.add(job);
 		}
-		
+
 		return jobsDto;
 	}
-	
+
 	public List<JobResDto> getByPrincipal() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByPerson(principalService.getAuthPrincipal());
@@ -131,60 +131,64 @@ public class JobService {
 	}
 
 	public InsertResDto insertJob(JobInsertReqDto jobDto) {
-		InsertResDto result = null;
+
+		InsertResDto result = new InsertResDto();
+
+
 		try {
 			em().getTransaction().begin();
 			Job job = new Job();
 			job.setJobName(jobDto.getJobName());
-			
+
 			final Company company = companyDao.getById(Company.class, jobDto.getCompanyId());
 			job.setCompany(company);
 			jobDto.setCompanyCode(company.getCompanyCode());
-			
-			job.setStartDate(LocalDate.parse(jobDto.getStartDate()));
-			job.setEndDate(LocalDate.parse(jobDto.getEndDate()));
+
+			job.setStartDate(DateUtil.parseStringToLocalDate(jobDto.getStartDate()));
+			job.setEndDate(DateUtil.parseStringToLocalDate(jobDto.getEndDate()));
 			job.setDescription(jobDto.getDescription());
 			job.setJobCode(GenerateCode.generateCode());
-			
+
 			jobDto.setJobCode(job.getJobCode());
-			
+
 			final User hr = userDao.getById(User.class, jobDto.getHrId());
 			final User pic = userDao.getById(User.class, jobDto.getPicId());
 			job.setHr(hr);
 			job.setPic(pic);
 			job.setExpectedSalaryMin(jobDto.getExpectedSalaryMin());
 			job.setExpectedSalaryMax(jobDto.getExpectedSalaryMax());
-			
-			
 
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);
 			jobDto.setEmploymentTypeCode(type.getEmploymentTypeCode());
 
-			 File file = new File();
+			File file = new File();
 			file.setFileName(jobDto.getFile());
 			file.setFileExtension(jobDto.getFileExtension());
-			file.setCreatedBy(principalService.getAuthPrincipal());
 			file = fileDao.save(file);
 			job.setJobPicture(file);
-			job.setCreatedBy(principalService.getAuthPrincipal());
 			job = jobDao.save(job);
-			
-			if(jobDto.getBenefits() != null) {
-				for(int i =0;i<jobDto.getBenefits().size();i++) {
+
+
+			if (jobDto.getBenefits() != null) {
+				for (int i = 0; i < jobDto.getBenefits().size(); i++) {
+
 					OwnedBenefit ownedBenefit = new OwnedBenefit();
-					final Benefit benefit = benefitDao.getById(Benefit.class, jobDto.getBenefits().get(i).getBenefitId());
+					final Benefit benefit = benefitDao.getById(Benefit.class,
+							jobDto.getBenefits().get(i).getBenefitId());
 					ownedBenefit.setBenefit(benefit);
 					ownedBenefit.setJob(job);
 					ownedBenefitDao.save(ownedBenefit);
 				}
 			}
-			
 
-			if(jobDto.getQuestions()!= null) {
-				for(int i =0;i<jobDto.getQuestions().size();i++) {
+
+			if (jobDto.getQuestions() !=null) {
+				for (int i = 0; i < jobDto.getQuestions().size(); i++) {
+
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
-					final Question question = questionDao.getById(Question.class, jobDto.getQuestions().get(i).getQuestionId());
+					final Question question = questionDao.getById(Question.class,
+							jobDto.getQuestions().get(i).getQuestionId());
 					assignQuestion.setQuestion(question);
 					assignQuestion.setJob(job);
 					jobDto.getQuestions().get(i).setQuestionCode(question.getQuestionCode());
@@ -193,27 +197,26 @@ public class JobService {
 			}
 
 			final String jobInsertCandidateAPI = "http://localhost:8081/jobs";
-			
+
 			final HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.APPLICATION_JSON);
-		    headers.setBearerAuth(JwtConfig.get());
-			
-			final RequestEntity<JobInsertReqDto> jobInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers).body(jobDto);
-			
-			final ResponseEntity<InsertResDto> responseCandidate  =restTemplate.exchange(jobInsert,InsertResDto.class);
-		
-			if(responseCandidate.getStatusCode().equals(HttpStatus.CREATED)){
-				result = new InsertResDto();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+
+			final RequestEntity<JobInsertReqDto> jobInsert = RequestEntity.post(jobInsertCandidateAPI).headers(headers)
+					.body(jobDto);
+
+			final ResponseEntity<InsertResDto> responseCandidate = restTemplate.exchange(jobInsert, InsertResDto.class);
+
+			if (responseCandidate.getStatusCode().equals(HttpStatus.CREATED)) {
 				result.setId(job.getId());
 				result.setMessage("New job vacancy added!");
 				em().getTransaction().commit();
-			}
-			else {
+			} else {
 				em().getTransaction().rollback();
 				throw new RuntimeException("Insert Failed");
-				
+
 			}
-	
+
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
@@ -242,7 +245,7 @@ public class JobService {
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);
 
-			if (jobDto.getFile() != null) {				
+			if (jobDto.getFile() != null) {
 				final File file = new File();
 				file.setFileName(jobDto.getFile());
 				file.setFileExtension(jobDto.getFileExtension());
@@ -251,27 +254,27 @@ public class JobService {
 				job.setJobPicture(file);
 				fileDao.deleteById(File.class, jobDto.getFileId());
 			}
-			
+
 			jobDao.saveAndFlush(job);
-			
+
 			result = new UpdateResDto();
 			result = new UpdateResDto();
 			result.setVersion(job.getVersion());
 			result.setMessage("New job vacancy added!");
-			
+
 			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 		}
-		
+
 		return result;
 	}
 
 	public List<JobResDto> getByHr(String id) {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByAssignedHR(id);
-		
-		for (int i=0; i<jobs.size(); i++) {
+
+		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
 			job.setJobName(jobs.get(i).getJobName());
@@ -284,18 +287,18 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			
+
 			jobsDto.add(job);
 		}
-		
+
 		return jobsDto;
 	}
-	
+
 	public List<JobResDto> getByPic(String id) {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByAssignedPIC(id);
-		
-		for (int i=0; i<jobs.size(); i++) {
+
+		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
 			job.setJobName(jobs.get(i).getJobName());
@@ -308,10 +311,10 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			
+
 			jobsDto.add(job);
 		}
-		
+
 		return jobsDto;
 	}
 }

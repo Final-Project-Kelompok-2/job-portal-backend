@@ -3,6 +3,8 @@ package com.lawencon.jobportaladmin.dto.hired;
 public class HiredInsertReqDto {
 
 	private String applicantId;
+	private String applicantCode;
+	private String statusCode;
 	private String startDate;
 	private String endDate;
 
@@ -28,6 +30,22 @@ public class HiredInsertReqDto {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getApplicantCode() {
+		return applicantCode;
+	}
+
+	public void setApplicantCode(String applicantCode) {
+		this.applicantCode = applicantCode;
+	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
 
 }

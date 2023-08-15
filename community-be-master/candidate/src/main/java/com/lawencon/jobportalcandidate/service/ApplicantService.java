@@ -107,7 +107,7 @@ public class ApplicantService {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
 
-			final RequestEntity<ApplicantInsertReqDto> applicantInsert = RequestEntity.patch(applicantInsertAdminAPI)
+			final RequestEntity<ApplicantInsertReqDto> applicantInsert = RequestEntity.post(applicantInsertAdminAPI)
 					.headers(headers).body(data);
 
 			final ResponseEntity<InsertResDto> responseAdmin = restTemplate.exchange(applicantInsert,
@@ -136,9 +136,12 @@ public class ApplicantService {
 
 		try {
 			em().getTransaction().begin();
+			System.out.println(updateData.getApplicantCode()+ "======================");
+			System.out.println(updateData.getStatusCode() + "======================");
+			
 			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
-
+			
 			applicant.setStatus(hiringStatus);
 			applicant = applicantDao.saveAndFlush(applicant);
 
@@ -148,7 +151,6 @@ public class ApplicantService {
 			em().getTransaction().commit();
 			
 		} catch (Exception e) {
-
 			em().getTransaction().rollback();
 			e.printStackTrace();
 

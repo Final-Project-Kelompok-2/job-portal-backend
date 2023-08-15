@@ -1,6 +1,5 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import com.lawencon.jobportaladmin.dto.candidatetrainingexp.CandidateTrainingExp
 import com.lawencon.jobportaladmin.dto.candidatetrainingexp.CandidateTrainingExpUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateTrainingExp;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -27,7 +27,6 @@ public class CandidateTrainingExpService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
@@ -63,8 +62,8 @@ public class CandidateTrainingExpService {
 			trainingExp.setCreatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());
-			trainingExp.setStartDate(LocalDate.parse(data.getStartDate().toString()));
-			trainingExp.setEndDate(LocalDate.parse(data.getEndDate().toString()));
+			trainingExp.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			trainingExp.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 			trainingExp.setDescription(data.getDescription());
 			final CandidateUser candidateUser = candidateUserDao.getByEmail(data.getEmail());
 			trainingExp.setCandidateUser(candidateUser);
@@ -91,8 +90,8 @@ public class CandidateTrainingExpService {
 			trainingExp.setUpdatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());
-			trainingExp.setStartDate(LocalDate.parse(data.getStartDate().toString()));
-			trainingExp.setEndDate(LocalDate.parse(data.getEndDate().toString()));
+			trainingExp.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
+			trainingExp.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
 					principalService.getAuthPrincipal());

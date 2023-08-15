@@ -19,58 +19,23 @@ import com.lawencon.jobportalcandidate.model.Job;
 
 @Repository
 public class ApplicantDao extends AbstractJpaDao{
+	
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
 	
 	public Applicant getByCode(String code) {
-		final String sql = "SELECT "
-				+ "	a.id, "
-				+ "	a.applicantCode, "
-				+ "	a.appliedDate,  "
-				+ " a.job.id, "
-				+ "	a.status.id, "
-				+ " a.candidate.id, "
-				+ "	a.createdBy, "
-				+ "	a.createdAt, "
-				+ "	a.isActive, "
-				+ "	a.version "
-				+ "FROM "
-				+ "	Applicant a "
-				+ "WHERE "
-				+ "	a.applicantCode = :code";
+		final String sql = "SELECT a FROM Applicant a WHERE applicantCode = :code ";
 		
-		final Object applicantObj = this.em().createQuery(sql).setParameter("code", code).getSingleResult();
+//		final String sql = "SELECT a FROM Applicant a WHERE applicantCode = 'Y8RI6'";
 		
-		final Object[] applicantArr = (Object[]) applicantObj;
-		Applicant applicant  = null;
-		
-		if (applicantArr.length > 0) {
-			applicant = new Applicant();
-			
-			applicant.setId(applicantArr[0].toString());
-			applicant.setApplicantCode(applicantArr[1].toString());
-			applicant.setAppliedDate(LocalDateTime.parse(applicantArr[2].toString()));
-			
-			final Job job = new Job();
-			job.setId(applicantArr[3].toString());
-			applicant.setJob(job);
-			
-			final HiringStatus hiringStatus = new HiringStatus();
-			hiringStatus.setId(applicantArr[4].toString());
-			applicant.setStatus(hiringStatus);
-			
-			final CandidateUser candidate = new CandidateUser();
-			candidate.setId(applicantArr[5].toString());
-			applicant.setCandidate(candidate);
-			
-			applicant.setCreatedBy(applicantArr[6].toString());
-			applicant.setCreatedAt(LocalDateTime.parse(applicantArr[7].toString()));
-			applicant.setIsActive(Boolean.valueOf(applicantArr[8].toString()));
-			applicant.setVersion(Integer.valueOf(applicantArr[9].toString()));
-		}
+		final Applicant applicant = this.em().createQuery(sql,Applicant.class)
+				.setParameter("code", code)
+				.getSingleResult();
 		
 		return applicant;
+	
+
 	}
 	
 	public List<Applicant> getApplicantByCandidate(String id){

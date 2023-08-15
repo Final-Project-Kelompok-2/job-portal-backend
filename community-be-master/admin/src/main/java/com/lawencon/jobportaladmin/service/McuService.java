@@ -3,17 +3,27 @@ package com.lawencon.jobportaladmin.service;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportaladmin.dao.ApplicantDao;
 import com.lawencon.jobportaladmin.dao.FileDao;
+import com.lawencon.jobportaladmin.dao.HiringStatusDao;
 import com.lawencon.jobportaladmin.dao.McuDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.mcu.McuInsertReqDto;
 import com.lawencon.jobportaladmin.dto.mcu.McusInsertReqDto;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.File;
+import com.lawencon.jobportaladmin.model.HiringStatus;
 import com.lawencon.jobportaladmin.model.Mcu;
 
 @Service
@@ -31,13 +41,19 @@ public class McuService {
 
 	@Autowired
 	private ApplicantDao applicantDao;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	private HiringStatusDao hiringStatusDao;
 
 	public InsertResDto insertMcuFiles(McusInsertReqDto data) {
 		final InsertResDto resDto = new InsertResDto();
 
 		try {
 			em().getTransaction().begin();
-			final Applicant applicant = applicantDao.getById(Applicant.class, data.getApplicantId());
+			Applicant applicant = applicantDao.getById(Applicant.class, data.getApplicantId());
 
 			for (int i = 0; i < data.getMcuData().size(); i++) {
 				final McuInsertReqDto mcuData = data.getMcuData().get(i);
@@ -53,8 +69,33 @@ public class McuService {
 				newMcu = mcuDao.save(newMcu);
 			}
 			
-			resDto.setMessage("Insert Mcu Files Success");
-			em().getTransaction().commit();
+			final HiringStatus hiringStatus = hiringStatusDao.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.MCU.statusCode);
+			applicant.setStatus(hiringStatus);
+			data.setApplicantCode(applicant.getApplicantCode());
+			data.setStatusCode(hiringStatus.getStatusCode());
+			
+			applicant = applicantDao.saveAndFlush(applicant);
+			
+			final String updateApplicantAPI = "http://localhost:8081/applicants";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			 
+			final RequestEntity<McusInsertReqDto> applicantUpdate = RequestEntity.patch(updateApplicantAPI).headers(headers).body(data);
+			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(applicantUpdate, UpdateResDto.class);
+
+			
+			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
+				resDto.setMessage("Insert Mcu Files Success");
+				em().getTransaction().commit();
+				
+			} else {
+				
+				em().getTransaction().rollback();
+				throw new RuntimeException("Update Failed");
+			}
+			
+		
 
 		} catch (Exception e) {
 			em().getTransaction().rollback();

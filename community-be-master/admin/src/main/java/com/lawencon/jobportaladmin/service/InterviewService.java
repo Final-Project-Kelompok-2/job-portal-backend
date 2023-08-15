@@ -59,7 +59,7 @@ public class InterviewService {
 			em().getTransaction().begin();
 			Interview interview = new Interview();
 			Applicant applicant = applicantDao.getById(Applicant.class, interviewData.getApplicantId());
-			
+			interviewData.setApplicantCode(applicant.getApplicantCode());
 			interview.setApplicant(applicant);
 			interview.setInterviewDate(DateUtil.parseStringToLocalDateTime(interviewData.getInterviewDate()));
 			interview.setInterviewLocation(interviewData.getInterviewLocation());
@@ -77,7 +77,7 @@ public class InterviewService {
 			
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.INTERVIEWUSER.statusCode);
 			applicant.setStatus(hiringStatus);
-			
+			interviewData.setStatusCode(hiringStatus.getStatusCode());
 			applicant = applicantDao.saveAndFlush(applicant);
 			
 			final String updateApplicantAPI = "http://localhost:8081/applicants";

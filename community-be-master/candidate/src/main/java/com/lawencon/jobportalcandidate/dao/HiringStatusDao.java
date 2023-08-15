@@ -22,7 +22,7 @@ public class HiringStatusDao extends AbstractJpaDao  {
 			sqlb.append("FROM ");
 			sqlb.append(" HiringStatus hs ");
 			sqlb.append(" WHERE ");
-			sqlb.append(" hs.statusCode = :statusCode");
+			sqlb.append(" hs.statusCode = :code");
 			
 //		final String sql = "SELECT "
 //				+ "	hs.id, "
@@ -33,6 +33,7 @@ public class HiringStatusDao extends AbstractJpaDao  {
 //				+ "	HiringStatus hs "
 //				+ "WHERE "
 //				+ "	hs.statusCode = :code";
+<<<<<<< HEAD
 //		
 //		final Object hiringStatusObj = this.em().createQuery(sqlb.toString())
 //				.setParameter("code", code)
@@ -52,6 +53,13 @@ public class HiringStatusDao extends AbstractJpaDao  {
 //			hiringStatus.setStatusName(hiringStatusArr[2].toString());
 //			hiringStatus.setVersion(Integer.valueOf(hiringStatusArr[3].toString()));
 //		}
+=======
+		
+		final HiringStatus hiringStatus = this.em().createQuery(sqlb.toString(),HiringStatus.class)
+				.setParameter("code", code)
+				.getSingleResult();
+		
+>>>>>>> b5519995a3735acc35601bc251620f4dc5cd39b6
 		
 		return hiringStatus;
 	}
