@@ -1,7 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +64,8 @@ public class CandidateProjectExpService {
 			projectExp.setProjectName(data.getProjectName());
 			projectExp.setDescription(data.getDescription());
 			projectExp.setProjectUrl(data.getProjectUrl());
-			projectExp.setStartDate(Timestamp.valueOf(data.getStartDate().toString()).toLocalDateTime());
-			projectExp.setEndDate(Timestamp.valueOf(data.getEndDate().toString()).toLocalDateTime());
+			projectExp.setStartDate(LocalDate.parse(data.getStartDate().toString()));
+			projectExp.setEndDate(LocalDate.parse(data.getEndDate().toString()));
 
 			final CandidateUser candidateUser = candidateUserDao.getByEmail(data.getEmail());
 			projectExp.setCandidateUser(candidateUser);
@@ -94,8 +93,8 @@ public class CandidateProjectExpService {
 			projectExp.setProjectName(data.getProjectName());
 			projectExp.setDescription(data.getDescription());
 			projectExp.setProjectUrl(data.getProjectUrl());
-			projectExp.setStartDate(LocalDateTime.parse(data.getStartDate()));
-			projectExp.setEndDate(LocalDateTime.parse(data.getEndDate()));
+			projectExp.setStartDate(LocalDate.parse(data.getStartDate()));
+			projectExp.setEndDate(LocalDate.parse(data.getEndDate()));
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, "ID Principal");
 			projectExp.setCandidateUser(candidateUser);
 			projectExp.setUpdatedBy(principalService.getAuthPrincipal());

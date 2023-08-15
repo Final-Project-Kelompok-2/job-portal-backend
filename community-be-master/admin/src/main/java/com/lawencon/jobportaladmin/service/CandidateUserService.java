@@ -1,6 +1,5 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
@@ -277,11 +276,11 @@ public class CandidateUserService {
 					projectExp.setDescription(candidateData.getCandidateProjectExp().get(i).getDescription());
 					projectExp.setProjectUrl(candidateData.getCandidateProjectExp().get(i).getProjectUrl());
 					projectExp.setStartDate(
-							Timestamp.valueOf(candidateData.getCandidateProjectExp().get(i).getStartDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateProjectExp().get(i).getStartDate().toString())
+									);
 					projectExp.setEndDate(
-							Timestamp.valueOf(candidateData.getCandidateProjectExp().get(i).getEndDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateProjectExp().get(i).getEndDate().toString())
+									);
 
 					final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
 							candidateUser.getId());
@@ -337,11 +336,11 @@ public class CandidateUserService {
 					trainingExp
 							.setOrganizationName(candidateData.getCandidateTrainingExp().get(i).getOrganizationName());
 					trainingExp.setStartDate(
-							Timestamp.valueOf(candidateData.getCandidateTrainingExp().get(i).getStartDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateTrainingExp().get(i).getStartDate().toString())
+									);
 					trainingExp.setEndDate(
-							Timestamp.valueOf(candidateData.getCandidateTrainingExp().get(i).getEndDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateTrainingExp().get(i).getEndDate().toString())
+									);
 					trainingExp.setDescription(candidateData.getCandidateTrainingExp().get(i).getDescription());
 
 					final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
@@ -365,11 +364,11 @@ public class CandidateUserService {
 					work.setReasonLeave(candidateData.getCandidateWorkExp().get(i).getReasonLeave());
 					work.setLastSalary(candidateData.getCandidateWorkExp().get(i).getLastSalary());
 					work.setStartDate(
-							Timestamp.valueOf(candidateData.getCandidateWorkExp().get(i).getStartDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateWorkExp().get(i).getStartDate().toString())
+									);
 					work.setEndDate(
-							Timestamp.valueOf(candidateData.getCandidateWorkExp().get(i).getEndDate().toString())
-									.toLocalDateTime());
+							LocalDate.parse(candidateData.getCandidateWorkExp().get(i).getEndDate().toString())
+									);
 
 					final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
 							candidateUser.getId());

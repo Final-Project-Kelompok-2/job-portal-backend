@@ -1,6 +1,6 @@
 package com.lawencon.jobportaladmin.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,22 +12,22 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "t_candidate_training_exp")
-public class CandidateTrainingExp extends BaseEntity{
-	@Column(name = "organization_name",length = 20 ,nullable =false)
+public class CandidateTrainingExp extends BaseEntity {
+	@Column(name = "organization_name", length = 20, nullable = false)
 	private String organizationName;
-	
-	@Column(name = "training_name" , length = 20, nullable = false)
+
+	@Column(name = "training_name", length = 20, nullable = false)
 	private String trainingName;
-	
-	@Column(name = "description",nullable = false)
+
+	@Column(name = "description", nullable = false)
 	private String description;
-	
-	@Column(name = "start_date",nullable = false)
-	private LocalDateTime startDate;
-	
-	@Column(name = "end_date",nullable = false)
-	private LocalDateTime endDate;
-	
+
+	@Column(name = "start_date", nullable = false)
+	private LocalDate startDate;
+
+	@Column(name = "end_date", nullable = false)
+	private LocalDate endDate;
+
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
@@ -56,19 +56,19 @@ public class CandidateTrainingExp extends BaseEntity{
 		this.description = description;
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
@@ -79,6 +79,5 @@ public class CandidateTrainingExp extends BaseEntity{
 	public void setCandidateUser(CandidateUser candidateUser) {
 		this.candidateUser = candidateUser;
 	}
-	
-	
+
 }
