@@ -36,8 +36,6 @@ public class JobDao extends AbstractJpaDao  {
 			sqlb.append(" address, ");
 			sqlb.append(" start_date, ");
 			sqlb.append(" end_date, ");
-			sqlb.append(" hr_id, ");
-			sqlb.append(" pic_id, ");
 			sqlb.append(" expected_salary_min, ");
 			sqlb.append(" expected_salary_max, ");
 			sqlb.append(" employment_type_name, ");
@@ -48,10 +46,6 @@ public class JobDao extends AbstractJpaDao  {
 			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
 			sqlb.append("INNER JOIN ");
 			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_user tu ON tu.id = tj.hr_id ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" Wt_user tu2 ON tu2.id = tj.pic_id ");
 			sqlb.append("WHERE ");
 			sqlb.append(" company_code = :companycode");
 		
@@ -89,6 +83,7 @@ public class JobDao extends AbstractJpaDao  {
 				final Company company = new Company();
 				company.setCompanyName(jobArr[2].toString());
 				company.setAddress(jobArr[3].toString());
+				job.setCompany(company);
 				
 				job.setStartDate(LocalDate.parse(jobArr[4].toString(), formatter));
 				job.setEndDate(LocalDate.parse(jobArr[5].toString(), formatter));
@@ -149,6 +144,7 @@ public class JobDao extends AbstractJpaDao  {
 				final Company company = new Company();
 				company.setCompanyName(jobArr[2].toString());
 				company.setAddress(jobArr[3].toString());
+				job.setCompany(company);
 				
 				job.setStartDate(LocalDate.parse(jobArr[4].toString(), formatter));
 				job.setEndDate(LocalDate.parse(jobArr[5].toString(), formatter));
