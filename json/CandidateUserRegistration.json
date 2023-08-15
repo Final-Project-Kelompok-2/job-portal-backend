@@ -105,13 +105,13 @@
         {
             "languageName" : "English",
             "writingRate" : "5",
-            "speakingRate" : "4.5",
+            "speakingRate" : "4",
             "listeningRate" : "3"
         },
         {
             "languageName" : "Indonesia",
             "writingRate" : "5",
-            "speakingRate" : "4.5",
+            "speakingRate" : "4",
             "listeningRate" : "3"
         }
     ],
@@ -120,15 +120,15 @@
             "projectName" : "Asset Management System",
             "projectUrl" : "www.github.com/assets",
             "description" : "This is AMS Project",
-            "startDate" : "2019-01-01",
-            "endDate" : "2019-06-01"
+            "startDate" : "2019-01-01 00:00:00",
+            "endDate" : "2019-06-01 00:00:00"
         },
         {
             "projectName" : "Bootcamp Management System",
             "projectUrl" : "www.github.com/bootcamp",
             "description" : "This is BMS Project",
-            "startDate" : "2019-07-01",
-            "endDate" : "2019-12-01"
+            "startDate" : "2019-07-01 00:00:00",
+            "endDate" : "2019-12-01 00:00:00"
         }
     ],
     "candidateReferences": [
@@ -153,13 +153,13 @@
     ],
     "candidateSkill": [
         {
-            "skillname" : "Web Design"
+            "skillName" : "Web Design"
         },
         {
-            "skillname" : "Database Adminsitartor"
+            "skillName" : "Database Adminsitartor"
         },
         {
-            "skillname" : "Video Editing"
+            "skillName" : "Video Editing"
         }
     ],
     "candidateTrainingExp": [
@@ -167,15 +167,15 @@
             "organizationName" : "Google Indonesia",
             "trainingName" : "IT Support Seminar",
             "description" : "Learn about IT Support",
-            "startDate" : "2019-10-01",
-            "endDate" : "2019-10-30"
+            "startDate" : "2019-10-01 00:00:00",
+            "endDate" : "2019-10-30 00:00:00"
         },
         {
             "organizationName" : "IBM Indonesia",
             "trainingName" : "IT Hardware Seminar",
             "description" : "Learn about IT Hardware",
-            "startDate" : "2019-10-01",
-            "endDate" : "2019-10-30"
+            "startDate" : "2019-10-01 00:00:00",
+            "endDate" : "2019-10-30 00:00:00"
         }
     ],
     "candidateWorkExp": [
@@ -186,8 +186,8 @@
             "responsibility" : "Managing Database",
             "reasonLeave" : "Lazy",
             "lastSalary" : 5000000,
-            "startDate" : "2022-10-01",
-            "endDate" : "2022-12-30"
+            "startDate" : "2022-10-01 00:00:00",
+            "endDate" : "2022-12-30 00:00:00"
         },
         {
             "positionName" : "IT Support",
@@ -196,8 +196,8 @@
             "responsibility" : "Managing IT Software & Hardware",
             "reasonLeave" : "Lazy",
             "lastSalary" : 7000000,
-            "startDate" : "2023-01-01",
-            "endDate" : "2022-03-30"
+            "startDate" : "2023-01-01 00:00:00",
+            "endDate" : "2022-03-30 00:00:00"
         }
     ]
 }

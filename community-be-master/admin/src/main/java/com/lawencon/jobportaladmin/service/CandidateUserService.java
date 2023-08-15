@@ -2,7 +2,6 @@ package com.lawencon.jobportaladmin.service;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.persistence.EntityManager;
 
@@ -88,7 +87,7 @@ public class CandidateUserService {
 
 	@Autowired
 	private CandidateTrainingExpDao candidateTrainingDao;
-	
+
 	@Autowired
 	private CandidateWorkExpDao candidateWorkExpDao;
 
@@ -337,10 +336,12 @@ public class CandidateUserService {
 					trainingExp.setTrainingName(candidateData.getCandidateTrainingExp().get(i).getTrainingName());
 					trainingExp
 							.setOrganizationName(candidateData.getCandidateTrainingExp().get(i).getOrganizationName());
-					trainingExp.setStartDate(LocalDateTime
-							.parse(candidateData.getCandidateTrainingExp().get(i).getStartDate().toString()));
-					trainingExp.setEndDate(LocalDateTime
-							.parse(candidateData.getCandidateTrainingExp().get(i).getEndDate().toString()));
+					trainingExp.setStartDate(
+							Timestamp.valueOf(candidateData.getCandidateTrainingExp().get(i).getStartDate().toString())
+									.toLocalDateTime());
+					trainingExp.setEndDate(
+							Timestamp.valueOf(candidateData.getCandidateTrainingExp().get(i).getEndDate().toString())
+									.toLocalDateTime());
 					trainingExp.setDescription(candidateData.getCandidateTrainingExp().get(i).getDescription());
 
 					final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
