@@ -63,7 +63,7 @@ public class AssesmentService {
 			assesment.setAssesmentLocation(assesmentData.getAssesmentLocation());
 			Applicant applicant = applicantDao.getById(Applicant.class, assesmentData.getApplicantId());
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, applicant.getCandidate().getId());
-			
+			assesmentData.setApplicantCode(applicant.getApplicantCode());
 			assesment.setApplicant(applicant);
 			
 			assesment = assesmentDao.save(assesment);			

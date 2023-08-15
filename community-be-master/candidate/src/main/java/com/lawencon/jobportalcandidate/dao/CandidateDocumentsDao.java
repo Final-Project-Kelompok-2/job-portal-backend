@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.model.CandidateDocuments;
-import com.lawencon.jobportalcandidate.model.CandidateProfile;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.FileType;
@@ -46,40 +45,40 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 			.append( "WHERE   ")
 			.append( "	tcd.user_id  = :candidate");
 
-final List<?>documentObjs = em().createNativeQuery(sql.toString())
-		.setParameter("candidate", id)
-		.getResultList();
-final List<CandidateDocuments> candidateDocumentsList = new ArrayList<>();
-if(documentObjs.size() > 0) {
-	for(Object documentObj : documentObjs ) {
-		final Object[] documentArr = (Object[]) documentObj;
-		final CandidateDocuments candidateDocument = new CandidateDocuments();
-		candidateDocument.setId(documentArr[0].toString());
-		candidateDocument.setDocName(documentArr[1].toString());
+		final List<?>documentObjs = em().createNativeQuery(sql.toString())
+				.setParameter("candidate", id)
+				.getResultList();
+		final List<CandidateDocuments> candidateDocumentsList = new ArrayList<>();
+		if(documentObjs.size() > 0) {
+			for(Object documentObj : documentObjs ) {
+				final Object[] documentArr = (Object[]) documentObj;
+				final CandidateDocuments candidateDocument = new CandidateDocuments();
+				candidateDocument.setId(documentArr[0].toString());
+				candidateDocument.setDocName(documentArr[1].toString());
+				
+			
+				final CandidateUser candidateUser = new CandidateUser();
+				candidateUser.setUserEmail(documentArr[2].toString());
+				candidateDocument.setCandidateUser(candidateUser);
+				
+				final File file = new File();
+				file.setId(documentArr[3].toString());
+				candidateDocument.setFile(file);
+				
+				
+				
+				final FileType fileType = new FileType();
 		
-	
-		final CandidateUser candidateUser = new CandidateUser();
-		candidateUser.setUserEmail(documentArr[2].toString());
-		candidateDocument.setCandidateUser(candidateUser);
+				fileType.setTypeCode(documentArr[4].toString());
+				fileType.setTypeName(documentArr[5].toString());
+				
+				candidateDocument.setFileType(fileType);
+				candidateDocumentsList.add(candidateDocument);
+				
+			}
+		}
 		
-		final File file = new File();
-		file.setId(documentArr[3].toString());
-		candidateDocument.setFile(file);
-		
-		
-		
-		final FileType fileType = new FileType();
-
-		fileType.setTypeCode(documentArr[4].toString());
-		fileType.setTypeName(documentArr[5].toString());
-		
-		candidateDocument.setFileType(fileType);
-		candidateDocumentsList.add(candidateDocument);
-		
-	}
-}
-
-return candidateDocumentsList;
+		return candidateDocumentsList;
 	}
 	
 	public List<CandidateDocuments> getByCandidateEmail(String id){

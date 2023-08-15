@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportaladmin.dto.InsertResDto;
@@ -39,6 +40,12 @@ public class JobController {
 	@GetMapping("/person")
 	public ResponseEntity<List<JobResDto>> getByPrincipal() {
 		final List<JobResDto> data = jobService.getByPrincipal();
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
+	
+	@GetMapping("/company")
+	public ResponseEntity<List<JobResDto>> getByCompany(@RequestParam String code) {
+		final List<JobResDto> data = jobService.getByCompany(code);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 	

@@ -1,7 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.model.Applicant;
-import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.Company;
 import com.lawencon.jobportalcandidate.model.HiringStatus;
 import com.lawencon.jobportalcandidate.model.Job;
@@ -26,8 +24,6 @@ public class ApplicantDao extends AbstractJpaDao{
 	
 	public Applicant getByCode(String code) {
 		final String sql = "SELECT a FROM Applicant a WHERE applicantCode = :code ";
-		
-//		final String sql = "SELECT a FROM Applicant a WHERE applicantCode = 'Y8RI6'";
 		
 		final Applicant applicant = this.em().createQuery(sql,Applicant.class)
 				.setParameter("code", code)

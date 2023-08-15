@@ -3,6 +3,7 @@ package com.lawencon.jobportaladmin.dto.assesment;
 public class AssesmentInsertReqDto {
 
 	private String applicantId;
+	private String applicantCode;
 	private String assesmentLocation;
 	private String assesmentDate;
 
@@ -28,6 +29,14 @@ public class AssesmentInsertReqDto {
 
 	public void setAssesmentDate(String assesmentDate) {
 		this.assesmentDate = assesmentDate;
+	}
+
+	public String getApplicantCode() {
+		return applicantCode;
+	}
+
+	public void setApplicantCode(String applicantCode) {
+		this.applicantCode = applicantCode;
 	}
 
 }

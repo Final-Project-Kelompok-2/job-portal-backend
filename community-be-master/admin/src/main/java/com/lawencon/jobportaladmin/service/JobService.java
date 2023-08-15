@@ -107,6 +107,30 @@ public class JobService {
 
 		return jobsDto;
 	}
+	
+	public List<JobResDto> getByCompany(String code) {
+		final List<JobResDto> jobsDto = new ArrayList<>();
+		final List<Job> jobs = jobDao.getByCompany(code);
+
+		for (int i = 0; i < jobs.size(); i++) {
+			final JobResDto job = new JobResDto();
+			job.setId(jobs.get(i).getId());
+			job.setJobName(jobs.get(i).getJobName());
+			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
+			job.setAddress(jobs.get(i).getCompany().getAddress());
+			job.setStartDate(jobs.get(i).getStartDate().toString());
+			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setDescription(jobs.get(i).getDescription());
+			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
+			job.setFileId(jobs.get(i).getJobPicture().getId());
+
+			jobsDto.add(job);
+		}
+
+		return jobsDto;
+	}
 
 	public List<JobResDto> getByPrincipal() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
