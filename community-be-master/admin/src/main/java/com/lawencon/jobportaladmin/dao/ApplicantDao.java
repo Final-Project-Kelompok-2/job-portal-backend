@@ -153,6 +153,17 @@ public class ApplicantDao extends AbstractJpaDao {
 		return applicantList;
 	}
 
+	public Applicant getByCode(String code) {
+		final String sql = "SELECT a FROM Applicant a WHERE applicantCode = :code ";
+		
+		final Applicant applicant = this.em().createQuery(sql,Applicant.class)
+				.setParameter("code", code)
+				.getSingleResult();
+		
+		return applicant;
+	
+
+	}
 	
 	
 }

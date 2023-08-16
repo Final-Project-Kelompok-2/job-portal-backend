@@ -91,6 +91,7 @@ public class AssesmentService {
 					applicant.getCandidate().getId());
 			assesmentData.setApplicantCode(applicant.getApplicantCode());
 			assesment.setApplicant(applicant);
+			
 			final List<AssignedJobQuestion> jobQuestions = assignedJobQuestionDao.getByJob(applicant.getJob().getId());
 
 			if (jobQuestions.size() > 0) {
