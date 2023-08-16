@@ -69,6 +69,9 @@ public class ReviewService extends AbstractJpaDao{
 			review.setApplicant(applicant);
 			review = reviewDao.saveAndFlush(review);
 		
+			resDto.setVersion(review.getVersion());
+			resDto.setMessage("Update Review Success");
+			
 			em().getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -82,8 +85,8 @@ public class ReviewService extends AbstractJpaDao{
 		return resDto;
 	}
 	
-	public ReviewResDto getByApplicant(ReviewGetReqDto data) {
-		final Review review= reviewDao.getByApplicant(data.getApplicantId());
+	public ReviewResDto getByApplicant(String applicantId) {
+		final Review review= reviewDao.getByApplicant(applicantId);
 		final ReviewResDto reviewDto = new ReviewResDto();
 		if(review.getNotes()!=null) {
 			reviewDto.setNotes(review.getNotes());
