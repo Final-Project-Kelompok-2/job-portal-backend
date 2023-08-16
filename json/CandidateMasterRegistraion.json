@@ -1,0 +1,203 @@
+{
+    userEmail: "candidateadm@gmail.com",
+    salutation: "Mr.",
+    fullname: "Andrew Maruli",
+    gender: "Male",
+    experience: "1",
+    expectedSalary: "5000000",
+    phoneNumber: "0928108253",
+    mobileNumber: "0928108253",
+    nik: "1325438351484",
+    birthDate: "2001-05-15",
+    birthPlace: "Jakarta",
+    maritalStatusId: "6edec8d5-b51a-4006-a82b-295ec65fd0b8",
+    religionId: "7c555171-50f7-4a56-99b4-60d624b906be",
+    personTypeId: "83b5e6e1-6937-4cc6-992d-0ef404e8074d",
+    file: "Picture1",
+    fileExtension: ".png",
+    candidateStatusId: "410624ec-8015-4f58-955f-4b79e91a8451",
+    candidateAddress": [
+        {
+            "address": "Jl. Menuju Surga 1",
+            "residenceType": "Home",
+            "country": "Indonesia",
+            "province": "DKI Jakarta",
+            "city": "South Jakarta",
+            "postalCode": "15116"
+        },
+        {
+            "address": "Jl. Menuju Surga 2",
+            "residenceType": "Home",
+            "country": "Indonesia",
+            "province": "DKI Jakarta",
+            "city": "South Jakarta",
+            "postalCode": "15116"
+        }
+    ],
+    "candidateDocuments": [
+        {
+            "docName": "CV_ANDREW",
+            "fileTypeCode": "FE-01",
+            "fileName": "CV_ANDREWMARULI",
+            "fileExtension": ".pdf"
+        },
+        {
+            "docName": "KK_ANDREW",
+            "fileTypeCode": "FE-02",
+            "fileName": "KK_ANDREWMARULI",
+            "fileExtension": ".pdf"
+        },
+        {
+            "docName": "TR_ANDREW",
+            "fileTypeCode": "FE-04",
+            "fileName": "TR_ANDREWMARULI",
+            "fileExtension": ".pdf"
+        }
+    ],
+    "candidateEducations": [
+        {
+            "degreeName" : "Sarjana (S1)",
+            "instituitionName" : "Univeristas Indonesia",
+            "majors" : "Teknik Informatika",
+            "cgpa" : 3.5,
+            "startYear" : "2019-01-01",
+            "endYear" : "2022-05-01"
+        },
+        {
+            "degreeName" : "Magister (S2)",
+            "instituitionName" : "Univeristas Indonesia",
+            "majors" : "Teknik Informatika",
+            "cgpa" : 3.7,
+            "startYear" : "2022-01-01",
+            "endYear" : "2023-05-01"
+        }
+    ],
+    "candidateFamily": [
+        {
+            "fullname" : "Joko Anwar",
+            "relationship" : "Ayah",
+            "degreeName" : "Sarjana (S1)",
+            "occupation" : "Karyawan Swasta",
+            "birthDate" : "1975-02-01",
+            "birthPlace" : "Jakarta",
+            "email" : "joko@gmail.com"
+        },
+        {
+            "fullname" : "Sari Anwar",
+            "relationship" : "Ibu",
+            "degreeName" : "Sarjana (S1)",
+            "occupation" : "Karyawan Swasta",
+            "birthDate" : "1975-05-01",
+            "birthPlace" : "Jakarta",
+            "email" : "sari@gmail.com"
+        },
+        {
+            "fullname" : "Mario Anwar",
+            "relationship" : "Adik",
+            "degreeName" : "Sarjana (S1)",
+            "occupation" : "Karyawan Swasta",
+            "birthDate" : "2001-02-01",
+            "birthPlace" : "Jakarta",
+            "email" : "mario@gmail.com"
+        }
+    ],
+    "candidateLanguage": [
+        {
+            "languageName" : "English",
+            "writingRate" : "5",
+            "speakingRate" : "4",
+            "listeningRate" : "3"
+        },
+        {
+            "languageName" : "Indonesia",
+            "writingRate" : "5",
+            "speakingRate" : "4",
+            "listeningRate" : "3"
+        }
+    ],
+    "candidateProjectExp": [
+        {
+            "projectName" : "Asset Management System",
+            "projectUrl" : "www.github.com/assets",
+            "description" : "This is AMS Project",
+            "startDate" : "2019-01-01",
+            "endDate" : "2019-06-01"
+        },
+        {
+            "projectName" : "Bootcamp Management System",
+            "projectUrl" : "www.github.com/bootcamp",
+            "description" : "This is BMS Project",
+            "startDate" : "2019-07-01",
+            "endDate" : "2019-12-01"
+        }
+    ],
+    "candidateReferences": [
+        {
+            "fullname" : "Santo Matthew",
+            "relationship" : "Colleague",
+            "occupation" : "Front-end Developer",
+            "phoneNumber" : "0811245678",
+            "email" : "santo@gmail.com",
+            "company" : "PT. Linov Roket Prestasi",
+            "description" : "This is my Colleague"
+        },
+        {
+            "fullname" : "Purnama Sari",
+            "relationship" : "Colleague",
+            "occupation" : "SEO Specialist",
+            "phoneNumber" : "0811245688",
+            "email" : "purnama@gmail.com",
+            "company" : "PT. Linov Roket Prestasi",
+            "description" : "This is my Colleague"
+        }
+    ],
+    "candidateSkill": [
+        {
+            "skillName" : "Web Design"
+        },
+        {
+            "skillName" : "Database Adminsitartor"
+        },
+        {
+            "skillName" : "Video Editing"
+        }
+    ],
+    "candidateTrainingExp": [
+        {
+            "organizationName" : "Google Indonesia",
+            "trainingName" : "IT Support Seminar",
+            "description" : "Learn about IT Support",
+            "startDate" : "2019-10-01",
+            "endDate" : "2019-10-30"
+        },
+        {
+            "organizationName" : "IBM Indonesia",
+            "trainingName" : "IT Hardware Seminar",
+            "description" : "Learn about IT Hardware",
+            "startDate" : "2019-10-01",
+            "endDate" : "2019-10-30"
+        }
+    ],
+    "candidateWorkExp": [
+        {
+            "positionName" : "Database Admin",
+            "companyName" : "PT. Karya Digital Cemerlang",
+            "address" : "Jl. Kebayoran Baru No.21",
+            "responsibility" : "Managing Database",
+            "reasonLeave" : "Lazy",
+            "lastSalary" : 5000000,
+            "startDate" : "2022-10-01",
+            "endDate" : "2022-12-30"
+        },
+        {
+            "positionName" : "IT Support",
+            "companyName" : "PT. Cahaya Surga",
+            "address" : "Jl. Kebayoran Lama No.21",
+            "responsibility" : "Managing IT Software & Hardware",
+            "reasonLeave" : "Lazy",
+            "lastSalary" : 7000000,
+            "startDate" : "2023-01-01",
+            "endDate" : "2022-03-30"
+        }
+    ]
+}
