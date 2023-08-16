@@ -28,7 +28,7 @@ public class McuController {
 	}
 	
 	
-	@GetMapping
-	public ResponseEntity<>abc(){}
+//	@GetMapping
+//	public ResponseEntity<>abc(){}
 	
 }
