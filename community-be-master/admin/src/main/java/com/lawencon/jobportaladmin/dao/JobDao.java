@@ -54,6 +54,7 @@ public class JobDao extends AbstractJpaDao{
 			.append(" Wt_user tu2 ON tu2.id = tj.pic_id ")
 			.append("WHERE ")
 			.append(" company_code = :companycode");
+
 			
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id, "
@@ -81,7 +82,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	company_code = :companycode";
 			
-		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
+		final List<?> jobObjs = em().createNativeQuery(sql)
 				.setParameter("companycode", code)
 				.getResultList();
 		
@@ -95,6 +96,7 @@ public class JobDao extends AbstractJpaDao{
 				final Company company = new Company();
 				company.setCompanyName(jobArr[2].toString());
 				company.setAddress(jobArr[3].toString());
+				job.setCompany(company);
 				
 				job.setStartDate(LocalDate.parse(jobArr[4].toString(), formatter));
 				job.setEndDate(LocalDate.parse(jobArr[5].toString(), formatter));
@@ -129,7 +131,7 @@ public class JobDao extends AbstractJpaDao{
 		final List<Job> jobs = new ArrayList<>();
 		
 		final StringBuilder sqlb = new StringBuilder();
-<<<<<<< HEAD
+
 			sqlb.append("SELECT ")
 			.append(" tj.id AS job_id, ")
 			.append(" job_name, ")
@@ -151,29 +153,6 @@ public class JobDao extends AbstractJpaDao{
 			.append(" t_employment_type tet ON tet.id = tj.employment_type_id ")
 			.append("WHERE ")
 			.append(" tj.hr_id = :id");
-=======
-			sqlb.append("SELECT ");
-			sqlb.append(" tj.id AS job_id, ");
-			sqlb.append(" tj.job_name, ");
-			sqlb.append(" tc.company_name, ");
-			sqlb.append(" tj.address, ");
-			sqlb.append(" tj.start_date, ");
-			sqlb.append(" tj.end_date, ");
-			sqlb.append(" tj.hr_id, ");
-			sqlb.append(" tj.pic_id, ");
-			sqlb.append(" tj.expected_salary_min, ");
-			sqlb.append(" tj.expected_salary_max, ");
-			sqlb.append(" tj.employment_type_name, ");
-			sqlb.append(" tj.job_picture_id ");
-			sqlb.append("FROM ");
-			sqlb.append(" t_job tj ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
-			sqlb.append("WHERE ");
-			sqlb.append(" tj.hr_id = :id");
->>>>>>> b5519995a3735acc35601bc251620f4dc5cd39b6
 		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"

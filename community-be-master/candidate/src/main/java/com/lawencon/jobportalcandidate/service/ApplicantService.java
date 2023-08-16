@@ -136,8 +136,6 @@ public class ApplicantService {
 
 		try {
 			em().getTransaction().begin();
-			System.out.println(updateData.getApplicantCode()+ "======================");
-			System.out.println(updateData.getStatusCode() + "======================");
 			
 			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
