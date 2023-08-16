@@ -18,10 +18,12 @@ public class ReviewDao extends AbstractJpaDao{
 	public Review getByApplicant(String id) {
 		final StringBuilder sqlb = new StringBuilder();
 			sqlb.append("SELECT ");
+			sqlb.append(" tr.id, ");
 			sqlb.append(" tr.notes, ");
-			sqlb.append(" tr.score ");
+			sqlb.append(" tr.score, ");
+			sqlb.append(" tr.ver ");
 			sqlb.append("FROM ");
-			sqlb.append(" t_review tr");
+			sqlb.append(" t_review tr ");
 			sqlb.append("WHERE ");
 			sqlb.append(" tr.applicant_id = :id");
 		
@@ -36,8 +38,15 @@ public class ReviewDao extends AbstractJpaDao{
 		
 		if(reviewObjArr.length>0) {
 			review = new Review();
-			review.setNotes(reviewObjArr[0].toString());
-			review.setScore(Float.valueOf(reviewObjArr[1].toString()));
+			review.setId(reviewObjArr[0].toString());
+			if(reviewObjArr[1]!=null) {
+				review.setNotes(reviewObjArr[1].toString());
+			}
+			if(reviewObjArr[2]!=null) {
+				review.setScore(Float.valueOf(reviewObjArr[2].toString()));
+			}
+			review.setVersion(Integer.valueOf(reviewObjArr[3].toString()));
+			
 		}
 		return review;
 	}
