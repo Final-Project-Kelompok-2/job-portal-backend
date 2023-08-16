@@ -25,4 +25,9 @@ public class InterviewController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
+//	@GetMapping
+//	private ResponseEntity<InterviewInsertReqDto> getByApplicant(){
+//		
+//	}
+	
 }

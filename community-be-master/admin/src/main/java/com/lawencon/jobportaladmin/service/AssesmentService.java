@@ -28,6 +28,7 @@ import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.assesment.AssesmentInsertReqDto;
+import com.lawencon.jobportaladmin.dto.assesment.AssesmentResDto;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.Assesment;
 import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
@@ -164,4 +165,17 @@ public class AssesmentService {
 		return insertResDto;
 	}
 
+	public AssesmentResDto getByApplicant(String applicantId) {
+		final Assesment assesment = assesmentDao.getByApplicant(applicantId);
+		final AssesmentResDto assesmentDto = new AssesmentResDto();
+		
+		assesmentDto.setAssesmentDate(assesment.getAssesmentDate().toString());
+		assesmentDto.setAssesmentLocation(assesment.getAssesmentLocation());
+		if(assesment.getNotes()!=null) {
+			assesmentDto.setNotes(assesment.getNotes());
+		}
+		
+		return assesmentDto;
+	}
+	
 }
