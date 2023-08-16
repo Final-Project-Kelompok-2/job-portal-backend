@@ -65,7 +65,7 @@ public class JobService {
 			job.setEndDate(jobs.get(i).getEndDate().toString());
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 
@@ -134,7 +134,7 @@ public class JobService {
 			newJob.setJobName(job.getJobName());
 			newJob.setJobCode(job.getJobCode());
 			
-			final Company company = companyDao.getByCode(job.getCompanyCode());
+				final Company company = companyDao.getByCode(job.getCompanyCode());
 			newJob.setCompany(company);
 			
 			newJob.setStartDate(DateUtil.parseStringToLocalDate(job.getStartDate().toString()));
