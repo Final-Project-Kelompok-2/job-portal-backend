@@ -12,7 +12,6 @@ import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.Assesment;
 import com.lawencon.jobportaladmin.model.Review;
-import com.lawencon.jobportaladmin.util.DateUtil;
 
 @Repository
 public class AssesmentDao extends AbstractJpaDao {

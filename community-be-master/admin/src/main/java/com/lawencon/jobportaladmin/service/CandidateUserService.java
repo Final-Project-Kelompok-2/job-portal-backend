@@ -1,6 +1,8 @@
 package com.lawencon.jobportaladmin.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -30,6 +32,7 @@ import com.lawencon.jobportaladmin.dao.ReligionDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.candidate.CandidateMasterInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserInsertReqDto;
+import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserResDto;
 import com.lawencon.jobportaladmin.model.CandidateAddress;
 import com.lawencon.jobportaladmin.model.CandidateDocuments;
 import com.lawencon.jobportaladmin.model.CandidateEducation;
@@ -418,6 +421,23 @@ public class CandidateUserService {
 		}
 
 		return insertResDto;
+	}
+	
+	public List<CandidateUserResDto> getAll(){
+		final List<CandidateUserResDto> candidatesDto = new ArrayList<>();
+		final List<CandidateUser> candidates = candidateUserDao.getAll(CandidateUser.class);
+		
+		for(int i=0;i<candidates.size();i++) {
+			final CandidateUserResDto candidateDto = new CandidateUserResDto();
+			candidateDto.setFullname(candidates.get(i).getCandidateProfile().getFullname());
+			candidateDto.setUserEmail(candidates.get(i).getUserEmail());
+			candidateDto.setStatusName(candidates.get(i).getCandidateProfile().getCandidateStatus().getStatusName());
+			
+			candidatesDto.add(candidateDto);
+		}
+		return candidatesDto;
+		
+		
 	}
 
 }
