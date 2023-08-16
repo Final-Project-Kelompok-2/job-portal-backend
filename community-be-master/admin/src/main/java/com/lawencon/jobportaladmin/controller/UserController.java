@@ -1,4 +1,4 @@
-	package com.lawencon.jobportaladmin.controller;
+package com.lawencon.jobportaladmin.controller;
 
 import java.util.List;
 
@@ -23,19 +23,23 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
-	
+
 	@GetMapping("/filter")
-	public ResponseEntity<List<UsersResDto>> getUsersByRoleCode(@RequestParam String roleCode){
+	public ResponseEntity<List<UsersResDto>> getUsersByRoleCode(@RequestParam String roleCode) {
 		final List<UsersResDto> response = userService.getUsersByRoleCode(roleCode);
-		return new ResponseEntity<>(response,HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
+	@GetMapping
+	public ResponseEntity<List<UsersResDto>> getAll() {
+		final List<UsersResDto> response = userService.getAll();
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 
 	@PostMapping
-	public ResponseEntity<InsertResDto> insertUser(@RequestBody UserInsertReqDto userData){
+	public ResponseEntity<InsertResDto> insertUser(@RequestBody UserInsertReqDto userData) {
 		final InsertResDto response = userService.registerUser(userData);
-		return new ResponseEntity<>(response,HttpStatus.CREATED);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-	
+
 }
