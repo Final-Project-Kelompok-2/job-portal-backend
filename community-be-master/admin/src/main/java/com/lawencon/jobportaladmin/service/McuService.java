@@ -1,5 +1,8 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import com.lawencon.jobportaladmin.dao.McuDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.mcu.McuInsertReqDto;
+import com.lawencon.jobportaladmin.dto.mcu.McuResDto;
 import com.lawencon.jobportaladmin.dto.mcu.McusInsertReqDto;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.File;
@@ -41,10 +45,10 @@ public class McuService {
 
 	@Autowired
 	private ApplicantDao applicantDao;
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	private HiringStatusDao hiringStatusDao;
 
@@ -68,34 +72,34 @@ public class McuService {
 				newMcu.setFile(newMcuFile);
 				newMcu = mcuDao.save(newMcu);
 			}
-			
-			final HiringStatus hiringStatus = hiringStatusDao.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.MCU.statusCode);
+
+			final HiringStatus hiringStatus = hiringStatusDao
+					.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.MCU.statusCode);
 			applicant.setStatus(hiringStatus);
 			data.setApplicantCode(applicant.getApplicantCode());
 			data.setStatusCode(hiringStatus.getStatusCode());
-			
+
 			applicant = applicantDao.saveAndFlush(applicant);
-			
+
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
-			 
-			final RequestEntity<McusInsertReqDto> applicantUpdate = RequestEntity.patch(updateApplicantAPI).headers(headers).body(data);
-			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(applicantUpdate, UpdateResDto.class);
 
-			
+			final RequestEntity<McusInsertReqDto> applicantUpdate = RequestEntity.patch(updateApplicantAPI)
+					.headers(headers).body(data);
+			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(applicantUpdate,
+					UpdateResDto.class);
+
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
 				resDto.setMessage("Insert Mcu Files Success");
 				em().getTransaction().commit();
-				
+
 			} else {
-				
+
 				em().getTransaction().rollback();
 				throw new RuntimeException("Update Failed");
 			}
-			
-		
 
 		} catch (Exception e) {
 			em().getTransaction().rollback();
@@ -105,6 +109,20 @@ public class McuService {
 		return resDto;
 	}
 
-	
-	
+	public List<McuResDto> getByApplicant(String id) {
+		final List<Mcu> mcus = mcuDao.getByApplicant(id);
+		final List<McuResDto> mcuDtos = new ArrayList<>();
+
+		for (int i = 0; i < mcus.size(); i++) {
+			final McuResDto mcuDto = new McuResDto();
+			final File file = fileDao.getById(File.class, mcus.get(i).getFile().getId());
+			mcuDto.setId(file.getId());
+			mcuDto.setFilename(file.getFileName());
+			mcuDto.setFileExtension(file.getFileExtension());
+			mcuDtos.add(mcuDto);
+		}
+
+		return mcuDtos;
+	}
+
 }
