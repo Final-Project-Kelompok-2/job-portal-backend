@@ -29,31 +29,32 @@ public class JobDao extends AbstractJpaDao{
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		final StringBuilder sqlb = new StringBuilder();
-			sqlb.append("SELECT ");
-			sqlb.append(" tj.id AS job_id, ");
-			sqlb.append(" job_name, ");
-			sqlb.append(" company_name, ");
-			sqlb.append(" address, ");
-			sqlb.append(" start_date, ");
-			sqlb.append(" end_date, ");
-			sqlb.append(" hr_id, ");
-			sqlb.append(" pic_id, ");
-			sqlb.append(" expected_salary_min, ");
-			sqlb.append(" expected_salary_max, ");
-			sqlb.append(" employment_type_name, ");
-			sqlb.append(" job_picture_id ");
-			sqlb.append("FROM ");
-			sqlb.append(" t_job tj ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_user tu ON tu.id = tj.hr_id ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_user tu2 ON tu2.id = tj.pic_id ");
-			sqlb.append("WHERE ");
-			sqlb.append(" company_code = :companycode");
+			sqlb.append("SELECT ")
+			.append(" tj.id AS job_id, ")
+			.append(" job_name, ")
+			.append(" company_name, ")
+			.append(" address, ")
+			.append(" start_date, ")
+			.append(" end_date, ")
+			.append(" hr_id, ")
+			.append(" pic_id, ")
+			.append(" expected_salary_min, ")
+			.append(" expected_salary_max, ")
+			.append(" employment_type_name, ")
+			.append(" job_picture_id ")
+			.append("FROM ")
+			.append(" t_job tj ")
+			.append("INNER JOIN ")
+			.append(" t_company tc ON tc.id = tj.company_id ")
+			.append("INNER JOIN ")
+			.append(" t_employment_type tet ON tet.id = tj.employment_type_id ")
+			.append("INNER JOIN ")
+			.append(" t_user tu ON tu.id = tj.hr_id ")
+			.append("INNER JOIN ")
+			.append(" Wt_user tu2 ON tu2.id = tj.pic_id ")
+			.append("WHERE ")
+			.append(" company_code = :companycode");
+
 			
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id, "
@@ -130,27 +131,28 @@ public class JobDao extends AbstractJpaDao{
 		final List<Job> jobs = new ArrayList<>();
 		
 		final StringBuilder sqlb = new StringBuilder();
-			sqlb.append("SELECT ");
-			sqlb.append(" tj.id AS job_id, ");
-			sqlb.append(" tj.job_name, ");
-			sqlb.append(" tc.company_name, ");
-			sqlb.append(" tj.address, ");
-			sqlb.append(" tj.start_date, ");
-			sqlb.append(" tj.end_date, ");
-			sqlb.append(" tj.hr_id, ");
-			sqlb.append(" tj.pic_id, ");
-			sqlb.append(" tj.expected_salary_min, ");
-			sqlb.append(" tj.expected_salary_max, ");
-			sqlb.append(" tj.employment_type_name, ");
-			sqlb.append(" tj.job_picture_id ");
-			sqlb.append("FROM ");
-			sqlb.append(" t_job tj ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_company tc ON tc.id = tj.company_id ");
-			sqlb.append("INNER JOIN ");
-			sqlb.append(" t_employment_type tet ON tet.id = tj.employment_type_id ");
-			sqlb.append("WHERE ");
-			sqlb.append(" tj.hr_id = :id");
+
+			sqlb.append("SELECT ")
+			.append(" tj.id AS job_id, ")
+			.append(" job_name, ")
+			.append(" company_name, ")
+			.append(" address, ")
+			.append(" start_date, ")
+			.append(" end_date, ")
+			.append(" hr_id, ")
+			.append(" pic_id, ")
+			.append(" expected_salary_min, ")
+			.append(" expected_salary_max, ")
+			.append(" employment_type_name, ")
+			.append(" job_picture_id ")
+			.append("FROM ")
+			.append(" t_job tj ")
+			.append("INNER JOIN ")
+			.append(" t_company tc ON tc.id = tj.company_id ")
+			.append("INNER JOIN ")
+			.append(" t_employment_type tet ON tet.id = tj.employment_type_id ")
+			.append("WHERE ")
+			.append(" tj.hr_id = :id");
 		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"

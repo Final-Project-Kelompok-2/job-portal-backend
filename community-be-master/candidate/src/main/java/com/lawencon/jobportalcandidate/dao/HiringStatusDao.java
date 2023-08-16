@@ -33,10 +33,27 @@ public class HiringStatusDao extends AbstractJpaDao  {
 //				+ "	HiringStatus hs "
 //				+ "WHERE "
 //				+ "	hs.statusCode = :code";
-		
-		final HiringStatus hiringStatus = this.em().createQuery(sqlb.toString(),HiringStatus.class)
-				.setParameter("code", code)
+//		
+//		final Object hiringStatusObj = this.em().createQuery(sqlb.toString())
+//				.setParameter("code", code)
+//				.getSingleResult();
+		final HiringStatus hiringStatus= this.em().createQuery(sqlb.toString(),HiringStatus.class)
+				.setParameter("statusCode", code)
 				.getSingleResult();
+		
+//		final Object[] hiringStatusArr = (Object[]) hiringStatusObj;
+//		HiringStatus hiringStatus = null;
+//		
+//		if (hiringStatusArr.length > 0) {
+//			hiringStatus = new HiringStatus();
+//			
+//			hiringStatus.setId(hiringStatusArr[0].toString());
+//			hiringStatus.setStatusCode(hiringStatusArr[1].toString());
+//			hiringStatus.setStatusName(hiringStatusArr[2].toString());
+//			hiringStatus.setVersion(Integer.valueOf(hiringStatusArr[3].toString()));
+//		}
+
+		
 		
 		
 		return hiringStatus;

@@ -156,7 +156,7 @@ public class CandidateDocumentService {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
 			
-			final RequestEntity<Void>documentInsert = RequestEntity.delete(candidateDocumentApi).headers(headers).build();
+			final RequestEntity<Void>documentInsert = RequestEntity.delete(candidateDocumentApi+"/"+id).headers(headers).build();
 			final ResponseEntity<DeleteResDto> responseAdmin = restTemplate.exchange(documentInsert, DeleteResDto.class);
 			if(responseAdmin.getStatusCode().equals(HttpStatus.OK)){
 			
