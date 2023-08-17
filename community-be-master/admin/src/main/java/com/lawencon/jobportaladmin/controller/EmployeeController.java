@@ -19,7 +19,6 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	
 	@GetMapping
 	public ResponseEntity<List<EmployeeResDto>> getAll(){
 		final List<EmployeeResDto> response = employeeService.getAll();

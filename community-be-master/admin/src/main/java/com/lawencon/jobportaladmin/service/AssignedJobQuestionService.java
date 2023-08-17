@@ -10,13 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.dao.AssignedJobQuestionDao;
-import com.lawencon.jobportaladmin.dao.JobDao;
 import com.lawencon.jobportaladmin.dao.QuestionDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.assignedjobquestion.AssignedJobQuestionInsertReqDto;
 import com.lawencon.jobportaladmin.dto.assignedjobquestion.AssignedJobQuestionResDto;
 import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
-import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.Question;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -29,8 +27,6 @@ public class AssignedJobQuestionService {
 
 	@Autowired
 	private AssignedJobQuestionDao assignedJobQuestionDao;
-	@Autowired
-	private JobDao jobDao;
 	@Autowired
 	private QuestionDao questionDao;
 	@Autowired

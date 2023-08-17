@@ -23,7 +23,6 @@ public class HiredController {
 	@PostMapping
 	public ResponseEntity<InsertResDto> insertHired(@RequestBody HiredInsertReqDto hiredData){
 		final InsertResDto response = hiredService.insertHired(hiredData);
-		
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 		
 	}

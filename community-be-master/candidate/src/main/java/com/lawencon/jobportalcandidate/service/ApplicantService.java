@@ -17,19 +17,24 @@ import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.config.JwtConfig;
+import com.lawencon.jobportalcandidate.constant.PersonTypes;
 import com.lawencon.jobportalcandidate.dao.ApplicantDao;
+import com.lawencon.jobportalcandidate.dao.CandidateProfileDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
 import com.lawencon.jobportalcandidate.dao.HiringStatusDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
+import com.lawencon.jobportalcandidate.dao.PersonTypeDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.applicant.ApplicantInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.applicant.ApplicantResDto;
 import com.lawencon.jobportalcandidate.dto.applicant.ApplicantUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.Applicant;
+import com.lawencon.jobportalcandidate.model.CandidateProfile;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.HiringStatus;
 import com.lawencon.jobportalcandidate.model.Job;
+import com.lawencon.jobportalcandidate.model.PersonType;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -51,6 +56,10 @@ public class ApplicantService {
 	private RestTemplate restTemplate;
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	@Autowired
+	private CandidateProfileDao candidateProfileDao;
+	@Autowired
+	private PersonTypeDao personTypeDao;
 
 	public List<ApplicantResDto> getApplicantByCandidate() {
 		final List<Applicant> applicantList = applicantDao.getApplicantByCandidate(principalService.getAuthPrincipal());
@@ -136,10 +145,21 @@ public class ApplicantService {
 
 		try {
 			em().getTransaction().begin();
-			
+
 			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
+
+			if (applicant.getStatus().getStatusCode()
+					.equals(com.lawencon.jobportalcandidate.constant.HiringStatus.HIRED.statusCode)) {
+				CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
+						applicant.getCandidate().getId());
+				
+				final PersonType employeeType = personTypeDao.getByCode(PersonTypes.EMPLOYEE.typeCode);
+				CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class, candidateUser.getCandidateProfile().getId());
+				candidateProfile.setPersonType(employeeType);
+				candidateProfile = candidateProfileDao.save(candidateProfile);
+			}
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
-			
+
 			applicant.setStatus(hiringStatus);
 			applicant = applicantDao.saveAndFlush(applicant);
 
@@ -147,7 +167,7 @@ public class ApplicantService {
 			resDto.setMessage("Update Application Success");
 
 			em().getTransaction().commit();
-			
+
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();

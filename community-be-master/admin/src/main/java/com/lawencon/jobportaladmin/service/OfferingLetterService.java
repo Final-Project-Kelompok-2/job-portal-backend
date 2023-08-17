@@ -81,7 +81,6 @@ public class OfferingLetterService {
 			
 			final List<OwnedBenefit> ownedBenefits = ownedBenefitDao.getByJob(applicant.getJob().getId());
 
-			
 			final CandidateUser candidate=  candidateUserDao.getById(CandidateUser.class, applicant.getCandidate().getId());
 			
 			offeringLetter = offeringLetterDao.save(offeringLetter);
@@ -89,17 +88,17 @@ public class OfferingLetterService {
 			final String emailSubject = "Offering Letter";
 			String emailBody = "Offering letter yang kami tawarkan yaitu anda "
 					+ " akan bekerja di Kantor " + offeringLetter.getAddress() +" pada posisi " 
-			+ applicant.getJob().getJobName() + " yaitu dengan gaji sebesar Rp ." + offeringData.getSalary() 
-			+ " dengan benefit : ";
+			+ applicant.getJob().getJobName() + " yaitu dengan gaji sebesar Rp ." + offeringData.getSalary(); 
+			
 			
 			if(ownedBenefits.size()>0) {
+				emailBody +=" Benefit yang didapat adalah :";
 				for(int i=0;i<ownedBenefits.size();i++) {
-					final Benefit benefit = benefitDao.getById(Benefit.class, ownedBenefits.get(i).getBenefit().getId());
-					emailBody += benefit.getBenefitName();
+					emailBody += ownedBenefits.get(i).getBenefit().getBenefitName();
 				}
 			}
 			
-			emailBody += " Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
+			emailBody += "Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
 			
 			emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailBody);
 			
@@ -113,18 +112,17 @@ public class OfferingLetterService {
 
 			
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
-				
 				resDto.setId(offeringLetter.getId());
 				resDto.setMessage("Insert Offering Letter Success");
 				em().getTransaction().commit();
 			} else {
-				
 				em().getTransaction().rollback();
-				throw new RuntimeException("Update Failed");
+				throw new RuntimeException("Insert Offering Letter Failed");
 			}
 			
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
 		}
 		
 		return resDto;
