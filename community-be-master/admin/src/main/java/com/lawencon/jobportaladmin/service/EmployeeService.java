@@ -12,13 +12,8 @@ import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.EmployeeDao;
 import com.lawencon.jobportaladmin.dao.JobDao;
-import com.lawencon.jobportaladmin.dto.InsertResDto;
-import com.lawencon.jobportaladmin.dto.employee.EmployeeInsertReqDto;
 import com.lawencon.jobportaladmin.dto.employee.EmployeeResDto;
-import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.Employee;
-import com.lawencon.jobportaladmin.model.Job;
-import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service

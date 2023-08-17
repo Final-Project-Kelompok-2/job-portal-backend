@@ -25,7 +25,6 @@ import com.lawencon.jobportaladmin.dao.PersonTypeDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.hired.HiredInsertReqDto;
-import com.lawencon.jobportaladmin.dto.offeringletter.OfferingLetterInsertReqDto;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.CandidateProfile;
 import com.lawencon.jobportaladmin.model.CandidateUser;
@@ -71,6 +70,9 @@ public class HiredService {
 	@Autowired
 	private HiringStatusDao hiringStatusDao;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public InsertResDto insertHired(HiredInsertReqDto hiredData) {
 		final InsertResDto resDto = new InsertResDto();
 
@@ -82,12 +84,11 @@ public class HiredService {
 			hired.setApplicant(applicant);
 			hired.setStartDate(DateUtil.parseStringToLocalDateTime(hiredData.getStartDate()));
 
-			if (hiredData.getStartDate() != null) {
+			if (hiredData.getEndDate() != null) {
 				hired.setEndDate(DateUtil.parseStringToLocalDateTime(hiredData.getEndDate()));
 			}
 
 			hired = hiredDao.save(hired);
-
 			
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.HIRED.statusCode);
 			applicant.setStatus(hiringStatus);
@@ -111,6 +112,17 @@ public class HiredService {
 			
 			applicant = applicantDao.saveAndFlush(applicant);
 			
+			final String emailSubject = "Welcome New Employee";
+			String emailBody = "Selamat "+ candidateUser.getCandidateProfile().getFullname()+ " anda telah diterima di "
+					+ " perusahaan "+ job.getCompany().getCompanyName() +", Alamat : "+ job.getCompany().getAddress()
+					+" sebagai "+ job.getJobName() + ". Anda akan mulai"
+					
+					+ " bekerja pada tanggal "+ hiredData.getStartDate() ;
+					
+			emailBody+= hiredData.getEndDate()!=null?" sampai tanggal "+hired.getEndDate() : "";		
+			
+			emailBody += " Sampai bertemu dikantor. Terima kasih";
+			emailService.sendEmail(candidateUser.getUserEmail(), emailSubject, emailBody);
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
@@ -135,6 +147,7 @@ public class HiredService {
 			
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
 		}
 
 		return resDto;

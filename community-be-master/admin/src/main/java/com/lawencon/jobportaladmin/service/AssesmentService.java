@@ -20,7 +20,6 @@ import com.lawencon.jobportaladmin.dao.AssesmentDao;
 import com.lawencon.jobportaladmin.dao.AssignedJobQuestionDao;
 import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.HiringStatusDao;
-import com.lawencon.jobportaladmin.dao.JobDao;
 import com.lawencon.jobportaladmin.dao.QuestionDao;
 import com.lawencon.jobportaladmin.dao.ReviewDao;
 import com.lawencon.jobportaladmin.dao.ReviewDetailDao;
@@ -29,6 +28,7 @@ import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.assesment.AssesmentInsertReqDto;
 import com.lawencon.jobportaladmin.dto.assesment.AssesmentResDto;
+import com.lawencon.jobportaladmin.dto.assesment.AssesmentUpdateReqDto;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.Assesment;
 import com.lawencon.jobportaladmin.model.AssignedJobQuestion;
@@ -75,9 +75,6 @@ public class AssesmentService {
 
 	@Autowired
 	private QuestionDao questionDao;
-	
-	@Autowired
-	private JobDao jobDao;
 
 	public InsertResDto insertAssesment(AssesmentInsertReqDto assesmentData) {
 		final InsertResDto insertResDto = new InsertResDto();
@@ -92,7 +89,7 @@ public class AssesmentService {
 					applicant.getCandidate().getId());
 			assesmentData.setApplicantCode(applicant.getApplicantCode());
 			assesment.setApplicant(applicant);
-			
+
 			final List<AssignedJobQuestion> jobQuestions = assignedJobQuestionDao.getByJob(applicant.getJob().getId());
 
 			if (jobQuestions.size() > 0) {
@@ -102,7 +99,8 @@ public class AssesmentService {
 
 				for (int i = 0; i < jobQuestions.size(); i++) {
 					final ReviewDetail reviewDetail = new ReviewDetail();
-					final Question question = questionDao.getById(Question.class, jobQuestions.get(i).getQuestion().getId());
+					final Question question = questionDao.getById(Question.class,
+							jobQuestions.get(i).getQuestion().getId());
 					reviewDetail.setQuestion(question);
 					reviewDetail.setReview(review);
 					reviewDetailDao.save(reviewDetail);
@@ -110,8 +108,8 @@ public class AssesmentService {
 
 				final String emailSubject = "Job Test";
 				final String emailbody = "Pada Job Vacancy ini kamu perlu mengerjakan tes sebanyak "
-								+ jobQuestions.size() + " soal. "
-								+ "Silahkan mengerjakan terlebih dahulu sebelum sesi Assessment Interview. Terima kasih";
+						+ jobQuestions.size() + " soal. "
+						+ "Silahkan mengerjakan terlebih dahulu sebelum sesi Assessment Interview. Terima kasih";
 
 				emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailbody);
 			}
@@ -120,9 +118,9 @@ public class AssesmentService {
 
 			final String emailSubject = "Assesment Schedule ";
 			final String emailbody = "Selamat  " + candidate.getCandidateProfile().getFullname()
-					+ ", lamaran kamu pada Job Vacancy "+ applicant.getJob().getJobName() + " telah di proses. Silahkan untuk datang ke "
-					+ assesment.getAssesmentLocation() + " pada tanggal " + assesmentData.getAssesmentDate()
-					+ " untuk Interview dengan user";
+					+ ", lamaran kamu pada Job Vacancy " + applicant.getJob().getJobName()
+					+ " telah di proses. Silahkan untuk datang ke " + assesment.getAssesmentLocation()
+					+ " pada tanggal " + assesmentData.getAssesmentDate() + " untuk Interview dengan user";
 
 			emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailbody);
 
@@ -168,14 +166,32 @@ public class AssesmentService {
 	public AssesmentResDto getByApplicant(String applicantId) {
 		final Assesment assesment = assesmentDao.getByApplicant(applicantId);
 		final AssesmentResDto assesmentDto = new AssesmentResDto();
-		
+
 		assesmentDto.setAssesmentDate(assesment.getAssesmentDate().toString());
 		assesmentDto.setAssesmentLocation(assesment.getAssesmentLocation());
-		if(assesment.getNotes()!=null) {
-			assesmentDto.setNotes(assesment.getNotes());
-		}
-		
+		assesmentDto.setNotes(assesment.getNotes());
 		return assesmentDto;
 	}
-	
+
+	public UpdateResDto updateAssesment(AssesmentUpdateReqDto data) {
+		final UpdateResDto resDto = new UpdateResDto();
+
+		try {
+			em().getTransaction().begin();
+			Assesment assesment = assesmentDao.getByApplicant(data.getApplicantId());
+			assesment.setNotes(data.getNotes());
+			assesment = assesmentDao.saveAndFlush(assesment);
+
+			resDto.setVersion(assesment.getVersion());
+			resDto.setMessage("Update Assesment Success");
+
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+
+		}
+		return resDto;
+	}
+
 }

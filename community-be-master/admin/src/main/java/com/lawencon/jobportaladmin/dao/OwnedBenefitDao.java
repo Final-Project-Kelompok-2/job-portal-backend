@@ -22,7 +22,7 @@ public class OwnedBenefitDao extends AbstractJpaDao {
 	public List<OwnedBenefit> getByJob(String id) {
 		final StringBuilder sqlb = new StringBuilder();
 			sqlb.append("SELECT ");
-			sqlb.append(" tb.benefit_name ");
+			sqlb.append(" tb.id, tb.benefit_name, tob.ver ");
 			sqlb.append("FROM ");
 			sqlb.append(" t_owned_benefit tob ");
 			sqlb.append("INNER JOIN ");
@@ -44,10 +44,12 @@ public class OwnedBenefitDao extends AbstractJpaDao {
 			for(Object ownedBenefitObj : ownedBenefitObjs) {
 				final Object[] ownedBenefitObjArr = (Object []) ownedBenefitObj;
 				final Benefit benefit = new Benefit();
-				benefit.setBenefitName(ownedBenefitObjArr[0].toString());
+				benefit.setId(ownedBenefitObjArr[0].toString());
+				benefit.setBenefitName(ownedBenefitObjArr[1].toString());
 				
 				final OwnedBenefit ownedBenefit = new OwnedBenefit();
 				ownedBenefit.setBenefit(benefit);
+				ownedBenefit.setVersion(Integer.valueOf(ownedBenefitObjArr[2].toString()));
 				
 				ownedBenefits.add(ownedBenefit);
 			}
