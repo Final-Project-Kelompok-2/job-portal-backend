@@ -18,8 +18,7 @@ public class CandidateUserDao extends AbstractJpaDao{
 	
 	public CandidateUser getByEmail(String candidateEmail) {
 		final String sql =  "SELECT "
-				+ "	cu.id, "
-				+ "	cu.version "
+				+ "	cu "
 				+ "FROM "
 				+ "	CandidateUser cu "
 				+ "WHERE "
