@@ -6,7 +6,8 @@ public class CandidateDocumentResDto {
 	private String docName;
 	private String fileId;
 	private String fileTypeId;
-	private String candidateId;
+
+	private String fileTypeName;
 
 	public String getId() {
 		return id;
@@ -41,11 +42,12 @@ public class CandidateDocumentResDto {
 		this.fileTypeId = fileTypeId;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
+
+	public String getFileTypeName() {
+		return fileTypeName;
 	}
 
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
+	public void setFileTypeName(String fileTypeName) {
+		this.fileTypeName = fileTypeName;
 	}
 }
