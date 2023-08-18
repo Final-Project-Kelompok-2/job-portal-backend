@@ -6,11 +6,11 @@ public enum CandidateStatus {
 	BLACKLIST("CS-03","Blacklist");
 	
 	
-	public final String typeCode;
-	public final String typeName;
+	public final String statusCode;
+	public final String statusName;
 
-	CandidateStatus(String typeCode, String typeName) {
-		this.typeCode = typeCode;
-		this.typeName = typeName;
+	CandidateStatus(String statusCode, String statusName) {
+		this.statusCode = statusCode;
+		this.statusName = statusName;
 	}
 }

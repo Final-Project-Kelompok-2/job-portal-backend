@@ -15,13 +15,13 @@ public class CandidateStatusDao extends AbstractJpaDao {
 		return ConnHandler.getManager();
 	}
 
-	public CandidateStatus getByCode(String code) {
+	public CandidateStatus getByCode(String statusCode) {
 		final StringBuilder sql = new StringBuilder();
-		sql.append("SELECT cu FROM CandidateStatus cs WHERE cs.statusCode= : code");
+		sql.append("SELECT cs FROM CandidateStatus AS cs WHERE cs.statusCode=:statusCode ");
 
-		final CandidateStatus candidateStatus = em().createQuery(sql.toString(), 
-				CandidateStatus.class)
-				.setParameter(":code", code).getSingleResult();
+		final CandidateStatus candidateStatus = em()
+				.createQuery(sql.toString(), CandidateStatus.class)
+				.setParameter("statusCode", statusCode).getSingleResult();
 
 		return candidateStatus;
 	}

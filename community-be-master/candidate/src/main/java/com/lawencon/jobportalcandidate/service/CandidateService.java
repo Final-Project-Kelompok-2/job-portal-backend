@@ -137,7 +137,7 @@ public class CandidateService implements UserDetailsService {
 			candidateProfile.setPersonType(personType);
 
 			final CandidateStatus candidateStatus = candidateStatusDao
-					.getByCode(com.lawencon.jobportalcandidate.constant.CandidateStatus.ACTIVE.typeCode);
+					.getByCode(com.lawencon.jobportalcandidate.constant.CandidateStatus.ACTIVE.statusCode);
 			candidateProfile.setCandidateStatus(candidateStatus);
 			candidateProfileDao.saveNoLogin(candidateProfile, () -> GenerateCode.generateCode());
 
