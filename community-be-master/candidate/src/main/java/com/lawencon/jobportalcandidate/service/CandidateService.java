@@ -46,7 +46,7 @@ import com.lawencon.jobportalcandidate.model.Religion;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
-@Service
+@Service	
 public class CandidateService implements UserDetailsService {
 
 	private EntityManager em() {
@@ -100,24 +100,23 @@ public class CandidateService implements UserDetailsService {
 		candidateprofileDto.setGender(candidateprofile.getGender());
 		candidateprofileDto.setExperience(candidateprofile.getExperience());
 
-		if(candidateprofile.getExpectedSalary() != null) {
+		if (candidateprofile.getExpectedSalary() != null) {
 			candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary().toString());
 		}
-		
+
 		candidateprofileDto.setPhoneNumber(candidateprofile.getPhoneNumber());
 		candidateprofileDto.setMobileNumber(candidateprofile.getMobileNumber());
 		candidateprofileDto.setNik(candidateprofile.getNik());
-		if(candidateprofile.getBirthDate() != null) {
+		if (candidateprofile.getBirthDate() != null) {
 			candidateprofileDto.setBirthDate(candidateprofile.getBirthDate().toString());
 		}
-		
+
 		candidateprofileDto.setBirthPlace(candidateprofile.getBirthPlace());
-		if(candidateprofile.getMaritalStatus() != null) {
+		if (candidateprofile.getMaritalStatus() != null) {
 			candidateprofileDto.setMaritalStatusId(candidateprofile.getMaritalStatus().getId());
 		}
-		
+
 		data.setCandidateProfile(candidateprofileDto);
-		
 
 		candidateuserDto.setProfileId(candidateprofile.getId());
 		data.setCandidateUser(candidateuserDto);
@@ -136,6 +135,10 @@ public class CandidateService implements UserDetailsService {
 			candidateProfile.setFullname(data.getProfile().getFullname());
 			final PersonType personType = personTypeDao.getByCode(PersonTypes.CANDIDATE.typeCode);
 			candidateProfile.setPersonType(personType);
+
+			final CandidateStatus candidateStatus = candidateStatusDao
+					.getByCode(com.lawencon.jobportalcandidate.constant.CandidateStatus.ACTIVE.typeCode);
+			candidateProfile.setCandidateStatus(candidateStatus);
 			candidateProfileDao.saveNoLogin(candidateProfile, () -> GenerateCode.generateCode());
 
 			CandidateUser candidateUser = new CandidateUser();
@@ -172,7 +175,6 @@ public class CandidateService implements UserDetailsService {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 		}
-
 		return result;
 	}
 

@@ -146,6 +146,9 @@ public class CandidateUserService {
 			final PersonType type = personTypeDao.getById(PersonType.class, candidateData.getPersonTypeId());
 			candidateProfile.setPersonType(type);
 
+			final CandidateStatus candidateStatus = candidateStatusDao.getByCode(com.lawencon.jobportaladmin.constant.CandidateStatus.ACTIVE.typeCode);
+			candidateProfile.setCandidateStatus(candidateStatus);
+			
 			if (candidateData.getFile() != null) {
 				final File file = new File();
 				file.setFileName(candidateData.getFile());
@@ -426,7 +429,7 @@ public class CandidateUserService {
 			candidateDto.setId(candidates.get(i).getId());
 			candidateDto.setFullname(candidates.get(i).getCandidateProfile().getFullname());
 			candidateDto.setUserEmail(candidates.get(i).getUserEmail());
-			candidateDto.setStatusName(candidates.get(i).getCandidateProfile().getCandidateStatus().getStatusName());
+//			candidateDto.setStatusName(candidates.get(i).getCandidateProfile().getCandidateStatus().getStatusName());
 			candidatesDto.add(candidateDto);
 		}
 		return candidatesDto;
