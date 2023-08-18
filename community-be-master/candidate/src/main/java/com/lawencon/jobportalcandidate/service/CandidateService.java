@@ -204,11 +204,11 @@ public class CandidateService implements UserDetailsService {
 			profile.setPersonType(type);
 
 			if (data.getFile() != null) {
-				final File file = new File();
+				File file = new File();
 				file.setFileName(data.getFile());
 				file.setFileExtension(data.getFileExtension());
 				file.setCreatedBy(principalService.getAuthPrincipal());
-				fileDao.save(file);
+				file = fileDao.save(file);
 				profile.setFile(file);
 				fileDao.deleteById(File.class, data.getFileId());
 			}

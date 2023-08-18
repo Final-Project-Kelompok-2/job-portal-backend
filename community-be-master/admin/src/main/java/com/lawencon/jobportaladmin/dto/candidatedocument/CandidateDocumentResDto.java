@@ -1,11 +1,12 @@
 package com.lawencon.jobportaladmin.dto.candidatedocument;
 
 public class CandidateDocumentResDto {
+	
 	private String id;
 	private String docName;
-	private String candidateId;
 	private String fileId;
 	private String fileTypeId;
+	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -23,13 +24,6 @@ public class CandidateDocumentResDto {
 		this.docName = docName;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 
 	public String getFileId() {
 		return fileId;
@@ -45,5 +39,13 @@ public class CandidateDocumentResDto {
 
 	public void setFileTypeId(String fileTypeId) {
 		this.fileTypeId = fileTypeId;
+	}
+
+	public String getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(String candidateId) {
+		this.candidateId = candidateId;
 	}
 }

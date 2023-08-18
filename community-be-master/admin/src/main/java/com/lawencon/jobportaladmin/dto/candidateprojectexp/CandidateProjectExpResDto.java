@@ -7,7 +7,6 @@ public class CandidateProjectExpResDto {
 	private String description;
 	private String startDate;
 	private String endDate;
-	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -57,11 +56,4 @@ public class CandidateProjectExpResDto {
 		this.endDate = endDate;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }

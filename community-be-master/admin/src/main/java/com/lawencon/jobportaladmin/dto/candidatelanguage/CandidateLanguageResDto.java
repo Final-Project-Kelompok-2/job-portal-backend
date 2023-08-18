@@ -1,12 +1,12 @@
 package com.lawencon.jobportaladmin.dto.candidatelanguage;
 
 public class CandidateLanguageResDto {
+	
 	private String id;
 	private String languageName;
 	private String writingRate;
 	private String speakingRate;
 	private String listeningRate;
-	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -48,11 +48,4 @@ public class CandidateLanguageResDto {
 		this.listeningRate = listeningRate;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }

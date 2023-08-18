@@ -1,6 +1,7 @@
 package com.lawencon.jobportaladmin.dto.candidatefamily;
 
 public class CandidateFamilyResDto {
+	
 	private String id;
 	private String fullname;
 	private String relationship;
@@ -8,7 +9,6 @@ public class CandidateFamilyResDto {
 	private String occupation;
 	private String birthDate;
 	private String birthPlace;
-	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -66,11 +66,4 @@ public class CandidateFamilyResDto {
 		this.birthPlace = birthPlace;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }

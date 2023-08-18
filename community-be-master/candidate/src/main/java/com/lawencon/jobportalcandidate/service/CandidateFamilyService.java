@@ -101,10 +101,15 @@ public class CandidateFamilyService {
 				result.setMessage("Family Insert Success !");
 				em().getTransaction().commit();
 			}
+			else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Family Insert failed");
+			}
 			
 		
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
 		}
 		
 		return result;
