@@ -432,7 +432,7 @@ public class CandidateUserService {
 			candidateDto.setId(candidates.get(i).getId());
 			candidateDto.setFullname(candidates.get(i).getCandidateProfile().getFullname());
 			candidateDto.setUserEmail(candidates.get(i).getUserEmail());
-//			candidateDto.setStatusName(candidates.get(i).getCandidateProfile().getCandidateStatus().getStatusName());
+			candidateDto.setStatusName(candidates.get(i).getCandidateProfile().getCandidateStatus().getStatusName());
 			candidatesDto.add(candidateDto);
 		}
 		return candidatesDto;

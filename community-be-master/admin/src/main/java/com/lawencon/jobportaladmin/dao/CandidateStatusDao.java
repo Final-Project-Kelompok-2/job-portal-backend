@@ -1,7 +1,5 @@
 package com.lawencon.jobportaladmin.dao;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
