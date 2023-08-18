@@ -6,6 +6,7 @@ public class CandidateDocumentResDto {
 	private String docName;
 	private String fileId;
 	private String fileTypeId;
+	private String candidateId;
 
 	private String fileTypeName;
 
@@ -49,5 +50,13 @@ public class CandidateDocumentResDto {
 
 	public void setFileTypeName(String fileTypeName) {
 		this.fileTypeName = fileTypeName;
+	}
+
+	public String getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(String candidateId) {
+		this.candidateId = candidateId;
 	}
 }
