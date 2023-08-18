@@ -66,10 +66,28 @@ public class ApplicantService {
 			applicantRes.setJobId(applicantList.get(i).getJob().getId());
 			applicantRes.setJobName(applicantList.get(i).getJob().getJobName());
 			applicantRes.setCompanyName(applicantList.get(i).getJob().getCompany().getCompanyName());
+			applicantRes.setCandidateId(applicantList.get(i).getCandidate().getId());
 			applicantRes.setCandidateName(applicantList.get(i).getCandidate().getCandidateProfile().getFullname());
 			applicantListRes.add(applicantRes);
 		}
 		return applicantListRes;
+	}
+
+	public ApplicantResDto getById(String id) {
+		final Applicant applicant = applicantDao.getById(Applicant.class, id);
+		final ApplicantResDto applicantRes = new ApplicantResDto();
+		applicantRes.setId(applicant.getId());
+		applicantRes.setApplicantCode(applicant.getApplicantCode());
+		applicantRes.setAppliedDate(applicant.getAppliedDate().toString());
+		applicantRes.setStatusId(applicant.getStatus().getId());
+		applicantRes.setStatusName(applicant.getStatus().getStatusName());
+		applicantRes.setJobId(applicant.getJob().getId());
+		applicantRes.setJobName(applicant.getJob().getJobName());
+		applicantRes.setCompanyName(applicant.getJob().getCompany().getCompanyName());
+		System.out.println("Candidate Id => " +applicant.getCandidate().getId());
+		applicantRes.setCandidateId(applicant.getCandidate().getId());
+		applicantRes.setCandidateName(applicant.getCandidate().getCandidateProfile().getFullname());
+		return applicantRes;
 	}
 
 	public InsertResDto insertApplicant(ApplicantInsertReqDto applicantData) {
@@ -83,11 +101,11 @@ public class ApplicantService {
 
 			final Job job = jobDao.getByCode(applicantData.getJobCode());
 			newApplicant.setJob(job);
-			
+
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(applicantData.getStatusCode());
-			
+
 			newApplicant.setStatus(hiringStatus);
-			
+
 			final CandidateUser candidateUser = candidateUserDao.getByEmail(applicantData.getCandidateEmail());
 			newApplicant.setCandidate(candidateUser);
 
@@ -117,25 +135,27 @@ public class ApplicantService {
 			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, updateData.getStatusId());
 			applicant.setStatus(hiringStatus);
 			updateData.setStatusCode(hiringStatus.getStatusCode());
-			
+
 			applicant = applicantDao.saveAndFlush(applicant);
-			
+
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
-			 
-			final RequestEntity<ApplicantUpdateReqDto> applicantUpdate = RequestEntity.patch(updateApplicantAPI).headers(headers).body(updateData);
-			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(applicantUpdate, UpdateResDto.class);
+
+			final RequestEntity<ApplicantUpdateReqDto> applicantUpdate = RequestEntity.patch(updateApplicantAPI)
+					.headers(headers).body(updateData);
+			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(applicantUpdate,
+					UpdateResDto.class);
 
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
 
 				resDto.setVersion(applicant.getVersion());
 				resDto.setMessage("Update Application Success");
 				em().getTransaction().commit();
-				
+
 			} else {
-				
+
 				em().getTransaction().rollback();
 				throw new RuntimeException("Update Failed");
 			}

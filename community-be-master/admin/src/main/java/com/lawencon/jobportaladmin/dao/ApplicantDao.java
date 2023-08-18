@@ -35,7 +35,8 @@ public class ApplicantDao extends AbstractJpaDao {
 				+ "	ta.job_id, "
 				+ "	tj.job_name, "
 				+ "	tc.company_name,"
-				+ " tcp.fullname "
+				+ " tcp.fullname , "
+				+ " ta.candidate_id AS candidateId "
 				+ "FROM  "
 				+ "	t_applicant ta  "
 				+ "INNER JOIN  "
@@ -86,6 +87,7 @@ public class ApplicantDao extends AbstractJpaDao {
 				applicant.setJob(job);
 				
 				final CandidateUser candidate = new CandidateUser();
+				candidate.setId(applicantArr[9].toString().toString());
 				final CandidateProfile profile = new CandidateProfile();
 				profile.setFullname(applicantArr[8].toString().toString());
 				candidate.setCandidateProfile(profile);
