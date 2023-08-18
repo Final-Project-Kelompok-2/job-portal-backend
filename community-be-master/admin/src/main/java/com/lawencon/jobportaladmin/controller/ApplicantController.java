@@ -18,6 +18,7 @@ import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantInsertReqDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantResDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantUpdateReqDto;
+import com.lawencon.jobportaladmin.dto.assesment.AssesmentResDto;
 import com.lawencon.jobportaladmin.service.ApplicantService;
 
 @RestController
@@ -38,6 +39,12 @@ public class ApplicantController {
 	public ResponseEntity<List<ApplicantResDto>> getByJob(@RequestParam String jobId){
 		final List<ApplicantResDto> response = applicantService.getAllApplicantByJob(jobId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED); 
+	}
+	
+	@GetMapping("/filter")
+	public ResponseEntity<ApplicantResDto> getByApplicant(@RequestParam String id){
+		final ApplicantResDto response= applicantService.getById(id);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
 	@PatchMapping

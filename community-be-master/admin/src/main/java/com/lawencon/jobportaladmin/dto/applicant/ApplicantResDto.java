@@ -9,6 +9,7 @@ public class ApplicantResDto {
 	private String appliedDate;
 	private String statusId;
 	private String statusName;
+	private String candidateId;
 	private String candidateName;
 
 	public String getId() {
@@ -75,6 +76,16 @@ public class ApplicantResDto {
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+	
+	
+
+	public String getCandidateId() {
+		return candidateId;
+	}
+
+	public void setCandidateId(String candidateId) {
+		this.candidateId = candidateId;
 	}
 
 	public String getCandidateName() {
