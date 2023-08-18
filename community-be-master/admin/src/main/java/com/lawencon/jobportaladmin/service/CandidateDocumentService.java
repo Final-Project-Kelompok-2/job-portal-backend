@@ -29,9 +29,6 @@ public class CandidateDocumentService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-
-	@Autowired
-	private RestTemplate restTemplate;
 	
 	@Autowired
 	private CandidateDocumentsDao candidateDocumentDao;

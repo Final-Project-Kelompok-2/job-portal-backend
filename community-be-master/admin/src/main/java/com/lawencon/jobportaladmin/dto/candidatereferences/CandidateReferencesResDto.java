@@ -9,7 +9,6 @@ public class CandidateReferencesResDto {
 	private String email;
 	private String company;
 	private String description;
-	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -75,12 +74,5 @@ public class CandidateReferencesResDto {
 		this.description = description;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 
 }

@@ -26,39 +26,49 @@ public class CandidateMasterResDto {
 	private List<CandidateSkillInsertReqDto> candidateSkill;
 	private List<CandidateTrainingExpInsertReqDto> candidateTrainingExp;
 	private List<CandidateWorkExpInsertReqDto> candidateWorkExp;
+
 	public CandidateProfileInsertReqDto getCandidateProfile() {
 		return candidateProfile;
 	}
+
 	public CandidateAddressInsertReqDto getCandidateAddress() {
 		return candidateAddress;
 	}
+
 	public List<CandidateDocumentInsertReqDto> getCandidateDocuments() {
 		return candidateDocuments;
 	}
+
 	public List<CandidateEducationInsertReqDto> getCandidateEducations() {
 		return candidateEducations;
 	}
+
 	public List<CandidateFamilyInsertReqDto> getCandidateFamily() {
 		return candidateFamily;
 	}
+
 	public List<CandidateLanguageInsertReqDto> getCandidateLanguage() {
 		return candidateLanguage;
 	}
+
 	public List<CandidateProjectExpInsertReqDto> getCandidateProjectExp() {
 		return candidateProjectExp;
 	}
+
 	public List<CandidateReferencesInsertReqDto> getCandidateReferences() {
 		return candidateReferences;
 	}
+
 	public List<CandidateSkillInsertReqDto> getCandidateSkill() {
 		return candidateSkill;
 	}
+
 	public List<CandidateTrainingExpInsertReqDto> getCandidateTrainingExp() {
 		return candidateTrainingExp;
 	}
+
 	public List<CandidateWorkExpInsertReqDto> getCandidateWorkExp() {
 		return candidateWorkExp;
 	}
 
-	
 }

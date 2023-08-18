@@ -23,22 +23,24 @@ public class CandidateUserController {
 
 	@Autowired
 	private CandidateUserService candidateUserService;
-	
+
 	@PostMapping
-	public ResponseEntity<InsertResDto> insertCandidateUser(@RequestBody CandidateUserInsertReqDto candidate){
+	public ResponseEntity<InsertResDto> insertCandidateUser(@RequestBody CandidateUserInsertReqDto candidate) {
 		final InsertResDto response = candidateUserService.insertCandidateuser(candidate);
-		return new ResponseEntity<>(response,HttpStatus.CREATED);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-	
+
 	@PostMapping("/register")
-	public ResponseEntity<InsertResDto> insertCandidateUserFromAdmin(@RequestBody CandidateMasterInsertReqDto candidate){
+	public ResponseEntity<InsertResDto> insertCandidateUserFromAdmin(
+			@RequestBody CandidateMasterInsertReqDto candidate) {
 		final InsertResDto response = candidateUserService.insertCandidateFromAdmin(candidate);
-		return new ResponseEntity<>(response,HttpStatus.CREATED);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<List<CandidateUserResDto>> getAll(){
+	public ResponseEntity<List<CandidateUserResDto>> getAll() {
 		final List<CandidateUserResDto> response = candidateUserService.getAll();
-		return new ResponseEntity<>(response,HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
 }

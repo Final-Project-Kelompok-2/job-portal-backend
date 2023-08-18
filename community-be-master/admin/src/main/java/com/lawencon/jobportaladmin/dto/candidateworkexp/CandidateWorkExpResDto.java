@@ -10,7 +10,6 @@ public class CandidateWorkExpResDto {
 	private Float lastSalary;
 	private String startDate;
 	private String endDate;
-	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -84,11 +83,4 @@ public class CandidateWorkExpResDto {
 		this.endDate = endDate;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }

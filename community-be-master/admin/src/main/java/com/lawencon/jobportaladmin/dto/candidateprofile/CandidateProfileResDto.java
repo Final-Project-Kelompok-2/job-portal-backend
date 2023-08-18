@@ -13,11 +13,11 @@ public class CandidateProfileResDto {
 	private String nik;
 	private String birthDate;
 	private String birthPlace;
-	private String maritalStatusId;
-	private String religionId;
-	private String personTypeId;
+	private String maritalStatus;
+	private String religion;
+	private String personType;
 	private String fileId;
-	private String candidateStatusId;
+	private String candidateStatus;
 
 	public String getId() {
 		return id;
@@ -107,29 +107,6 @@ public class CandidateProfileResDto {
 		this.birthPlace = birthPlace;
 	}
 
-	public String getMaritalStatusId() {
-		return maritalStatusId;
-	}
-
-	public void setMaritalStatusId(String maritalStatusId) {
-		this.maritalStatusId = maritalStatusId;
-	}
-
-	public String getReligionId() {
-		return religionId;
-	}
-
-	public void setReligionId(String religionId) {
-		this.religionId = religionId;
-	}
-
-	public String getPersonTypeId() {
-		return personTypeId;
-	}
-
-	public void setPersonTypeId(String personTypeId) {
-		this.personTypeId = personTypeId;
-	}
 
 	public String getFileId() {
 		return fileId;
@@ -139,11 +116,37 @@ public class CandidateProfileResDto {
 		this.fileId = fileId;
 	}
 
-	public String getCandidateStatusId() {
-		return candidateStatusId;
+	public String getMaritalStatus() {
+		return maritalStatus;
 	}
 
-	public void setCandidateStatusId(String candidateStatusId) {
-		this.candidateStatusId = candidateStatusId;
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
+
+	public String getReligion() {
+		return religion;
+	}
+
+	public void setReligion(String religion) {
+		this.religion = religion;
+	}
+
+	public String getPersonType() {
+		return personType;
+	}
+
+	public void setPersonType(String personType) {
+		this.personType = personType;
+	}
+
+	public String getCandidateStatus() {
+		return candidateStatus;
+	}
+
+	public void setCandidateStatus(String candidateStatus) {
+		this.candidateStatus = candidateStatus;
+	}
+
+
 }

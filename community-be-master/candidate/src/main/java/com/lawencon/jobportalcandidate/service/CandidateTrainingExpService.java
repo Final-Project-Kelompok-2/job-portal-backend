@@ -91,6 +91,10 @@ public class CandidateTrainingExpService {
 				insertRes.setMessage("Training Exp record added!");
 				em().getTransaction().commit();
 			}
+			else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Trainin Exp Failed");
+			}
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();

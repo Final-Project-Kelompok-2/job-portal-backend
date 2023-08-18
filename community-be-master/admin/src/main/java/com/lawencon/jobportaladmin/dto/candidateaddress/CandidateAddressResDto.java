@@ -1,6 +1,7 @@
 package com.lawencon.jobportaladmin.dto.candidateaddress;
 
 public class CandidateAddressResDto {
+	
 	private String id;
 	private String address;
 	private String residenceType;
@@ -8,7 +9,6 @@ public class CandidateAddressResDto {
 	private String province;
 	private String city;
 	private String postalCode;
-	private String candidateId;
 
 	public String getId() {
 		return id;
@@ -66,11 +66,4 @@ public class CandidateAddressResDto {
 		this.postalCode = postalCode;
 	}
 
-	public String getCandidateId() {
-		return candidateId;
-	}
-
-	public void setCandidateId(String candidateId) {
-		this.candidateId = candidateId;
-	}
 }
