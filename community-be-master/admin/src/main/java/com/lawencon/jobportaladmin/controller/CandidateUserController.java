@@ -3,6 +3,7 @@ package com.lawencon.jobportaladmin.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,12 @@ public class CandidateUserController {
 	@GetMapping
 	public ResponseEntity<List<CandidateUserResDto>> getAll() {
 		final List<CandidateUserResDto> response = candidateUserService.getAll();
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/detail")
+	public ResponseEntity<CandidateUserResDto> getById(@Param("id") String id) {
+		final CandidateUserResDto response = candidateUserService.getById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

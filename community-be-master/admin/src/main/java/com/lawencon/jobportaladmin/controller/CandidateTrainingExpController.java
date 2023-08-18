@@ -24,7 +24,7 @@ import com.lawencon.jobportaladmin.dto.candidatetrainingexp.CandidateTrainingExp
 import com.lawencon.jobportaladmin.service.CandidateTrainingExpService;
 
 @RestController
-@RequestMapping("training-experiences")
+@RequestMapping("candidate-trainings")
 public class CandidateTrainingExpController {
 
 	@Autowired

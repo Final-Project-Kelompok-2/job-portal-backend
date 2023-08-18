@@ -30,7 +30,7 @@ public class CandidateFamilyDao extends AbstractJpaDao{
 				sql.append ("	degree_name, ");
 				sql.append ("	occupation, ");
 				sql.append ("	birth_date, ");
-				sql.append ("	birth_place, ");
+				sql.append ("	birth_place ");
 				sql.append ("FROM  ");
 				sql.append ("	t_candidate_family tcf  ");
 				sql.append ("WHERE  ");
