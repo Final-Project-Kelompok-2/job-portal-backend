@@ -6,7 +6,6 @@ public class CandidateDocumentResDto {
 	private String docName;
 	private String fileId;
 	private String fileTypeId;
-
 	private String fileTypeName;
 
 	public String getId() {
