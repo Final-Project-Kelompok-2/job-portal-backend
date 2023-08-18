@@ -32,4 +32,14 @@ public class FileTypeService {
 
 	}
 
+	public FileTypesResDto getByCode(String code) {
+		final FileTypesResDto fileTypeDto = new FileTypesResDto();
+		final FileType fileType = fileTypeDao.getByCode(code);
+		
+		fileTypeDto.setId(fileType.getId());
+		fileTypeDto.setTypeCode(fileType.getTypeCode());
+		fileTypeDto.setTypeName(fileType.getTypeName());
+		
+		return fileTypeDto;
+	}
 }
