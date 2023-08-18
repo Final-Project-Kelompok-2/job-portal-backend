@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import com.lawencon.jobportaladmin.dao.ProfileDao;
 import com.lawencon.jobportaladmin.dao.RoleDao;
 import com.lawencon.jobportaladmin.dao.UserDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.changepassword.ChangePasswordReqDto;
 import com.lawencon.jobportaladmin.dto.login.LoginReqDto;
 import com.lawencon.jobportaladmin.dto.login.LoginResDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
@@ -29,6 +32,7 @@ import com.lawencon.jobportaladmin.model.Profile;
 import com.lawencon.jobportaladmin.model.Role;
 import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.GenerateCode;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -58,6 +62,8 @@ public class UserService implements UserDetailsService{
 	@Autowired
 	private EmailService emailService;
 	
+	@Autowired
+	private PrincipalService<String> principalService;
 	
 	public LoginResDto login(LoginReqDto loginData) {
 		final User user = userDao.getByUsername(loginData.getUserEmail());
@@ -76,6 +82,33 @@ public class UserService implements UserDetailsService{
 		}
 		
 		return loginRes;
+	}
+	
+	public UpdateResDto changePassword(ChangePasswordReqDto data) {
+		final UpdateResDto resDto = new UpdateResDto();
+		User user = userDao.getById(User.class, principalService.getAuthPrincipal());
+		try {
+			em().getTransaction().begin();
+			if(passwordEncoder.matches(data.getOldPassword(),user.getUserPassword())) {
+				final String encodedPassword = passwordEncoder.encode(data.getNewPassword());
+				user.setUserPassword(encodedPassword);
+				user = userDao.save(user);
+				resDto.setVersion(user.getVersion());
+				resDto.setMessage("Update Password Success");
+				em().getTransaction().commit();
+			}
+			else {
+				em().getTransaction().rollback();
+				resDto.setMessage("Update Password Failed");
+			}
+			
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		
+		return resDto;
 	}
 	
 	public InsertResDto registerUser(UserInsertReqDto userData) {
