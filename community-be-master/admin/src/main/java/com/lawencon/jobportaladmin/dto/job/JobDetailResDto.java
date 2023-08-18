@@ -1,6 +1,6 @@
 package com.lawencon.jobportaladmin.dto.job;
 
-public class JobResDto {
+public class JobDetailResDto {
 
 	private String id;
 	private String jobName;
@@ -8,9 +8,12 @@ public class JobResDto {
 	private String address;
 	private String startDate;
 	private String endDate;
+	private String description;
 	private String expectedSalaryMin;
 	private String expectedSalaryMax;
 	private String employementTypeName;
+	private String fileId;
+	private String companyPhotoId;
 
 	public String getId() {
 		return id;
@@ -60,6 +63,14 @@ public class JobResDto {
 		this.endDate = endDate;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getExpectedSalaryMin() {
 		return expectedSalaryMin;
 	}
@@ -84,4 +95,19 @@ public class JobResDto {
 		this.employementTypeName = employementTypeName;
 	}
 
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+
+	public String getCompanyPhotoId() {
+		return companyPhotoId;
+	}
+
+	public void setCompanyPhotoId(String companyPhotoId) {
+		this.companyPhotoId = companyPhotoId;
+	}
 }
