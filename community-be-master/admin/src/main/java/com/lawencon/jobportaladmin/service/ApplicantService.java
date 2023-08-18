@@ -83,10 +83,11 @@ public class ApplicantService {
 
 			final Job job = jobDao.getByCode(applicantData.getJobCode());
 			newApplicant.setJob(job);
-
+			
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(applicantData.getStatusCode());
+			
 			newApplicant.setStatus(hiringStatus);
-
+			
 			final CandidateUser candidateUser = candidateUserDao.getByEmail(applicantData.getCandidateEmail());
 			newApplicant.setCandidate(candidateUser);
 
