@@ -28,6 +28,7 @@ import com.lawencon.jobportaladmin.dao.QuestionDao;
 import com.lawencon.jobportaladmin.dao.UserDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.job.JobDetailResDto;
 import com.lawencon.jobportaladmin.dto.job.JobInsertReqDto;
 import com.lawencon.jobportaladmin.dto.job.JobResDto;
 import com.lawencon.jobportaladmin.dto.job.JobUpdateReqDto;
@@ -96,18 +97,16 @@ public class JobService {
 			job.setAddress(jobs.get(i).getCompany().getAddress());
 			job.setStartDate(jobs.get(i).getStartDate().toString());
 			job.setEndDate(jobs.get(i).getEndDate().toString());
-			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
-			job.setFileId(jobs.get(i).getJobPicture().getId());
 
 			jobsDto.add(job);
 		}
 
 		return jobsDto;
 	}
-	
+
 	public List<JobResDto> getByCompany(String code) {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByCompany(code);
@@ -120,11 +119,9 @@ public class JobService {
 			job.setAddress(jobs.get(i).getCompany().getAddress());
 			job.setStartDate(jobs.get(i).getStartDate().toString());
 			job.setEndDate(jobs.get(i).getEndDate().toString());
-			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
-			job.setFileId(jobs.get(i).getJobPicture().getId());
 
 			jobsDto.add(job);
 		}
@@ -144,11 +141,9 @@ public class JobService {
 			job.setAddress(jobs.get(i).getCompany().getAddress());
 			job.setStartDate(jobs.get(i).getStartDate().toString());
 			job.setEndDate(jobs.get(i).getEndDate().toString());
-			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
-			job.setFileId(jobs.get(i).getJobPicture().getId());
 			jobsDto.add(job);
 		}
 		return jobsDto;
@@ -157,7 +152,6 @@ public class JobService {
 	public InsertResDto insertJob(JobInsertReqDto jobDto) {
 
 		InsertResDto result = new InsertResDto();
-
 
 		try {
 			em().getTransaction().begin();
@@ -193,7 +187,6 @@ public class JobService {
 			job.setJobPicture(file);
 			job = jobDao.save(job);
 
-
 			if (jobDto.getBenefits() != null) {
 				for (int i = 0; i < jobDto.getBenefits().size(); i++) {
 
@@ -206,8 +199,7 @@ public class JobService {
 				}
 			}
 
-
-			if (jobDto.getQuestions() !=null) {
+			if (jobDto.getQuestions() != null) {
 				for (int i = 0; i < jobDto.getQuestions().size(); i++) {
 
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
@@ -306,11 +298,9 @@ public class JobService {
 			job.setAddress(jobs.get(i).getCompany().getAddress());
 			job.setStartDate(jobs.get(i).getStartDate().toString());
 			job.setEndDate(jobs.get(i).getEndDate().toString());
-			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
-			job.setFileId(jobs.get(i).getJobPicture().getId());
 
 			jobsDto.add(job);
 		}
@@ -330,15 +320,34 @@ public class JobService {
 			job.setAddress(jobs.get(i).getCompany().getAddress());
 			job.setStartDate(jobs.get(i).getStartDate().toString());
 			job.setEndDate(jobs.get(i).getEndDate().toString());
-			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
-			job.setFileId(jobs.get(i).getJobPicture().getId());
 
 			jobsDto.add(job);
 		}
 
 		return jobsDto;
 	}
+
+	public JobDetailResDto getDetail(String id) {
+		final JobDetailResDto job = new JobDetailResDto();
+		final Job jobDb = jobDao.getById(Job.class, id);
+		
+		job.setId(jobDb.getId());
+		job.setJobName(jobDb.getJobName());
+		job.setCompanyName(jobDb.getCompany().getCompanyName());
+		job.setAddress(jobDb.getCompany().getAddress());
+		job.setStartDate(jobDb.getStartDate().toString());
+		job.setDescription(jobDb.getDescription());
+		job.setEndDate(jobDb.getEndDate().toString());
+		job.setExpectedSalaryMin(jobDb.getExpectedSalaryMin().toString());
+		job.setExpectedSalaryMax(jobDb.getExpectedSalaryMin().toString());
+		job.setEmployementTypeName(jobDb.getEmploymentType().getEmploymentTypeName());
+		job.setFileId(jobDb.getJobPicture().getId());
+		job.setCompanyPhotoId(jobDb.getCompany().getPhoto().getId());
+		
+		return job;
+	}
+	
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.job.JobDetailResDto;
 import com.lawencon.jobportaladmin.dto.job.JobInsertReqDto;
 import com.lawencon.jobportaladmin.dto.job.JobResDto;
 import com.lawencon.jobportaladmin.service.JobService;
@@ -21,7 +22,6 @@ import com.lawencon.jobportaladmin.service.JobService;
 @RequestMapping("jobs")
 public class JobController {
 
-	
 	@Autowired
 	private JobService jobService;
 	
@@ -46,6 +46,12 @@ public class JobController {
 	@GetMapping("/company")
 	public ResponseEntity<List<JobResDto>> getByCompany(@RequestParam String code) {
 		final List<JobResDto> data = jobService.getByCompany(code);
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
+	
+	@GetMapping("/detail")
+	public ResponseEntity<JobDetailResDto> getDetail(@RequestParam String id) {
+		final JobDetailResDto data = jobService.getDetail(id);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 	
