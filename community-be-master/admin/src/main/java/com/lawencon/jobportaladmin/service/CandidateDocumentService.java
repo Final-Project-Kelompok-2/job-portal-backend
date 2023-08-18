@@ -49,7 +49,6 @@ public class CandidateDocumentService {
 		final List<CandidateDocumentResDto> candidateDocumentResList = new ArrayList<>();
 		for(int i = 0 ; i < candidateDocuments.size() ; i++) {
 			final CandidateDocumentResDto document = new CandidateDocumentResDto();
-			document.setCandidateId(candidateDocuments.get(i).getCandidateUser().getUserEmail());
 			document.setDocName(candidateDocuments.get(i).getDocName());
 			document.setId(candidateDocuments.get(i).getId());
 			document.setFileId(candidateDocuments.get(i).getFile().getId());

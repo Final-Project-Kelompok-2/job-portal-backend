@@ -24,7 +24,6 @@ public class HiringStatusDao extends AbstractJpaDao{
 		sqlb.append(" HiringStatus hs ");
 		sqlb.append("WHERE ");
 		sqlb.append(" hs.statusCode = :statusCode");
-		
 		final String sql = "SELECT "
 				+ " hs.id, "
 				+ " hs.statusCode, "

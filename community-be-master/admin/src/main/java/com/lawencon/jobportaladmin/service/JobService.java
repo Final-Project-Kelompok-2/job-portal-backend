@@ -342,7 +342,7 @@ public class JobService {
 		job.setDescription(jobDb.getDescription());
 		job.setEndDate(jobDb.getEndDate().toString());
 		job.setExpectedSalaryMin(jobDb.getExpectedSalaryMin().toString());
-		job.setExpectedSalaryMax(jobDb.getExpectedSalaryMin().toString());
+		job.setExpectedSalaryMax(jobDb.getExpectedSalaryMax().toString());
 		job.setEmployementTypeName(jobDb.getEmploymentType().getEmploymentTypeName());
 		job.setFileId(jobDb.getJobPicture().getId());
 		job.setCompanyPhotoId(jobDb.getCompany().getPhoto().getId());
