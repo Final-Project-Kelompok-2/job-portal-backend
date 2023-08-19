@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -28,7 +29,7 @@ public class CandidateProfile extends BaseEntity {
 	private String experience;
 
 	@Column(name = "expected_salary", nullable = false)
-	private Float expectedSalary;
+	private BigDecimal expectedSalary;
 
 	@Column(name = "phone_number", length = 20, nullable = false)
 	private String phoneNumber;
@@ -95,14 +96,6 @@ public class CandidateProfile extends BaseEntity {
 
 	public void setExperience(String experience) {
 		this.experience = experience;
-	}
-
-	public Float getExpectedSalary() {
-		return expectedSalary;
-	}
-
-	public void setExpectedSalary(Float expectedSalary) {
-		this.expectedSalary = expectedSalary;
 	}
 
 	public String getPhoneNumber() {
@@ -183,6 +176,14 @@ public class CandidateProfile extends BaseEntity {
 
 	public void setCandidateStatus(CandidateStatus candidateStatus) {
 		this.candidateStatus = candidateStatus;
+	}
+
+	public BigDecimal getExpectedSalary() {
+		return expectedSalary;
+	}
+
+	public void setExpectedSalary(BigDecimal expectedSalary) {
+		this.expectedSalary = expectedSalary;
 	}
 
 }

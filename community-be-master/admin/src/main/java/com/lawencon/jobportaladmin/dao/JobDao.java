@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.dao;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import com.lawencon.jobportaladmin.model.EmploymentType;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.User;
+import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 
 @Repository
 public class JobDao extends AbstractJpaDao{
@@ -109,8 +111,8 @@ public class JobDao extends AbstractJpaDao{
 				pic.setId(jobArr[7].toString());
 				job.setPic(pic);
 				
-				job.setExpectedSalaryMin(Integer.valueOf(jobArr[8].toString()));
-				job.setExpectedSalaryMax(Integer.valueOf(jobArr[9].toString()));
+				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobArr[8].toString()));
+				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobArr[9].toString()));
 				
 				final EmploymentType type = new EmploymentType();
 				type.setEmploymentTypeName(jobArr[10].toString());
@@ -192,8 +194,8 @@ public class JobDao extends AbstractJpaDao{
 				
 				job.setStartDate(LocalDate.parse(jobArr[4].toString()));
 				job.setEndDate(LocalDate.parse(jobArr[5].toString()));
-				job.setExpectedSalaryMin(Integer.valueOf(jobArr[6].toString()));
-				job.setExpectedSalaryMax(Integer.valueOf(jobArr[7].toString()));
+				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobArr[6].toString()));
+				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobArr[7].toString()));
 				
 				final EmploymentType type = new EmploymentType();
 				type.setEmploymentTypeName(jobArr[8].toString());
@@ -292,8 +294,8 @@ public class JobDao extends AbstractJpaDao{
 				pic.setId(jobArr[7].toString());
 				job.setPic(pic);
 				
-				job.setExpectedSalaryMin(Integer.valueOf(jobArr[8].toString()));
-				job.setExpectedSalaryMax(Integer.valueOf(jobArr[9].toString()));
+				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobArr[8].toString()));
+				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobArr[9].toString()));
 				
 				final EmploymentType type = new EmploymentType();
 				type.setEmploymentTypeName(jobArr[10].toString());
@@ -393,8 +395,8 @@ public class JobDao extends AbstractJpaDao{
 				pic.setId(jobArr[7].toString());
 				job.setPic(pic);
 				
-				job.setExpectedSalaryMin(Integer.valueOf(jobArr[8].toString()));
-				job.setExpectedSalaryMax(Integer.valueOf(jobArr[9].toString()));
+				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobArr[8].toString()));
+				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobArr[9].toString()));
 				
 				final EmploymentType type = new EmploymentType();
 				type.setEmploymentTypeName(jobArr[10].toString());

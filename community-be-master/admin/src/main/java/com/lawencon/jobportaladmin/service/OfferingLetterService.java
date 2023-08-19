@@ -30,6 +30,7 @@ import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.HiringStatus;
 import com.lawencon.jobportaladmin.model.OfferingLetter;
 import com.lawencon.jobportaladmin.model.OwnedBenefit;
+import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 
 @Service
 public class OfferingLetterService {
@@ -72,7 +73,7 @@ public class OfferingLetterService {
 			offeringData.setApplicantCode(applicant.getApplicantCode());
 			
 			offeringLetter.setAddress(offeringData.getAddress());
-			offeringLetter.setSalary(offeringData.getSalary());
+			offeringLetter.setSalary(BigDecimalUtil.parseToBigDecimal(offeringData.getSalary().toString()));
 			offeringLetter.setApplicant(applicant);
 			
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.OFFERING.statusCode);

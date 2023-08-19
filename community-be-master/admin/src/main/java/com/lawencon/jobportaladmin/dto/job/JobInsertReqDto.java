@@ -16,8 +16,8 @@ public class JobInsertReqDto {
 	private String description;
 	private String hrId;
 	private String picId;
-	private Integer expectedSalaryMin;
-	private Integer expectedSalaryMax;
+	private String expectedSalaryMin;
+	private String expectedSalaryMax;
 	private List<OwnedBenefitInsertReqDto> benefits;
 	private List<AssignedJobQuestionInsertReqDto> questions;
 	private String employmentTypeId;
@@ -105,22 +105,6 @@ public class JobInsertReqDto {
 		this.picId = picId;
 	}
 
-	public Integer getExpectedSalaryMin() {
-		return expectedSalaryMin;
-	}
-
-	public void setExpectedSalaryMin(Integer expectedSalaryMin) {
-		this.expectedSalaryMin = expectedSalaryMin;
-	}
-
-	public Integer getExpectedSalaryMax() {
-		return expectedSalaryMax;
-	}
-
-	public void setExpectedSalaryMax(Integer expectedSalaryMax) {
-		this.expectedSalaryMax = expectedSalaryMax;
-	}
-
 	public String getJobCode() {
 		return jobCode;
 	}
@@ -159,6 +143,22 @@ public class JobInsertReqDto {
 
 	public void setQuestions(List<AssignedJobQuestionInsertReqDto> questions) {
 		this.questions = questions;
+	}
+
+	public String getExpectedSalaryMin() {
+		return expectedSalaryMin;
+	}
+
+	public void setExpectedSalaryMin(String expectedSalaryMin) {
+		this.expectedSalaryMin = expectedSalaryMin;
+	}
+
+	public String getExpectedSalaryMax() {
+		return expectedSalaryMax;
+	}
+
+	public void setExpectedSalaryMax(String expectedSalaryMax) {
+		this.expectedSalaryMax = expectedSalaryMax;
 	}
 
 

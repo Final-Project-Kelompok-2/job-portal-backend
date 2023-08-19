@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ import com.lawencon.jobportaladmin.model.FileType;
 import com.lawencon.jobportaladmin.model.MaritalStatus;
 import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Religion;
+import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -130,7 +132,7 @@ public class CandidateUserService {
 			candidateProfile.setFullname(candidateData.getFullname());
 			candidateProfile.setGender(candidateData.getGender());
 			candidateProfile.setExperience(candidateData.getExperience());
-			candidateProfile.setExpectedSalary(Float.valueOf(candidateData.getExpectedSalary().toString()));
+			candidateProfile.setExpectedSalary(BigDecimal.valueOf(Long.valueOf(candidateData.getExpectedSalary())));
 			candidateProfile.setPhoneNumber(candidateData.getPhoneNumber());
 			candidateProfile.setMobileNumber(candidateData.getMobileNumber());
 			candidateProfile.setNik(candidateData.getNik());
@@ -364,7 +366,7 @@ public class CandidateUserService {
 					work.setAddress(candidateData.getCandidateWorkExp().get(i).getAddress());
 					work.setResponsibility(candidateData.getCandidateWorkExp().get(i).getResponsibility());
 					work.setReasonLeave(candidateData.getCandidateWorkExp().get(i).getReasonLeave());
-					work.setLastSalary(candidateData.getCandidateWorkExp().get(i).getLastSalary());
+					work.setLastSalary(BigDecimalUtil.parseToBigDecimal(candidateData.getCandidateWorkExp().get(i).getLastSalary().toString()));
 					work.setStartDate(
 							LocalDate.parse(candidateData.getCandidateWorkExp().get(i).getStartDate().toString()));
 					work.setEndDate(
@@ -438,7 +440,7 @@ public class CandidateUserService {
 			candidateDto.setFullname(candidates.get(i).getCandidateProfile().getFullname());
 			candidateDto.setGender(candidates.get(i).getCandidateProfile().getGender());
 			candidateDto.setExperience(candidates.get(i).getCandidateProfile().getExperience());
-			candidateDto.setExpectedSalary(candidates.get(i).getCandidateProfile().getExpectedSalary());
+			candidateDto.setExpectedSalary(BigDecimal.valueOf(Long.valueOf(candidates.get(i).getCandidateProfile().getExpectedSalary().toString())));
 			candidateDto.setPhoneNumber(candidates.get(i).getCandidateProfile().getPhoneNumber());
 			candidateDto.setMobileNumber(candidates.get(i).getCandidateProfile().getMobileNumber());
 			candidateDto.setNik(candidates.get(i).getCandidateProfile().getNik());

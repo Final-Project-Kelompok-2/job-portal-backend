@@ -1,5 +1,7 @@
 package com.lawencon.jobportaladmin.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -10,17 +12,16 @@ import com.lawencon.base.BaseEntity;
 
 @Entity
 @Table(name = "t_offering_letter")
-public class OfferingLetter extends BaseEntity{
+public class OfferingLetter extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "applicant_id")
 	private Applicant applicant;
-
 
 	@Column(name = "address", length = 50, nullable = false)
 	private String address;
 
 	@Column(name = "salary", nullable = false)
-	private Integer salary;
+	private BigDecimal salary;
 
 	public Applicant getApplicant() {
 		return applicant;
@@ -38,11 +39,12 @@ public class OfferingLetter extends BaseEntity{
 		this.address = address;
 	}
 
-	public Integer getSalary() {
+	public BigDecimal getSalary() {
 		return salary;
 	}
 
-	public void setSalary(Integer salary) {
+	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
 	}
+
 }
