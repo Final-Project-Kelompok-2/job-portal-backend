@@ -1,5 +1,7 @@
 package com.lawencon.jobportaladmin.dto.candidateuser;
 
+import java.math.BigDecimal;
+
 public class CandidateUserResDto {
 
 	private String id;
@@ -9,7 +11,7 @@ public class CandidateUserResDto {
 	private String fullname;
 	private String gender;
 	private String experience;
-	private Float expectedSalary;
+	private BigDecimal expectedSalary;
 	private String phoneNumber;
 	private String mobileNumber;
 	private String nik;
@@ -81,13 +83,7 @@ public class CandidateUserResDto {
 		this.experience = experience;
 	}
 
-	public Float getExpectedSalary() {
-		return expectedSalary;
-	}
-
-	public void setExpectedSalary(Float expectedSalary) {
-		this.expectedSalary = expectedSalary;
-	}
+	
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -199,6 +195,14 @@ public class CandidateUserResDto {
 
 	public void setCandidateStatus(String candidateStatus) {
 		this.candidateStatus = candidateStatus;
+	}
+
+	public BigDecimal getExpectedSalary() {
+		return expectedSalary;
+	}
+
+	public void setExpectedSalary(BigDecimal expectedSalary) {
+		this.expectedSalary = expectedSalary;
 	}	
 
 }

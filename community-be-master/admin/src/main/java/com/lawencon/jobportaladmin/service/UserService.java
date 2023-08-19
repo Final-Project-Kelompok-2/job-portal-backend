@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.jobportaladmin.constant.PersonTypes;
 import com.lawencon.jobportaladmin.dao.FileDao;
 import com.lawencon.jobportaladmin.dao.PersonTypeDao;
 import com.lawencon.jobportaladmin.dao.ProfileDao;
@@ -128,7 +129,7 @@ public class UserService implements UserDetailsService{
 
 			newUser.setUserPassword(encodedPassword);
 			
-			final PersonType personType = personTypeDao.getById(PersonType.class, userData.getPersonTypeId());
+			final PersonType personType = personTypeDao.getByCode(PersonTypes.EMPLOYEE.typeCode);
 			
 			Profile profile = new Profile();
 			profile.setFullName(userData.getFullName());

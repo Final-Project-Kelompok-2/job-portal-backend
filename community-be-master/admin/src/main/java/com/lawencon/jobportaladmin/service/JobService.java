@@ -41,6 +41,7 @@ import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.OwnedBenefit;
 import com.lawencon.jobportaladmin.model.Question;
 import com.lawencon.jobportaladmin.model.User;
+import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
@@ -173,8 +174,8 @@ public class JobService {
 			final User pic = userDao.getById(User.class, jobDto.getPicId());
 			job.setHr(hr);
 			job.setPic(pic);
-			job.setExpectedSalaryMin(jobDto.getExpectedSalaryMin());
-			job.setExpectedSalaryMax(jobDto.getExpectedSalaryMax());
+			job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMin()));
+			job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMax()));
 
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);
@@ -255,8 +256,8 @@ public class JobService {
 			job.setStartDate(LocalDate.parse(jobDto.getStartDate()));
 			job.setEndDate(LocalDate.parse(jobDto.getEndDate()));
 			job.setDescription(jobDto.getDescription());
-			job.setExpectedSalaryMin(Integer.valueOf(jobDto.getExpectedSalaryMin()));
-			job.setExpectedSalaryMax(Integer.valueOf(jobDto.getExpectedSalaryMax()));
+			job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMin()));
+			job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMax()));
 
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);

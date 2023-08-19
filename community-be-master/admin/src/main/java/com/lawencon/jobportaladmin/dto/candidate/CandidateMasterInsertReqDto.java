@@ -19,7 +19,7 @@ public class CandidateMasterInsertReqDto {
 	private String fullname;
 	private String gender;
 	private String experience;
-	private Float expectedSalary;
+	private String expectedSalary;
 	private String phoneNumber;
 	private String mobileNumber;
 	private String nik;
@@ -80,14 +80,6 @@ public class CandidateMasterInsertReqDto {
 
 	public void setExperience(String experience) {
 		this.experience = experience;
-	}
-
-	public Float getExpectedSalary() {
-		return expectedSalary;
-	}
-
-	public void setExpectedSalary(Float expectedSalary) {
-		this.expectedSalary = expectedSalary;
 	}
 
 	public String getPhoneNumber() {
@@ -256,6 +248,14 @@ public class CandidateMasterInsertReqDto {
 
 	public void setCandidateWorkExp(List<CandidateWorkExpInsertReqDto> candidateWorkExp) {
 		this.candidateWorkExp = candidateWorkExp;
+	}
+
+	public String getExpectedSalary() {
+		return expectedSalary;
+	}
+
+	public void setExpectedSalary(String expectedSalary) {
+		this.expectedSalary = expectedSalary;
 	}
 
 }

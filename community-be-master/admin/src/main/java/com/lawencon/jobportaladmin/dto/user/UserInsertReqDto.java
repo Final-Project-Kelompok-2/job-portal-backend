@@ -3,7 +3,6 @@ package com.lawencon.jobportaladmin.dto.user;
 public class UserInsertReqDto {
 	private String userEmail;
 	private String roleId;
-	private String personTypeId;
 	private String fullName;
 	private String address;
 	private String phoneNumber;
@@ -65,14 +64,6 @@ public class UserInsertReqDto {
 
 	public void setRoleId(String roleId) {
 		this.roleId = roleId;
-	}
-
-	public String getPersonTypeId() {
-		return personTypeId;
-	}
-
-	public void setPersonTypeId(String personTypeId) {
-		this.personTypeId = personTypeId;
 	}
 
 }
