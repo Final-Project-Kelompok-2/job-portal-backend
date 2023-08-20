@@ -62,6 +62,7 @@ public class LoginController {
 		loginRes.setFullName(userDb.getFullName());
 		loginRes.setRoleCode(userDb.getRoleCode());
 		loginRes.setProfileId(userDb.getProfileId());
+		loginRes.setPhotoId(userDb.getPhotoId());
 		loginRes.setToken(response.getBody());
 		
 		return new ResponseEntity<>(loginRes, HttpStatus.OK);

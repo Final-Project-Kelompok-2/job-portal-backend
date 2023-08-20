@@ -133,10 +133,10 @@ public class JobService {
 			Job newJob = new Job();
 			newJob.setJobName(job.getJobName());
 			newJob.setJobCode(job.getJobCode());
-			
-				final Company company = companyDao.getByCode(job.getCompanyCode());
+
+			final Company company = companyDao.getByCode(job.getCompanyCode());
 			newJob.setCompany(company);
-			
+
 			newJob.setStartDate(DateUtil.parseStringToLocalDate(job.getStartDate().toString()));
 			newJob.setEndDate(DateUtil.parseStringToLocalDate(job.getEndDate().toString()));
 			newJob.setDescription(job.getDescription());
@@ -153,10 +153,10 @@ public class JobService {
 			photo = fileDao.save(photo);
 			newJob.setJobPicture(photo);
 			newJob = jobDao.save(newJob);
-			
-			if(job.getQuestions()!=null) {
 
-				for(int i=0;i<job.getQuestions().size();i++) {
+			if (job.getQuestions() != null) {
+
+				for (int i = 0; i < job.getQuestions().size(); i++) {
 					final Question question = questionDao.getByCode(job.getQuestions().get(i).getQuestionCode());
 					AssignedJobQuestion assignQuestion = new AssignedJobQuestion();
 					assignQuestion.setQuestion(question);
@@ -164,7 +164,7 @@ public class JobService {
 					assignedJobQuestionDao.save(assignQuestion);
 				}
 			}
-			
+
 			insertResDto.setId(newJob.getId());
 			insertResDto.setMessage("Insert job success");
 			em().getTransaction().commit();
@@ -175,6 +175,25 @@ public class JobService {
 		}
 
 		return insertResDto;
+
+	}
+
+	public JobResDto getById(String jobId) {
+		final Job job = jobDao.getById(Job.class, jobId);
+		final JobResDto jobDto = new JobResDto();
+
+		jobDto.setId(job.getId());
+		jobDto.setJobName(job.getJobName());
+		jobDto.setCompanyName(job.getCompany().getCompanyName());
+		jobDto.setAddress(job.getCompany().getAddress());
+		jobDto.setStartDate(job.getStartDate().toString());
+		jobDto.setEndDate(job.getEndDate().toString());
+		jobDto.setDescription(job.getDescription());
+		jobDto.setExpectedSalaryMin(job.getExpectedSalaryMin().toString());
+		jobDto.setExpectedSalaryMax(job.getExpectedSalaryMin().toString());
+		jobDto.setEmployementTypeName(job.getEmploymentType().getEmploymentTypeName());
+		jobDto.setFileId(job.getJobPicture().getId());
+		return jobDto;
 
 	}
 

@@ -11,6 +11,4 @@ public class Auth {
 		SpringApplication.run(Auth.class, args);
 	
 	}
-	
-	
 }
