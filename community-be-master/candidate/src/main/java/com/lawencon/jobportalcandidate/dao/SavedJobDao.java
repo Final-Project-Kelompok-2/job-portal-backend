@@ -124,4 +124,30 @@ public class SavedJobDao extends AbstractJpaDao {
 		
 		return savedjobs;
 	}
+	
+	
+	public Boolean checkBookmark(String jobId, String person) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT tsj.id FROM t_saved_job tsj WHERE tsj.job_id = :jobId AND tsj.user_id = :person");
+		
+		
+		Boolean result = false;
+		try {
+			final Object savedJobObj = this.em().createNativeQuery(sqlb.toString())
+					.setParameter("jobId", jobId)
+					.setParameter("person", person).getSingleResult();
+			
+			final Object[] savedJobArr = (Object[]) savedJobObj;
+			
+		if(savedJobArr.length>0) {
+			result= true;
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+		return result;
+		
+	}
 }
