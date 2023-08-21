@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lawencon.auth.dto.ErrorResDto;
 import com.lawencon.auth.service.JwtService;
 
 @Component
@@ -51,9 +52,9 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 				} catch (Exception e) {
 					e.printStackTrace() ;
 					response.setStatus(401);
-//					final ErrorResDto<String> errorRes = new ErrorResDto<>();
-//					errorRes.setMessage("token expired");
-//					response.getWriter().append(new ObjectMapper().writeValueAsString(errorRes));
+					final ErrorResDto<String> errorRes = new ErrorResDto<>();
+					errorRes.setMessage("token expired");
+					response.getWriter().append(new ObjectMapper().writeValueAsString(errorRes));
 					return;
 				}
 			} else {	
