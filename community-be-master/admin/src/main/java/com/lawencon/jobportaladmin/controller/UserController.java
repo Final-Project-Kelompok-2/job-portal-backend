@@ -50,4 +50,10 @@ public class UserController {
 		final UpdateResDto response = userService.changePassword(data);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	@GetMapping("/detail")
+	public ResponseEntity<UsersResDto>getById(@RequestParam String id){
+		final UsersResDto response = userService.getById(id);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
 }

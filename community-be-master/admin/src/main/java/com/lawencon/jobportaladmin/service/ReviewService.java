@@ -82,10 +82,13 @@ public class ReviewService extends AbstractJpaDao {
 	public ReviewResDto getByApplicant(String applicantId) {
 		final Review review = reviewDao.getByApplicant(applicantId);
 		final ReviewResDto reviewDto = new ReviewResDto();
+		if(review.getNotes() != null) {
+			reviewDto.setNotes(review.getNotes());			
+		}
+		if(review.getScore() != null) {
+			reviewDto.setScore(review.getScore().toString());			
+		}
 
-		reviewDto.setNotes(review.getNotes());
-
-		reviewDto.setScore(review.getScore().toString());
 
 		return reviewDto;
 	}

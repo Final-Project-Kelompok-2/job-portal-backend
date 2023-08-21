@@ -20,7 +20,8 @@ public class AssesmentDao extends AbstractJpaDao {
 	}
 	public Assesment getByApplicant(String applicantId) {
 	
-		final String sql = "SELECT ta.assesment_date, "
+		final String sql = "SELECT ta.id, "
+				+ " ta.assesment_date, "
 				+ " ta.assesment_location, "
 				+ " ta.notes  "
 				+ " FROM "
@@ -39,11 +40,12 @@ public class AssesmentDao extends AbstractJpaDao {
 			
 			if (assArr.length > 0) {
 				assesment = new Assesment();
-				assesment.setAssesmentDate(Timestamp.valueOf(assArr[0].toString()).toLocalDateTime());
-				assesment.setAssesmentLocation(assArr[1].toString());
-				if(assArr[2]!=null) {
+				assesment.setId(assArr[0].toString());
+				assesment.setAssesmentDate(Timestamp.valueOf(assArr[1].toString()).toLocalDateTime());
+				assesment.setAssesmentLocation(assArr[2].toString());
+				if(assArr[3]!=null) {
 					
-					assesment.setNotes(assArr[2].toString());
+					assesment.setNotes(assArr[3].toString());
 				}
 			}
 

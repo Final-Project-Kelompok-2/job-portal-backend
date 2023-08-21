@@ -38,6 +38,7 @@ public class AssesmentController {
 		final AssesmentResDto response= assesmentService.getByApplicant(applicantId);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
+		
 	
 	@PatchMapping
 	public ResponseEntity<UpdateResDto> updateNotes(@RequestBody AssesmentUpdateReqDto data){
