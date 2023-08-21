@@ -346,6 +346,8 @@ public class JobService {
 		job.setExpectedSalaryMax(jobDb.getExpectedSalaryMax().toString());
 		job.setEmployementTypeName(jobDb.getEmploymentType().getEmploymentTypeName());
 		job.setFileId(jobDb.getJobPicture().getId());
+		job.setPicId(jobDb.getPic().getId());
+		job.setHrId(jobDb.getHr().getId());
 		job.setCompanyPhotoId(jobDb.getCompany().getPhoto().getId());
 		
 		return job;

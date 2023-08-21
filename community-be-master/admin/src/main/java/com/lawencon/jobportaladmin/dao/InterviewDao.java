@@ -21,7 +21,7 @@ public class InterviewDao extends AbstractJpaDao {
 		final StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT ti.interview_date, ti.interview_location ");
 		sql.append(" FROM t_interview ti WHERE ti.applicant_id = :id ");
-
+		System.out.println("ID Applicant => " + id);
 		try {
 			final Object interviewObj = em().createNativeQuery(sql.toString()).setParameter("id", id).getSingleResult();
 

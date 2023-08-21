@@ -444,8 +444,11 @@ public class CandidateUserService {
 			candidateDto.setFullname(candidates.get(i).getCandidateProfile().getFullname());
 			candidateDto.setGender(candidates.get(i).getCandidateProfile().getGender());
 			candidateDto.setExperience(candidates.get(i).getCandidateProfile().getExperience());
-			candidateDto.setExpectedSalary(BigDecimal
-					.valueOf(Long.valueOf(candidates.get(i).getCandidateProfile().getExpectedSalary().toString())));
+			if(candidates.get(i).getCandidateProfile().getExpectedSalary() != null) {
+				candidateDto.setExpectedSalary(BigDecimal
+						.valueOf(Long.valueOf(candidates.get(i).getCandidateProfile().getExpectedSalary().toString())));
+			}
+				
 			candidateDto.setPhoneNumber(candidates.get(i).getCandidateProfile().getPhoneNumber());
 			candidateDto.setMobileNumber(candidates.get(i).getCandidateProfile().getMobileNumber());
 			candidateDto.setNik(candidates.get(i).getCandidateProfile().getNik());

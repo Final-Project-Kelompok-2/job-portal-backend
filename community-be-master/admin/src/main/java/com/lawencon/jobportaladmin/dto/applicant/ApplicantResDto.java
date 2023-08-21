@@ -11,6 +11,7 @@ public class ApplicantResDto {
 	private String statusName;
 	private String candidateId;
 	private String candidateName;
+	private String statusCode;
 
 	public String getId() {
 		return id;
@@ -78,8 +79,6 @@ public class ApplicantResDto {
 		this.statusName = statusName;
 	}
 	
-	
-
 	public String getCandidateId() {
 		return candidateId;
 	}
@@ -95,5 +94,15 @@ public class ApplicantResDto {
 	public void setCandidateName(String candidateName) {
 		this.candidateName = candidateName;
 	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
+	
+	
 
 }

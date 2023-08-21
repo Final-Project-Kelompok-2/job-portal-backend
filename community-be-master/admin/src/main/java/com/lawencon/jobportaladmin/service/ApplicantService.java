@@ -81,8 +81,10 @@ public class ApplicantService {
 		applicantRes.setAppliedDate(applicant.getAppliedDate().toString());
 		applicantRes.setStatusId(applicant.getStatus().getId());
 		applicantRes.setStatusName(applicant.getStatus().getStatusName());
+		applicantRes.setStatusCode(applicant.getStatus().getStatusCode());
+		System.out.println("Status Code => "+ applicant.getStatus().getStatusCode());
 		applicantRes.setJobId(applicant.getJob().getId());
-		applicantRes.setJobName(applicant.getJob().getJobName());
+		applicantRes.setJobName(applicant.getJob().getJobName());	
 		applicantRes.setCompanyName(applicant.getJob().getCompany().getCompanyName());
 		System.out.println("Candidate Id => " +applicant.getCandidate().getId());
 		applicantRes.setCandidateId(applicant.getCandidate().getId());

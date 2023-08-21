@@ -92,11 +92,10 @@ public class AssesmentService {
 
 			final List<AssignedJobQuestion> jobQuestions = assignedJobQuestionDao.getByJob(applicant.getJob().getId());
 
+			Review review = new Review();
+			review.setApplicant(applicant);
+			review = reviewDao.save(review);
 			if (jobQuestions.size() > 0) {
-				Review review = new Review();
-				review.setApplicant(applicant);
-				review = reviewDao.save(review);
-
 				for (int i = 0; i < jobQuestions.size(); i++) {
 					final ReviewDetail reviewDetail = new ReviewDetail();
 					final Question question = questionDao.getById(Question.class,
@@ -178,8 +177,10 @@ public class AssesmentService {
 
 		try {
 			em().getTransaction().begin();
+			final Applicant applicant = applicantDao.getById(Applicant.class, data.getApplicantId());
 			Assesment assesment = assesmentDao.getByApplicant(data.getApplicantId());
 			assesment.setNotes(data.getNotes());
+			assesment.setApplicant(applicant);
 			assesment = assesmentDao.saveAndFlush(assesment);
 
 			resDto.setVersion(assesment.getVersion());

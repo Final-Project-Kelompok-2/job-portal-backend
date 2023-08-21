@@ -14,6 +14,9 @@ public class JobDetailResDto {
 	private String employementTypeName;
 	private String fileId;
 	private String companyPhotoId;
+	private String picId;
+	private String hrId;
+	
 
 	public String getId() {
 		return id;
@@ -110,4 +113,22 @@ public class JobDetailResDto {
 	public void setCompanyPhotoId(String companyPhotoId) {
 		this.companyPhotoId = companyPhotoId;
 	}
+
+	public String getPicId() {
+		return picId;
+	}
+
+	public void setPicId(String picId) {
+		this.picId = picId;
+	}
+
+	public String getHrId() {
+		return hrId;
+	}
+
+	public void setHrId(String hrId) {
+		this.hrId = hrId;
+	}
+	
+	
 }
