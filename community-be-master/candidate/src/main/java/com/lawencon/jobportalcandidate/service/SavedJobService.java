@@ -65,20 +65,20 @@ public class SavedJobService {
 	}
 
 	public InsertResDto insertSavedJob(SavedJobInsertReqDto mysavedjob) {
-		final SavedJob savedjob = new SavedJob();
+		
 
 		InsertResDto result = null;
 		
 		try {
 			em().getTransaction().begin();
-			
+			 SavedJob savedjob = new SavedJob();
 			final Job job = jobDao.getById(Job.class, mysavedjob.getJobId());
 			savedjob.setJob(job);
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			savedjob.setCandidateUser(candidate);
 			savedjob.setCreatedBy(principalService.getAuthPrincipal());
 			
-			savedJobDao.save(savedjob);
+			savedjob= savedJobDao.save(savedjob);
 
 			result = new InsertResDto();
 			result.setId(savedjob.getId());
