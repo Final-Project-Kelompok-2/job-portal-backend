@@ -128,26 +128,56 @@ public class SavedJobDao extends AbstractJpaDao {
 	
 	public Boolean checkBookmark(String jobId, String person) {
 		final StringBuilder sqlb = new StringBuilder();
-		sqlb.append("SELECT tsj.id FROM t_saved_job tsj WHERE tsj.job_id = :jobId AND tsj.user_id = :person");
+		sqlb.append("SELECT tsj.id, tsj.ver FROM t_saved_job tsj WHERE tsj.job_id = :jobId AND tsj.user_id = :person");
 		
 		
 		Boolean result = false;
+		
 		try {
+			
 			final Object savedJobObj = this.em().createNativeQuery(sqlb.toString())
 					.setParameter("jobId", jobId)
 					.setParameter("person", person).getSingleResult();
-			
 			final Object[] savedJobArr = (Object[]) savedJobObj;
+			
 			
 		if(savedJobArr.length>0) {
 			result= true;
-			}
+		}
 		
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 			
 		return result;
 		
 	}
+	
+	public SavedJob getByJobAndPrincipal(String jobId,String person) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT tsj.id, tsj.ver FROM t_saved_job tsj WHERE tsj.job_id = :jobId AND tsj.user_id = :person");
+		
+		
+		final SavedJob savedJob = new SavedJob();
+		try {
+			
+			final Object savedJobObj = this.em().createNativeQuery(sqlb.toString())
+					.setParameter("jobId", jobId)
+					.setParameter("person", person).getSingleResult();
+			final Object[] savedJobArr = (Object[]) savedJobObj;
+			
+			
+		if(savedJobArr.length>0) {
+			savedJob.setId(savedJobArr[0].toString());
+			savedJob.setVersion(Integer.valueOf(savedJobArr[1].toString()));
+		}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return savedJob;
+	}
+	
 }
