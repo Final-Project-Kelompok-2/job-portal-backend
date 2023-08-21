@@ -93,10 +93,19 @@ public class SavedJobService {
 	}
 	
 	public DeleteResDto removeSavedJob(String id) {
-		savedJobDao.deleteById(SavedJob.class, id);
-		
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Job removed from your SavedList");
+		
+		try {
+			em().getTransaction().begin();
+			final SavedJob savedJob = savedJobDao.getByJobAndPrincipal(id, principalService.getAuthPrincipal());
+			savedJobDao.deleteById(SavedJob.class, savedJob.getId());
+			
+			response.setMessage("Job removed from your SavedList");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		
 		return response;
 	}

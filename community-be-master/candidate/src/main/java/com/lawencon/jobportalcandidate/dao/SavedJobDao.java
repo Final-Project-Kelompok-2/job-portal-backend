@@ -134,19 +134,16 @@ public class SavedJobDao extends AbstractJpaDao {
 		Boolean result = false;
 		
 		try {
-			
 			final Object savedJobObj = this.em().createNativeQuery(sqlb.toString())
 					.setParameter("jobId", jobId)
 					.setParameter("person", person).getSingleResult();
 			final Object[] savedJobArr = (Object[]) savedJobObj;
-			
 			
 		if(savedJobArr.length>0) {
 			result= true;
 		}
 		
 		} catch (Exception e) {
-			e.printStackTrace();
 			
 		}
 			
@@ -167,7 +164,6 @@ public class SavedJobDao extends AbstractJpaDao {
 					.setParameter("person", person).getSingleResult();
 			final Object[] savedJobArr = (Object[]) savedJobObj;
 			
-			
 		if(savedJobArr.length>0) {
 			savedJob.setId(savedJobArr[0].toString());
 			savedJob.setVersion(Integer.valueOf(savedJobArr[1].toString()));
@@ -177,7 +173,7 @@ public class SavedJobDao extends AbstractJpaDao {
 			e.printStackTrace();
 		}
 		
-		return savedJob;
+		return savedJob	;
 	}
 	
 }
