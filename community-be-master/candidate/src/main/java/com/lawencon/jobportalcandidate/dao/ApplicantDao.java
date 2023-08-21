@@ -12,6 +12,7 @@ import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.model.Applicant;
 import com.lawencon.jobportalcandidate.model.Company;
+import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.HiringStatus;
 import com.lawencon.jobportalcandidate.model.Job;
 
@@ -43,7 +44,8 @@ public class ApplicantDao extends AbstractJpaDao{
 				+ "	ths.status_name , "
 				+ "	ta.job_id, "
 				+ "	tj.job_name, "
-				+ "	tc.company_name "
+				+ "	tc.company_name,"
+				+ "	tc.photo_id "
 				+ "FROM  "
 				+ "	t_applicant ta  "
 				+ "INNER JOIN  "
@@ -79,6 +81,9 @@ public class ApplicantDao extends AbstractJpaDao{
 				
 				final Company company = new Company();
 				company.setCompanyName(applicantArr[7].toString());
+				final File photo = new File();
+				photo.setId(applicantArr[8].toString());
+				company.setPhoto(photo);
 				
 				
 				final Job job = new Job();

@@ -13,6 +13,7 @@ public class JobResDto {
 	private String expectedSalaryMax;
 	private String employementTypeName;
 	private String fileId;
+	private Boolean isBookmark;
 
 	public String getId() {
 		return id;
@@ -100,6 +101,14 @@ public class JobResDto {
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
+	}
+
+	public Boolean getIsBookmark() {
+		return isBookmark;
+	}
+
+	public void setIsBookmark(Boolean isBookmark) {
+		this.isBookmark = isBookmark;
 	}
 
 }

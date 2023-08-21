@@ -15,6 +15,7 @@ import com.lawencon.jobportalcandidate.dao.EmploymentTypeDao;
 import com.lawencon.jobportalcandidate.dao.FileDao;
 import com.lawencon.jobportalcandidate.dao.JobDao;
 import com.lawencon.jobportalcandidate.dao.QuestionDao;
+import com.lawencon.jobportalcandidate.dao.SavedJobDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.job.JobInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.job.JobResDto;
@@ -24,7 +25,9 @@ import com.lawencon.jobportalcandidate.model.EmploymentType;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.Question;
+import com.lawencon.jobportalcandidate.model.SavedJob;
 import com.lawencon.jobportalcandidate.util.DateUtil;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class JobService {
@@ -46,6 +49,12 @@ public class JobService {
 
 	@Autowired
 	private AssignedJobQuestionDao assignedJobQuestionDao;
+	
+	@Autowired
+	private SavedJobDao savedJobDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -56,7 +65,7 @@ public class JobService {
 		final List<Job> jobs = jobDao.getAll(Job.class);
 
 		for (int i = 0; i < jobs.size(); i++) {
-			final JobResDto job = new JobResDto();
+			final JobResDto job = new JobResDto();	
 			job.setId(jobs.get(i).getId());
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
@@ -68,7 +77,8 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-
+			job.setIsBookmark(savedJobDao.checkBookmark(jobs.get(i).getId(), principalService.getAuthPrincipal()));
+			
 			jobsDto.add(job);
 		}
 

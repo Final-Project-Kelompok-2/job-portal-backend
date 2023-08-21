@@ -74,6 +74,7 @@ public class ApplicantService {
 			applicantRes.setJobId(applicantList.get(i).getJob().getId());
 			applicantRes.setJobName(applicantList.get(i).getJob().getJobName());
 			applicantRes.setCompanyName(applicantList.get(i).getJob().getCompany().getCompanyName());
+			applicantRes.setCompanyPhotoId(applicantList.get(i).getJob().getCompany().getPhoto().getId());
 			applicantListRes.add(applicantRes);
 		}
 		return applicantListRes;
@@ -91,7 +92,7 @@ public class ApplicantService {
 			data.setApplicantCode(applicant.getApplicantCode());
 
 			applicant.setAppliedDate(currentDate);
-			data.setAppliedDate(applicant.getAppliedDate().toString());
+			data.setAppliedDate(currentDate.toString());
 
 			final Job job = jobDao.getById(Job.class, data.getJobId());
 			applicant.setJob(job);
