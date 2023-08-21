@@ -6,7 +6,7 @@ public class CandidateWorkExpInsertReqDto {
 	private String address;
 	private String responsibility;
 	private String reasonLeave;
-	private Float lastSalary;
+	private String lastSalary;
 	private String startDate;
 	private String endDate;
 	private String candidateId;
@@ -52,11 +52,11 @@ public class CandidateWorkExpInsertReqDto {
 		this.reasonLeave = reasonLeave;
 	}
 
-	public Float getLastSalary() {
+	public String getLastSalary() {
 		return lastSalary;
 	}
 
-	public void setLastSalary(Float lastSalary) {
+	public void setLastSalary(String lastSalary) {
 		this.lastSalary = lastSalary;
 	}
 

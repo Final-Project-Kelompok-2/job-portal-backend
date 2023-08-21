@@ -45,33 +45,34 @@ public class CandidateAddressDao extends AbstractJpaDao{
 				sql.append ("WHERE  ");
 				sql.append ("	tca.user_id  = :candidate");
 		
-		final Object candidateAddressObjs = em().createNativeQuery(sql.toString())
+		final List<?> candidateAddressObjs = em().createNativeQuery(sql.toString())
 				.setParameter("candidate", id)
-				.getSingleResult();
+				.getResultList();
 		
-		final Object[] candidateAddressArr = (Object[]) candidateAddressObjs;
-
 		final List<CandidateAddress> addresses = new ArrayList<>();
 		CandidateAddress candidateAddress = null;
-		if(candidateAddressArr.length > 0) {
-			candidateAddress = new CandidateAddress();
-			candidateAddress.setId(candidateAddressArr[0].toString());
-			candidateAddress.setAddress(candidateAddressArr[1].toString());
-			candidateAddress.setResidenceType(candidateAddressArr[2].toString());
-			candidateAddress.setCountry(candidateAddressArr[3].toString());
-			candidateAddress.setProvince(candidateAddressArr[4].toString());
-			candidateAddress.setCity(candidateAddressArr[5].toString());
-			candidateAddress.setPostalCode(candidateAddressArr[6].toString());
-			
-			final CandidateProfile candidateProfile = new CandidateProfile();
-			candidateProfile.setFullname(candidateAddressArr[8].toString());
-			
-			final CandidateUser candidateUser = new CandidateUser();
-			candidateUser.setId(candidateAddressArr[7].toString());
-			candidateUser.setCandidateProfile(candidateProfile);
-			candidateAddress.setCandidateUser(candidateUser);
-			
-			addresses.add(candidateAddress);
+		if(candidateAddressObjs.size() > 0) {
+			for(Object candidateAddressObj : candidateAddressObjs) {
+				final Object[] candidateAddressArr = (Object[]) candidateAddressObj;
+				candidateAddress = new CandidateAddress();
+				candidateAddress.setId(candidateAddressArr[0].toString());
+				candidateAddress.setAddress(candidateAddressArr[1].toString());
+				candidateAddress.setResidenceType(candidateAddressArr[2].toString());
+				candidateAddress.setCountry(candidateAddressArr[3].toString());
+				candidateAddress.setProvince(candidateAddressArr[4].toString());
+				candidateAddress.setCity(candidateAddressArr[5].toString());
+				candidateAddress.setPostalCode(candidateAddressArr[6].toString());
+				
+				final CandidateProfile candidateProfile = new CandidateProfile();
+				candidateProfile.setFullname(candidateAddressArr[8].toString());
+				
+				final CandidateUser candidateUser = new CandidateUser();
+				candidateUser.setId(candidateAddressArr[7].toString());
+				candidateUser.setCandidateProfile(candidateProfile);
+				candidateAddress.setCandidateUser(candidateUser);
+				
+				addresses.add(candidateAddress);
+			}
 		}
 		
 		

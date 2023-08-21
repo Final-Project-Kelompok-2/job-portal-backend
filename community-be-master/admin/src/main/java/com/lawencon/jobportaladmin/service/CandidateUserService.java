@@ -136,6 +136,7 @@ public class CandidateUserService {
 			candidateProfile.setPhoneNumber(candidateData.getPhoneNumber());
 			candidateProfile.setMobileNumber(candidateData.getMobileNumber());
 			candidateProfile.setNik(candidateData.getNik());
+			candidateProfile.setBirthPlace(candidateData.getBirthPlace());
 			candidateProfile.setBirthDate(LocalDate.parse(candidateData.getBirthDate()));
 
 			final MaritalStatus status = maritalStatusDao.getById(MaritalStatus.class,
