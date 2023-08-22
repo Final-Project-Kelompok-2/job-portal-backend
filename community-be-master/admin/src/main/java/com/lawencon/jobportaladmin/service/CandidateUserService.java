@@ -517,8 +517,8 @@ public class CandidateUserService {
 				candidateDto.setBirthDate(candidate.get(i).getCandidateProfile().getBirthDate().toString());
 			}
 			candidateDto.setBirthPlace(candidate.get(i).getCandidateProfile().getBirthPlace());
-			candidateDto.setMaritalStatusId(candidate.get(i).getCandidateProfile().getMaritalStatus().getId());
 			if (candidate.get(i).getCandidateProfile().getMaritalStatus() != null) {
+				candidateDto.setMaritalStatusId(candidate.get(i).getCandidateProfile().getMaritalStatus().getId());
 				final MaritalStatus marital = maritalStatusDao.getById(MaritalStatus.class,
 						candidate.get(i).getCandidateProfile().getMaritalStatus().getId());
 				candidateDto.setMaritalStatus(marital.getMaritalName());
@@ -534,7 +534,7 @@ public class CandidateUserService {
 				final PersonType type = personTypeDao.getById(PersonType.class,
 						candidate.get(i).getCandidateProfile().getPersonType().getId());
 				candidateDto.setPersonType(type.getTypeName());
-				candidateDto.setFileId(candidate.get(i).getCandidateProfile().getFile().getId());
+				
 				candidateDto.setCandidateStatusId(candidate.get(i).getCandidateProfile().getCandidateStatus().getId());
 			}
 			if (candidate.get(i).getCandidateProfile().getCandidateStatus() != null) {

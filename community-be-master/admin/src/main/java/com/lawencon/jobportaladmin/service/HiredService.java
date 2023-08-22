@@ -85,7 +85,7 @@ public class HiredService {
 			hired.setStartDate(DateUtil.parseStringToLocalDateTime(hiredData.getStartDate()));
 
 			if (hiredData.getEndDate() != null) {
-				hired.setEndDate(DateUtil.parseStringToLocalDateTime(hiredData.getEndDate()));
+				hired.setEndDate(DateUtil.parseStringToLocalDateTime(hiredData.getEndDate().toString()));
 			}
 
 			hired = hiredDao.save(hired);
