@@ -17,6 +17,7 @@ import com.lawencon.jobportalcandidate.model.EmploymentType;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.SavedJob;
+import com.lawencon.jobportalcandidate.util.BigDecimalUtil;
 
 @Repository
 public class SavedJobDao extends AbstractJpaDao {
@@ -106,8 +107,8 @@ public class SavedJobDao extends AbstractJpaDao {
 				
 				job.setStartDate(LocalDate.parse(savedjobArr[6].toString(), formatter));
 				job.setEndDate(LocalDate.parse(savedjobArr[7].toString(), formatter));
-				job.setExpectedSalaryMin(Integer.valueOf(savedjobArr[8].toString()));
-				job.setExpectedSalaryMax(Integer.valueOf(savedjobArr[9].toString()));
+				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(savedjobArr[8].toString()));
+				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(savedjobArr[9].toString()));
 				
 				final EmploymentType type = new EmploymentType();
 				type.setEmploymentTypeName(savedjobArr[10].toString());

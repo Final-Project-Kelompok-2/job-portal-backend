@@ -43,6 +43,7 @@ import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.MaritalStatus;
 import com.lawencon.jobportalcandidate.model.PersonType;
 import com.lawencon.jobportalcandidate.model.Religion;
+import com.lawencon.jobportalcandidate.util.BigDecimalUtil;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -190,7 +191,7 @@ public class CandidateService implements UserDetailsService {
 			profile.setFullname(data.getFullname());
 			profile.setGender(data.getGender());
 			profile.setExperience(data.getExperience());
-			profile.setExpectedSalary(Float.valueOf(data.getExpectedSalary().toString()));
+			profile.setExpectedSalary(BigDecimalUtil.parseToBigDecimal(data.getExpectedSalary().toString()));
 			profile.setPhoneNumber(data.getPhoneNumber());
 			profile.setMobileNumber(data.getMobileNumber());
 			profile.setNik(data.getNik());

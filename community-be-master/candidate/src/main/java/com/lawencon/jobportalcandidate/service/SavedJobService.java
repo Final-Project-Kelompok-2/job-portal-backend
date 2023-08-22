@@ -56,6 +56,7 @@ public class SavedJobService {
 			savedJob.setEndDate(savedJobs.get(i).getJob().getEndDate().toString());
 			savedJob.setExpectedSalaryMin(savedJobs.get(i).getJob().getExpectedSalaryMin().toString());
 			savedJob.setExpectedSalaryMax(savedJobs.get(i).getJob().getExpectedSalaryMax().toString());
+			savedJob.setEmploymenTypeName(savedJobs.get(i).getJob().getEmploymentType().getEmploymentTypeName());
 			savedjobsDto.add(savedJob);
 		}
 

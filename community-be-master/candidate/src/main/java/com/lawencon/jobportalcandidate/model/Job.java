@@ -1,5 +1,6 @@
 	package com.lawencon.jobportalcandidate.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -34,10 +35,10 @@ public class Job extends BaseEntity {
 	private String description;	
 	
 	@Column(name = "expected_salary_min", nullable = true)
-	private Integer expectedSalaryMin;	
+	private BigDecimal expectedSalaryMin;	
 	
 	@Column(name = "expected_salary_max", nullable = true)
-	private Integer expectedSalaryMax;
+	private BigDecimal expectedSalaryMax;
 	
 	@OneToOne
 	@JoinColumn(name = "employment_type_id")
@@ -95,21 +96,6 @@ public class Job extends BaseEntity {
 		this.description = description;
 	}
 
-	public Integer getExpectedSalaryMin() {
-		return expectedSalaryMin;
-	}
-
-	public void setExpectedSalaryMin(Integer expectedSalaryMin) {
-		this.expectedSalaryMin = expectedSalaryMin;
-	}
-
-	public Integer getExpectedSalaryMax() {
-		return expectedSalaryMax;
-	}
-
-	public void setExpectedSalaryMax(Integer expectedSalaryMax) {
-		this.expectedSalaryMax = expectedSalaryMax;
-	}
 
 	public EmploymentType getEmploymentType() {
 		return employmentType;
@@ -125,5 +111,21 @@ public class Job extends BaseEntity {
 
 	public void setJobPicture(File jobPicture) {
 		this.jobPicture = jobPicture;
+	}
+
+	public BigDecimal getExpectedSalaryMin() {
+		return expectedSalaryMin;
+	}
+
+	public void setExpectedSalaryMin(BigDecimal expectedSalaryMin) {
+		this.expectedSalaryMin = expectedSalaryMin;
+	}
+
+	public BigDecimal getExpectedSalaryMax() {
+		return expectedSalaryMax;
+	}
+
+	public void setExpectedSalaryMax(BigDecimal expectedSalaryMax) {
+		this.expectedSalaryMax = expectedSalaryMax;
 	}	
 }

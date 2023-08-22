@@ -1,5 +1,6 @@
 package com.lawencon.jobportalcandidate.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class CandidateWorkExp extends BaseEntity{
 	private String reasonLeave;
 	
 	@Column(name = "last_salary", nullable = false)
-	private Float lastSalary;
+	private BigDecimal lastSalary;
 	
 	@Column(name = "start_date",nullable = false)
 	private LocalDate startDate;
@@ -81,13 +82,6 @@ public class CandidateWorkExp extends BaseEntity{
 		this.reasonLeave = reasonLeave;
 	}
 
-	public Float getLastSalary() {
-		return lastSalary;
-	}
-
-	public void setLastSalary(Float lastSalary) {
-		this.lastSalary = lastSalary;
-	}
 
 	public LocalDate getStartDate() {
 		return startDate;
@@ -111,6 +105,14 @@ public class CandidateWorkExp extends BaseEntity{
 
 	public void setCandidateUser(CandidateUser candidateUser) {
 		this.candidateUser = candidateUser;
+	}
+
+	public BigDecimal getLastSalary() {
+		return lastSalary;
+	}
+
+	public void setLastSalary(BigDecimal lastSalary) {
+		this.lastSalary = lastSalary;
 	}
 	
 }
