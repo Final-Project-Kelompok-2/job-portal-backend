@@ -104,6 +104,7 @@ public class McuService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Mcu Failed");
 		}
 
 		return resDto;

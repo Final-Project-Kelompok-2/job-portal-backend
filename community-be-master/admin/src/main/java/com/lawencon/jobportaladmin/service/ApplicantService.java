@@ -122,6 +122,7 @@ public class ApplicantService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Applicant Failed");
 		}
 
 		return resDto;

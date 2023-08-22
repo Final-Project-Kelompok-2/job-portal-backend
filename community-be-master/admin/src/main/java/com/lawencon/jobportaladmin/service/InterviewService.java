@@ -112,6 +112,8 @@ public class InterviewService {
 			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
+			throw new RuntimeException("Insert Interview Failed");
 		}
 
 		return resDto;

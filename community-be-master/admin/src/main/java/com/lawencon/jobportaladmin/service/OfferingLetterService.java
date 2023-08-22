@@ -124,6 +124,7 @@ public class OfferingLetterService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Offering Letter Failed");
 		}
 		
 		return resDto;
