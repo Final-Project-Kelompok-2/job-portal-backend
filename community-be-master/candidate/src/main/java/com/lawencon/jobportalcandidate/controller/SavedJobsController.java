@@ -27,8 +27,8 @@ public class SavedJobsController {
 	private SavedJobService savedJobService;
 	
 	@GetMapping
-	public ResponseEntity<List<SavedJobResDto>> getByCandidate(@Param("id") String id) {
-		final List<SavedJobResDto> data = savedJobService.getSavedJobByCandidate(id);
+	public ResponseEntity<List<SavedJobResDto>> getByCandidate() {
+		final List<SavedJobResDto> data = savedJobService.getSavedJobByCandidate();
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 	

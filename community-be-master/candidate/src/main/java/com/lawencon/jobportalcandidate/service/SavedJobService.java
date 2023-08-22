@@ -40,9 +40,9 @@ public class SavedJobService {
 	@Autowired
 	private PrincipalService<String> principalService;
 
-	public List<SavedJobResDto> getSavedJobByCandidate(String id) {
+	public List<SavedJobResDto> getSavedJobByCandidate() {
 		final List<SavedJobResDto> savedjobsDto = new ArrayList<>();
-		final List<SavedJob> savedJobs = savedJobDao.getByCandidate(id);
+		final List<SavedJob> savedJobs = savedJobDao.getByCandidate(principalService.getAuthPrincipal());
 
 		for (int i = 0; i < savedJobs.size(); i++) {
 			final SavedJobResDto savedJob = new SavedJobResDto();
@@ -56,8 +56,6 @@ public class SavedJobService {
 			savedJob.setEndDate(savedJobs.get(i).getJob().getEndDate().toString());
 			savedJob.setExpectedSalaryMin(savedJobs.get(i).getJob().getExpectedSalaryMin().toString());
 			savedJob.setExpectedSalaryMax(savedJobs.get(i).getJob().getExpectedSalaryMax().toString());
-			savedJob.setUserId(savedJobs.get(i).getCandidateUser().getId());
-		
 			savedjobsDto.add(savedJob);
 		}
 

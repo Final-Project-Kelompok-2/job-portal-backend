@@ -13,7 +13,6 @@ public class SavedJobResDto {
 	private String expectedSalaryMin;
 	private String expectedSalaryMax;
 	private String employmenTypeName;
-	private String userId;
 
 	public String getId() {
 		return id;
@@ -103,12 +102,5 @@ public class SavedJobResDto {
 		this.employmenTypeName = employmenTypeName;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 
 }
