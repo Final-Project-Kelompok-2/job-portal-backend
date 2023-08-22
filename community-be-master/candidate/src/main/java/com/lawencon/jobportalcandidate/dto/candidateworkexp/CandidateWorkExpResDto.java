@@ -8,7 +8,7 @@ public class CandidateWorkExpResDto {
 	private String address;
 	private String responsibility;
 	private String reasonLeave;
-	private Float lastSalary;
+	private String lastSalary;
 	private String startDate;
 	private String endDate;
 	
@@ -60,14 +60,6 @@ public class CandidateWorkExpResDto {
 		this.reasonLeave = reasonLeave;
 	}
 
-	public Float getLastSalary() {
-		return lastSalary;
-	}
-
-	public void setLastSalary(Float lastSalary) {
-		this.lastSalary = lastSalary;
-	}
-
 	public String getStartDate() {
 		return startDate;
 	}
@@ -82,6 +74,14 @@ public class CandidateWorkExpResDto {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getLastSalary() {
+		return lastSalary;
+	}
+
+	public void setLastSalary(String lastSalary) {
+		this.lastSalary = lastSalary;
 	}
 
 }

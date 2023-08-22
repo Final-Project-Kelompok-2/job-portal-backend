@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportalcandidate.model.CandidateWorkExp;
+import com.lawencon.jobportalcandidate.util.BigDecimalUtil;
 
 @Repository
 public class CandidateWorkExpDao extends AbstractJpaDao {
@@ -51,7 +52,7 @@ public class CandidateWorkExpDao extends AbstractJpaDao {
 				work.setAddress(workArr[3].toString());
 				work.setResponsibility(workArr[4].toString());
 				work.setReasonLeave(workArr[5].toString());
-				work.setLastSalary(Float.valueOf(workArr[6].toString()));
+				work.setLastSalary(BigDecimalUtil.parseToBigDecimal(workArr[6].toString()));
 				work.setStartDate(LocalDate.parse(workArr[7].toString()));
 				work.setEndDate(LocalDate.parse(workArr[8].toString()));
 				

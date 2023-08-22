@@ -26,6 +26,7 @@ import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.Question;
 import com.lawencon.jobportalcandidate.model.SavedJob;
+import com.lawencon.jobportalcandidate.util.BigDecimalUtil;
 import com.lawencon.jobportalcandidate.util.DateUtil;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -150,8 +151,8 @@ public class JobService {
 			newJob.setStartDate(DateUtil.parseStringToLocalDate(job.getStartDate().toString()));
 			newJob.setEndDate(DateUtil.parseStringToLocalDate(job.getEndDate().toString()));
 			newJob.setDescription(job.getDescription());
-			newJob.setExpectedSalaryMin(job.getExpectedSalaryMin());
-			newJob.setExpectedSalaryMax(job.getExpectedSalaryMax());
+			newJob.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(job.getExpectedSalaryMin().toString()));
+			newJob.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(job.getExpectedSalaryMax().toString()));
 
 			final EmploymentType employmentType = employmentTypeDao.getByCode(job.getEmploymentTypeCode());
 			newJob.setEmploymentType(employmentType);
