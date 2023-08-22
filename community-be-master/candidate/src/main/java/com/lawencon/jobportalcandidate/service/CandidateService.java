@@ -34,6 +34,7 @@ import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResD
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserResDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.ChangePasswordReqDto;
 import com.lawencon.jobportalcandidate.login.LoginReqDto;
 import com.lawencon.jobportalcandidate.login.LoginResDto;
 import com.lawencon.jobportalcandidate.model.CandidateProfile;
@@ -83,6 +84,8 @@ public class CandidateService implements UserDetailsService {
 
 	@Autowired
 	private PrincipalService<String> principalService;
+	
+	
 
 	public CandidateMasterResDto getCandidateProfile(String id) {
 		final CandidateMasterResDto data = new CandidateMasterResDto();
@@ -252,6 +255,30 @@ public class CandidateService implements UserDetailsService {
 		}
 
 		return loginRes;
+	}
+	
+	public UpdateResDto changePassword(ChangePasswordReqDto data) {
+		final UpdateResDto resDto = new UpdateResDto();
+		CandidateUser candidate= candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+		try {
+			em().getTransaction().begin();
+			if (passwordEncoder.matches(data.getOldPassword(), candidate.getUserPassword())) {
+				final String encodedPassword = passwordEncoder.encode(data.getNewPassword());
+				candidate.setUserPassword(encodedPassword);
+				candidate = candidateUserDao.save(candidate);
+				resDto.setVersion(candidate.getVersion());
+				resDto.setMessage("Update Password Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				resDto.setMessage("Update Password Failed");
+			}
+
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		return resDto;
 	}
 
 	@Override
