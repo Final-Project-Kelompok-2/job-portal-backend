@@ -12,13 +12,17 @@ public class EmailService {
 	private JavaMailSender javaMailSender;
 
 	public void sendEmail(String to, String subject, String message) {
-		SimpleMailMessage msg = new SimpleMailMessage();
-
-		msg.setTo(to);
-		msg.setSubject(subject);
-		msg.setText(message);
-
-		javaMailSender.send(msg);
+		Thread thread = new Thread(){
+            public void run(){
+                SimpleMailMessage msg = new SimpleMailMessage();
+				msg.setTo(to);
+				msg.setSubject(subject);
+				msg.setText(message);
+				javaMailSender.send(msg);
+            }
+        };
+        
+        thread.start();
 
 	}
 }

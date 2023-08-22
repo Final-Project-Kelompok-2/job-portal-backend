@@ -35,7 +35,7 @@ public class CandidateWorkExpService {
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
-	
+
 	@Autowired
 	private PrincipalService<String> principalService;
 
@@ -80,7 +80,7 @@ public class CandidateWorkExpService {
 			work.setCreatedBy(principalService.getAuthPrincipal());
 
 			candidateWorkExpDao.save(work);
-			
+
 			result.setId(work.getId());
 			result.setMessage("Working Experience record added!");
 			em().getTransaction().commit();
@@ -91,7 +91,7 @@ public class CandidateWorkExpService {
 
 		return result;
 	}
-	
+
 	public UpdateResDto updateWorksExperience(CandidateWorkExpUpdateReqDto data) {
 		final CandidateWorkExp work = candidateWorkExpDao.getById(CandidateWorkExp.class, data.getId());
 
@@ -109,7 +109,8 @@ public class CandidateWorkExpService {
 			work.setStartDate(DateUtil.parseStringToLocalDate(data.getStartDate()));
 			work.setEndDate(DateUtil.parseStringToLocalDate(data.getEndDate()));
 
-			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
+			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
+					principalService.getAuthPrincipal());
 			work.setCandidateUser(candidate);
 			work.setUpdatedBy(principalService.getAuthPrincipal());
 
@@ -126,14 +127,20 @@ public class CandidateWorkExpService {
 
 		return result;
 	}
-	
+
 	public DeleteResDto deleteWorkExperience(String id) {
-		candidateWorkExpDao.deleteById(CandidateWorkExp.class, id);
-		
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Working Experience Has Been Removed");
-		
+
+		try {
+			em().getTransaction().begin();
+			candidateWorkExpDao.deleteById(CandidateWorkExp.class, id);
+			response.setMessage("Working Experience Has Been Removed");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+
 		return response;
 	}
 }
-

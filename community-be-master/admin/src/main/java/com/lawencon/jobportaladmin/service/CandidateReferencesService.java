@@ -122,10 +122,17 @@ public class CandidateReferencesService {
 	}
 	
 	public DeleteResDto deleteReference(String id) {
-		candidateRefDao.deleteById(CandidateReferences.class, id);
-		
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Reference has been removed");
+
+		try {
+			em().getTransaction().begin();
+			candidateRefDao.deleteById(CandidateReferences.class, id);
+			response.setMessage("Reference has been removed");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		
 		return response;
 	}

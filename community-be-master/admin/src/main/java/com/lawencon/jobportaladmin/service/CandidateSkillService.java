@@ -104,10 +104,17 @@ public class CandidateSkillService {
 	}
 
 	public DeleteResDto deleteSkill(String id) {
-		candidateSkillDao.deleteById(CandidateSkill.class, id);
-
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Skill has been removed");
+	
+		try {
+			em().getTransaction().begin();			
+			candidateSkillDao.deleteById(CandidateSkill.class, id);
+			response.setMessage("Skill has been removed");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 
 		return response;
 	}

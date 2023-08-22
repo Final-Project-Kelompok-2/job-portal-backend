@@ -112,10 +112,18 @@ public class CandidateProjectExpService {
 	}
 
 	public DeleteResDto deleteCandidateProjectExp(String id) {
-		projectExpDao.deleteById(CandidateProjectExp.class, id);
-
 		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Project Success");
+
+		try {
+			em().getTransaction().begin();			
+			projectExpDao.deleteById(CandidateProjectExp.class, id);
+			deleteRes.setMessage("Delete Candidate Project Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
 		return deleteRes;
 	}
 

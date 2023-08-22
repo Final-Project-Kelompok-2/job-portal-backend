@@ -144,7 +144,6 @@ public class AssesmentService {
 					UpdateResDto.class);
 
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
-
 				insertResDto.setId(assesment.getId());
 				insertResDto.setMessage("Insert Assesment and Update Applicant Success");
 				em().getTransaction().commit();
