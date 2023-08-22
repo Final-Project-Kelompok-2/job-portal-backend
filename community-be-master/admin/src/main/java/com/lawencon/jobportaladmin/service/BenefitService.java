@@ -45,6 +45,7 @@ public class BenefitService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Benefit Failed");
 		}
 
 		return resDto;
