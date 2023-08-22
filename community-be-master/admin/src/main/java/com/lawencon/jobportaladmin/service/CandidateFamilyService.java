@@ -123,10 +123,17 @@ public class CandidateFamilyService {
 	}
 	
 	public DeleteResDto deleteFamily(String id) {
-		candidateFamilyDao.deleteById(CandidateFamily.class, id);
-		
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Family has been removed");
+	
+		try {
+			em().getTransaction().begin();			
+			candidateFamilyDao.deleteById(CandidateFamily.class, id);
+			response.setMessage("Family has been removed");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		
 		return response;
 	}

@@ -129,10 +129,20 @@ public class CandidateDocumentService {
 //		return updateResDto;
 //	}
 //
-	public DeleteResDto deleteDCandidateDocument(String id) {
-		candidateDocumentDao.deleteById(CandidateDocuments.class, id);
+	public DeleteResDto deleteCandidateDocument(String id) {
 		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Document Success");
+		try {
+			em().getTransaction().begin();
+			final CandidateDocuments document = candidateDocumentDao.getById(CandidateDocuments.class, id);
+			final String fileId = document.getFile().getId();
+			candidateDocumentDao.deleteById(CandidateDocuments.class, id);
+			fileDao.deleteById(File.class, fileId);
+			deleteRes.setMessage("Delete Candidate Document Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		return deleteRes;
 	}
 
