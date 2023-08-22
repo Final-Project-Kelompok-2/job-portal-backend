@@ -144,7 +144,6 @@ public class AssesmentService {
 					UpdateResDto.class);
 
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
-
 				insertResDto.setId(assesment.getId());
 				insertResDto.setMessage("Insert Assesment and Update Applicant Success");
 				em().getTransaction().commit();
@@ -157,6 +156,7 @@ public class AssesmentService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Assesment Failed");
 		}
 
 		return insertResDto;

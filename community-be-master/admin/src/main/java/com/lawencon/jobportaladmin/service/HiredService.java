@@ -138,7 +138,6 @@ public class HiredService {
 				
 				em().getTransaction().commit();
 			} else {
-				
 				em().getTransaction().rollback();
 				throw new RuntimeException("Update Failed");
 			}
@@ -148,6 +147,7 @@ public class HiredService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Hired Failed");
 		}
 
 		return resDto;
