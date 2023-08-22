@@ -31,9 +31,11 @@ import com.lawencon.jobportaladmin.dao.MaritalStatusDao;
 import com.lawencon.jobportaladmin.dao.PersonTypeDao;
 import com.lawencon.jobportaladmin.dao.ReligionDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.candidate.CandidateMasterInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserResDto;
+import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateAddress;
 import com.lawencon.jobportaladmin.model.CandidateDocuments;
 import com.lawencon.jobportaladmin.model.CandidateEducation;
@@ -395,6 +397,70 @@ public class CandidateUserService {
 		return insertResDto;
 	}
 
+	public UpdateResDto updateCandidateFromAdmin(CandidateUserUpdateReqDto candidateData) {
+		final UpdateResDto updateResDto = new UpdateResDto();
+		
+		try {
+			em().getTransaction().begin();
+			CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, candidateData.getId());
+			candidateUser.setUserEmail(candidateData.getUserEmail());
+
+			CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class, candidateUser.getCandidateProfile().getId());
+			candidateProfile.setSalutation(candidateData.getSalutation());
+			candidateProfile.setFullname(candidateData.getFullname());
+			candidateProfile.setGender(candidateData.getGender());
+			candidateProfile.setExperience(candidateData.getExperience());
+			candidateProfile.setExpectedSalary(BigDecimal.valueOf(Long.valueOf(candidateData.getExpectedSalary())));
+			candidateProfile.setPhoneNumber(candidateData.getPhoneNumber());
+			candidateProfile.setMobileNumber(candidateData.getMobileNumber());
+			candidateProfile.setNik(candidateData.getNik());
+			candidateProfile.setBirthPlace(candidateData.getBirthPlace());
+			candidateProfile.setBirthDate(LocalDate.parse(candidateData.getBirthDate()));
+
+			final MaritalStatus status = maritalStatusDao.getById(MaritalStatus.class,
+					candidateData.getMaritalStatusId());
+			candidateProfile.setMaritalStatus(status);
+
+			final Religion religion = religionDao.getById(Religion.class, candidateData.getReligionId());
+			candidateProfile.setReligion(religion);
+
+			final PersonType type = personTypeDao.getById(PersonType.class, candidateData.getPersonTypeId());
+			candidateProfile.setPersonType(type);
+
+			final CandidateStatus candidateStatus = candidateStatusDao
+					.getByCode(com.lawencon.jobportaladmin.constant.CandidateStatus.ACTIVE.typeCode);
+			candidateProfile.setCandidateStatus(candidateStatus);
+
+			if (!candidateData.getFile().isBlank()) {
+				final String fileId = candidateData.getFileId();
+				final File file = new File();
+				file.setFileName(candidateData.getFile());
+				file.setFileExtension(candidateData.getFileExtension());
+				file.setCreatedBy(principalService.getAuthPrincipal());
+				fileDao.save(file);
+				fileDao.deleteById(File.class, fileId);
+				candidateProfile.setFile(file);
+			}
+
+			final CandidateStatus candidatestatus = candidateStatusDao.getById(CandidateStatus.class,
+					candidateData.getCandidateStatusId());
+			candidateProfile.setCandidateStatus(candidatestatus);
+			candidateProfile.setUpdatedBy(principalService.getAuthPrincipal());
+			candidateProfileDao.saveAndFlush(candidateProfile);
+			candidateUser.setCandidateProfile(candidateProfile);
+			candidateUserDao.saveAndFlush(candidateUser);
+			
+			updateResDto.setVersion(candidateUser.getVersion());
+			updateResDto.setMessage("Candidate has been updated!");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		return updateResDto;
+	}
+	
 	public InsertResDto insertCandidateuser(CandidateUserInsertReqDto candidateData) {
 		final InsertResDto insertResDto = new InsertResDto();
 

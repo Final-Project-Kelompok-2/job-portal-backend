@@ -7,15 +7,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.candidate.CandidateMasterInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserResDto;
+import com.lawencon.jobportaladmin.dto.candidateuser.CandidateUserUpdateReqDto;
 import com.lawencon.jobportaladmin.service.CandidateUserService;
 
 @RestController
@@ -43,10 +46,16 @@ public class CandidateUserController {
 		final List<CandidateUserResDto> response = candidateUserService.getAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/detail")
 	public ResponseEntity<CandidateUserResDto> getById(@Param("id") String id) {
 		final CandidateUserResDto response = candidateUserService.getById(id);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@PatchMapping("/update")
+	public ResponseEntity<UpdateResDto> updateCandidateUserFromAdmin(@RequestBody CandidateUserUpdateReqDto candidate) {
+		final UpdateResDto response = candidateUserService.updateCandidateFromAdmin(candidate);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
