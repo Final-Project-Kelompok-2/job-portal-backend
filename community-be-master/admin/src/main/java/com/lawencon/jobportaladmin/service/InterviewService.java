@@ -112,7 +112,9 @@ public class InterviewService {
 			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
-		}
+			e.printStackTrace();
+			throw new RuntimeException("Insert Interview and Update Applicant Failed");
+		}	
 
 		return resDto;
 	}

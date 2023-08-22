@@ -157,6 +157,7 @@ public class AssesmentService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Assesment and Update Applicant Failed");
 		}
 
 		return insertResDto;
