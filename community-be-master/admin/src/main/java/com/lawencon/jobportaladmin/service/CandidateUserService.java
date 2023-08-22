@@ -431,54 +431,52 @@ public class CandidateUserService {
 
 	public List<CandidateUserResDto> getAll() {
 		final List<CandidateUserResDto> candidatesDto = new ArrayList<>();
-		final List<CandidateUser> candidates = candidateUserDao.getAll(CandidateUser.class);
+		final List<CandidateUser> candidate = candidateUserDao.getAll(CandidateUser.class);
 
-		for (int i = 0; i < candidates.size(); i++) {
+		for (int i = 0; i < candidate.size(); i++) {
 			final CandidateUserResDto candidateDto = new CandidateUserResDto();
-			candidateDto.setId(candidates.get(i).getId());
-			candidateDto.setFullname(candidates.get(i).getCandidateProfile().getFullname());
-			candidateDto.setUserEmail(candidates.get(i).getUserEmail());
-			candidateDto.setProfileId(candidates.get(i).getCandidateProfile().getId());
-
-			candidateDto.setSalutation(candidates.get(i).getCandidateProfile().getSalutation());
-			candidateDto.setFullname(candidates.get(i).getCandidateProfile().getFullname());
-			candidateDto.setGender(candidates.get(i).getCandidateProfile().getGender());
-			candidateDto.setExperience(candidates.get(i).getCandidateProfile().getExperience());
-			if(candidates.get(i).getCandidateProfile().getExpectedSalary() != null) {
-				candidateDto.setExpectedSalary(BigDecimal
-						.valueOf(Long.valueOf(candidates.get(i).getCandidateProfile().getExpectedSalary().toString())));
+			candidateDto.setId(candidate.get(i).getId());
+			candidateDto.setFullname(candidate.get(i).getCandidateProfile().getFullname());
+			candidateDto.setUserEmail(candidate.get(i).getUserEmail());
+			candidateDto.setProfileId(candidate.get(i).getCandidateProfile().getId());
+			candidateDto.setSalutation(candidate.get(i).getCandidateProfile().getSalutation());
+			candidateDto.setFullname(candidate.get(i).getCandidateProfile().getFullname());
+			candidateDto.setGender(candidate.get(i).getCandidateProfile().getGender());
+			candidateDto.setExperience(candidate.get(i).getCandidateProfile().getExperience());
+			candidateDto.setExpectedSalary(candidate.get(i).getCandidateProfile().getExpectedSalary());
+			candidateDto.setPhoneNumber(candidate.get(i).getCandidateProfile().getPhoneNumber());
+			candidateDto.setMobileNumber(candidate.get(i).getCandidateProfile().getMobileNumber());
+			candidateDto.setNik(candidate.get(i).getCandidateProfile().getNik());
+			if (candidate.get(i).getCandidateProfile().getBirthDate() != null) {
+				candidateDto.setBirthDate(candidate.get(i).getCandidateProfile().getBirthDate().toString());
 			}
-				
-			candidateDto.setPhoneNumber(candidates.get(i).getCandidateProfile().getPhoneNumber());
-			candidateDto.setMobileNumber(candidates.get(i).getCandidateProfile().getMobileNumber());
-			candidateDto.setNik(candidates.get(i).getCandidateProfile().getNik());
-
-			candidateDto.setBirthDate(candidates.get(i).getCandidateProfile().getBirthDate().toString());
-
-			candidateDto.setBirthPlace(candidates.get(i).getCandidateProfile().getBirthPlace());
-
-			candidateDto.setMaritalStatusId(candidates.get(i).getCandidateProfile().getMaritalStatus().getId());
-			final MaritalStatus marital = maritalStatusDao.getById(MaritalStatus.class,
-					candidates.get(i).getCandidateProfile().getMaritalStatus().getId());
-			candidateDto.setMaritalStatus(marital.getMaritalName());
-
-			candidateDto.setReligionId(candidates.get(i).getCandidateProfile().getReligion().getId());
-			final Religion religion = religionDao.getById(Religion.class,
-					candidates.get(i).getCandidateProfile().getReligion().getId());
-			candidateDto.setReligion(religion.getReligionName());
-
-			candidateDto.setPersonTypeId(candidates.get(i).getCandidateProfile().getPersonType().getId());
-			final PersonType type = personTypeDao.getById(PersonType.class,
-					candidates.get(i).getCandidateProfile().getPersonType().getId());
-			candidateDto.setPersonType(type.getTypeName());
-			candidateDto.setFileId(candidates.get(i).getCandidateProfile().getFile().getId());
-
-			candidateDto.setCandidateStatusId(candidates.get(i).getCandidateProfile().getCandidateStatus().getId());
-			final CandidateStatus status = candidateStatusDao.getById(CandidateStatus.class,
-					candidates.get(i).getCandidateProfile().getCandidateStatus().getId());
-			candidateDto.setCandidateStatus(status.getStatusName());
-			candidateDto.setProfileId(candidates.get(i).getCandidateProfile().getId());
-
+			candidateDto.setBirthPlace(candidate.get(i).getCandidateProfile().getBirthPlace());
+			candidateDto.setMaritalStatusId(candidate.get(i).getCandidateProfile().getMaritalStatus().getId());
+			if (candidate.get(i).getCandidateProfile().getMaritalStatus() != null) {
+				final MaritalStatus marital = maritalStatusDao.getById(MaritalStatus.class,
+						candidate.get(i).getCandidateProfile().getMaritalStatus().getId());
+				candidateDto.setMaritalStatus(marital.getMaritalName());
+				candidateDto.setReligionId(candidate.get(i).getCandidateProfile().getReligion().getId());
+			}
+			if (candidate.get(i).getCandidateProfile().getReligion() != null) {
+				final Religion religion = religionDao.getById(Religion.class,
+						candidate.get(i).getCandidateProfile().getReligion().getId());
+				candidateDto.setReligion(religion.getReligionName());
+				candidateDto.setPersonTypeId(candidate.get(i).getCandidateProfile().getPersonType().getId());
+			}
+			if (candidate.get(i).getCandidateProfile().getPersonType() != null) {
+				final PersonType type = personTypeDao.getById(PersonType.class,
+						candidate.get(i).getCandidateProfile().getPersonType().getId());
+				candidateDto.setPersonType(type.getTypeName());
+				candidateDto.setFileId(candidate.get(i).getCandidateProfile().getFile().getId());
+				candidateDto.setCandidateStatusId(candidate.get(i).getCandidateProfile().getCandidateStatus().getId());
+			}
+			if (candidate.get(i).getCandidateProfile().getCandidateStatus() != null) {
+				final CandidateStatus status = candidateStatusDao.getById(CandidateStatus.class,
+						candidate.get(i).getCandidateProfile().getCandidateStatus().getId());
+				candidateDto.setCandidateStatus(status.getStatusName());
+				candidateDto.setProfileId(candidate.get(i).getCandidateProfile().getId());
+			}
 			candidatesDto.add(candidateDto);
 		}
 		return candidatesDto;
@@ -501,26 +499,36 @@ public class CandidateUserService {
 		candidateDto.setPhoneNumber(candidate.getCandidateProfile().getPhoneNumber());
 		candidateDto.setMobileNumber(candidate.getCandidateProfile().getMobileNumber());
 		candidateDto.setNik(candidate.getCandidateProfile().getNik());
-		candidateDto.setBirthDate(candidate.getCandidateProfile().getBirthDate().toString());
+		if (candidate.getCandidateProfile().getBirthDate() != null) {
+			candidateDto.setBirthDate(candidate.getCandidateProfile().getBirthDate().toString());
+		}
 		candidateDto.setBirthPlace(candidate.getCandidateProfile().getBirthPlace());
 		candidateDto.setMaritalStatusId(candidate.getCandidateProfile().getMaritalStatus().getId());
-		final MaritalStatus marital = maritalStatusDao.getById(MaritalStatus.class,
-				candidate.getCandidateProfile().getMaritalStatus().getId());
-		candidateDto.setMaritalStatus(marital.getMaritalName());
-		candidateDto.setReligionId(candidate.getCandidateProfile().getReligion().getId());
-		final Religion religion = religionDao.getById(Religion.class,
-				candidate.getCandidateProfile().getReligion().getId());
-		candidateDto.setReligion(religion.getReligionName());
-		candidateDto.setPersonTypeId(candidate.getCandidateProfile().getPersonType().getId());
-		final PersonType type = personTypeDao.getById(PersonType.class,
-				candidate.getCandidateProfile().getPersonType().getId());
-		candidateDto.setPersonType(type.getTypeName());
-		candidateDto.setFileId(candidate.getCandidateProfile().getFile().getId());
-		candidateDto.setCandidateStatusId(candidate.getCandidateProfile().getCandidateStatus().getId());
-		final CandidateStatus status = candidateStatusDao.getById(CandidateStatus.class,
-				candidate.getCandidateProfile().getCandidateStatus().getId());
-		candidateDto.setCandidateStatus(status.getStatusName());
-		candidateDto.setProfileId(candidate.getCandidateProfile().getId());
+		if (candidate.getCandidateProfile().getMaritalStatus() != null) {
+			final MaritalStatus marital = maritalStatusDao.getById(MaritalStatus.class,
+					candidate.getCandidateProfile().getMaritalStatus().getId());
+			candidateDto.setMaritalStatus(marital.getMaritalName());
+			candidateDto.setReligionId(candidate.getCandidateProfile().getReligion().getId());
+		}
+		if (candidate.getCandidateProfile().getReligion() != null) {
+			final Religion religion = religionDao.getById(Religion.class,
+					candidate.getCandidateProfile().getReligion().getId());
+			candidateDto.setReligion(religion.getReligionName());
+			candidateDto.setPersonTypeId(candidate.getCandidateProfile().getPersonType().getId());
+		}
+		if (candidate.getCandidateProfile().getPersonType() != null) {
+			final PersonType type = personTypeDao.getById(PersonType.class,
+					candidate.getCandidateProfile().getPersonType().getId());
+			candidateDto.setPersonType(type.getTypeName());
+			candidateDto.setFileId(candidate.getCandidateProfile().getFile().getId());
+			candidateDto.setCandidateStatusId(candidate.getCandidateProfile().getCandidateStatus().getId());
+		}
+		if (candidate.getCandidateProfile().getCandidateStatus() != null) {
+			final CandidateStatus status = candidateStatusDao.getById(CandidateStatus.class,
+					candidate.getCandidateProfile().getCandidateStatus().getId());
+			candidateDto.setCandidateStatus(status.getStatusName());
+			candidateDto.setProfileId(candidate.getCandidateProfile().getId());
+		}
 
 		return candidateDto;
 	}

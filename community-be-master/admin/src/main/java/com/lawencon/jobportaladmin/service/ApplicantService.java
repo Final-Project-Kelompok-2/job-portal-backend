@@ -63,6 +63,7 @@ public class ApplicantService {
 			applicantRes.setAppliedDate(applicantList.get(i).getAppliedDate().toString());
 			applicantRes.setStatusId(applicantList.get(i).getStatus().getId());
 			applicantRes.setStatusName(applicantList.get(i).getStatus().getStatusName());
+			applicantRes.setStatusCode(applicantList.get(i).getStatus().getStatusCode());
 			applicantRes.setJobId(applicantList.get(i).getJob().getId());
 			applicantRes.setJobName(applicantList.get(i).getJob().getJobName());
 			applicantRes.setCompanyName(applicantList.get(i).getJob().getCompany().getCompanyName());
@@ -134,7 +135,7 @@ public class ApplicantService {
 			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
 			updateData.setApplicantCode(applicant.getApplicantCode());
 
-			final HiringStatus hiringStatus = hiringStatusDao.getById(HiringStatus.class, updateData.getStatusId());
+			final HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
 			applicant.setStatus(hiringStatus);
 			updateData.setStatusCode(hiringStatus.getStatusCode());
 
