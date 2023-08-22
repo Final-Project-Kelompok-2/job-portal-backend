@@ -36,7 +36,8 @@ public class ApplicantDao extends AbstractJpaDao {
 				+ "	tj.job_name, "
 				+ "	tc.company_name,"
 				+ " tcp.fullname , "
-				+ " ta.candidate_id AS candidateId "
+				+ " ta.candidate_id AS candidateId, "
+				+ " ths.status_code "
 				+ "FROM  "
 				+ "	t_applicant ta  "
 				+ "INNER JOIN  "
@@ -75,6 +76,7 @@ public class ApplicantDao extends AbstractJpaDao {
 				final HiringStatus hiringStatus = new HiringStatus();
 				hiringStatus.setId(applicantArr[3].toString());
 				hiringStatus.setStatusName(applicantArr[4].toString());
+				hiringStatus.setStatusCode(applicantArr[10].toString());
 				applicant.setStatus(hiringStatus);
 
 				final Company company = new Company();
