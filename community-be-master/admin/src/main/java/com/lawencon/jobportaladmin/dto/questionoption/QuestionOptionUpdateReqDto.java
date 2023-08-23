@@ -4,6 +4,7 @@ public class QuestionOptionUpdateReqDto {
 
 	private String id;
 	private String optionLabel;
+	private Boolean isCorrect;
 	private String questionId;
 
 	public String getId() {
@@ -29,5 +30,15 @@ public class QuestionOptionUpdateReqDto {
 	public void setQuestionId(String questionId) {
 		this.questionId = questionId;
 	}
+
+	public Boolean getIsCorrect() {
+		return isCorrect;
+	}
+
+	public void setIsCorrect(Boolean isCorrect) {
+		this.isCorrect = isCorrect;
+	}
+	
+	
 
 }
