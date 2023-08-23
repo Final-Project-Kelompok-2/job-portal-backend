@@ -2,6 +2,7 @@ package com.lawencon.jobportaladmin.dto.candidateeducation;
 
 public class CandidateEducationInsertReqDto {
 	
+	private String educationCode;
 	private String degreeName;
 	private String instituitionName;
 	private String majors;
@@ -73,6 +74,14 @@ public class CandidateEducationInsertReqDto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getEducationCode() {
+		return educationCode;
+	}
+
+	public void setEducationCode(String educationCode) {
+		this.educationCode = educationCode;
 	}
 	
 	

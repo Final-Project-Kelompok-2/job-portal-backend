@@ -317,6 +317,7 @@ ALTER TABLE t_candidate_training_exp ADD CONSTRAINT training_exp_user_fk
 
 CREATE TABLE t_candidate_education ( 
 	id VARCHAR(36) NOT NULL,
+	education_code VARCHAR(6) NOT NULL,
 	degree_name VARCHAR(50) NOT NULL,
 	institution_name VARCHAR(50) NOT NULL,
 	majors VARCHAR(50) NOT NULL,
@@ -337,6 +338,8 @@ ALTER TABLE t_candidate_education ADD CONSTRAINT candidate_education_pk
 ALTER TABLE t_candidate_education ADD CONSTRAINT candidate_education_user_fk
 	FOREIGN KEY(user_id)
 	REFERENCES t_candidate_user(id); 
+ALTER TABLE t_candidate_education ADD CONSTRAINT candidate_education_code_bk 
+	UNIQUE (education_code);
 
 CREATE TABLE t_candidate_language ( 
 	id VARCHAR(36) NOT NULL,
