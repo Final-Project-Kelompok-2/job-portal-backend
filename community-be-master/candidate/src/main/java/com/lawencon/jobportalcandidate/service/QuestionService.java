@@ -14,8 +14,10 @@ import com.lawencon.jobportalcandidate.dao.AssignedJobQuestionDao;
 import com.lawencon.jobportalcandidate.dao.QuestionDao;
 import com.lawencon.jobportalcandidate.dao.QuestionOptionDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
+import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.question.QuestionInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.question.QuestionResDto;
+import com.lawencon.jobportalcandidate.dto.question.QuestionUpdateReqDto;
 import com.lawencon.jobportalcandidate.dto.question.QuestionsInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.questionoption.QuestionOptionInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.questionoption.QuestionOptionResDto;
@@ -110,5 +112,34 @@ public class QuestionService {
 		}
 
 		return questionsDto;
+	}
+	
+	public UpdateResDto updateQuestion(QuestionUpdateReqDto data) {
+		final UpdateResDto res = new UpdateResDto();
+		try {
+			em().getTransaction().begin();
+			final Question question = questionDao.getByCode(data.getQuestionCode());
+			question.setQuestionDetail(data.getQuestionDetail());
+			final Question save = questionDao.saveAndFlush(question);
+			if (data.getOptions() != null) {
+				final List<QuestionOption> option = questionOptionDao.getByQuestion(question.getId());
+				for (int i = 0; i < data.getOptions().size(); i++) {
+					System.out.println("Ini versi == >     "+option.get(i).getVersion());
+					option.get(i).setOptionLabel(data.getOptions().get(i).getOptionLabel());
+					option.get(i).setIsCorrect(data.getOptions().get(i).getIsCorrect());
+					option.get(i).setQuestion(question);
+					questionOptionDao.saveAndFlush(option.get(i));
+				}
+				res.setMessage("Update Success");
+				res.setVersion(save.getVersion());
+			}
+			em().getTransaction().commit();
+			} catch (Exception e) {
+				em().getTransaction().rollback();
+				e.printStackTrace();
+				throw new RuntimeException("Update Failed");
+
+			}
+			return res;
 	}
 }
