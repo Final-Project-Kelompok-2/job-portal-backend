@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.config.JwtConfig;
 import com.lawencon.jobportalcandidate.constant.PersonTypes;
 import com.lawencon.jobportalcandidate.dao.CandidateProfileDao;
 import com.lawencon.jobportalcandidate.dao.CandidateStatusDao;
@@ -104,7 +105,7 @@ public class CandidateService implements UserDetailsService {
 		candidateprofileDto.setExperience(candidateprofile.getExperience());
 
 		if (candidateprofile.getExpectedSalary() != null) {
-			candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary().toString());
+			candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary());
 		}
 
 		candidateprofileDto.setPhoneNumber(candidateprofile.getPhoneNumber());
@@ -116,19 +117,32 @@ public class CandidateService implements UserDetailsService {
 
 		candidateprofileDto.setBirthPlace(candidateprofile.getBirthPlace());
 		if (candidateprofile.getMaritalStatus() != null) {
-			candidateprofileDto.setMaritalStatusId(candidateprofile.getMaritalStatus().getId());
+			final MaritalStatus marital = maritalStatusDao.getById(MaritalStatus.class,
+					candidateprofile.getMaritalStatus().getId());
+			candidateprofileDto.setMaritalStatusId(marital.getId());
+			candidateprofileDto.setMaritalStatusCode(marital.getMaritalCode());
+			candidateprofileDto.setMaritalStatus(marital.getMaritalName());
 		}
 		if (candidateprofile.getReligion() != null) {
-			candidateprofileDto.setReligionId(candidateprofile.getReligion().getId());
+			final Religion religion = religionDao.getById(Religion.class, candidateprofile.getReligion().getId());
+			candidateprofileDto.setReligionId(religion.getId());
+			candidateprofileDto.setReligionCode(religion.getReligionCode());
+			candidateprofileDto.setReligion(religion.getReligionName());
 		}
 		if (candidateprofile.getPersonType() != null) {
-			candidateprofileDto.setPersonTypeId(candidateprofile.getPersonType().getId());
+			final PersonType type = personTypeDao.getById(PersonType.class, candidateprofile.getPersonType().getId());
+			candidateprofileDto.setPersonTypeId(type.getId());
+			candidateprofileDto.setPersonTypeCode(type.getTypeCode());
+			candidateprofileDto.setPersonType(type.getTypeName());
 		}
-		if (candidateprofile.getFile() != null) {			
+		if (candidateprofile.getFile() != null) {
 			candidateprofileDto.setFileId(candidateprofile.getFile().getId());
 		}
 		if (candidateprofile.getCandidateStatus() != null) {
-			candidateprofileDto.setCandidateStatusId(candidateprofile.getCandidateStatus().getId());
+			final CandidateStatus status = candidateStatusDao.getById(CandidateStatus.class, candidateprofile.getCandidateStatus().getId());
+			candidateprofileDto.setCandidateStatusId(status.getId());
+			candidateprofileDto.setCandidateStatusCode(status.getStatusCode());
+			candidateprofileDto.setCandidateStatus(status.getStatusName());
 		}
 
 		data.setCandidateProfile(candidateprofileDto);
@@ -200,13 +214,11 @@ public class CandidateService implements UserDetailsService {
 			em().getTransaction().begin();
 
 			final CandidateUser user = candidateUserDao.getById(CandidateUser.class, data.getId());
-			user.setId(data.getId());
 			user.setUserEmail(data.getUserEmail());
 			user.setUpdatedBy(principalService.getAuthPrincipal());
 
 			final CandidateProfile profile = candidateProfileDao.getById(CandidateProfile.class,
 					user.getCandidateProfile().getId());
-			profile.setId(data.getProfile().getId());
 			profile.setSalutation(data.getProfile().getSalutation());
 			profile.setFullname(data.getProfile().getFullname());
 			profile.setGender(data.getProfile().getGender());
@@ -219,36 +231,63 @@ public class CandidateService implements UserDetailsService {
 			profile.setBirthPlace(data.getProfile().getBirthPlace());
 			final MaritalStatus status = maritalStatusDao.getById(MaritalStatus.class,
 					data.getProfile().getMaritalStatusId());
+			data.getProfile().setMaritalStatusCode(status.getMaritalCode());
 			profile.setMaritalStatus(status);
 
 			final Religion religion = religionDao.getById(Religion.class, data.getProfile().getReligionId());
+			data.getProfile().setReligionCode(religion.getReligionCode());
 			profile.setReligion(religion);
 
 			final PersonType type = personTypeDao.getById(PersonType.class, data.getProfile().getPersonTypeId());
+			data.getProfile().setPersonTypeCode(type.getTypeCode());
 			profile.setPersonType(type);
 
-			if (data.getProfile().getFile() != null) {
+			if (!data.getProfile().getFile().isBlank()) {
 				final String fileId = data.getProfile().getFileId();
+
 				File file = new File();
 				file.setFileName(data.getProfile().getFile());
 				file.setFileExtension(data.getProfile().getFileExtension());
 				file.setCreatedBy(principalService.getAuthPrincipal());
 				file = fileDao.save(file);
 				profile.setFile(file);
-				fileDao.deleteById(File.class, fileId);
+				
+				if (fileId != null) {										
+					fileDao.deleteById(File.class, fileId);
+				}
 			}
 
 			final CandidateStatus candidatestatus = candidateStatusDao.getById(CandidateStatus.class,
 					data.getProfile().getCandidateStatusId());
+			data.getProfile().setCandidateStatusCode(candidatestatus.getStatusCode());
 			profile.setCandidateStatus(candidatestatus);
 			profile.setUpdatedBy(principalService.getAuthPrincipal());
 			candidateProfileDao.saveAndFlush(profile);
 			user.setCandidateProfile(profile);
 			candidateUserDao.saveAndFlush(user);
+			
+			final String candidateProfileUpdateAPI = "http://localhost:8080/candidate-user/update/candidate";
 
-			result = new UpdateResDto();
-			result.setVersion(profile.getVersion());
-			result.setMessage("Candidate User has been updated");
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final RequestEntity<CandidateUserUpdateReqDto> candidateUpdate = RequestEntity.patch(candidateProfileUpdateAPI)
+					.headers(headers).body(data);
+
+			final ResponseEntity<UpdateResDto> responseAdmin = restTemplate.exchange(candidateUpdate,
+					UpdateResDto.class);
+
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				result = new UpdateResDto();
+				result.setVersion(profile.getVersion());
+				result.setMessage("Candidate User has been updated");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+
+			}
 
 			em().getTransaction().commit();
 		} catch (Exception e) {

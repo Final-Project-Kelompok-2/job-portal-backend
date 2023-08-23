@@ -120,4 +120,19 @@ public class CandidateAddressService {
 		}
 		return deleteRes;
 	}
+	
+	public DeleteResDto deleteCandidateAddressFromCandidate(String code) {
+		final DeleteResDto deleteRes = new DeleteResDto();
+		try {
+			em().getTransaction().begin();
+			final CandidateAddress address = candidateAddressDao.getByCode(code);
+			candidateAddressDao.deleteById(CandidateAddress.class, address.getId());
+			deleteRes.setMessage("Delete Candidate Address Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		return deleteRes;
+	}
 }

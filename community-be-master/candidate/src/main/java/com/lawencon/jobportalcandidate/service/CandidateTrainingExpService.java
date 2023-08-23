@@ -79,7 +79,7 @@ public class CandidateTrainingExpService {
 			data.setEmail(candidateUser.getUserEmail());
 			final CandidateTrainingExp trainingId = trainingDao.save(trainingExp);
 			
-			final String candidateTrainingApi = "http://localhost:8080/training-experiences";
+			final String candidateTrainingApi = "http://localhost:8080/candidate-trainings";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());

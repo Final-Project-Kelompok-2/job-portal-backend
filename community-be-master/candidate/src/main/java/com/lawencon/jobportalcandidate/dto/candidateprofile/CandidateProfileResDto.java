@@ -1,5 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.candidateprofile;
 
+import java.math.BigDecimal;
+
 public class CandidateProfileResDto {
 
 	private String id;
@@ -7,17 +9,57 @@ public class CandidateProfileResDto {
 	private String fullname;
 	private String gender;
 	private String experience;
-	private String expectedSalary;
+	private BigDecimal expectedSalary;
 	private String phoneNumber;
 	private String mobileNumber;
 	private String nik;
 	private String birthDate;
 	private String birthPlace;
+	private String maritalStatus;
+	private String maritalStatusCode;
 	private String maritalStatusId;
+	private String religion;
+	private String religionCode;
 	private String religionId;
+	private String personType;
+	private String personTypeCode;
 	private String personTypeId;
 	private String fileId;
+	private String candidateStatus;
+	private String candidateStatusCode;
 	private String candidateStatusId;
+
+	public String getMaritalStatusCode() {
+		return maritalStatusCode;
+	}
+
+	public void setMaritalStatusCode(String maritalStatusCode) {
+		this.maritalStatusCode = maritalStatusCode;
+	}
+
+	public String getReligionCode() {
+		return religionCode;
+	}
+
+	public void setReligionCode(String religionCode) {
+		this.religionCode = religionCode;
+	}
+
+	public String getPersonTypeCode() {
+		return personTypeCode;
+	}
+
+	public void setPersonTypeCode(String personTypeCode) {
+		this.personTypeCode = personTypeCode;
+	}
+
+	public String getCandidateStatusCode() {
+		return candidateStatusCode;
+	}
+
+	public void setCandidateStatusCode(String candidateStatusCode) {
+		this.candidateStatusCode = candidateStatusCode;
+	}
 
 	public String getId() {
 		return id;
@@ -59,11 +101,11 @@ public class CandidateProfileResDto {
 		this.experience = experience;
 	}
 
-	public String getExpectedSalary() {
+	public BigDecimal getExpectedSalary() {
 		return expectedSalary;
 	}
 
-	public void setExpectedSalary(String expectedSalary) {
+	public void setExpectedSalary(BigDecimal expectedSalary) {
 		this.expectedSalary = expectedSalary;
 	}
 
@@ -107,6 +149,14 @@ public class CandidateProfileResDto {
 		this.birthPlace = birthPlace;
 	}
 
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
 	public String getMaritalStatusId() {
 		return maritalStatusId;
 	}
@@ -115,12 +165,28 @@ public class CandidateProfileResDto {
 		this.maritalStatusId = maritalStatusId;
 	}
 
+	public String getReligion() {
+		return religion;
+	}
+
+	public void setReligion(String religion) {
+		this.religion = religion;
+	}
+
 	public String getReligionId() {
 		return religionId;
 	}
 
 	public void setReligionId(String religionId) {
 		this.religionId = religionId;
+	}
+
+	public String getPersonType() {
+		return personType;
+	}
+
+	public void setPersonType(String personType) {
+		this.personType = personType;
 	}
 
 	public String getPersonTypeId() {
@@ -139,6 +205,14 @@ public class CandidateProfileResDto {
 		this.fileId = fileId;
 	}
 
+	public String getCandidateStatus() {
+		return candidateStatus;
+	}
+
+	public void setCandidateStatus(String candidateStatus) {
+		this.candidateStatus = candidateStatus;
+	}
+
 	public String getCandidateStatusId() {
 		return candidateStatusId;
 	}
@@ -146,4 +220,5 @@ public class CandidateProfileResDto {
 	public void setCandidateStatusId(String candidateStatusId) {
 		this.candidateStatusId = candidateStatusId;
 	}
+
 }

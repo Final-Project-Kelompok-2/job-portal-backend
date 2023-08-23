@@ -13,13 +13,49 @@ public class CandidateProfileUpdateReqDto {
 	private String nik;
 	private String birthDate;
 	private String birthPlace;
+	private String maritalStatusCode;
 	private String maritalStatusId;
+	private String religionCode;
 	private String religionId;
+	private String personTypeCode;
 	private String personTypeId;
 	private String fileId;
 	private String file;
 	private String fileExtension;
+	private String candidateStatusCode;
 	private String candidateStatusId;
+	
+	public String getMaritalStatusCode() {
+		return maritalStatusCode;
+	}
+
+	public void setMaritalStatusCode(String maritalStatusCode) {
+		this.maritalStatusCode = maritalStatusCode;
+	}
+
+	public String getReligionCode() {
+		return religionCode;
+	}
+
+	public void setReligionCode(String religionCode) {
+		this.religionCode = religionCode;
+	}
+
+	public String getPersonTypeCode() {
+		return personTypeCode;
+	}
+
+	public void setPersonTypeCode(String personTypeCode) {
+		this.personTypeCode = personTypeCode;
+	}
+
+	public String getCandidateStatusCode() {
+		return candidateStatusCode;
+	}
+
+	public void setCandidateStatusCode(String candidateStatusCode) {
+		this.candidateStatusCode = candidateStatusCode;
+	}
 
 	public String getId() {
 		return id;
