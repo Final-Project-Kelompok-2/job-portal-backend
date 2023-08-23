@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
+import com.lawencon.jobportaladmin.dao.ApplicantDao;
 import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.EmployeeDao;
 import com.lawencon.jobportaladmin.dao.JobDao;
 import com.lawencon.jobportaladmin.dto.employee.EmployeeResDto;
+import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.Employee;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -26,23 +28,20 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeDao employeeDao;
 	@Autowired
-	private CandidateUserDao candidateDao;
-	@Autowired
-	private JobDao jobDao;
-	@Autowired
 	private PrincipalService<String> principalService;
 	
 	
 	public List<EmployeeResDto>getAll(){
-		final List<Employee>getList = employeeDao.getAll(Employee.class);
+		final List<Employee> getList = employeeDao.getAll(Employee.class);
 		final List<EmployeeResDto> employeeRes = new ArrayList<>();
 		for(int i = 0 ; i < getList.size() ; i++) {
 			final EmployeeResDto resDto = new EmployeeResDto();
-			resDto.setCandidateId(getList.get(i).getCandidate().getId());
-			resDto.setEmployeeCode(getList.get(i).getEmployeeCode());
-			resDto.setId(getList.get(i).getId());
-			resDto.setJobId(getList.get(i).getJob().getId());
-			
+			resDto.setCandidateName(getList.get(i).getCandidate().getCandidateProfile().getFullname());
+			resDto.setPhoneNumber(getList.get(i).getCandidate().getCandidateProfile().getPhoneNumber());
+			resDto.setJobName(getList.get(i).getJob().getJobName());
+			resDto.setCompanyUrl(getList.get(i).getJob().getCompany().getCompanyUrl());
+			resDto.setEmploymentTypeName(getList.get(i).getJob().getEmploymentType().getEmploymentTypeName());
+			employeeRes.add(resDto);
 		}
 		return employeeRes;
 	}

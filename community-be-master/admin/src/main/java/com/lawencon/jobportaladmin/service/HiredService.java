@@ -142,8 +142,6 @@ public class HiredService {
 				throw new RuntimeException("Update Failed");
 			}
 			
-			
-			
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
