@@ -49,5 +49,7 @@ public class CandidateUserController {
 		final CandidateUserResDto response = candidateUserService.getById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	
 
 }

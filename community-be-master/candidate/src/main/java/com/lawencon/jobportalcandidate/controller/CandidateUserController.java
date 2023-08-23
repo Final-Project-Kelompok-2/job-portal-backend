@@ -15,6 +15,7 @@ import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserBlacklistReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.ChangePasswordReqDto;
 import com.lawencon.jobportalcandidate.service.CandidateService;
@@ -47,6 +48,12 @@ public class CandidateUserController {
 	@PatchMapping("/password")
 	public ResponseEntity<UpdateResDto> changePassword(@RequestBody ChangePasswordReqDto data){
 		final UpdateResDto response = candidateService.changePassword(data);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+	@PatchMapping("/blacklist")
+	public ResponseEntity<UpdateResDto> updateBlacklist(@RequestBody CandidateUserBlacklistReqDto data){
+		final UpdateResDto response = candidateService.updateBlacklist(data);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 }

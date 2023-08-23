@@ -18,7 +18,6 @@ import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantInsertReqDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantResDto;
 import com.lawencon.jobportaladmin.dto.applicant.ApplicantUpdateReqDto;
-import com.lawencon.jobportaladmin.dto.assesment.AssesmentResDto;
 import com.lawencon.jobportaladmin.service.ApplicantService;
 
 @RestController
