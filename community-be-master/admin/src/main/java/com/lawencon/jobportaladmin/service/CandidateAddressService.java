@@ -108,9 +108,16 @@ public class CandidateAddressService {
 	}
 	
 	public DeleteResDto deleteCandidateAddress(String id) {
-		candidateAddressDao.deleteById(CandidateAddress.class, "d1614260-9337-43ce-a1f0-3e86ae24ceaa");
 		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Address Success");
+		try {
+			em().getTransaction().begin();
+			candidateAddressDao.deleteById(CandidateAddress.class, id);
+			deleteRes.setMessage("Delete Candidate Address Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		return deleteRes;
 	}
 }

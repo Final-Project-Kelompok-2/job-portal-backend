@@ -120,10 +120,17 @@ public class CandidateEducationService {
 	}
 
 	public DeleteResDto deleteEducation(String id) {
-		candidateEducationDao.deleteById(CandidateEducation.class, id);
-
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Education has been removed");
+		
+		try {
+			em().getTransaction().begin();
+			candidateEducationDao.deleteById(CandidateEducation.class, id);
+			response.setMessage("Education has been removed");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 
 		return response;
 	}

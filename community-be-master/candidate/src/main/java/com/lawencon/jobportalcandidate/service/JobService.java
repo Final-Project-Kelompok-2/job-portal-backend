@@ -201,7 +201,7 @@ public class JobService {
 		jobDto.setEndDate(job.getEndDate().toString());
 		jobDto.setDescription(job.getDescription());
 		jobDto.setExpectedSalaryMin(job.getExpectedSalaryMin().toString());
-		jobDto.setExpectedSalaryMax(job.getExpectedSalaryMin().toString());
+		jobDto.setExpectedSalaryMax(job.getExpectedSalaryMax().toString());
 		jobDto.setEmployementTypeName(job.getEmploymentType().getEmploymentTypeName());
 		jobDto.setFileId(job.getJobPicture().getId());
 		return jobDto;

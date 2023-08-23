@@ -1067,6 +1067,7 @@ INSERT INTO t_marital_status (id, marital_code, marital_name, created_by, create
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 select * from t_employment_type tet ;
 select * from t_person_type tpt ;
+select * from t_profile tp ;
 select * from t_company tc ;
 select * from t_user tu ;
 select * from t_role tr ;

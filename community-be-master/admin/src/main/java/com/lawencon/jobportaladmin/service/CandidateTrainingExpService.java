@@ -111,10 +111,18 @@ public class CandidateTrainingExpService {
 	}
 
 	public DeleteResDto deleteCandidateTrainingExp(String id) {
-		trainingDao.deleteById(CandidateTrainingExp.class, id);
-
 		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Training Exp Success");
+
+		try {
+			em().getTransaction().begin();			
+			trainingDao.deleteById(CandidateTrainingExp.class, id);
+			deleteRes.setMessage("Delete Candidate Training Exp Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
 		return deleteRes;
 	}
 }
