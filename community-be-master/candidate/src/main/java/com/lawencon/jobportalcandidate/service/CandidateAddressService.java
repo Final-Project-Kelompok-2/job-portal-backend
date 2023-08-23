@@ -114,6 +114,8 @@ public class CandidateAddressService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Failed");
+
 		}
 
 		return insertResDto;

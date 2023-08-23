@@ -150,15 +150,16 @@ public class ApplicantService {
 			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
 
 			if (applicant.getStatus().getStatusCode()
-					.equals(com.lawencon.jobportalcandidate.constant.HiringStatus.HIRED.statusCode)) {
+					.equals(com.lawencon.jobportalcandidate.constant.HiringStatus.OFFERING.statusCode)) {
 				CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
 						applicant.getCandidate().getId());
-				
+				System.out.println("YOU ARE HERE ========================");
 				final PersonType employeeType = personTypeDao.getByCode(PersonTypes.EMPLOYEE.typeCode);
 				CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class, candidateUser.getCandidateProfile().getId());
 				candidateProfile.setPersonType(employeeType);
 				candidateProfile = candidateProfileDao.save(candidateProfile);
 			}
+			
 			final HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
 
 			applicant.setStatus(hiringStatus);
