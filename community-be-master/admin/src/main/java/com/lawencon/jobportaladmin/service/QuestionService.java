@@ -140,9 +140,28 @@ public class QuestionService {
 					questionOptionDao.saveAndFlush(option.get(i));
 				}
 			}
-			res.setMessage("Update Success");
-			res.setVersion(save.getVersion());
-			em().getTransaction().commit();
+			final String questionUpdateCandidateAPI = "http://localhost:8081/questions";
+
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+
+			final RequestEntity<QuestionUpdateReqDto> questionsInsert = RequestEntity.patch(questionUpdateCandidateAPI)
+					.headers(headers).body(data);
+
+			final ResponseEntity<InsertResDto> responseCandidate = restTemplate.exchange(questionsInsert,
+					InsertResDto.class);
+
+			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
+
+				res.setMessage("Update Success");
+				res.setVersion(save.getVersion());
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Update Failed");
+
+			}
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
