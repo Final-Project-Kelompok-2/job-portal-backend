@@ -7,7 +7,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -25,8 +27,10 @@ import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducationInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducationResDto;
 import com.lawencon.jobportalcandidate.dto.candidateeducation.CandidateEducationUpdateReqDto;
+import com.lawencon.jobportalcandidate.model.CandidateAddress;
 import com.lawencon.jobportalcandidate.model.CandidateEducation;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -74,6 +78,8 @@ public class CandidateEducationService {
 		try {
 			em().getTransaction().begin();
 			final CandidateEducation education = new CandidateEducation();
+			education.setEducationCode(GenerateCode.generateCode());
+			data.setEducationCode(education.getEducationCode());
 			education.setDegreeName(data.getDegreeName());
 			education.setInstitutionName(data.getInstituitionName());
 			education.setMajors(data.getMajors());
@@ -150,9 +156,38 @@ public class CandidateEducationService {
 	}
 
 	public DeleteResDto deleteEducation(String id) {
+		final DeleteResDto response = new DeleteResDto();
+
+		try {
+			em().getTransaction().begin();
+			final CandidateEducation education = candidateEducationDao.getById(CandidateEducation.class, id);
+			candidateEducationDao.deleteById(CandidateEducation.class, education.getId());
+			
+			final String candidateEducationAPI = "http://localhost:8080/candidate-educations/deleteEducation/";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateEducation> httpEntity = new HttpEntity<CandidateEducation>(headers);
+
+			final ResponseEntity<CandidateAddress> responseAdmin = restTemplate.exchange(
+					candidateEducationAPI+education.getEducationCode(), HttpMethod.DELETE, httpEntity, CandidateAddress.class);
+
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				response.setMessage("Delete Candidate Education Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+			}
+			
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		candidateEducationDao.deleteById(CandidateEducation.class, id);
 
-		final DeleteResDto response = new DeleteResDto();
 		response.setMessage("Education has been removed");
 
 		return response;

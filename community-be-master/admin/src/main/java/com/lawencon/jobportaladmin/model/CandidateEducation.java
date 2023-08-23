@@ -14,6 +14,9 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_candidate_education")
 public class CandidateEducation extends BaseEntity {
 
+	@Column(name = "education_code", nullable = false, unique = true)
+	private String educationCode;
+	
 	@Column(name = "degree_name", length = 50, nullable = false)
 	private String degreeName;
 
@@ -36,6 +39,14 @@ public class CandidateEducation extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
 
+	public String getEducationCode() {
+		return educationCode;
+	}
+
+	public void setEducationCode(String educationCode) {
+		this.educationCode = educationCode;
+	}
+	
 	public String getDegreeName() {
 		return degreeName;
 	}

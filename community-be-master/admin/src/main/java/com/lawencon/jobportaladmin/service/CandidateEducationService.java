@@ -63,6 +63,8 @@ public class CandidateEducationService {
 		try {
 			em().getTransaction().begin();
 			final CandidateEducation education = new CandidateEducation();
+			education.setEducationCode(data.getEducationCode());
+			
 			education.setDegreeName(data.getDegreeName());
 			education.setInstitutionName(data.getInstituitionName());
 			education.setMajors(data.getMajors());
@@ -125,6 +127,23 @@ public class CandidateEducationService {
 		try {
 			em().getTransaction().begin();
 			candidateEducationDao.deleteById(CandidateEducation.class, id);
+			response.setMessage("Education has been removed");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+
+		return response;
+	}
+	
+	public DeleteResDto deleteEducationFromCandidate(String code) {
+		final DeleteResDto response = new DeleteResDto();
+		
+		try {
+			em().getTransaction().begin();
+			final CandidateEducation education = candidateEducationDao.getByCode(code);
+			candidateEducationDao.deleteById(CandidateEducation.class, education.getId());
 			response.setMessage("Education has been removed");
 			em().getTransaction().commit();
 		} catch (Exception e) {
