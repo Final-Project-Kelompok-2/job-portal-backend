@@ -9,12 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
-import com.lawencon.jobportaladmin.dao.ApplicantDao;
-import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.EmployeeDao;
-import com.lawencon.jobportaladmin.dao.JobDao;
 import com.lawencon.jobportaladmin.dto.employee.EmployeeResDto;
-import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.Employee;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -41,6 +37,7 @@ public class EmployeeService {
 			resDto.setJobName(getList.get(i).getJob().getJobName());
 			resDto.setCompanyUrl(getList.get(i).getJob().getCompany().getCompanyUrl());
 			resDto.setEmploymentTypeName(getList.get(i).getJob().getEmploymentType().getEmploymentTypeName());
+			resDto.setCandidateEmail(getList.get(i).getCandidate().getUserEmail());
 			employeeRes.add(resDto);
 		}
 		return employeeRes;

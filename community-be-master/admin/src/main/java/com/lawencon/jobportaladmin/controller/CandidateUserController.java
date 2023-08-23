@@ -52,6 +52,8 @@ public class CandidateUserController {
 		final CandidateUserResDto response = candidateUserService.getById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	
 
 	@PatchMapping("/update")
 	public ResponseEntity<UpdateResDto> updateCandidateUserFromAdmin(@RequestBody CandidateUserUpdateReqDto candidate) {

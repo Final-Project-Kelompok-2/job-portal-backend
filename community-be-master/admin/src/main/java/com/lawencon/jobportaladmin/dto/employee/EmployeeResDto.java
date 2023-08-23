@@ -4,6 +4,7 @@ public class EmployeeResDto {
 	
 	private String id;
 	private String candidateName;
+	private String candidateEmail;
 	private String phoneNumber;
 	private String jobName;
 	private String companyUrl;
@@ -57,6 +58,14 @@ public class EmployeeResDto {
 
 	public void setEmploymentTypeName(String employmentTypeName) {
 		this.employmentTypeName = employmentTypeName;
+	}
+
+	public String getCandidateEmail() {
+		return candidateEmail;
+	}
+
+	public void setCandidateEmail(String candidateEmail) {
+		this.candidateEmail = candidateEmail;
 	}
 
 }

@@ -32,6 +32,8 @@ import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResDto;
+import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserBlacklistReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserResDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserUpdateReqDto;
@@ -299,6 +301,31 @@ public class CandidateService implements UserDetailsService {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 		}
+		return resDto;
+	}
+
+	public UpdateResDto updateBlacklist(CandidateUserBlacklistReqDto data) {
+		final UpdateResDto  resDto = new UpdateResDto();
+		
+		try {
+			em().getTransaction().begin();
+			final CandidateUser candidateUser = candidateUserDao.getByUsername(data.getCandidateEmail());
+			final CandidateStatus candidateStatus = candidateStatusDao.getByCode(data.getStatusCode());
+			 CandidateProfile candidateProfile= candidateProfileDao.getById(CandidateProfile.class, candidateUser.getCandidateProfile().getId());
+			candidateProfile.setCandidateStatus(candidateStatus);
+			candidateUser.setIsActive(data.getIsActive());
+			
+			candidateProfile= candidateProfileDao.save(candidateProfile);
+			
+			resDto.setVersion(candidateProfile.getVersion());
+			resDto.setMessage("Update Blacklist Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+			throw new RuntimeException("Update Blacklist Failed");
+		}
+		
 		return resDto;
 	}
 

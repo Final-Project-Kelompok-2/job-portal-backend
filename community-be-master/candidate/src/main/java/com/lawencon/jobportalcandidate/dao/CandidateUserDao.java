@@ -18,38 +18,12 @@ public class CandidateUserDao extends AbstractJpaDao{
 	}
 	
 	public CandidateUser getByUsername(String email) {
-		final String sql = "SELECT tu.id ,"
-				+ " tu.user_password, "
-				+ " tu.is_active, " 
-				+ "	tu.profile_id, "
-				+ " tp.fullname, "
-				+ " tp.file_id "
-				+ " FROM t_candidate_user tu "
-				+ " INNER JOIN t_candidate_profile tp ON tp.id = tu.profile_id " 
-				+ " WHERE tu.user_email = :email ";
+		final String sql = "SELECT cu FROM CandidateUser cu " 
+				+ " WHERE cu.userEmail = :email ";
 
-			final Object user = em().createNativeQuery(sql).setParameter("email", email).getSingleResult();
-
-			final Object[] userArr = (Object[]) user;
-			CandidateUser userGet = null;
-
-			if (userArr.length > 0) {
-				userGet = new CandidateUser();
-				userGet.setId(userArr[0].toString());
-				userGet.setUserPassword(userArr[1].toString());
-				userGet.setIsActive(Boolean.valueOf(userArr[2].toString()));
-				
-				final CandidateProfile profile = new CandidateProfile();
-				profile.setId(userArr[3].toString());
-				profile.setFullname(userArr[4].toString());
-				
-				final File photo = new File();
-				if(userArr[5]!=null) {
-					photo.setId(userArr[5].toString());
-					profile.setFile(photo);
-				}
-				userGet.setCandidateProfile(profile);
-			}
+		
+		final CandidateUser userGet = em().createQuery(sql,CandidateUser.class)
+				.setParameter("email", email).getSingleResult();
 			
 			return userGet;
 	}
