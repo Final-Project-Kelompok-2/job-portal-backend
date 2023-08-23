@@ -1,7 +1,5 @@
 package com.lawencon.jobportaladmin.dao;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -26,22 +24,23 @@ public class MaritalStatusDao extends AbstractJpaDao {
 		sqlb.append("WHERE ");
 		sqlb.append(" ms.maritalCode = :code");
 
-		final Object statusObj = this.em().createQuery(sqlb.toString()).getSingleResult();
-
-		final Object[] statusArr = (Object[]) statusObj;
-		MaritalStatus status = null;
+		final MaritalStatus statusObj = this.em().createQuery(sqlb.toString(), MaritalStatus.class)
+				.setParameter("code", code).getSingleResult();
 		
-		if (statusArr.length > 0) {			
-			status = new MaritalStatus();
-			status.setId(statusArr[0].toString());
-			status.setMaritalCode(statusArr[1].toString());
-			status.setMaritalName(statusArr[2].toString());
-			status.setCreatedBy(statusArr[3].toString());
-			status.setCreatedAt(LocalDateTime.parse(statusArr[4].toString()));
-			status.setIsActive(Boolean.valueOf(statusArr[5].toString()));
-			status.setVersion(Integer.valueOf(statusArr[6].toString()));
-		}
+//		final Object[] statusArr = (Object[]) statusObj;
+//		MaritalStatus status = null;
+//		
+//		if (statusArr.length > 0) {			
+//			status = new MaritalStatus();
+//			status.setId(statusArr[0].toString());
+//			status.setMaritalCode(statusArr[1].toString());
+//			status.setMaritalName(statusArr[2].toString());
+//			status.setCreatedBy(statusArr[3].toString());
+//			status.setCreatedAt(LocalDateTime.parse(statusArr[4].toString()));
+//			status.setIsActive(Boolean.valueOf(statusArr[5].toString()));
+//			status.setVersion(Integer.valueOf(statusArr[6].toString()));
+//		}
 
-		return status;
+		return statusObj;
 	}
 }

@@ -147,8 +147,7 @@ public class CandidateAddressService {
 			em().getTransaction().begin();
 			candidateAddressDao.deleteById(CandidateAddress.class, id);
 			
-			final String candidateAddressAPI = "http://localhost:8080/candidate-address/";
-
+			final String candidateAddressAPI = "http://localhost:8080/candidate-address/" + id;
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 

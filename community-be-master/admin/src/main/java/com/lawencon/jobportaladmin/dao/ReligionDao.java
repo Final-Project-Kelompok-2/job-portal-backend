@@ -26,22 +26,23 @@ public class ReligionDao extends AbstractJpaDao {
 			sqlb.append("WHERE ");
 			sqlb.append(" tr.religionCode = :code");
 
-		final Object religionObj = em().createQuery(sqlb.toString()).setParameter("code", code).getSingleResult();
-		final Object[] religionArr = (Object[]) religionObj;
-
-		Religion religion = null;
+		final Religion religionObj = this.em().createQuery(sqlb.toString(), Religion.class).setParameter("code", code).getSingleResult();
 		
-		if (religionArr.length > 0) {			
-			religion = new Religion();
-			religion.setId(religionArr[0].toString());
-			religion.setReligionCode(religionArr[1].toString());
-			religion.setReligionName(religionArr[2].toString());
-			religion.setCreatedBy(religionArr[3].toString());
-			religion.setCreatedAt(LocalDateTime.parse(religionArr[4].toString()));
-			religion.setIsActive(Boolean.valueOf(religionArr[5].toString()));
-			religion.setVersion(Integer.valueOf(religionArr[6].toString()));
-		}
+//		final Object[] religionArr = (Object[]) religionObj;
+//
+//		Religion religion = null;
+//		
+//		if (religionArr.length > 0) {			
+//			religion = new Religion();
+//			religion.setId(religionArr[0].toString());
+//			religion.setReligionCode(religionArr[1].toString());
+//			religion.setReligionName(religionArr[2].toString());
+//			religion.setCreatedBy(religionArr[3].toString());
+//			religion.setCreatedAt(LocalDateTime.parse(religionArr[4].toString()));
+//			religion.setIsActive(Boolean.valueOf(religionArr[5].toString()));
+//			religion.setVersion(Integer.valueOf(religionArr[6].toString()));
+//		}
 
-		return religion;
+		return religionObj;
 	}
 }
