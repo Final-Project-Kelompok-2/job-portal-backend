@@ -8,6 +8,7 @@ public class LoginResDto {
 	private String profileId;
 	private String photoId;
 	private String message;
+	private String nik;
 
 	public String getToken() {
 		return token;
@@ -57,6 +58,14 @@ public class LoginResDto {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getNik() {
+		return nik;
+	}
+
+	public void setNik(String nik) {
+		this.nik = nik;
 	}
 
 }
