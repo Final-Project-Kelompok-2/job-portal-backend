@@ -1,6 +1,8 @@
 package com.lawencon.jobportaladmin.dto.candidateworkexp;
 
 public class CandidateWorkExpInsertReqDto {
+	
+	private String workingCode;
 	private String positionName;
 	private String companyName;
 	private String address;
@@ -11,6 +13,14 @@ public class CandidateWorkExpInsertReqDto {
 	private String endDate;
 	private String candidateId;
 	private String email;
+	
+	public String getWorkingCode() {
+		return workingCode;
+	}
+
+	public void setWorkingCode(String workingCode) {
+		this.workingCode = workingCode;
+	}
 
 	public String getPositionName() {
 		return positionName;
