@@ -66,6 +66,7 @@ public class CandidateWorkExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateWorkExp work = new CandidateWorkExp();
+			work.setWorkingCode(data.getWorkingCode());
 			work.setPositionName(data.getPositionName());
 			work.setCompanyName(data.getCompanyName());
 			work.setAddress(data.getAddress());
@@ -134,6 +135,23 @@ public class CandidateWorkExpService {
 		try {
 			em().getTransaction().begin();
 			candidateWorkExpDao.deleteById(CandidateWorkExp.class, id);
+			response.setMessage("Working Experience Has Been Removed");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+
+		return response;
+	}
+	
+	public DeleteResDto deleteWorkExperienceFromCandidate(String code) {
+		final DeleteResDto response = new DeleteResDto();
+
+		try {
+			em().getTransaction().begin();
+			final CandidateWorkExp work = candidateWorkExpDao.getByCode(code);
+			candidateWorkExpDao.deleteById(CandidateWorkExp.class, work.getId());
 			response.setMessage("Working Experience Has Been Removed");
 			em().getTransaction().commit();
 		} catch (Exception e) {

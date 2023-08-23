@@ -248,6 +248,7 @@ ALTER TABLE t_candidate_skill ADD CONSTRAINT user_id_fk_t_candidate_skill
 
 CREATE TABLE t_candidate_work_exp ( 
 	id VARCHAR(36) NOT NULL,
+	working_code VARCHAR(5) NOT NULL,
 	position_name VARCHAR(30) NOT NULL,
 	company_name VARCHAR(30) NOT NULL,
 	address TEXT NOT NULL,
@@ -270,6 +271,8 @@ ALTER TABLE t_candidate_work_exp ADD CONSTRAINT candidate_work_exp_pk
 ALTER TABLE t_candidate_work_exp ADD CONSTRAINT user_id_fk_t_candidate_work_exp
 	FOREIGN KEY (user_id)
 	REFERENCES t_candidate_user(id);
+ALTER TABLE t_candidate_work_exp ADD CONSTRAINT candidate_work_exp_code_bk 
+	UNIQUE (working_code);
 
 CREATE TABLE t_candidate_project_exp ( 
 	id VARCHAR(36) NOT NULL,

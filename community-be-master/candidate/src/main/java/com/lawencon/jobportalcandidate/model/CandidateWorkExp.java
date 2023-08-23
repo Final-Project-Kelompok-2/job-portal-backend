@@ -14,6 +14,10 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(name = "t_candidate_work_exp")
 public class CandidateWorkExp extends BaseEntity{
+	
+	@Column(name = "working_code", nullable = false, unique = true) 
+	private String workingCode;
+	
 	@Column(name = "position_name",length = 30, nullable = false)
 	private String positionName;
 	
@@ -41,6 +45,14 @@ public class CandidateWorkExp extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+
+	public String getWorkingCode() {
+		return workingCode;
+	}
+
+	public void setWorkingCode(String workingCode) {
+		this.workingCode = workingCode;
+	}
 
 	public String getPositionName() {
 		return positionName;

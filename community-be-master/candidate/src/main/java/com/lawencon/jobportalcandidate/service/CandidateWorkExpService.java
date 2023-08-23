@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -28,6 +30,7 @@ import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.CandidateWorkExp;
 import com.lawencon.jobportalcandidate.util.BigDecimalUtil;
 import com.lawencon.jobportalcandidate.util.DateUtil;
+import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -76,6 +79,8 @@ public class CandidateWorkExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateWorkExp work = new CandidateWorkExp();
+			work.setWorkingCode(GenerateCode.generateCode());
+			data.setWorkingCode(work.getWorkingCode());
 			work.setPositionName(data.getPositionName());
 			work.setCompanyName(data.getCompanyName());
 			work.setAddress(data.getAddress());
@@ -157,9 +162,37 @@ public class CandidateWorkExpService {
 	}
 	
 	public DeleteResDto deleteWorkExperience(String id) {
-		candidateWorkExpDao.deleteById(CandidateWorkExp.class, id);
-		
 		final DeleteResDto response = new DeleteResDto();
+		
+		try {
+			em().getTransaction().begin();
+			final CandidateWorkExp work = candidateWorkExpDao.getById(CandidateWorkExp.class, id);
+			candidateWorkExpDao.deleteById(CandidateWorkExp.class, work.getId());
+			
+			final String candidateWorkingAPI = "http://localhost:8080/candidate-works/deleteWork/";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateWorkExp> httpEntity = new HttpEntity<CandidateWorkExp>(headers);
+
+			final ResponseEntity<CandidateWorkExp> responseAdmin = restTemplate.exchange(
+					candidateWorkingAPI+work.getWorkingCode(), HttpMethod.DELETE, httpEntity, CandidateWorkExp.class);
+
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				response.setMessage("Delete Candidate Working Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Insert Failed");
+			}
+			
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
 		response.setMessage("Working Experience Has Been Removed");
 		
 		return response;
