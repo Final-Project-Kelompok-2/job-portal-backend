@@ -63,6 +63,7 @@ public class LoginController {
 		loginRes.setProfileId(userDb.getProfileId());
 		loginRes.setPhotoId(userDb.getPhotoId());
 		loginRes.setToken(response.getBody());
+		loginRes.setNik(userDb.getNik());
 		
 		return new ResponseEntity<>(loginRes, HttpStatus.OK);
 	}

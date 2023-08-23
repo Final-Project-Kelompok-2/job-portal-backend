@@ -314,6 +314,9 @@ public class CandidateService implements UserDetailsService {
 			if (user.getCandidateProfile().getFile() != null) {
 				loginRes.setPhotoId(user.getCandidateProfile().getFile().getId());
 			}
+			if(user.getCandidateProfile().getNik()!=null) {
+				loginRes.setNik(user.getCandidateProfile().getNik());
+			}
 		}
 
 		return loginRes;
