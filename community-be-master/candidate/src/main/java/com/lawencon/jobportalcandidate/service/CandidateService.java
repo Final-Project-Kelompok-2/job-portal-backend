@@ -306,7 +306,8 @@ public class CandidateService implements UserDetailsService {
 
 		if (!user.getIsActive()) {
 			loginRes.setMessage("Akun anda nonaktif");
-			return loginRes;
+			throw new RuntimeException("Akun Anda nonaktif");
+			
 		} else {
 			loginRes.setUserId(user.getId());
 			loginRes.setFullName(user.getCandidateProfile().getFullname());
@@ -330,7 +331,7 @@ public class CandidateService implements UserDetailsService {
 			if (passwordEncoder.matches(data.getOldPassword(), candidate.getUserPassword())) {
 				final String encodedPassword = passwordEncoder.encode(data.getNewPassword());
 				candidate.setUserPassword(encodedPassword);
-				candidate = candidateUserDao.save(candidate);
+				candidate = candidateUserDao.save(candidate);	
 				resDto.setVersion(candidate.getVersion());
 				resDto.setMessage("Update Password Success");
 				em().getTransaction().commit();
@@ -342,6 +343,7 @@ public class CandidateService implements UserDetailsService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Update Password Failed");
 		}
 		return resDto;
 	}
