@@ -54,9 +54,9 @@ public class CandidateAddressController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/candidate/{id}")
-	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("id") String id) {
-		final DeleteResDto response = addressService.deleteCandidateAddress(id);
+	@DeleteMapping("/deleteAddress/{code}")
+	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("code") String code) {
+		final DeleteResDto response = addressService.deleteCandidateAddressFromCandidate(code);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

@@ -216,6 +216,7 @@ ALTER TABLE t_candidate_family ADD CONSTRAINT user_id_fk_t_candidate_family
 
 CREATE TABLE t_candidate_address ( 
 	id VARCHAR(36) NOT NULL,
+	address_code VARCHAR(5) NOT NULL,
 	address TEXT NOT NULL,
 	residence_type VARCHAR(10) NOT NULL,
 	country VARCHAR(20) NOT NULL,
@@ -223,9 +224,9 @@ CREATE TABLE t_candidate_address (
 	city VARCHAR(20) NOT NULL,
 	postal_code VARCHAR(10) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -236,6 +237,8 @@ ALTER TABLE t_candidate_address ADD CONSTRAINT candidate_address_pk
 ALTER TABLE t_candidate_address ADD CONSTRAINT user_id_fk_t_candidate_address
 	FOREIGN KEY (user_id)
 	REFERENCES t_candidate_user(id);
+ALTER TABLE t_candidate_address ADD CONSTRAINT candidate_address_code_bk
+	UNIQUE(address_code);
 
 CREATE TABLE t_candidate_skill ( 
 	id VARCHAR(36) NOT NULL,

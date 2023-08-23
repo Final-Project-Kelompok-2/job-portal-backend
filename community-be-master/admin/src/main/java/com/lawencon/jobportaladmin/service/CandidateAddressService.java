@@ -53,13 +53,13 @@ public class CandidateAddressService {
 		}
 		return candidateAddressResList;
 	}
-	
-	
+		
 	public InsertResDto insertCandidateAddress(CandidateAddressInsertReqDto data) {
 		final InsertResDto insertResDto = new InsertResDto();
 		try {
 			em().getTransaction().begin();
 			final CandidateAddress candidateAddress = new CandidateAddress();
+			candidateAddress.setAddressCode(data.getAddressCode());
 			candidateAddress.setAddress(data.getAddress());
 			candidateAddress.setCity(data.getCity());
 			candidateAddress.setCountry(data.getCountry());

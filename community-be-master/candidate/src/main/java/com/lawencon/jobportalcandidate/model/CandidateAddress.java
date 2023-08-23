@@ -12,6 +12,9 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_candidate_address")
 public class CandidateAddress extends BaseEntity {
 
+	@Column(name= "address_code", nullable= false, unique= true)
+	private String addressCode;
+	
 	@Column(name = "address", nullable= false)
 	private String address;
 	
@@ -35,6 +38,14 @@ public class CandidateAddress extends BaseEntity {
 	@JoinColumn(name= "user_id")
 	private CandidateUser candidateUser;
 
+	public String getAddressCode() {
+		return addressCode;
+	}
+
+	public void setAddressCode(String addressCode) {
+		this.addressCode = addressCode;
+	}
+	
 	public String getAddress() {
 		return address;
 	}
@@ -90,4 +101,5 @@ public class CandidateAddress extends BaseEntity {
 	public void setCandidateUser(CandidateUser candidateUser) {
 		this.candidateUser = candidateUser;
 	}
+
 }

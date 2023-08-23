@@ -26,7 +26,7 @@ public class FileController {
 	@GetMapping("{id}")
     public ResponseEntity<?> getFileById(@PathVariable("id") String id) {
         final File file = fileService.getById(id);
-        System.out.println(file.getFileName());
+//        System.out.println(file.getFileName());
         final String fileName = "attachment";
         final byte[] fileBytes = Base64.getDecoder().decode(file.getFileName());
         return ResponseEntity.ok()

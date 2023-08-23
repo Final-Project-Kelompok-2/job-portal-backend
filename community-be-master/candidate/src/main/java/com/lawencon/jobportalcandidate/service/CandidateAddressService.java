@@ -28,6 +28,7 @@ import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressResD
 import com.lawencon.jobportalcandidate.dto.candidateaddress.CandidateAddressUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateAddress;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -71,6 +72,9 @@ public class CandidateAddressService {
 		try {
 			em().getTransaction().begin();
 			final CandidateAddress candidateAddress = new CandidateAddress();
+			
+			candidateAddress.setAddressCode(GenerateCode.generateCode());
+			data.setAddressCode(candidateAddress.getAddressCode());
 			candidateAddress.setAddress(data.getAddress());
 			candidateAddress.setCity(data.getCity());
 			candidateAddress.setCountry(data.getCountry());
@@ -145,18 +149,18 @@ public class CandidateAddressService {
 		final DeleteResDto deleteRes = new DeleteResDto();
 		try {
 			em().getTransaction().begin();
-			candidateAddressDao.deleteById(CandidateAddress.class, id);
+			final CandidateAddress address = candidateAddressDao.getById(CandidateAddress.class, id);
+			candidateAddressDao.deleteById(CandidateAddress.class, address.getId());
 			
-			final String candidateAddressAPI = "http://localhost:8080/candidate-address/" + id;
+			final String candidateAddressAPI = "http://localhost:8080/candidate-address/deleteAddress/";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
-
 			headers.setBearerAuth(JwtConfig.get());
 			
 			final HttpEntity<CandidateAddress> httpEntity = new HttpEntity<CandidateAddress>(headers);
 
 			final ResponseEntity<CandidateAddress> responseAdmin = restTemplate.exchange(
-					candidateAddressAPI+id, HttpMethod.DELETE, httpEntity, CandidateAddress.class);
+					candidateAddressAPI+address.getAddressCode(), HttpMethod.DELETE, httpEntity, CandidateAddress.class);
 
 			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
 				deleteRes.setMessage("Delete Candidate Address Success");

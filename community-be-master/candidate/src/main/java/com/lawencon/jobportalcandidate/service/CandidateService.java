@@ -33,7 +33,6 @@ import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResDto;
-import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileUpdateReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserBlacklistReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserResDto;
