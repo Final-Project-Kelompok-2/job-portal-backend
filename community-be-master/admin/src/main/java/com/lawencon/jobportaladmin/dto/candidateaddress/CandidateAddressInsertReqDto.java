@@ -2,6 +2,7 @@ package com.lawencon.jobportaladmin.dto.candidateaddress;
 
 public class CandidateAddressInsertReqDto {
 
+	private String addressCode;
 	private String address;
 	private String residenceType;
 	private String country;
@@ -73,6 +74,14 @@ public class CandidateAddressInsertReqDto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getAddressCode() {
+		return addressCode;
+	}
+
+	public void setAddressCode(String addressCode) {
+		this.addressCode = addressCode;
 	}
 
 }

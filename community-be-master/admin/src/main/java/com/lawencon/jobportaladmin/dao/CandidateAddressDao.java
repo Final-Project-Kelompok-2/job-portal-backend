@@ -87,7 +87,7 @@ public class CandidateAddressDao extends AbstractJpaDao{
 			sqlb.append("FROM ");
 			sqlb.append(" CandidateAddress ca ");
 			sqlb.append("WHERE ");
-			sqlb.append(" ca.Code = :code");
+			sqlb.append(" ca.addressCode = :code");
 		
 		final CandidateAddress address = this.em().createQuery(sqlb.toString(),CandidateAddress.class).setParameter("code", code).getSingleResult();
 	
