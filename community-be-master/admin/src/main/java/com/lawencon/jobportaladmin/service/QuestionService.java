@@ -20,8 +20,10 @@ import com.lawencon.jobportaladmin.dao.AssignedJobQuestionDao;
 import com.lawencon.jobportaladmin.dao.QuestionDao;
 import com.lawencon.jobportaladmin.dao.QuestionOptionDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.question.QuestionInsertReqDto;
 import com.lawencon.jobportaladmin.dto.question.QuestionResDto;
+import com.lawencon.jobportaladmin.dto.question.QuestionUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.question.QuestionsInsertReqDto;
 import com.lawencon.jobportaladmin.dto.questionoption.QuestionOptionInsertReqDto;
 import com.lawencon.jobportaladmin.dto.questionoption.QuestionOptionResDto;
@@ -48,20 +50,20 @@ public class QuestionService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	
-	public List<QuestionResDto> getAll(){
+
+	public List<QuestionResDto> getAll() {
 		final List<QuestionResDto> questionsDto = new ArrayList<>();
 		final List<Question> questions = questionDao.getAll(Question.class);
-		
-		for(int i=0;i<questions.size();i++) {
+
+		for (int i = 0; i < questions.size(); i++) {
 			final QuestionResDto questionDto = new QuestionResDto();
 			questionDto.setId(questions.get(i).getId());
 			questionDto.setQuestionDetail(questions.get(i).getQuestionDetail());
 			questionsDto.add(questionDto);
 		}
-		
+
 		return questionsDto;
-		
+
 	}
 
 	public InsertResDto insertQuestion(QuestionsInsertReqDto newQuestions) {
@@ -99,7 +101,8 @@ public class QuestionService {
 			final RequestEntity<QuestionsInsertReqDto> questionsInsert = RequestEntity.post(questionInsertCandidateAPI)
 					.headers(headers).body(newQuestions);
 
-			final ResponseEntity<InsertResDto> responseCandidate = restTemplate.exchange(questionsInsert, InsertResDto.class);
+			final ResponseEntity<InsertResDto> responseCandidate = restTemplate.exchange(questionsInsert,
+					InsertResDto.class);
 
 			if (responseCandidate.getStatusCode().equals(HttpStatus.CREATED)) {
 
@@ -110,13 +113,65 @@ public class QuestionService {
 				throw new RuntimeException("Insert Failed");
 
 			}
-			
+
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Failed");
 		}
 
 		return insertRes;
+	}
+
+	public UpdateResDto updateQuestion(QuestionUpdateReqDto data) {
+		final UpdateResDto res = new UpdateResDto();
+		try {
+			em().getTransaction().begin();
+			final Question question = questionDao.getById(Question.class, data.getId());
+			question.setQuestionDetail(data.getQuestionDetail());
+			final Question save = questionDao.saveAndFlush(question);
+			if (data.getOptions() != null) {
+				final List<QuestionOption> option = questionOptionDao.getByQuestion(data.getId());
+				for (int i = 0; i < data.getOptions().size(); i++) {
+					System.out.println("Ini versi == >     "+option.get(i).getVersion());
+					option.get(i).setOptionLabel(data.getOptions().get(i).getOptionLabel());
+					option.get(i).setIsCorrect(data.getOptions().get(i).getIsCorrect());
+					option.get(i).setQuestion(question);
+					questionOptionDao.saveAndFlush(option.get(i));
+				}
+			}
+			res.setMessage("Update Success");
+			res.setVersion(save.getVersion());
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+			throw new RuntimeException("Update Failed");
+
+		}
+		return res;
+	}
+
+	public QuestionResDto getById(String id) {
+		final Question question = questionDao.getById(Question.class, id);
+		final QuestionResDto questionDto = new QuestionResDto();
+
+		final List<QuestionOption> options = questionOptionDao.getByQuestion(question.getId());
+		final List<QuestionOptionResDto> optionsDto = new ArrayList<>();
+
+		for (int j = 0; j < options.size(); j++) {
+			final QuestionOptionResDto optionDto = new QuestionOptionResDto();
+			optionDto.setId(options.get(j).getId());
+			optionDto.setOptionLabel(options.get(j).getOptionLabel());
+			optionsDto.add(optionDto);
+		}
+
+		questionDto.setId(question.getId());
+		questionDto.setQuestionCode(question.getQuestionCode());
+		questionDto.setQuestionDetail(question.getQuestionDetail());
+		questionDto.setOptions(optionsDto);
+		
+		return questionDto;
 	}
 
 	public List<QuestionResDto> getByJob(String id) {
