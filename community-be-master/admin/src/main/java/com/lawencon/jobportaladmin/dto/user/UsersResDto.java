@@ -4,6 +4,7 @@ public class UsersResDto {
 
 	private String id;
 	private String email;
+	private String profileId;
 	private String fullName;
 	private String role;
 
@@ -13,6 +14,15 @@ public class UsersResDto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+
+	public String getProfileId() {
+		return profileId;
+	}
+
+	public void setProfileId(String profileId) {
+		this.profileId = profileId;
 	}
 
 	public String getFullName() {

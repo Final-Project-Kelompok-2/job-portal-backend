@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.changepassword.ChangePasswordReqDto;
+import com.lawencon.jobportaladmin.dto.profile.ProfileResDto;
+import com.lawencon.jobportaladmin.dto.profile.ProfileUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.user.UsersResDto;
 import com.lawencon.jobportaladmin.service.UserService;
@@ -54,6 +56,17 @@ public class UserController {
 	@GetMapping("/detail")
 	public ResponseEntity<UsersResDto>getById(@RequestParam String id){
 		final UsersResDto response = userService.getById(id);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+	@GetMapping("/profile")
+	public ResponseEntity<ProfileResDto>getProfile(@RequestParam String id){
+		final ProfileResDto response = userService.getProfile(id);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	@PatchMapping("/profile")
+	public ResponseEntity<UpdateResDto>updateProfile(@RequestBody ProfileUpdateReqDto data){
+		final UpdateResDto response = userService.updateProfile(data);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 }

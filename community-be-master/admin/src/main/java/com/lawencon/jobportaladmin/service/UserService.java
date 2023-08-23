@@ -24,6 +24,8 @@ import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.changepassword.ChangePasswordReqDto;
 import com.lawencon.jobportaladmin.dto.login.LoginReqDto;
 import com.lawencon.jobportaladmin.dto.login.LoginResDto;
+import com.lawencon.jobportaladmin.dto.profile.ProfileResDto;
+import com.lawencon.jobportaladmin.dto.profile.ProfileUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.user.UsersResDto;
 import com.lawencon.jobportaladmin.model.File;
@@ -196,10 +198,26 @@ public class UserService implements UserDetailsService {
 		return usersDto;
 	}
 
+	public ProfileResDto getProfile(String id) {
+		final Profile profile = profileDao.getById(Profile.class, id);
+		final ProfileResDto res = new ProfileResDto();
+		res.setAddress(profile.getAddress());
+		res.setFullName(profile.getFullName());
+		res.setPhoneNumber(profile.getPhoneNumber());
+		res.setPhoto(profile.getPhoto().getId());
+		return res;
+	}
+
+	public UpdateResDto updateProfile(ProfileUpdateReqDto data) {
+		return null;
+
+	}
+
 	public UsersResDto getById(String id) {
 		final User user = userDao.getById(User.class, id);
 		final UsersResDto userDto = new UsersResDto();
 		userDto.setId(user.getId());
+		userDto.setProfileId(user.getProfile().getId());
 		userDto.setFullName(user.getProfile().getFullName());
 		userDto.setRole(user.getRole().getRoleName());
 		userDto.setEmail(user.getUserEmail());
