@@ -64,7 +64,7 @@ public class AuthorizationFilter extends OncePerRequestFilter{
 					response.setStatus(401);
 					final ErrorResDto<String> errorRes = new ErrorResDto<>();
 					errorRes.setMessage("token expired");
-					response.getWriter().append(new ObjectMapper	().writeValueAsString(errorRes));
+					response.getWriter().append(new ObjectMapper().writeValueAsString(errorRes));
 					return;
 				}
 			} else {	
