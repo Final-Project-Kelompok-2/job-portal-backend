@@ -24,7 +24,7 @@ public class Company extends BaseEntity {
 	@Column(name = "company_url")
 	private String companyUrl;
 
-	@Column(name = "company_phone", length = 15, nullable = false)
+	@Column(name = "company_phone", length = 15, nullable = false,unique = true)
 	private String companyPhone;
 
 	@OneToOne
