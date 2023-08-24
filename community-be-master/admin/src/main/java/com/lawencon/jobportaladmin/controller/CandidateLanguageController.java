@@ -47,9 +47,16 @@ public class CandidateLanguageController {
 		final UpdateResDto response = languageService.updateCandidateLanguage(data);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<DeleteResDto> delete(@PathVariable("id") String id) {
-		final DeleteResDto data = languageService.DeleteCandidateLanguage(id);
+		final DeleteResDto data = languageService.deleteCandidateLanguage(id);
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/deleteLanguage/{code}")
+	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("code") String code) {
+		final DeleteResDto data = languageService.deleteCandidateLanguageFromCandidate(code);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 }

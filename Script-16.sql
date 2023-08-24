@@ -1012,4 +1012,4 @@ INSERT INTO t_candidate_status (id, status_code, status_name, created_by, create
 	(uuid_generate_v4(), 'CS-03', 'Blacklist',  (SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'), now(), true, 0);
 
 
-
+SELECT * FROM t_candidate_training_exp tctE;

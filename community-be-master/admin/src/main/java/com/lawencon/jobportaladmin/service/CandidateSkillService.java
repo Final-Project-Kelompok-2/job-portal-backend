@@ -118,4 +118,21 @@ public class CandidateSkillService {
 
 		return response;
 	}
+	
+	public DeleteResDto deleteSkillFromCandidate(String code) {
+		final DeleteResDto response = new DeleteResDto();
+		
+		try {
+			em().getTransaction().begin();
+			final CandidateSkill skill = candidateSkillDao.getByCode(code);
+			candidateSkillDao.deleteById(CandidateSkill.class, skill.getId());
+
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		return response;
+	}
 }

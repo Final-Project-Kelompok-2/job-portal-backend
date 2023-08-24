@@ -146,5 +146,21 @@ public class CandidateDocumentService {
 		}
 		return deleteRes;
 	}
-
+	
+	public DeleteResDto deleteCandidateDocumentFromCandidate(String code) {
+		final DeleteResDto deleteRes = new DeleteResDto();
+		try {
+			em().getTransaction().begin();
+			final CandidateDocuments document = candidateDocumentDao.getByCode(code);
+			final String fileId = document.getFile().getId();
+			candidateDocumentDao.deleteById(CandidateDocuments.class, document.getId());
+			fileDao.deleteById(File.class, fileId);
+			deleteRes.setMessage("Delete Candidate Document Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		return deleteRes;
+	}
 }

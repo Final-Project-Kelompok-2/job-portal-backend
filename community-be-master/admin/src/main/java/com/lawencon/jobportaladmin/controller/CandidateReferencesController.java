@@ -53,5 +53,11 @@ public class CandidateReferencesController {
 		final DeleteResDto data = candidateReferencesService.deleteReference(id);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/deleteReference/{code}")
+	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("code") String code) {
+		final DeleteResDto data = candidateReferencesService.deleteResDtoFromCandidate(code);
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
 
 }

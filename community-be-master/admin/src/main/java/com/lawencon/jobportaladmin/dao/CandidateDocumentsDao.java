@@ -92,6 +92,20 @@ public class CandidateDocumentsDao extends AbstractJpaDao {
 		final List<CandidateDocuments> documentList = em().createNamedQuery(sql.toString(), CandidateDocuments.class)
 				.setParameter("email", email).getResultList();
 		return documentList;
-
+	}
+	
+	public CandidateDocuments getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT ")
+			.append(" cd ")
+			.append("FROM ")
+			.append(" CandidateDocuments cd ")
+			.append("WHERE ")
+			.append(" cd.docCode = :code");
+		
+		final CandidateDocuments document = this.em().createQuery(sqlb.toString(), CandidateDocuments.class)
+					.setParameter("code", code).getSingleResult();
+		
+		return document;
 	}
 }

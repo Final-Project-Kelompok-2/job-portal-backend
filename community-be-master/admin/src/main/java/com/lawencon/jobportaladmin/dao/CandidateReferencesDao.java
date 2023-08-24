@@ -73,4 +73,19 @@ public class CandidateReferencesDao extends AbstractJpaDao{
 		return referencesList;
 	}
 	
+	public CandidateReferences getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT ")
+			.append(" cr ")
+			.append("FROM ")
+			.append(" CandidateReferences cr ")
+			.append("WHERE ")
+			.append(" cr.referenceCode = :code");
+		
+		final CandidateReferences reference = this.em().createQuery(sqlb.toString(), CandidateReferences.class)
+					.setParameter("code", code).getSingleResult();
+		
+		return reference;
+	}
+	
 }

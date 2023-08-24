@@ -54,4 +54,10 @@ public class CandidateSkillController {
 		final DeleteResDto data = candidateSkillService.deleteSkill(id);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/deleteSkill/{code}")
+	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("code") String code) {
+		final DeleteResDto data = candidateSkillService.deleteSkillFromCandidate(code);
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
 }

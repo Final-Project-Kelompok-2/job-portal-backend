@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -142,11 +144,35 @@ public class CandidateReferencesService {
 	}
 	
 	public DeleteResDto deleteReference(String id) {
-		candidateRefDao.deleteById(CandidateReferences.class, id);
-		
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Reference has been removed");
 		
+		try {
+			em().getTransaction().begin();
+			final CandidateReferences reference = candidateRefDao.getById(CandidateReferences.class, id);
+			candidateRefDao.deleteById(CandidateReferences.class, reference.getId());
+			
+			final String candidateReferenceDeleteAPI = "http://localhost:8080/candidate-references/deleteReference/";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateReferences> httpEntity = new HttpEntity<CandidateReferences>(headers);
+
+			final ResponseEntity<CandidateReferences> responseAdmin = restTemplate.exchange(
+					candidateReferenceDeleteAPI+reference.getReferenceCode(), HttpMethod.DELETE, httpEntity, CandidateReferences.class);
+
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				response.setMessage("Delete Candidate Reference Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Deletion Failed");
+			}
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+	
 		return response;
 	}
 }

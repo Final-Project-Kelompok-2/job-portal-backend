@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -135,10 +137,35 @@ public class CandidateTrainingExpService {
 	
 	
 	public DeleteResDto deleteCandidateTrainingExp(String id) {
-		trainingDao.deleteById(CandidateTrainingExp.class, id);
-		
 		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Training Exp Success");
+
+		try {
+			em().getTransaction().begin();
+			final CandidateTrainingExp training = trainingDao.getById(CandidateTrainingExp.class, id);
+			trainingDao.deleteById(CandidateTrainingExp.class, training.getId());
+			
+			final String candidateTrainingAPI = "http://localhost:8080/candidate-trainings/deleteTraining/";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateTrainingExp> httpEntity = new HttpEntity<CandidateTrainingExp>(headers);
+
+			final ResponseEntity<CandidateTrainingExp> responseAdmin = restTemplate.exchange(
+					candidateTrainingAPI+training.getTrainingCode(), HttpMethod.DELETE, httpEntity, CandidateTrainingExp.class);
+			
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				deleteRes.setMessage("Delete Candidate Training Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Deletion Failed");
+			}
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
 		return deleteRes;
 	}
 }

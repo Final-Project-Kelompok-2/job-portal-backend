@@ -184,7 +184,7 @@ public class CandidateWorkExpService {
 				em().getTransaction().commit();
 			} else {
 				em().getTransaction().rollback();
-				throw new RuntimeException("Insert Failed");
+				throw new RuntimeException("Deletion Failed");
 			}
 			
 			em().getTransaction().commit();
@@ -192,9 +192,7 @@ public class CandidateWorkExpService {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 		}
-		
-		response.setMessage("Working Experience Has Been Removed");
-		
+
 		return response;
 	}
 }

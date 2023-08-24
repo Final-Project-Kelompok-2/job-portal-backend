@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -144,10 +146,34 @@ public class CandidateProjectExpService {
 	}
 
 	public DeleteResDto deleteCandidateProjectExp(String id) {
-		projectExpDao.deleteById(CandidateProjectExp.class, id);
-
 		final DeleteResDto deleteRes = new DeleteResDto();
-		deleteRes.setMessage("Delete Candidate Project Success");
+
+		try {
+			em().getTransaction().begin();
+			final CandidateProjectExp project = projectExpDao.getById(CandidateProjectExp.class, id);
+			projectExpDao.deleteById(CandidateProjectExp.class, project.getId());
+			
+			final String candidateProjectDeleteAPI = "http://localhost:8080/candidate-projects/deleteProject/";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateProjectExp> httpEntity = new HttpEntity<CandidateProjectExp>(headers);
+
+			final ResponseEntity<CandidateProjectExp> responseAdmin = restTemplate.exchange(
+					candidateProjectDeleteAPI+project.getProjectCode(), HttpMethod.DELETE, httpEntity, CandidateProjectExp.class);
+
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				deleteRes.setMessage("Delete Candidate Project Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Deletion Failed");
+			}
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		return deleteRes;
 	}
 

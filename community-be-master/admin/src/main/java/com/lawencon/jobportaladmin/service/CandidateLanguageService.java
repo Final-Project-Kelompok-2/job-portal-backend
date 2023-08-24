@@ -104,7 +104,7 @@ public class CandidateLanguageService {
 		return updateResDto;
 	}
 
-	public DeleteResDto DeleteCandidateLanguage(String id) {
+	public DeleteResDto deleteCandidateLanguage(String id) {
 		final DeleteResDto deleteRes = new DeleteResDto();
 		try {
 			em().getTransaction().begin();			
@@ -117,5 +117,21 @@ public class CandidateLanguageService {
 		}
 		return deleteRes;
 	}
+	
+	public DeleteResDto deleteCandidateLanguageFromCandidate(String code) {
+		final DeleteResDto deleteRes = new DeleteResDto();
+		try {
+			em().getTransaction().begin();			
+			final CandidateLanguage language = candidateLanguageDao.getByCode(code);
+			candidateLanguageDao.deleteById(CandidateLanguage.class, language.getId());
+			
+			deleteRes.setMessage("Delete Candidate Language Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		return deleteRes;
+	}	
 
 }

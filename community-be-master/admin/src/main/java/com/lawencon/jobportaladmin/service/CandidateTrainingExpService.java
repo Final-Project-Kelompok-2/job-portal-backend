@@ -126,4 +126,21 @@ public class CandidateTrainingExpService {
 		
 		return deleteRes;
 	}
+	
+	public DeleteResDto deleteCandidateTrainingExpFromCandidate(String code) {
+		final DeleteResDto deleteRes = new DeleteResDto();
+
+		try {
+			em().getTransaction().begin();	
+			final CandidateTrainingExp training = trainingDao.getByCode(code);
+			trainingDao.deleteById(CandidateTrainingExp.class, training.getId());
+			deleteRes.setMessage("Delete Candidate Training Exp Success");
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		return deleteRes;
+	}
 }

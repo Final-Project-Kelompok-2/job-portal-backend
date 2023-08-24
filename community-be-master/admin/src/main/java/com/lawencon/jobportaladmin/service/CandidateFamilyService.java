@@ -138,4 +138,21 @@ public class CandidateFamilyService {
 		
 		return response;
 	}
+	
+	public DeleteResDto deleteFamilyFromCandidate(String code) {
+		final DeleteResDto response = new DeleteResDto();
+		
+		try {
+			em().getTransaction().begin();
+			final CandidateFamily family = candidateFamilyDao.getByCode(code);
+			candidateFamilyDao.deleteById(CandidateFamily.class, family.getId());
+			
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		return response;
+	}
 }

@@ -71,4 +71,18 @@ public class CandidateLanguageDao extends AbstractJpaDao{
 		return languageList;
 	}
 	
+	public CandidateLanguage getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT ")
+			.append(" cl ")
+			.append("FROM ")
+			.append(" CandidateLanguage cl ")
+			.append("WHERE ")
+			.append(" cl.languageCode = :code");
+		
+		final CandidateLanguage language = this.em().createQuery(sqlb.toString(), CandidateLanguage.class)
+					.setParameter("code", code).getSingleResult();
+		
+		return language;
+	}
 }

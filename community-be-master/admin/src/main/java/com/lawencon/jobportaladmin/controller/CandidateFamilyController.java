@@ -52,4 +52,10 @@ public class CandidateFamilyController {
 		final DeleteResDto data = familyService.deleteFamily(id);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/deleteFamily/{code}")
+	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("code") String code) {
+		final DeleteResDto data = familyService.deleteFamilyFromCandidate(code);
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
 }

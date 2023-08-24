@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -136,10 +138,34 @@ public class CandidateSkillService {
 	}
 	
 	public DeleteResDto deleteSkill(String id) {
-		candidateSkillDao.deleteById(CandidateSkill.class, id);
-		
 		final DeleteResDto response = new DeleteResDto();
-		response.setMessage("Skill has been removed");
+
+		try {
+			em().getTransaction().begin();
+			final CandidateSkill skill = candidateSkillDao.getById(CandidateSkill.class, id);
+			candidateSkillDao.deleteById(CandidateSkill.class, skill.getId());
+			
+			final String candidateSkillDeleteAPI = "http://localhost:8080/candidate-skills/deleteSkill/";
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateSkill> httpEntity = new HttpEntity<CandidateSkill>(headers);
+			
+			final ResponseEntity<CandidateSkill> responseAdmin = restTemplate.exchange(
+					candidateSkillDeleteAPI+skill.getSkillCode(), HttpMethod.DELETE, httpEntity, CandidateSkill.class);
+			
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				response.setMessage("Delete Candidate Skill Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Deletion Failed");
+			}
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
 		
 		return response;
 	}
