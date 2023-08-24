@@ -67,6 +67,7 @@ public class CandidateDocumentService {
 			em().getTransaction().begin();
 			final CandidateDocuments candidateDocument = new CandidateDocuments();
 			candidateDocument.setDocName(data.getDocName());
+			candidateDocument.setDocCode(data.getDocCode());
 			final CandidateUser candidateUser = candidateUserDao.getByEmail(data.getEmail());
 			candidateDocument.setCandidateUser(candidateUser);
 

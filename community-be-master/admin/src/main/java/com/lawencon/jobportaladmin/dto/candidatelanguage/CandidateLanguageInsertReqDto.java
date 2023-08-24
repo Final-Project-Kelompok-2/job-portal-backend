@@ -1,11 +1,22 @@
 package com.lawencon.jobportaladmin.dto.candidatelanguage;
 
 public class CandidateLanguageInsertReqDto {
+	private String languageCode;
 	private String languageName;
 	private String writingRate;
 	private String speakingRate;
 	private String listeningRate;
 	private String email;
+	
+	
+
+	public String getLanguageCode() {
+		return languageCode;
+	}
+
+	public void setLanguageCode(String languageCode) {
+		this.languageCode = languageCode;
+	}
 
 	public String getLanguageName() {
 		return languageName;

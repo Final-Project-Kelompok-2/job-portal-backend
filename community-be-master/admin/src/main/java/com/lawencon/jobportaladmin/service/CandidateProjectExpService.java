@@ -61,6 +61,7 @@ public class CandidateProjectExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateProjectExp projectExp = new CandidateProjectExp();
+			projectExp.setProjectCode(data.getProjectCode());
 			projectExp.setProjectName(data.getProjectName());
 			projectExp.setDescription(data.getDescription());
 			projectExp.setProjectUrl(data.getProjectUrl());

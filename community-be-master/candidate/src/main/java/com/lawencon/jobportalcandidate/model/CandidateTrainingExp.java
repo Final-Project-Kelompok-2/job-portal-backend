@@ -13,6 +13,10 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(name = "t_candidate_training_exp")
 public class CandidateTrainingExp extends BaseEntity {
+	
+	@Column(name= "training_code",length = 5, nullable = false, unique = true)
+	private String trainingCode;
+	
 	@Column(name = "organization_name", length = 20, nullable = false)
 	private String organizationName;
 
@@ -31,6 +35,16 @@ public class CandidateTrainingExp extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+	
+	
+
+	public String getTrainingCode() {
+		return trainingCode;
+	}
+
+	public void setTrainingCode(String trainingCode) {
+		this.trainingCode = trainingCode;
+	}
 
 	public String getOrganizationName() {
 		return organizationName;

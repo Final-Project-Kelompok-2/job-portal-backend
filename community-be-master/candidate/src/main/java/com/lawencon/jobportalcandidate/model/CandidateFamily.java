@@ -14,6 +14,9 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_candidate_family")
 public class CandidateFamily extends BaseEntity {
 
+	@Column(name = "family_code",length = 5, nullable = false, unique = true)
+	private String familyCode;
+	
 	@Column(name = "fullname", length = 50, nullable = false)
 	private String fullname;
 
@@ -35,6 +38,16 @@ public class CandidateFamily extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+	
+	
+
+	public String getFamilyCode() {
+		return familyCode;
+	}
+
+	public void setFamilyCode(String familyCode) {
+		this.familyCode = familyCode;
+	}
 
 	public String getFullname() {
 		return fullname;

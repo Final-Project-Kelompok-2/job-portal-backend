@@ -3,11 +3,22 @@ package com.lawencon.jobportaladmin.dto.candidatedocument;
 public class CandidateDocumentInsertReqDto {
 
 	private String docName;
+	private String docCode;
 	private String candidateId;
 	private String email;
 	private String fileTypeCode;
 	private String fileName;
 	private String fileExtension;
+	
+	
+
+	public String getDocCode() {
+		return docCode;
+	}
+
+	public void setDocCode(String docCode) {
+		this.docCode = docCode;
+	}
 
 	public String getFileName() {
 		return fileName;
