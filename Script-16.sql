@@ -193,6 +193,7 @@ ALTER TABLE t_candidate_user ADD CONSTRAINT t_candidate_user_bk
 
 CREATE TABLE t_candidate_family ( 
 	id VARCHAR(36) NOT NULL,
+	family_code VARCHAR(5) NOT NULL,
 	fullname VARCHAR(50) NOT NULL,
 	relationship VARCHAR(10) NOT NULL,
 	degree_name VARCHAR(50) NOT NULL,
@@ -200,9 +201,9 @@ CREATE TABLE t_candidate_family (
 	birth_date date NOT NULL,
 	birth_place VARCHAR(20) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -213,6 +214,8 @@ ALTER TABLE t_candidate_family ADD CONSTRAINT candidate_family_pk
 ALTER TABLE t_candidate_family ADD CONSTRAINT user_id_fk_t_candidate_family
 	FOREIGN KEY (user_id)
 	REFERENCES t_candidate_user(id);
+ALTER TABLE t_candidate_family ADD CONSTRAINT candidate_family_code_bk
+	UNIQUE(family_code);
 
 CREATE TABLE t_candidate_address ( 
 	id VARCHAR(36) NOT NULL,
@@ -242,11 +245,12 @@ ALTER TABLE t_candidate_address ADD CONSTRAINT candidate_address_code_bk
 
 CREATE TABLE t_candidate_skill ( 
 	id VARCHAR(36) NOT NULL,
+	skill_code VARCHAR(5) NOT NULL,
 	skill_name text NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -257,6 +261,8 @@ ALTER TABLE t_candidate_skill ADD CONSTRAINT candidate_skill_pk
 ALTER TABLE t_candidate_skill ADD CONSTRAINT user_id_fk_t_candidate_skill
 	FOREIGN KEY (user_id)
 	REFERENCES t_candidate_user(id);
+ALTER TABLE t_candidate_skill ADD CONSTRAINT candidate_skill_code_bk
+	UNIQUE(skill_code);
 
 CREATE TABLE t_candidate_work_exp ( 
 	id VARCHAR(36) NOT NULL,
@@ -288,15 +294,16 @@ ALTER TABLE t_candidate_work_exp ADD CONSTRAINT candidate_work_exp_code_bk
 
 CREATE TABLE t_candidate_project_exp ( 
 	id VARCHAR(36) NOT NULL,
+	project_code VARCHAR(5) NOT NULL,
 	project_name VARCHAR(30) NOT NULL,
 	project_url TEXT,
 	description TEXT NOT NULL,
-	start_date timestamp NOT NULL,
-	end_date timestamp NOT NULL,
+	start_date date NOT NULL,
+	end_date date NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -307,18 +314,21 @@ ALTER TABLE t_candidate_project_exp ADD CONSTRAINT project_exp_pk
 ALTER TABLE t_candidate_project_exp ADD CONSTRAINT project_exp_user_fk
 	FOREIGN KEY(user_id)
 	REFERENCES t_candidate_user(id);
+ALTER TABLE t_candidate_project_exp ADD CONSTRAINT project_exp_code_bk 
+	UNIQUE (project_code);
 
 CREATE TABLE t_candidate_training_exp ( 
 	id VARCHAR(36) NOT NULL,
+	training_code VARCHAR(5) NOT NULL,
 	organization_name VARCHAR(20) NOT NULL,
 	training_name VARCHAR(20) NOT NULL,
 	description TEXT NOT NULL,
-	start_date timestamp NOT NULL,
-	end_date timestamp NOT NULL,
+	start_date date NOT NULL,
+	end_date date NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -329,6 +339,8 @@ ALTER TABLE t_candidate_training_exp ADD CONSTRAINT training_exp_pk
 ALTER TABLE t_candidate_training_exp ADD CONSTRAINT training_exp_user_fk
 	FOREIGN KEY(user_id)
 	REFERENCES t_candidate_user(id); 
+ALTER TABLE t_candidate_training_exp ADD CONSTRAINT training_exp_code_bk 
+	UNIQUE (training_code);
 
 CREATE TABLE t_candidate_education ( 
 	id VARCHAR(36) NOT NULL,
@@ -358,14 +370,15 @@ ALTER TABLE t_candidate_education ADD CONSTRAINT candidate_education_code_bk
 
 CREATE TABLE t_candidate_language ( 
 	id VARCHAR(36) NOT NULL,
+	language_code VARCHAR(5) NOT NULL,
 	language_name VARCHAR(30) NOT NULL,
 	writing_rate VARCHAR(2) NOT NULL,
 	speaking_rate VARCHAR(2) NOT NULL,
 	listening_rate VARCHAR(2) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -376,6 +389,8 @@ ALTER TABLE t_candidate_language ADD CONSTRAINT candidate_language_pk
 ALTER TABLE t_candidate_language ADD CONSTRAINT candidate_language_user_fk
 	FOREIGN KEY(user_id)
 	REFERENCES t_candidate_user(id); 
+ALTER TABLE t_candidate_language ADD CONSTRAINT candidate_language_code_bk
+	UNIQUE (language_code);
 
 CREATE TABLE t_file_type (
 	id VARCHAR(36) NOT NULL,
@@ -396,13 +411,14 @@ ALTER TABLE t_file_type ADD CONSTRAINT file_type_bk
 
 CREATE TABLE t_candidate_documents ( 
 	id VARCHAR(36) NOT NULL,
+	doc_code VARCHAR(5) NOT NULL,
 	doc_name VARCHAR(30) NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
 	file_id VARCHAR(36) NOT NULL,
 	file_type_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -420,10 +436,13 @@ ALTER TABLE t_candidate_documents ADD CONSTRAINT candidate_documents_file_type_f
 	FOREIGN KEY(file_type_id)
 	REFERENCES t_file_type(id); 
 ALTER TABLE t_candidate_documents ADD CONSTRAINT candidate_documents_bk
-	UNIQUE(user_id,file_type_id);
+	UNIQUE(user_id, file_type_id);
+ALTER TABLE t_candidate_documents ADD CONSTRAINT candidate_documents_code_bk 
+	UNIQUE (doc_code);
 
 CREATE TABLE t_candidate_references ( 
 	id VARCHAR(36) NOT NULL,
+	reference_code VARCHAR(5) NOT NULL,
 	fullname VARCHAR(50) NOT NULL,
 	relationship VARCHAR(10) NOT NULL,
 	occupation VARCHAR(20) NOT NULL,
@@ -432,9 +451,9 @@ CREATE TABLE t_candidate_references (
 	company VARCHAR(50) NOT NULL,
 	description TEXT NOT NULL,
 	user_id VARCHAR(36) NOT NULL,
-	created_by varchar(36) NOT NULL,
+	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
-	updated_by varchar(36),
+	updated_by VARCHAR(36),
 	updated_at timestamp,
 	is_active boolean NOT NULL,
 	ver int NOT NULL
@@ -445,6 +464,8 @@ ALTER TABLE t_candidate_references ADD CONSTRAINT candidate_references_pk
 ALTER TABLE t_candidate_references ADD CONSTRAINT candidate_references_user_fk
 	FOREIGN KEY(user_id)
 	REFERENCES t_candidate_user(id);
+ALTER TABLE t_candidate_references ADD CONSTRAINT candidate_references_code_bk
+	UNIQUE (reference_code);
 
 
 
