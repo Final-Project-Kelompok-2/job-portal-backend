@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="offering" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7147de07-9a48-4e90-b81a-c41b868ee0a6">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="60" width="560" height="1" uuid="265e7a64-90c4-40c3-b9fb-a2affe7625f2"/>
+			</line>
+			<staticText>
+				<reportElement x="280" y="0" width="274" height="40" uuid="9b7cab22-d20e-42f9-a353-ad576b8509c1"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Jalan Zingiber Volturi, Blok Tatang Rocket
+Jawa Barat, 172031]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="40" width="100" height="15" uuid="0a20991d-fa04-4236-bb54-2e8b113b048e"/>
+				<text><![CDATA[Telp : (021) 123456]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="40" width="130" height="15" uuid="d6ac238b-3895-49f8-a12c-b4c099a7e354"/>
+				<text><![CDATA[Email : jobroad@gmail.com]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="271" height="55" uuid="a8fa8667-1002-4ff7-8e57-a2d7e980734f"/>
+				<imageExpression><![CDATA["C:/Users/matth/Downloads/replicate-prediction-pduzeabbnuz3xfcog773wnyztq.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

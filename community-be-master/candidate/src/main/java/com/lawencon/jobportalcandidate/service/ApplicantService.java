@@ -153,7 +153,6 @@ public class ApplicantService {
 					.equals(com.lawencon.jobportalcandidate.constant.HiringStatus.OFFERING.statusCode)) {
 				CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
 						applicant.getCandidate().getId());
-				System.out.println("YOU ARE HERE ========================");
 				final PersonType employeeType = personTypeDao.getByCode(PersonTypes.EMPLOYEE.typeCode);
 				CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class, candidateUser.getCandidateProfile().getId());
 				candidateProfile.setPersonType(employeeType);
