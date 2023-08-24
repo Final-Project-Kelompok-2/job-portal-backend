@@ -5,7 +5,24 @@ public class CandidateDocumentResDto {
 	private String docName;
 	private String candidateId;
 	private String fileId;
-	private String fileTypeId;
+	private String fileExtension;
+	private String fileTypeName;
+
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+
+	public String getFileTypeName() {
+		return fileTypeName;
+	}
+
+	public void setFileTypeName(String fileTypeName) {
+		this.fileTypeName = fileTypeName;
+	}
 
 	public String getId() {
 		return id;
@@ -37,13 +54,5 @@ public class CandidateDocumentResDto {
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
-	}
-
-	public String getFileTypeId() {
-		return fileTypeId;
-	}
-
-	public void setFileTypeId(String fileTypeId) {
-		this.fileTypeId = fileTypeId;
 	}
 }

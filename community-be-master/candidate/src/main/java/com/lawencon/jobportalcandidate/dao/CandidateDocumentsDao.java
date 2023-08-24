@@ -28,7 +28,7 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 			.append("	tcd.id as documentId ,  ")
 			.append("	tcd.doc_name,  ")
 			.append( "	tcu.user_email,  ")
-			.append( " tf.id AS fileId , ")
+			.append( "  tf.id AS fileId , ")
 			.append( "	tft.type_code,  ")
 			.append( "	tft.type_name  ")
 			.append( "FROM   ")
@@ -56,7 +56,6 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 				candidateDocument.setId(documentArr[0].toString());
 				candidateDocument.setDocName(documentArr[1].toString());
 				
-			
 				final CandidateUser candidateUser = new CandidateUser();
 				candidateUser.setUserEmail(documentArr[2].toString());
 				candidateDocument.setCandidateUser(candidateUser);
@@ -65,10 +64,7 @@ public class CandidateDocumentsDao extends AbstractJpaDao{
 				file.setId(documentArr[3].toString());
 				candidateDocument.setFile(file);
 				
-				
-				
 				final FileType fileType = new FileType();
-		
 				fileType.setTypeCode(documentArr[4].toString());
 				fileType.setTypeName(documentArr[5].toString());
 				

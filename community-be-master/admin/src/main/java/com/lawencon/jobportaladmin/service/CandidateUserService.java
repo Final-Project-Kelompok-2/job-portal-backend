@@ -148,7 +148,7 @@ public class CandidateUserService {
 			final Religion religion = religionDao.getById(Religion.class, candidateData.getReligionId());
 			candidateProfile.setReligion(religion);
 
-			final PersonType type = personTypeDao.getById(PersonType.class, candidateData.getPersonTypeId());
+			final PersonType type = personTypeDao.getByCode(PersonTypes.CANDIDATE.typeCode);
 			candidateProfile.setPersonType(type);
 
 			final CandidateStatus candidateStatus = candidateStatusDao
@@ -164,9 +164,6 @@ public class CandidateUserService {
 				candidateProfile.setFile(file);
 			}
 
-			final CandidateStatus candidatestatus = candidateStatusDao.getById(CandidateStatus.class,
-					candidateData.getCandidateStatusId());
-			candidateProfile.setCandidateStatus(candidatestatus);
 			candidateProfile.setUpdatedBy(principalService.getAuthPrincipal());
 			candidateProfileDao.save(candidateProfile);
 			candidateUser.setCandidateProfile(candidateProfile);

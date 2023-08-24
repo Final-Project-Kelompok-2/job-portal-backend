@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
-import com.lawencon.jobportaladmin.dto.candidateprofile.CandidateProfileUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.changepassword.ChangePasswordReqDto;
 import com.lawencon.jobportaladmin.dto.profile.ProfileResDto;
+import com.lawencon.jobportaladmin.dto.profile.ProfileUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.user.UsersResDto;
 import com.lawencon.jobportaladmin.service.UserService;
