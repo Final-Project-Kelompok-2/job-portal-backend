@@ -208,8 +208,36 @@ public class UserService implements UserDetailsService {
 		return res;
 	}
 
-	public UpdateResDto updateProfile(CandidateProfileUpdateReqDto data) {
-		return null;
+	public UpdateResDto updateProfile(ProfileUpdateReqDto data) {
+		UpdateResDto updateResDto = null;
+		try {
+			em().getTransaction().begin();
+			final Profile profile = profileDao.getById(Profile.class, data.getId());
+			profile.setFullName(data.getFullName());
+			profile.setAddress(data.getAddress());
+			profile.setPhoneNumber(data.getPhoneNumber());
+
+			final File oldFile = fileDao.getById(File.class, profile.getPhoto().getId());
+			final File file = new File();
+			file.setFileName(data.getFileName());
+			file.setFileExtension(data.getFileExtension());
+			file.setCreatedBy(principalService.getAuthPrincipal());
+			profile.setPhoto(file);
+			fileDao.save(file);
+			profileDao.saveAndFlush(profile);
+			fileDao.deleteById(File.class, oldFile.getId());
+			updateResDto = new UpdateResDto();
+			updateResDto.setMessage("Update Berhasil");
+			updateResDto.setVersion(profile.getVersion());
+			em().getTransaction().commit();
+			return updateResDto;
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+			return null;
+		}
+
+	
 
 	}
 
