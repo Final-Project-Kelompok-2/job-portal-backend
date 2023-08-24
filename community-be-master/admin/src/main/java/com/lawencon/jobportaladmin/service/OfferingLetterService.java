@@ -1,6 +1,8 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -80,7 +82,9 @@ public class OfferingLetterService {
 
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
 					applicant.getCandidate().getId());
-
+			
+			
+			
 			offeringLetter = offeringLetterDao.save(offeringLetter);
 
 			final String emailSubject = "Offering Letter";
