@@ -1,8 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -79,10 +77,8 @@ public class OfferingLetterService {
 			offeringData.setStatusCode(hiringStatus.getStatusCode());
 
 			final List<OwnedBenefit> ownedBenefits = ownedBenefitDao.getByJob(applicant.getJob().getId());
-
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
 					applicant.getCandidate().getId());
-			
 			
 			
 			offeringLetter = offeringLetterDao.save(offeringLetter);

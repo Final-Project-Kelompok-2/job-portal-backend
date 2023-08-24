@@ -8,7 +8,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="104" splitType="Stretch">
+		<band height="116" splitType="Stretch">
 			<line>
 				<reportElement x="0" y="60" width="560" height="1" uuid="265e7a64-90c4-40c3-b9fb-a2affe7625f2"/>
 			</line>
@@ -32,6 +32,10 @@ Jawa Barat, 172031]]></text>
 				<reportElement x="0" y="0" width="271" height="55" uuid="a8fa8667-1002-4ff7-8e57-a2d7e980734f"/>
 				<imageExpression><![CDATA["C:/Users/matth/Downloads/replicate-prediction-pduzeabbnuz3xfcog773wnyztq.png"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="42" y="86" width="100" height="30" uuid="3da52645-643f-482f-90c5-54276900507e"/>
+				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
