@@ -31,6 +31,7 @@ import com.lawencon.jobportalcandidate.model.CandidateDocuments;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.FileType;
+import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -74,6 +75,8 @@ public class CandidateDocumentService {
 			em().getTransaction().begin();
 			final CandidateDocuments candidateDocument = new CandidateDocuments();
 			candidateDocument.setDocName(data.getDocName());
+			candidateDocument.setDocCode(GenerateCode.generateCode());
+			data.setDocCode(candidateDocument.getDocCode());
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class, principalService.getAuthPrincipal());
 			candidateDocument.setCandidateUser(candidateUser);
 			data.setEmail(candidateUser.getUserEmail());

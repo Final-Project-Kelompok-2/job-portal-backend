@@ -27,6 +27,7 @@ import com.lawencon.jobportalcandidate.dto.candidatetrainingexp.CandidateTrainin
 import com.lawencon.jobportalcandidate.model.CandidateTrainingExp;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.util.DateUtil;
+import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -67,6 +68,8 @@ public class CandidateTrainingExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateTrainingExp trainingExp = new CandidateTrainingExp();
+			trainingExp.setTrainingCode(GenerateCode.generateCode());
+			data.setTrainingCode(trainingExp.getTrainingCode());
 			trainingExp.setCreatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setDescription(data.getDescription());

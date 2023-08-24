@@ -58,7 +58,7 @@ public class CandidateSkillService {
 			em().getTransaction().begin();
 			final CandidateSkill skill = new CandidateSkill();
 			skill.setSkillName(data.getSkillName());
-
+			skill.setSkillCode(data.getSkillCode());
 			final CandidateUser candidate = candidateUserDao.getByEmail(data.getEmail());
 			skill.setCandidateUser(candidate);
 			skill.setCreatedBy(candidate.getId());

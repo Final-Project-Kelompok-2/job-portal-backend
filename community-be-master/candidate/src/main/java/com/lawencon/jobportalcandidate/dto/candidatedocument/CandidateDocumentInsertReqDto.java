@@ -1,7 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.candidatedocument;
 
 public class CandidateDocumentInsertReqDto {
-	
+	private String docCode;
 	private String docName;
 	private String candidateId;
 	private String email;
@@ -10,6 +10,14 @@ public class CandidateDocumentInsertReqDto {
 	private String fileExtension;
 
 	
+	public String getDocCode() {
+		return docCode;
+	}
+
+	public void setDocCode(String docCode) {
+		this.docCode = docCode;
+	}
+
 	public String getEmail() {
 		return email;
 	}

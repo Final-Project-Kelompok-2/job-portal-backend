@@ -1,13 +1,23 @@
 package com.lawencon.jobportalcandidate.dto.candidatetrainingexp;
 
 public class CandidateTrainingExpInsertReqDto {
-
+	private String trainingCode;
 	private String organizationName;
 	private String trainingName;
 	private String description;
 	private String startDate;
 	private String endDate;
 	private String email;
+	
+	
+
+	public String getTrainingCode() {
+		return trainingCode;
+	}
+
+	public void setTrainingCode(String trainingCode) {
+		this.trainingCode = trainingCode;
+	}
 
 	public String getOrganizationName() {
 		return organizationName;
