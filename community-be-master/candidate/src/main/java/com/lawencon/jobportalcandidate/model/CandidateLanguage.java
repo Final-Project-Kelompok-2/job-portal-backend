@@ -12,6 +12,9 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_candidate_language")
 public class CandidateLanguage extends BaseEntity {
 
+	@Column(name = "language_code",length = 5, nullable = false, unique = true)
+	private String langugageCode;
+	
 	@Column(name = "language_name", length = 30, nullable = false)
 	private String languageName;
 
@@ -27,6 +30,16 @@ public class CandidateLanguage extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+
+	
+	
+	public String getLangugageCode() {
+		return langugageCode;
+	}
+
+	public void setLangugageCode(String langugageCode) {
+		this.langugageCode = langugageCode;
+	}
 
 	public String getLanguageName() {
 		return languageName;

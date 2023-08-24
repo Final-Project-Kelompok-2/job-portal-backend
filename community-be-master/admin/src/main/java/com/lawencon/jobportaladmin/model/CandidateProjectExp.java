@@ -13,6 +13,10 @@ import com.lawencon.base.BaseEntity;
 @Entity
 @Table(name = "t_candidate_project_exp")
 public class CandidateProjectExp extends BaseEntity {
+	
+	@Column(name = "project_code",length = 5, nullable = false, unique = true)
+	private String projectCode;
+	
 	@Column(name = "project_name", length = 30, nullable = false)
 	private String projectName;
 
@@ -31,6 +35,16 @@ public class CandidateProjectExp extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+	
+	
+
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
 
 	public String getProjectName() {
 		return projectName;

@@ -12,6 +12,9 @@ import com.lawencon.base.BaseEntity;
 @Table(name = "t_candidate_references")
 public class CandidateReferences extends BaseEntity {
 
+	@Column(name = "reference_code",length = 5, nullable = false, unique = true)
+	private String referenceCode;
+	
 	@Column(name = "fullname", length = 50, nullable = false)
 	private String fullName;
 
@@ -36,6 +39,16 @@ public class CandidateReferences extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
+	
+	
+
+	public String getReferenceCode() {
+		return referenceCode;
+	}
+
+	public void setReferenceCode(String referenceCode) {
+		this.referenceCode = referenceCode;
+	}
 
 	public String getFullName() {
 		return fullName;

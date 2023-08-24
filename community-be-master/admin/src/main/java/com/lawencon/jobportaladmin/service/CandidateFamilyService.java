@@ -65,6 +65,7 @@ public class CandidateFamilyService {
 		
 		try {
 			em().getTransaction().begin();
+			family.setFamilyCode(data.getFamilyCode());
 			family.setFullname(data.getFullname());
 			family.setRelationship(data.getRelationship());
 			family.setDegreeName(data.getDegreeName());

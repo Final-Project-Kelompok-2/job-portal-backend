@@ -10,11 +10,15 @@ import javax.persistence.UniqueConstraint;
 import com.lawencon.base.BaseEntity;
 
 @Entity
-@Table(name = "t_candidate_documents",uniqueConstraints = {@UniqueConstraint(name="userAndfileType",columnNames= {"user_id","file_type_id"})})
+@Table(name = "t_candidate_documents", uniqueConstraints = {
+		@UniqueConstraint(name = "user,fileType,code", columnNames = { "user_id", "file_type_id", "doc_code" }) })
 public class CandidateDocuments extends BaseEntity {
 
 	@Column(name = "doc_name", length = 30, nullable = false)
 	private String docName;
+
+	@Column(name = "doc_code", length = 5, nullable = false, unique = true)
+	private String docCode;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -27,6 +31,16 @@ public class CandidateDocuments extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "file_type_id")
 	private FileType fileType;
+
+	
+	
+	public String getDocCode() {
+		return docCode;
+	}
+
+	public void setDocCode(String docCode) {
+		this.docCode = docCode;
+	}
 
 	public String getDocName() {
 		return docName;

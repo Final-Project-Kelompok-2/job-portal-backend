@@ -58,6 +58,7 @@ public class CandidateLanguageService {
 		try {
 			em().getTransaction().begin();
 			final CandidateLanguage candidateLanguage = new CandidateLanguage();
+			candidateLanguage.setLanguageCode(data.getLanguageCode());
 			candidateLanguage.setLanguageName(data.getLanguageName());
 			candidateLanguage.setListeningRate(data.getListeningRate());
 			candidateLanguage.setSpeakingRate(data.getSpeakingRate());
