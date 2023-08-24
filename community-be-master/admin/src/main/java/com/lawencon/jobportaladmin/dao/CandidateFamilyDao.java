@@ -69,6 +69,20 @@ public class CandidateFamilyDao extends AbstractJpaDao{
 		final List<CandidateFamily> familyList = em().createQuery(sql.toString(), CandidateFamily.class)
 				.setParameter("email", email).getResultList();
 		return familyList;
+	}
+	
+	public CandidateFamily getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT ")
+			.append(" cf ")
+			.append("FROM ")
+			.append(" CandidateFamily cf ")
+			.append("WHERE ")
+			.append(" cf.familyCode = :code");
 		
+		final CandidateFamily family = this.em().createQuery(sqlb.toString(), CandidateFamily.class)
+					.setParameter("code", code).getSingleResult();
+		
+		return family;
 	}
 }

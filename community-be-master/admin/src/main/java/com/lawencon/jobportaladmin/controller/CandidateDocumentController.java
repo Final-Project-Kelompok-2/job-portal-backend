@@ -50,4 +50,10 @@ public class CandidateDocumentController {
 		final DeleteResDto data = documentService.deleteCandidateDocument(id);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/deleteDocument/{code}")
+	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("code") String code) {
+		final DeleteResDto data = documentService.deleteCandidateDocumentFromCandidate(code);
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
 }

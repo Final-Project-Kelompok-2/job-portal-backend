@@ -137,4 +137,21 @@ public class CandidateReferencesService {
 		
 		return response;
 	}
+	
+	public DeleteResDto deleteResDtoFromCandidate(String code) {
+		final DeleteResDto response = new DeleteResDto();
+
+		try {
+			em().getTransaction().begin();
+			final CandidateReferences reference = candidateRefDao.getByCode(code);
+			candidateRefDao.deleteById(CandidateReferences.class, reference.getId());
+
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		return response;
+	}
 }

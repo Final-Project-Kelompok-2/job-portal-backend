@@ -60,4 +60,19 @@ public class CandidateSkillDao extends AbstractJpaDao{
 		return skillList;
 	}
 	
+	public CandidateSkill getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT ")
+			.append(" cs ")
+			.append("FROM ")
+			.append(" CandidateSkill cs ")
+			.append("WHERE ")
+			.append(" cs.skillCode = :code");
+		
+		final CandidateSkill skill = this.em().createQuery(sqlb.toString(), CandidateSkill.class)
+				.setParameter("code", code).getSingleResult();
+	
+		return skill;
+	}
+	
 }

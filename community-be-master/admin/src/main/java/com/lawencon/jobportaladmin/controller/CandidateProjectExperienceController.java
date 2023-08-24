@@ -52,4 +52,11 @@ public class CandidateProjectExperienceController {
 		final DeleteResDto data = candidateProjectExpService.deleteCandidateProjectExp(id);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
+
+	@DeleteMapping("/deleteProject/{code}")
+	public ResponseEntity<DeleteResDto> deleteFromCandidate(@PathVariable("code") String code) {
+		final DeleteResDto data = candidateProjectExpService.deteCandidateProjectExpFromCandidate(code);
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
 }
+

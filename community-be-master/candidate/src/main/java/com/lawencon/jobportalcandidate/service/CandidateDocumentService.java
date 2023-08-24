@@ -7,7 +7,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -149,30 +151,39 @@ public class CandidateDocumentService {
 	}
 
 	public DeleteResDto deleteCandidateDocument(String id) {
+		final DeleteResDto deleteRes = new DeleteResDto();
+		
 		try {
 			em().getTransaction().begin();
-			candidateDocumentDao.deleteById(CandidateDocuments.class, id);
-			final DeleteResDto deleteRes = new DeleteResDto();
-			deleteRes.setMessage("Delete Candidate Document Success");
-			final String candidateDocumentApi = "http://localhost:8080/candidate-documents/"+id;
+			final CandidateDocuments document = candidateDocumentDao.getById(CandidateDocuments.class, id);
+			final String fileId =  document.getFile().getId();
+			candidateDocumentDao.deleteById(CandidateDocuments.class, document.getId());
+			
+			fileDao.deleteById(File.class, fileId);
+			
+			final String candidateDocumentDeleteApi = "http://localhost:8080/candidate-documents/deleteDocument/";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
 			
-			final RequestEntity<Void>documentInsert = RequestEntity.delete(candidateDocumentApi+"/"+id).headers(headers).build();
-			final ResponseEntity<DeleteResDto> responseAdmin = restTemplate.exchange(documentInsert, DeleteResDto.class);
+			final HttpEntity<CandidateDocuments> httpEntity = new HttpEntity<CandidateDocuments>(headers);
+
+			final ResponseEntity<CandidateDocuments> responseAdmin = restTemplate.exchange(
+					candidateDocumentDeleteApi+document.getDocCode(), HttpMethod.DELETE, httpEntity, CandidateDocuments.class);
+
 			if(responseAdmin.getStatusCode().equals(HttpStatus.OK)){
-			
-				deleteRes.setMessage("Delete Candidate Document Success");
+				deleteRes.setMessage(document.getDocCode() + "Delete Candidate Document Success");
 				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Deletion Failed");
 			}
-			return deleteRes;
 		}catch(Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
-			return null;
 		}
 		
+		return deleteRes;
 	}
 
 }

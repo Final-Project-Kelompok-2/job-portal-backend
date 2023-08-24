@@ -68,4 +68,19 @@ public class CandidateProjectExpDao extends AbstractJpaDao{
 				.getResultList();
 		return projectExpList;
 	}
+	
+	public CandidateProjectExp getByCode(String code) {
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT ")
+			.append(" cp ")
+			.append("FROM ")
+			.append(" CandidateProjectExp cp ")
+			.append("WHERE ")
+			.append(" cp.projectCode = :code");
+		
+		final CandidateProjectExp project = this.em().createQuery(sqlb.toString(), CandidateProjectExp.class)
+					.setParameter("code", code).getSingleResult();
+		
+		return project;
+	}
 }

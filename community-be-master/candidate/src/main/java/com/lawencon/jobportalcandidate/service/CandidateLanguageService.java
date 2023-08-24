@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -122,12 +124,40 @@ public class CandidateLanguageService {
 	}
 	
 	public DeleteResDto DeleteCandidateLanguage(String id) {
+		final DeleteResDto deleteRes = new DeleteResDto();
+		
+		try {
+			em().getTransaction().begin();
+			final CandidateLanguage language = candidateLanguageDao.getById(CandidateLanguage.class, id);
+			candidateLanguageDao.deleteById(CandidateLanguage.class, language.getId());
+			
+			final String candidateLanguageDeleteAPI = "http://localhost:8080/candidate-language/deleteLanguage/";
+			
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+			
+			final HttpEntity<CandidateLanguage> httpEntity = new HttpEntity<CandidateLanguage>(headers);
+
+			final ResponseEntity<CandidateLanguage> responseAdmin = restTemplate.exchange(
+					candidateLanguageDeleteAPI+language.getLangugageCode(), HttpMethod.DELETE, httpEntity, CandidateLanguage.class);
+			
+			if (responseAdmin.getStatusCode().equals(HttpStatus.OK)) {
+				deleteRes.setMessage("Delete Candidate Language Success");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Deletion Failed");
+			}
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
 		candidateLanguageDao.deleteById(CandidateLanguage.class, id);
 		
-		final DeleteResDto deleteRes = new DeleteResDto();
 		deleteRes.setMessage("Delete Candidate Language Success");
 		return deleteRes;
 	}
-	
 	
 }

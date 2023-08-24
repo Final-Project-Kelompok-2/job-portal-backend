@@ -21,8 +21,6 @@ public class CandidateSkill extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private CandidateUser candidateUser;
-	
-	
 
 	public String getSkillCode() {
 		return skillCode;

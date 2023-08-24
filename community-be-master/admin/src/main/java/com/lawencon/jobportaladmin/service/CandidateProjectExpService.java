@@ -127,5 +127,22 @@ public class CandidateProjectExpService {
 		
 		return deleteRes;
 	}
+	
+	public DeleteResDto deteCandidateProjectExpFromCandidate(String code) {
+		final DeleteResDto deleteRes = new DeleteResDto();
+		
+		try {
+			em().getTransaction().begin();
+			final CandidateProjectExp project = projectExpDao.getByCode(code);
+			projectExpDao.deleteById(CandidateProjectExp.class, project.getId());
+			
+			em().getTransaction().commit();
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+		}
+		
+		return deleteRes;
+	}
 
 }
