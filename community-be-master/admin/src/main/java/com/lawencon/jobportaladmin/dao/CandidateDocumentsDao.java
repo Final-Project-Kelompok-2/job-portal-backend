@@ -27,7 +27,7 @@ public class CandidateDocumentsDao extends AbstractJpaDao {
 				.append("	tcd.id as documentId ,  ")
 				.append("	tcd.doc_name,  ")
 				.append( "	tcu.user_email,  ")
-				.append( " tf.id AS fileId , ")
+				.append( " 	tf.id AS fileId, ")
 				.append( "	tft.type_code,  ")
 				.append( "	tft.type_name  ")
 				.append( "FROM   ")

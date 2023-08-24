@@ -63,8 +63,12 @@ public class CandidateDocumentService {
 			document.setCandidateId(candidateDocuments.get(i).getCandidateUser().getUserEmail());
 			document.setDocName(candidateDocuments.get(i).getDocName());
 			document.setId(candidateDocuments.get(i).getId());
-			document.setFileId(candidateDocuments.get(i).getFile().getId());
-			document.setFileTypeId(candidateDocuments.get(i).getFileType().getTypeName());
+			
+			final File file = fileDao.getById(File.class, candidateDocuments.get(i).getFile().getId());
+			document.setFileId(file.getId());
+			document.setFileExtension(file.getFileExtension());
+			document.setFileTypeName(candidateDocuments.get(i).getFileType().getTypeName());
+			
 			candidateDocumentResList.add(document);
 		}
 		return candidateDocumentResList;

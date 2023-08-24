@@ -50,10 +50,13 @@ public class CandidateDocumentService {
 		for(int i = 0 ; i < candidateDocuments.size() ; i++) {
 			final CandidateDocumentResDto document = new CandidateDocumentResDto();
 			document.setDocName(candidateDocuments.get(i).getDocName());
+			document.setCandidateId(id);
 			document.setId(candidateDocuments.get(i).getId());
-			document.setFileId(candidateDocuments.get(i).getFile().getId());
-			document.setFileTypeId(candidateDocuments.get(i).getFileType().getId());
+			final File file = fileDao.getById(File.class, candidateDocuments.get(i).getFile().getId());
+			document.setFileId(file.getId());
+			document.setFileExtension(file.getFileExtension());
 			document.setFileTypeName(candidateDocuments.get(i).getFileType().getTypeName());
+			
 			
 			candidateDocumentResList.add(document);
 		}
