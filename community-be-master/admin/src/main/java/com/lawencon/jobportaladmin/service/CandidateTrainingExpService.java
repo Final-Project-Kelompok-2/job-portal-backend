@@ -59,6 +59,7 @@ public class CandidateTrainingExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateTrainingExp trainingExp = new CandidateTrainingExp();
+			trainingExp.setTrainingCode(data.getTrainingCode());
 			trainingExp.setCreatedBy(principalService.getAuthPrincipal());
 			trainingExp.setTrainingName(data.getTrainingName());
 			trainingExp.setOrganizationName(data.getOrganizationName());

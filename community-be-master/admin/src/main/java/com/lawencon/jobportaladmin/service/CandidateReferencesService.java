@@ -66,6 +66,7 @@ public class CandidateReferencesService {
 		
 		try {
 			em().getTransaction().begin();
+			reference.setReferenceCode(data.getReferenceCode());
 			reference.setFullName(data.getFullname());
 			reference.setRelationship(data.getRelationship());
 			reference.setOccupation(data.getOccupation());

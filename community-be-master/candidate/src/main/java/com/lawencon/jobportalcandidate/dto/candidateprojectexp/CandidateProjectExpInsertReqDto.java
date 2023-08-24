@@ -1,13 +1,22 @@
 package com.lawencon.jobportalcandidate.dto.candidateprojectexp;
 
 public class CandidateProjectExpInsertReqDto {
-	
+	private String projectCode;
 	private String projectName;
 	private String projectUrl;
 	private String description;
 	private String startDate;
 	private String endDate;
 	private String email;
+
+	
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
 
 	public String getProjectName() {
 		return projectName;

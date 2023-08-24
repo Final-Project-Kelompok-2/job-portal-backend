@@ -1,10 +1,20 @@
 package com.lawencon.jobportalcandidate.dto.candidateskill;
 
 public class CandidateSkillInsertReqDto {
-	
+	private String skillCode;
 	private String skillName;
 	private String email;
 	
+	
+	
+	public String getSkillCode() {
+		return skillCode;
+	}
+
+	public void setSkillCode(String skillCode) {
+		this.skillCode = skillCode;
+	}
+
 	public String getSkillName() {
 		return skillName;
 	}

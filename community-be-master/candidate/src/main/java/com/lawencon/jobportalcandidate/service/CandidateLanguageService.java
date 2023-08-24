@@ -26,6 +26,7 @@ import com.lawencon.jobportalcandidate.dto.candidatelanguage.CandidateLanguageRe
 import com.lawencon.jobportalcandidate.dto.candidatelanguage.CandidateLanguageUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateLanguage;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -66,6 +67,8 @@ public class CandidateLanguageService {
 		try {
 			em().getTransaction().begin();
 			final CandidateLanguage candidateLanguage = new CandidateLanguage();
+			candidateLanguage.setLangugageCode(GenerateCode.generateCode());
+			data.setLanguageCode(candidateLanguage.getLangugageCode());
 			candidateLanguage.setLanguageName(data.getLanguageName());
 			candidateLanguage.setListeningRate(data.getListeningRate());
 			candidateLanguage.setSpeakingRate(data.getSpeakingRate());
