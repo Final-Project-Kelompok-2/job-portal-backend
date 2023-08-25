@@ -1,12 +1,14 @@
 package com.lawencon.jobportaladmin.dto.offeringletter;
 
+import java.math.BigDecimal;
+
 public class OfferingLetterInsertReqDto {
 
 	private String applicantId;
 	private String applicantCode;
 	private String statusCode;
 	private String address;
-	private Integer salary;
+	private BigDecimal salary;
 
 	public String getAddress() {
 		return address;
@@ -16,13 +18,6 @@ public class OfferingLetterInsertReqDto {
 		this.address = address;
 	}
 
-	public Integer getSalary() {
-		return salary;
-	}
-
-	public void setSalary(Integer salary) {
-		this.salary = salary;
-	}
 
 	public String getApplicantId() {
 		return applicantId;
@@ -46,6 +41,14 @@ public class OfferingLetterInsertReqDto {
 
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
+	}
+
+	public BigDecimal getSalary() {
+		return salary;
+	}
+
+	public void setSalary(BigDecimal salary) {
+		this.salary = salary;
 	}
 
 }
