@@ -95,6 +95,7 @@ public class OfferingLetterService {
 			
 			offeringLetter = offeringLetterDao.save(offeringLetter);
 
+			final String title = applicant.getJob().getJobName() + " Offering Letter";
 			final String emailSubject = "Offering Letter";
 			String emailBody = "Offering letter yang kami tawarkan yaitu anda " + " akan bekerja di Kantor "
 					+ offeringLetter.getAddress() + " pada posisi " + applicant.getJob().getJobName()
@@ -115,9 +116,9 @@ public class OfferingLetterService {
 				}
 			}
 
-			emailBody += "Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
+			emailBody += ". Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
 
-			emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailBody);
+			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailBody);
 
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();

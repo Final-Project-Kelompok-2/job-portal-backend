@@ -147,12 +147,13 @@ public class UserService implements UserDetailsService {
 			newUser.setProfile(profile);
 			newUser = userDao.save(newUser);
 
+			final String title = "Your JobRoad Account";
 			final String emailSubject = "Job Portal Account Registration";
-			final String emailbody = "Halo " + userData.getFullName() + ", " + " Akun kamu dengan Role : "
-					+ role.getRoleName() + " berhasil dibuat. Silahkan login dengan menggunakan "
-					+ "password yang sudah diberikan : " + " Email : " + userData.getUserEmail() + " Password : "
-					+ generatePassword;
-			emailService.sendEmail(userData.getUserEmail(), emailSubject, emailbody);
+			final String emailbody = "Hi! " + userData.getFullName() + ", "
+					+ " your account has been created as " + role.getRoleName() + " on our platform. Kindly login with this credential: " + " Email: "
+					+ userData.getUserEmail() + " Password: " + generatePassword;
+
+			emailService.sendEmailNewUser(title, newUser, emailSubject, emailbody);
 
 			insertResDto.setId(newUser.getId());
 			insertResDto.setMessage("Insert User Success");
@@ -236,8 +237,6 @@ public class UserService implements UserDetailsService {
 			e.printStackTrace();
 			return null;
 		}
-
-	
 
 	}
 
