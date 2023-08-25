@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OfferingBenefit" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17a56a2e-9a36-4e51-a7a4-6891fea5f4dc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select benefit_name as benefitName from t_benefit]]>
+	</queryString>
+	<field name="benefitName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="benefitname"/>
+		<property name="com.jaspersoft.studio.field.label" value="benefitname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_benefit"/>
+	</field>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="100" height="30" isRemoveLineWhenBlank="true" uuid="3de9b214-ad67-4ea4-aeff-3da3330038a9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{benefitName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="10" height="30" uuid="5bbbe6df-cff8-4663-a1df-12c080dee3d5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[•]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
