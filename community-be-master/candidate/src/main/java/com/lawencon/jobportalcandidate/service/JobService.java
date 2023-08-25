@@ -79,7 +79,7 @@ public class JobService {
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setIsBookmark(savedJobDao.checkBookmark(jobs.get(i).getId(), principalService.getAuthPrincipal()));
-			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
+			
 			jobsDto.add(job);
 		}
 
@@ -103,7 +103,7 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
+
 			jobsDto.add(job);
 		}
 
@@ -127,7 +127,7 @@ public class JobService {
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
+
 			jobsDto.add(job);
 		}
 
@@ -204,7 +204,6 @@ public class JobService {
 		jobDto.setExpectedSalaryMax(job.getExpectedSalaryMax().toString());
 		jobDto.setEmployementTypeName(job.getEmploymentType().getEmploymentTypeName());
 		jobDto.setFileId(job.getJobPicture().getId());
-		jobDto.setCompanyPhotoId(job.getCompany().getPhoto().getId());
 		return jobDto;
 
 	}

@@ -14,7 +14,6 @@ public class JobResDto {
 	private String employementTypeName;
 	private String fileId;
 	private Boolean isBookmark;
-	private String companyPhotoId;
 
 	public String getId() {
 		return id;
@@ -111,14 +110,5 @@ public class JobResDto {
 	public void setIsBookmark(Boolean isBookmark) {
 		this.isBookmark = isBookmark;
 	}
-
-	public String getCompanyPhotoId() {
-		return companyPhotoId;
-	}
-
-	public void setCompanyPhotoId(String companyPhotoId) {
-		this.companyPhotoId = companyPhotoId;
-	}
-	
 
 }
