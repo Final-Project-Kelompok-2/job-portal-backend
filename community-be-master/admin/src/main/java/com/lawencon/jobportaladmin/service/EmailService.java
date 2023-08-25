@@ -24,7 +24,6 @@ public class EmailService {
         };
         
         thread.start();
-		
-		
+
 	}
 }
