@@ -1,6 +1,8 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -20,6 +22,7 @@ import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.HiringStatusDao;
 import com.lawencon.jobportaladmin.dao.OfferingLetterDao;
 import com.lawencon.jobportaladmin.dao.OwnedBenefitDao;
+import com.lawencon.jobportaladmin.dao.UserDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.offeringletter.OfferingLetterInsertReqDto;
@@ -28,7 +31,9 @@ import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.HiringStatus;
 import com.lawencon.jobportaladmin.model.OfferingLetter;
 import com.lawencon.jobportaladmin.model.OwnedBenefit;
+import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.BigDecimalUtil;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class OfferingLetterService {
@@ -57,6 +62,12 @@ public class OfferingLetterService {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private PrincipalService<String> principalService;
 
 	public InsertResDto insertOfferingLetter(OfferingLetterInsertReqDto offeringData) {
 		final InsertResDto resDto = new InsertResDto();
@@ -80,6 +91,7 @@ public class OfferingLetterService {
 			final CandidateUser candidate = candidateUserDao.getById(CandidateUser.class,
 					applicant.getCandidate().getId());
 			
+			final Map<String, Object> offeringDatas = new HashMap<>();
 			
 			offeringLetter = offeringLetterDao.save(offeringLetter);
 
@@ -87,7 +99,15 @@ public class OfferingLetterService {
 			String emailBody = "Offering letter yang kami tawarkan yaitu anda " + " akan bekerja di Kantor "
 					+ offeringLetter.getAddress() + " pada posisi " + applicant.getJob().getJobName()
 					+ " yaitu dengan gaji sebesar Rp ." + offeringData.getSalary();
-
+			
+			offeringDatas.put("fullname",candidate.getCandidateProfile().getFullname());
+			offeringDatas.put("positionName", applicant.getJob().getJobName());
+			offeringDatas.put("companyName", applicant.getJob().getCompany().getCompanyName());
+			
+			final User admin = userDao.getById(User.class, principalService.getAuthPrincipal());
+			
+			offeringDatas.put("adminName", admin.getProfile().getFullName());
+			
 			if (ownedBenefits.size() > 0) {
 				emailBody += " Benefit yang didapat adalah :";
 				for (int i = 0; i < ownedBenefits.size(); i++) {
