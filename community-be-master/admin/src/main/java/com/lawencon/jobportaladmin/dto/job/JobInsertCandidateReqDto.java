@@ -1,5 +1,7 @@
 package com.lawencon.jobportaladmin.dto.job;
 
+import java.math.BigDecimal;
+
 public class JobInsertCandidateReqDto {
 
 	private String jobName;
@@ -9,8 +11,8 @@ public class JobInsertCandidateReqDto {
 	private String description;
 	private String hrId;
 	private String picId;
-	private String expectedSalaryMin;
-	private String expectedSalaryMax;
+	private BigDecimal expectedSalaryMin;
+	private BigDecimal expectedSalaryMax;
 	private String employmentTypeId;
 	private String file;
 	private String fileExtension;
@@ -55,22 +57,6 @@ public class JobInsertCandidateReqDto {
 		this.description = description;
 	}
 
-	public String getExpectedSalaryMin() {
-		return expectedSalaryMin;
-	}
-
-	public void setExpectedSalaryMin(String expectedSalaryMin) {
-		this.expectedSalaryMin = expectedSalaryMin;
-	}
-
-	public String getExpectedSalaryMax() {
-		return expectedSalaryMax;
-	}
-
-	public void setExpectedSalaryMax(String expectedSalaryMax) {
-		this.expectedSalaryMax = expectedSalaryMax;
-	}
-
 	public String getEmploymentTypeId() {
 		return employmentTypeId;
 	}
@@ -109,6 +95,22 @@ public class JobInsertCandidateReqDto {
 
 	public void setPicId(String picId) {
 		this.picId = picId;
+	}
+
+	public BigDecimal getExpectedSalaryMin() {
+		return expectedSalaryMin;
+	}
+
+	public void setExpectedSalaryMin(BigDecimal expectedSalaryMin) {
+		this.expectedSalaryMin = expectedSalaryMin;
+	}
+
+	public BigDecimal getExpectedSalaryMax() {
+		return expectedSalaryMax;
+	}
+
+	public void setExpectedSalaryMax(BigDecimal expectedSalaryMax) {
+		this.expectedSalaryMax = expectedSalaryMax;
 	}
 
 }
