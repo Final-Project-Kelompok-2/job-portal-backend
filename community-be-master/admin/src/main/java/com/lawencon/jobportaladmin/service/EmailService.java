@@ -20,10 +20,10 @@ public class EmailService {
 				msg.setSubject(subject);
 				msg.setText(message);
 				javaMailSender.send(msg);
-			}
-		};
-
-		thread.start();
+            }
+        };
+        
+        thread.start();
 
 	}
 }
