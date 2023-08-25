@@ -1,5 +1,9 @@
 package com.lawencon.jobportaladmin.controller;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +27,16 @@ public class InterviewController {
 	private InterviewService interviewService;
 
 	@PostMapping
-	private ResponseEntity<InsertResDto> insertInterview(@RequestBody InterviewInsertReqDto interviewData) {
+	private ResponseEntity<InsertResDto> insertInterview(@RequestBody InterviewInsertReqDto interviewData) throws MessagingException, UnsupportedEncodingException {
 		final InsertResDto response = interviewService.insertInterview(interviewData);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 	@GetMapping
-	private ResponseEntity<InterviewResDto> getByApplicant(@RequestParam String applicantId){
+	private ResponseEntity<InterviewResDto> getByApplicant(@RequestParam String applicantId) {
 		final InterviewResDto response = interviewService.getByApplicant(applicantId);
-		return new ResponseEntity<>(response,HttpStatus.OK);
-		
+		return new ResponseEntity<>(response, HttpStatus.OK);
+
 	}
-	
+
 }
