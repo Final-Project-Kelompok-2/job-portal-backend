@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:remove="all">Assessment confirmation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body {
+	font-family: calibri, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+	background-color: #fff;
+}
+
+a.link {
+	border: solid 1px #000;
+	background-color: #000;
+	text-decoration: none;
+	color: #fff;
+	font-weight: bold;
+	display: block;
+	width: 100%;
+	text-align: center;
+	padding: 10px 0;
+}
+
+.content {
+	max-width: 30rem;
+	background-color: #fff;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding:  1rem;
+}
+</style>
+</head>
+<body>
+	<div class="content">
+		<p>
+			<img src="images/jobroad.png" data-th-src="|cid:jobroadLogo|"
+				height="50" />
+		</p>
+		<h1 th:text="${title}">title</h1>
+		<p th:text="${body}">body</p>
+		<br>
+		<p style="text-align: right;">
+			With Love, <br /> &emsp; <em>The JobBroad Team</em>
+		</p>
+	</div>
+</body>
+</html>
