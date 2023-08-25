@@ -115,16 +115,16 @@ public class AssesmentService {
 
 			assesment = assesmentDao.save(assesment);
 
-			final String title = "Assesment Stage";
 			final String emailSubject = "Assesment Schedule ";
-			final String emailBody = "Congratulation " + candidate.getCandidateProfile().getFullname()
-					+ " ! We are currently reviewing and processing your application for "
-					+ applicant.getJob().getJobName() + " position at "
-					+ applicant.getJob().getCompany().getCompanyName() + ". Please come to "
-					+ assesment.getAssesmentLocation() + " on " + assesmentData.getAssesmentDate()
-					+ " for HR Interview. Thank you.";
-
-			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailBody);
+//			final String emailBody = "Congratulation " + candidate.getCandidateProfile().getFullname()
+//					+ " ! We are currently reviewing and processing your application for "
+//					+ applicant.getJob().getJobName() + " position at "
+//					+ applicant.getJob().getCompany().getCompanyName() + ". Please come to "
+//					+ assesment.getAssesmentLocation() + " on " + assesmentData.getAssesmentDate()
+//					+ " for HR Interview. Thank you.";
+			
+			emailService.sendEmailAssessment(emailSubject, candidate, assesment, applicant);
+//			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailBody);
 
 			final HiringStatus hiringStatus = hiringStatusDao
 					.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.ASSESMENT.statusCode);

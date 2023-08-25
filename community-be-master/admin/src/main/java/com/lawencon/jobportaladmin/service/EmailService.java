@@ -1,9 +1,20 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,7 +22,11 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.lawencon.jobportaladmin.model.Applicant;
+import com.lawencon.jobportaladmin.model.Assesment;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.model.Interview;
+import com.lawencon.jobportaladmin.model.OfferingLetter;
 import com.lawencon.jobportaladmin.model.User;
 
 @Service
@@ -79,13 +94,94 @@ public class EmailService {
 
 	}
 
-	public void sendEmailThymeLeaf(String title, String to, String subject, String message)
-			throws MessagingException, UnsupportedEncodingException {
-		
+	public void sendEmailAssessment(String emailSubject, CandidateUser candidate, Assesment assesment,
+			Applicant applicant) throws MessagingException, UnsupportedEncodingException {
+
 		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
 		final MimeMessageHelper email;
 		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+		email.setTo(candidate.getUserEmail());
+		email.setSubject(emailSubject);
 
+		final Context ctx = new Context(LocaleContextHolder.getLocale());
+		ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
+		ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
+		ctx.setVariable("jobName", applicant.getJob().getJobName());
+		ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
+		ctx.setVariable("location", assesment.getAssesmentLocation());
+		ctx.setVariable("date", assesment.getAssesmentDate());
+		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+
+		final String htmlContent = this.htmlTemplateEngine.process("assesment-email-template", ctx);
+		email.setText(htmlContent, true);
+
+		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+		email.addInline("jobroadLogo", clr, PNG_MIME);
+
+		javaMailSender.send(mimeMessage);
+	}
+
+	public void sendEmailInterview(String emailSubject, CandidateUser candidate, Interview interview,
+			Applicant applicant) throws MessagingException, UnsupportedEncodingException {
+
+		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
+		final MimeMessageHelper email;
+		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+		email.setTo(candidate.getUserEmail());
+		email.setSubject(emailSubject);
+
+		final Context ctx = new Context(LocaleContextHolder.getLocale());
+		ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
+		ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
+		ctx.setVariable("jobName", applicant.getJob().getJobName());
+		ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
+		ctx.setVariable("location", interview.getInterviewLocation());
+		ctx.setVariable("date", interview.getInterviewDate());
+		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+
+		final String htmlContent = this.htmlTemplateEngine.process("interview-email-template", ctx);
+		email.setText(htmlContent, true);
+
+		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+		email.addInline("jobroadLogo", clr, PNG_MIME);
+
+		javaMailSender.send(mimeMessage);
+	}
+
+	public void sendEmailOfferingLetter(String emailSubject, CandidateUser candidate, OfferingLetter offeringLetter,
+			Applicant applicant, byte[] fileToAttach, String fileName) throws MessagingException, UnsupportedEncodingException {
+
+		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
+		final MimeMessageHelper email;
+		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+		email.setTo(candidate.getUserEmail());
+		email.setSubject(emailSubject);
+		email.addAttachment(fileName + ".pdf", new ByteArrayResource(fileToAttach));
+
+		final Context ctx = new Context(LocaleContextHolder.getLocale());
+		ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
+		ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
+		ctx.setVariable("jobName", applicant.getJob().getJobName());
+		ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
+		ctx.setVariable("salary", offeringLetter.getSalary());
+		ctx.setVariable("address", offeringLetter.getAddress());
+		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+
+		final String htmlContent = this.htmlTemplateEngine.process("offerletter-email-template", ctx);
+		email.setText(htmlContent, true);
+
+		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+		email.addInline("jobroadLogo", clr, PNG_MIME);
+
+		javaMailSender.send(mimeMessage);
+	}
+
+	public void sendEmailThymeLeaf(String title, String to, String subject, String message)
+			throws MessagingException, UnsupportedEncodingException {
+
+		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
+		final MimeMessageHelper email;
+		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 		email.setTo(to);
 		email.setSubject(subject);
 
@@ -102,9 +198,8 @@ public class EmailService {
 
 		javaMailSender.send(mimeMessage);
 	}
-	
-	
-	public void sendMailWithAttachment(String to, String subject, String body, byte[] fileToAttach, String fileName){
+
+	public void sendMailWithAttachment(String to, String subject, String body, byte[] fileToAttach, String fileName) {
 //		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 //			
 //			@Override
@@ -117,24 +212,21 @@ public class EmailService {
 //	            helper.addAttachment(fileName +".pdf", new ByteArrayResource(fileToAttach));
 //	        }
 //	    };
-		
-	    try {
-	    	MimeMessage message = javaMailSender.createMimeMessage();
-	    	MimeMessageHelper mime = new MimeMessageHelper(message,true);
-	    	mime.setTo(to);
-	    	mime.setSubject(subject);
-	    	mime.setText(body);
-	    	mime.addAttachment(fileName+".pdf", new ByteArrayResource(fileToAttach));
-	    	
-	    	javaMailSender.send(message);
+
+		try {
+			MimeMessage message = javaMailSender.createMimeMessage();
+			MimeMessageHelper mime = new MimeMessageHelper(message, true);
+			mime.setTo(to);
+			mime.setSubject(subject);
+			mime.setText(body);
+			mime.addAttachment(fileName + ".pdf", new ByteArrayResource(fileToAttach));
+
+			javaMailSender.send(message);
 //	    	javaMailSender.send(preparator);
-	    }
-	    catch (Exception ex) {
-	        ex.printStackTrace();
-	        System.err.println(ex.getMessage());
-	    }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.err.println(ex.getMessage());
+		}
 	}
 
-
-	
 }

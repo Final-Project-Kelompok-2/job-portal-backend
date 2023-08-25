@@ -130,8 +130,9 @@ public class OfferingLetterService {
 			
 			emailBody += "Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
 
+			emailService.sendEmailOfferingLetter(emailSubject, candidate, offeringLetter, applicant, jasperData, "OfferingLetter");
 //			emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailBody);
-			emailService.sendMailWithAttachment(candidate.getUserEmail(), emailSubject, emailBody,jasperData, "OfferingLetter");
+//			emailService.sendMailWithAttachment(candidate.getUserEmail(), emailSubject, emailBody,jasperData, "OfferingLetter");
 			
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();

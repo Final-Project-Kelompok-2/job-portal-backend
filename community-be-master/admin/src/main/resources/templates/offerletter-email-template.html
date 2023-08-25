@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:remove="all">Offering Letter Stage</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+body {
+	font-family: calibri, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+
+.content {
+	max-width: 30rem;
+	background-color: white;
+	margin-top: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding:  1rem;
+}
+
+.emailBody {
+	padding: 1rem;
+}
+
+.footer {
+	text-align: right;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+</style>
+</head>
+<body>
+
+	<table class="center">
+		<tr>
+			<td align="center" bgcolor="#EAFFF1" style="padding: 40px 0 30px 0;">
+				<img src="images/jobroad.png" data-th-src="|cid:jobroadLogo|"
+				style="display: block;" height="50" />
+			</td>
+		</tr>
+		<tr>
+			<td style="padding: 40px 30px 40px 30px;">
+				<h1>Offering Letter</h1>
+				<div>
+					Congratulation <b th:text="${salutation}">salutation </b><b
+						th:text="${name}">name</b> !
+				</div>
+				<p>
+					Based on HR Interview for <b th:text="${jobName}">jobName</b>
+					position at <b th:text="${company}">company</b>, we would like to
+					continue your application for User Interview <b th:text="${date}">2023-08-31T10:10</b>
+					at <b th:text="${location}">location</b>. Thank you!
+				</p>
+				<p>
+					We are delighted to offer you the position of <b
+						th:text="${jobName}">jobName</b> at <b th:text="${company}">company</b>.
+					We noticed your impressive skills and experience during the
+					selection process, and we believe you would be a valuable addition
+					to our company. Below are the details of the job offer:
+				</p>
+				<p>
+					<b>Name:</b> <span th:text="${salutation}">salutation</span><span
+						th:text="${name}"> name</span>
+				</p>
+				<p>
+					<b>Position:</b> <span th:text="${jobName}">jobName</span>
+				</p>
+				<p>
+					<b>Salary:</b> Rp <span th:text="${salary}">salary</span>
+				</p> Please review the attached document that provides information about
+				the salary and benefits. If you decide to accept this offer, kindly
+				bring the copy of this letter and necessary documents to our office
+				at <b th:text="${address}">address</b>. Once we receive your
+				paperwork, we will confirm your start date. We are looking forward
+				to having you on the <b th:text="${company}">company</b> team.
+				<p class="footer">
+					Regards, <br> <em>HR Team</em>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: center; padding: 1px 3px 1px 30px;"
+				bgcolor="#EAFFF1">
+				<p>JobRoad.com</p>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

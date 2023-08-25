@@ -74,13 +74,14 @@ public class InterviewService {
 
 			interview = interviewDao.save(interview);
 
-			final String title = "Interview Stage";
+//			final String title = "Interview Stage";
 			final String emailSubject = "Interview Schedule ";
-			final String emailbody = "Congratulation " + candidate.getCandidateProfile().getFullname()
-					+ ", you have been selected for User Interview on " + interview.getInterviewDate() + " at "
-					+ interview.getInterviewLocation() + " Thank you, and congratulation!";
+//			final String emailbody = "Congratulation " + candidate.getCandidateProfile().getFullname()
+//					+ ", you have been selected for User Interview on " + interview.getInterviewDate() + " at "
+//					+ interview.getInterviewLocation() + " Thank you, and congratulation!";
 
-			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailbody);
+			emailService.sendEmailInterview(emailSubject, candidate, interview, applicant);
+//			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailbody);
 
 			final HiringStatus hiringStatus = hiringStatusDao
 					.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.INTERVIEWUSER.statusCode);
