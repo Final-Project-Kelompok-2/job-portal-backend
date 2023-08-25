@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import com.lawencon.jobportaladmin.dao.OwnedBenefitDao;
 import com.lawencon.jobportaladmin.dao.UserDao;
 import com.lawencon.jobportaladmin.dto.InsertResDto;
 import com.lawencon.jobportaladmin.dto.UpdateResDto;
+import com.lawencon.jobportaladmin.dto.jasper.JasperReqDto;
 import com.lawencon.jobportaladmin.dto.offeringletter.OfferingLetterInsertReqDto;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.CandidateUser;
@@ -34,6 +36,7 @@ import com.lawencon.jobportaladmin.model.OwnedBenefit;
 import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 import com.lawencon.security.principal.PrincipalService;
+import com.lawencon.util.JasperUtil;
 
 @Service
 public class OfferingLetterService {
@@ -68,6 +71,9 @@ public class OfferingLetterService {
 	
 	@Autowired
 	private PrincipalService<String> principalService;
+	
+	@Autowired
+	private JasperUtil jasperUtil;
 
 	public InsertResDto insertOfferingLetter(OfferingLetterInsertReqDto offeringData) {
 		final InsertResDto resDto = new InsertResDto();
@@ -108,18 +114,25 @@ public class OfferingLetterService {
 			final User admin = userDao.getById(User.class, principalService.getAuthPrincipal());
 			
 			offeringDatas.put("adminName", admin.getProfile().getFullName());
-			
+			offeringDatas.put("salary", offeringData.getSalary());
+			final List<JasperReqDto> jasperBenefits = new ArrayList<>();
 			if (ownedBenefits.size() > 0) {
 				emailBody += " Benefit yang didapat adalah :";
 				for (int i = 0; i < ownedBenefits.size(); i++) {
 					emailBody += ownedBenefits.get(i).getBenefit().getBenefitName();
+					final JasperReqDto jasperBenefit = new JasperReqDto();
+					jasperBenefit.setBenefitName(ownedBenefits.get(i).getBenefit().getBenefitName());
+					jasperBenefits.add(jasperBenefit);
 				}
 			}
 
-			emailBody += ". Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
+			final byte[] jasperData = jasperUtil.responseToByteArray(jasperBenefits, offeringDatas, "OfferingLetter");
+			
+			emailBody += "Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
 
-			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailBody);
-
+//			emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailBody);
+			emailService.sendMailWithAttachment(candidate.getUserEmail(), emailSubject, emailBody,jasperData, "OfferingLetter");
+			
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
