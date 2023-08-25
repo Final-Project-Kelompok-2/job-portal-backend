@@ -1,5 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.candidateworkexp;
 
+import java.math.BigDecimal;
+
 public class CandidateWorkExpInsertReqDto {
 	
 	private String workingCode;
@@ -8,7 +10,7 @@ public class CandidateWorkExpInsertReqDto {
 	private String address;
 	private String responsibility;
 	private String reasonLeave;
-	private String lastSalary;
+	private BigDecimal lastSalary;
 	private String startDate;
 	private String endDate;
 	private String email;
@@ -61,13 +63,6 @@ public class CandidateWorkExpInsertReqDto {
 		this.reasonLeave = reasonLeave;
 	}
 
-	public String getLastSalary() {
-		return lastSalary;
-	}
-
-	public void setLastSalary(String lastSalary) {
-		this.lastSalary = lastSalary;
-	}
 
 	public String getStartDate() {
 		return startDate;
@@ -91,6 +86,14 @@ public class CandidateWorkExpInsertReqDto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public BigDecimal getLastSalary() {
+		return lastSalary;
+	}
+
+	public void setLastSalary(BigDecimal lastSalary) {
+		this.lastSalary = lastSalary;
 	}
 
 }

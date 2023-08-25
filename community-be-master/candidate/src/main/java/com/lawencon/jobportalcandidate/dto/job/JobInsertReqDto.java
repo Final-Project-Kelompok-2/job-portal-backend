@@ -1,5 +1,6 @@
 package com.lawencon.jobportalcandidate.dto.job;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.lawencon.jobportalcandidate.dto.assignedjobquestion.AssignedJobQuestionInsertReqDto;
@@ -13,8 +14,8 @@ public class JobInsertReqDto {
 	private String endDate;
 	private String description;
 	private List<AssignedJobQuestionInsertReqDto> questions;
-	private Integer expectedSalaryMin;
-	private Integer expectedSalaryMax;
+	private BigDecimal expectedSalaryMin;
+	private BigDecimal expectedSalaryMax;
 	private String employmentTypeCode;
 	private String file;
 	private String fileExtension;
@@ -67,21 +68,7 @@ public class JobInsertReqDto {
 		this.fileExtension = fileExtension;
 	}
 
-	public Integer getExpectedSalaryMin() {
-		return expectedSalaryMin;
-	}
-
-	public void setExpectedSalaryMin(Integer expectedSalaryMin) {
-		this.expectedSalaryMin = expectedSalaryMin;
-	}
-
-	public Integer getExpectedSalaryMax() {
-		return expectedSalaryMax;
-	}
-
-	public void setExpectedSalaryMax(Integer expectedSalaryMax) {
-		this.expectedSalaryMax = expectedSalaryMax;
-	}
+	
 
 	public String getJobCode() {
 		return jobCode;
@@ -113,6 +100,22 @@ public class JobInsertReqDto {
 
 	public void setQuestions(List<AssignedJobQuestionInsertReqDto> questions) {
 		this.questions = questions;
+	}
+
+	public BigDecimal getExpectedSalaryMin() {
+		return expectedSalaryMin;
+	}
+
+	public void setExpectedSalaryMin(BigDecimal expectedSalaryMin) {
+		this.expectedSalaryMin = expectedSalaryMin;
+	}
+
+	public BigDecimal getExpectedSalaryMax() {
+		return expectedSalaryMax;
+	}
+
+	public void setExpectedSalaryMax(BigDecimal expectedSalaryMax) {
+		this.expectedSalaryMax = expectedSalaryMax;
 	}
 
 }

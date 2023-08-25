@@ -3,7 +3,6 @@ package com.lawencon.jobportalcandidate.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +22,7 @@ import com.lawencon.jobportalcandidate.service.SavedJobService;
 @RestController
 @RequestMapping("saved-jobs")
 public class SavedJobsController {
+	
 	@Autowired
 	private SavedJobService savedJobService;
 	
