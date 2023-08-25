@@ -35,7 +35,7 @@
 			<staticText>
 				<reportElement x="280" y="0" width="274" height="40" uuid="412026a4-85e5-4656-bd51-39a1d8696837"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="13"/>
+					<font fontName="Times New Roman" size="13"/>
 				</textElement>
 				<text><![CDATA[Jalan Zingiber Volturi, Blok Tatang Rocket
 Jawa Barat, 172031]]></text>
@@ -43,14 +43,14 @@ Jawa Barat, 172031]]></text>
 			<staticText>
 				<reportElement x="290" y="40" width="100" height="15" uuid="fde1fe04-d720-48c1-af1f-b5ca1b441f89"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Times New Roman"/>
 				</textElement>
 				<text><![CDATA[Telp : (021) 123456]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="400" y="40" width="130" height="15" uuid="e1fb1d29-c89b-4a94-9fff-ca2a64870e25"/>
 				<textElement>
-					<font fontName="Arial"/>
+					<font fontName="Times New Roman"/>
 				</textElement>
 				<text><![CDATA[Email : jobroad@gmail.com]]></text>
 			</staticText>
@@ -65,14 +65,14 @@ Jawa Barat, 172031]]></text>
 			<staticText>
 				<reportElement x="180" y="10" width="200" height="20" uuid="5382fb97-5d1f-486b-b7f9-28861291a084"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="16" isBold="true"/>
+					<font fontName="Times New Roman" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Offering Letter]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="160" width="532" height="19" uuid="74408c9e-0d06-4d83-80c5-009ffe53b80b"/>
 				<textElement>
-					<font fontName="Arial" size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 					<paragraph lineSpacing="Proportional" lineSpacingSize="1.5"/>
 				</textElement>
 				<text><![CDATA[Please review the attached document that provides information about the salary and benefits.
@@ -80,12 +80,17 @@ Jawa Barat, 172031]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="11" y="40" width="543" height="39" uuid="4681805d-9df0-495f-b35b-83b5e46e9fb6"/>
-				<textFieldExpression><![CDATA["We are delighted to offer you the position of "+$P{positionName} +"at"+ $P{companyName}+". We noticed your impressive skills and experience during the selection process, and we believe you would be a valuable addition to our company. Below are the details of the job offer:"
-]]></textFieldExpression>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["We are delighted to offer you the position of "+$P{positionName} +"at"+ $P{companyName}+". We noticed your impressive skills and experience during the selection process, and we believe you would be a valuable addition to our company. Below are the details of the job offer:"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="90" width="550" height="59" uuid="244e640e-dd6e-46b5-ba7f-84d6ca115df4"/>
-				<textFieldExpression><![CDATA["Name : "+ $P{fullname}+ "\nPosition : "+$P{positionName}+ "  \nSalary : "+$P{salary}  ]]></textFieldExpression>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Name : "+ $P{fullname}+ "\nPosition : "+$P{positionName}+ "  \nSalary : "+$P{salary}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -93,7 +98,9 @@ Jawa Barat, 172031]]></text>
 		<band height="25">
 			<textField>
 				<reportElement x="20" y="5" width="100" height="20" uuid="bdcb1c78-072b-4f4b-be70-56caa3a8be78"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{benefitName}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -106,27 +113,29 @@ Jawa Barat, 172031]]></text>
 	<summary>
 		<band height="218">
 			<staticText>
-				<reportElement x="438" y="150" width="92" height="68" uuid="9d556ede-23d2-4060-89dd-a8f22224cf73"/>
-				<textElement textAlignment="Right">
-					<font fontName="Arial" size="12"/>
-					<paragraph lineSpacing="Proportional" lineSpacingSize="1.0"/>
-				</textElement>
-				<text><![CDATA[Regards,
-[AdminName]
-
-XXX Company]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="10" y="10" width="532" height="110" uuid="c726d5c6-9bac-4682-8473-d6df6b559d3e"/>
+				<reportElement x="10" y="10" width="532" height="20" uuid="c726d5c6-9bac-4682-8473-d6df6b559d3e"/>
 				<textElement>
-					<font fontName="Arial" size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 					<paragraph lineSpacing="Proportional" lineSpacingSize="1.5"/>
 				</textElement>
 				<text><![CDATA[If you decide to accept this offer, kindly bring the copy of this letter and necessary documents to our office.
 
-Once we receive your paperwork, we will confirm your start date. We are looking forward to having you on the [XXX] team.
 ]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="10" y="40" width="526" height="54" uuid="7127158d-8647-4de0-a2bc-3b546ecf7706"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Once we receive your paperwork, we will confirm your start date. We are looking forward to having you on the "+$P{companyName} +" team."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="130" width="120" height="80" uuid="2ef3f16a-d5b9-4718-9b32-750fe366a508"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Regards, \n"+$P{adminName}+"\n\n\n"+$P{companyName}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
