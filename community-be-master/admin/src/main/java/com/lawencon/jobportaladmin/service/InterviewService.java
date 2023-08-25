@@ -1,5 +1,8 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +56,8 @@ public class InterviewService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	public InsertResDto insertInterview(InterviewInsertReqDto interviewData) {
+	public InsertResDto insertInterview(InterviewInsertReqDto interviewData)
+			throws MessagingException, UnsupportedEncodingException {
 		final InsertResDto resDto = new InsertResDto();
 
 		try {
@@ -70,13 +74,13 @@ public class InterviewService {
 
 			interview = interviewDao.save(interview);
 
+			final String title = "Interview Stage";
 			final String emailSubject = "Interview Schedule ";
-			final String emailbody = "Selamat " + candidate.getCandidateProfile().getFullname()
-					+ ", kamu telah masuk ke tahap Interview User. "
-					+ " Silahkan mengikuti jadwal interview pada tanggal " + interview.getInterviewDate() + " di "
-					+ interview.getInterviewLocation();
+			final String emailbody = "Congratulation " + candidate.getCandidateProfile().getFullname()
+					+ ", you have been selected for User Interview on " + interview.getInterviewDate() + " at "
+					+ interview.getInterviewLocation() + " Thank you, and congratulation!";
 
-			emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailbody);
+			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailbody);
 
 			final HiringStatus hiringStatus = hiringStatusDao
 					.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.INTERVIEWUSER.statusCode);
@@ -122,11 +126,11 @@ public class InterviewService {
 		final InterviewResDto interviewResDto = new InterviewResDto();
 		final Interview interview = interviewDao.getByApplicant(applicantId);
 
-		if(interview !=null) {
+		if (interview != null) {
 			interviewResDto.setInterviewDate(interview.getInterviewDate().toString());
 			interviewResDto.setInterviewLocation(interview.getInterviewLocation());
-		}	
-		
+		}
+
 		return interviewResDto;
 	}
 

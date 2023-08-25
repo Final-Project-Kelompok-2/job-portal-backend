@@ -101,6 +101,7 @@ public class OfferingLetterService {
 			
 			offeringLetter = offeringLetterDao.save(offeringLetter);
 
+			final String title = applicant.getJob().getJobName() + " Offering Letter";
 			final String emailSubject = "Offering Letter";
 			String emailBody = "Offering letter yang kami tawarkan yaitu anda " + " akan bekerja di Kantor "
 					+ offeringLetter.getAddress() + " pada posisi " + applicant.getJob().getJobName()
