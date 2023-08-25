@@ -25,7 +25,6 @@ import com.lawencon.jobportalcandidate.model.EmploymentType;
 import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.Question;
-import com.lawencon.jobportalcandidate.model.SavedJob;
 import com.lawencon.jobportalcandidate.util.BigDecimalUtil;
 import com.lawencon.jobportalcandidate.util.DateUtil;
 import com.lawencon.security.principal.PrincipalService;
