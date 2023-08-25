@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OfferingLetter" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59fd7e03-ea90-41a9-8fbf-fa1332990035">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="Dataset1" uuid="36f2343f-29e2-4706-9020-b056ad3e6905">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+		<queryString language="SQL">
+			<![CDATA[select benefit_name as benefitName from t_benefit]]>
+		</queryString>
+	</subDataset>
+	<parameter name="fullname" class="java.lang.String"/>
+	<parameter name="positionName" class="java.lang.String"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="adminName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select benefit_name as benefitName from t_benefit]]>
+	</queryString>
+	<field name="benefitName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63">
+			<line>
+				<reportElement x="0" y="60" width="560" height="1" uuid="1fd9e534-c7fa-40d0-821a-f7aa4120f72e"/>
+			</line>
+			<staticText>
+				<reportElement x="280" y="0" width="274" height="40" uuid="412026a4-85e5-4656-bd51-39a1d8696837"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman&#xD;&#xA;" size="13"/>
+				</textElement>
+				<text><![CDATA[Jalan Zingiber Volturi, Blok Tatang Rocket
+Jawa Barat, 172031]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="40" width="100" height="15" uuid="fde1fe04-d720-48c1-af1f-b5ca1b441f89"/>
+				<textElement>
+					<font fontName="Times New Roman&#xD;&#xA;"/>
+				</textElement>
+				<text><![CDATA[Telp : (021) 123456]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="40" width="130" height="15" uuid="e1fb1d29-c89b-4a94-9fff-ca2a64870e25"/>
+				<textElement>
+					<font fontName="Times New Roman&#xD;&#xA;"/>
+				</textElement>
+				<text><![CDATA[Email : jobroad@gmail.com]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="2" width="271" height="55" uuid="debb4588-61b3-40b5-ae00-774758a4fd39"/>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/Final-Project-Kelompok-2/job-portal-frontend/main/projects/admin-jobroad/src/assets/jobroad.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="192" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="10" width="200" height="20" uuid="5382fb97-5d1f-486b-b7f9-28861291a084"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman&#xD;&#xA;" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Offering Letter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="42" width="532" height="30" uuid="f80ad58f-687c-497f-8d3f-054b30835ebd"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[We are pleased to offer you the position of [JobTitle] at [XXX] Company , with details as follows :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="72" width="532" height="50" uuid="287b9890-22fd-451c-96ac-4edfcfeef1ca"/>
+				<textElement>
+					<font size="12"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="2.0"/>
+				</textElement>
+				<text><![CDATA[Name :
+Position :
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="122" width="532" height="40" uuid="1f9401c0-5190-42ff-9b83-829f35517782"/>
+				<textElement>
+					<font size="12"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.5"/>
+				</textElement>
+				<text><![CDATA[Please review the attached document outlining your salary and benefits. Please note that the offering is in Gross, meaning the salary contribute to : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="172" width="532" height="20" uuid="b3117849-d8e5-4e82-a4c3-4b090950f64f"/>
+				<textElement>
+					<font size="12"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.5"/>
+				</textElement>
+				<text><![CDATA[If you accept this offer, please bring the copy of this letter to the office]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="119">
+			<subreport>
+				<reportElement x="20" y="5" width="200" height="109" uuid="68c70290-83c6-4d18-814e-87f76b88ef4d"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["OfferingBenefit.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="195">
+			<staticText>
+				<reportElement x="-2" y="20" width="532" height="58" uuid="d3bf6905-f54e-4aa6-afe8-8f83dc6eaf62"/>
+				<textElement>
+					<font size="12"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[We will contact you once we have received the paperwork as to your start date.
+
+We look forward to welcoming you as part of the [XXX] teamS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="127" width="92" height="68" uuid="9d556ede-23d2-4060-89dd-a8f22224cf73"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.0"/>
+				</textElement>
+				<text><![CDATA[Regards,
+[AdminName]
+
+XXX Company]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
