@@ -1,12 +1,14 @@
 package com.lawencon.jobportaladmin.dto.candidateprofile;
 
+import java.math.BigDecimal;
+
 public class CandidateProfileInsertReqDto {
 
 	private String salutation;
 	private String fullname;
 	private String gender;
 	private String experience;
-	private String expectedSalary;
+	private BigDecimal expectedSalary;
 	private String phoneNumber;
 	private String mobileNumber;
 	private String nik;
@@ -51,13 +53,6 @@ public class CandidateProfileInsertReqDto {
 		this.experience = experience;
 	}
 
-	public String getExpectedSalary() {
-		return expectedSalary;
-	}
-
-	public void setExpectedSalary(String expectedSalary) {
-		this.expectedSalary = expectedSalary;
-	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -145,5 +140,13 @@ public class CandidateProfileInsertReqDto {
 
 	public void setCandidateStatusId(String candidateStatusId) {
 		this.candidateStatusId = candidateStatusId;
+	}
+
+	public BigDecimal getExpectedSalary() {
+		return expectedSalary;
+	}
+
+	public void setExpectedSalary(BigDecimal expectedSalary) {
+		this.expectedSalary = expectedSalary;
 	}
 }
