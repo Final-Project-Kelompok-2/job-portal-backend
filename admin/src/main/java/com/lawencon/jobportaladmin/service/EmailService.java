@@ -59,7 +59,7 @@ public class EmailService {
 
 	}
 
-	public void sendEmailNewUser( User user, String subject, String message){
+	public void sendEmailNewUser(String subject, User user, String password){
 
 		Thread thread= new Thread() {
 			public void run() {
@@ -77,7 +77,7 @@ public class EmailService {
 					final Context ctx = new Context(LocaleContextHolder.getLocale());
 					ctx.setVariable("name", user.getProfile().getFullName());
 					ctx.setVariable("email", user.getUserEmail());
-					ctx.setVariable("body", message);
+					ctx.setVariable("password", password);
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 					ctx.setVariable("url", loginUrl);
 

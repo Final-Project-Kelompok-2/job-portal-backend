@@ -626,6 +626,7 @@ CREATE TABLE t_question_answer(
 	option_id VARCHAR(36) NOT NULL,
 	candidate_id VARCHAR(36) NOT NULL,
 	question_id VARCHAR(36) NOT NULL,
+	applicant_id VARCHAR(36) NOT NULL,
 	created_by VARCHAR(36) NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by VARCHAR(36),
@@ -642,6 +643,10 @@ ALTER TABLE t_question_answer ADD CONSTRAINT t_option_fk
 ALTER TABLE t_question_answer ADD CONSTRAINT t_candidate_fk
 	FOREIGN KEY(candidate_id)
 	REFERENCES t_candidate_user(id);
+ALTER TABLE t_question_answer ADD CONSTRAINT t_applicant_answer_fk
+	FOREIGN KEY(applicant_id)
+	REFERENCES t_applicant(id);
+
 
 CREATE TABLE t_assigned_job_question(
 	id VARCHAR(36) NOT NULL,
