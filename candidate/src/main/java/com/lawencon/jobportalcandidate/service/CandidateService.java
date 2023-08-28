@@ -3,6 +3,7 @@ package com.lawencon.jobportalcandidate.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -21,7 +22,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.config.JwtConfig;
+import com.lawencon.jobportalcandidate.constant.FileType;
 import com.lawencon.jobportalcandidate.constant.PersonTypes;
+import com.lawencon.jobportalcandidate.dao.CandidateDocumentsDao;
 import com.lawencon.jobportalcandidate.dao.CandidateProfileDao;
 import com.lawencon.jobportalcandidate.dao.CandidateStatusDao;
 import com.lawencon.jobportalcandidate.dao.CandidateUserDao;
@@ -33,6 +36,7 @@ import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
 import com.lawencon.jobportalcandidate.dto.candidateprofile.CandidateProfileResDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateCheckDataResDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserBlacklistReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserResDto;
@@ -40,6 +44,7 @@ import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserUpdateReqD
 import com.lawencon.jobportalcandidate.dto.candidateuser.ChangePasswordReqDto;
 import com.lawencon.jobportalcandidate.login.LoginReqDto;
 import com.lawencon.jobportalcandidate.login.LoginResDto;
+import com.lawencon.jobportalcandidate.model.CandidateDocuments;
 import com.lawencon.jobportalcandidate.model.CandidateProfile;
 import com.lawencon.jobportalcandidate.model.CandidateStatus;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
@@ -83,6 +88,9 @@ public class CandidateService implements UserDetailsService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private CandidateDocumentsDao candidateDocumentsDao;
 
 	@Autowired
 	private PrincipalService<String> principalService;
@@ -140,7 +148,8 @@ public class CandidateService implements UserDetailsService {
 			candidateprofileDto.setFileId(candidateprofile.getFile().getId());
 		}
 		if (candidateprofile.getCandidateStatus() != null) {
-			final CandidateStatus status = candidateStatusDao.getById(CandidateStatus.class, candidateprofile.getCandidateStatus().getId());
+			final CandidateStatus status = candidateStatusDao.getById(CandidateStatus.class,
+					candidateprofile.getCandidateStatus().getId());
 			candidateprofileDto.setCandidateStatusId(status.getId());
 			candidateprofileDto.setCandidateStatusCode(status.getStatusCode());
 			candidateprofileDto.setCandidateStatus(status.getStatusName());
@@ -252,8 +261,8 @@ public class CandidateService implements UserDetailsService {
 				file.setCreatedBy(principalService.getAuthPrincipal());
 				file = fileDao.save(file);
 				profile.setFile(file);
-				
-				if (fileId != null) {										
+
+				if (fileId != null) {
 					fileDao.deleteById(File.class, fileId);
 				}
 			}
@@ -266,15 +275,15 @@ public class CandidateService implements UserDetailsService {
 			candidateProfileDao.saveAndFlush(profile);
 			user.setCandidateProfile(profile);
 			candidateUserDao.saveAndFlush(user);
-			
+
 			final String candidateProfileUpdateAPI = "http://localhost:8080/candidate-user/update/candidate";
 
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
-			
-			final RequestEntity<CandidateUserUpdateReqDto> candidateUpdate = RequestEntity.patch(candidateProfileUpdateAPI)
-					.headers(headers).body(data);
+
+			final RequestEntity<CandidateUserUpdateReqDto> candidateUpdate = RequestEntity
+					.patch(candidateProfileUpdateAPI).headers(headers).body(data);
 
 			final ResponseEntity<UpdateResDto> responseAdmin = restTemplate.exchange(candidateUpdate,
 					UpdateResDto.class);
@@ -306,7 +315,7 @@ public class CandidateService implements UserDetailsService {
 		if (!user.getIsActive()) {
 			loginRes.setMessage("Akun anda nonaktif");
 			throw new RuntimeException("Akun Anda nonaktif");
-			
+
 		} else {
 			loginRes.setUserId(user.getId());
 			loginRes.setFullName(user.getCandidateProfile().getFullname());
@@ -314,7 +323,7 @@ public class CandidateService implements UserDetailsService {
 			if (user.getCandidateProfile().getFile() != null) {
 				loginRes.setPhotoId(user.getCandidateProfile().getFile().getId());
 			}
-			if(user.getCandidateProfile().getNik()!=null) {
+			if (user.getCandidateProfile().getNik() != null) {
 				loginRes.setNik(user.getCandidateProfile().getNik());
 			}
 		}
@@ -330,7 +339,7 @@ public class CandidateService implements UserDetailsService {
 			if (passwordEncoder.matches(data.getOldPassword(), candidate.getUserPassword())) {
 				final String encodedPassword = passwordEncoder.encode(data.getNewPassword());
 				candidate.setUserPassword(encodedPassword);
-				candidate = candidateUserDao.save(candidate);	
+				candidate = candidateUserDao.save(candidate);
 				resDto.setVersion(candidate.getVersion());
 				resDto.setMessage("Update Password Success");
 				em().getTransaction().commit();
@@ -348,18 +357,19 @@ public class CandidateService implements UserDetailsService {
 	}
 
 	public UpdateResDto updateBlacklist(CandidateUserBlacklistReqDto data) {
-		final UpdateResDto  resDto = new UpdateResDto();
-		
+		final UpdateResDto resDto = new UpdateResDto();
+
 		try {
 			em().getTransaction().begin();
 			final CandidateUser candidateUser = candidateUserDao.getByUsername(data.getCandidateEmail());
 			final CandidateStatus candidateStatus = candidateStatusDao.getByCode(data.getStatusCode());
-			 CandidateProfile candidateProfile= candidateProfileDao.getById(CandidateProfile.class, candidateUser.getCandidateProfile().getId());
+			CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class,
+					candidateUser.getCandidateProfile().getId());
 			candidateProfile.setCandidateStatus(candidateStatus);
 			candidateUser.setIsActive(data.getIsActive());
-			
-			candidateProfile= candidateProfileDao.save(candidateProfile);
-			
+
+			candidateProfile = candidateProfileDao.save(candidateProfile);
+
 			resDto.setVersion(candidateProfile.getVersion());
 			resDto.setMessage("Update Blacklist Success");
 			em().getTransaction().commit();
@@ -368,8 +378,41 @@ public class CandidateService implements UserDetailsService {
 			e.printStackTrace();
 			throw new RuntimeException("Update Blacklist Failed");
 		}
-		
+
 		return resDto;
+	}
+
+	public CandidateCheckDataResDto checkCandidateDatas() {
+		CandidateCheckDataResDto result = new CandidateCheckDataResDto();
+		
+		result.setValid(false);
+		
+		final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
+				principalService.getAuthPrincipal());
+		final CandidateProfile canProfile = candidateProfileDao.getById(CandidateProfile.class,
+				candidateUser.getCandidateProfile().getId());
+		final List<CandidateDocuments> candidateDocs = candidateDocumentsDao
+				.getCandidateDocumentsByCandidate(candidateUser.getId());
+
+		if (canProfile.getExperience() != null && canProfile.getExpectedSalary() != null
+				&& canProfile.getMobileNumber() != null && canProfile.getNik() != null
+				&& canProfile.getBirthDate() != null && canProfile.getBirthPlace() != null
+				&& canProfile.getMaritalStatus() != null && canProfile.getReligion().getId() != null) {
+
+			if (candidateDocs.size() > 0) {
+				for (int i = 0; i < candidateDocs.size(); i++) {
+					if (candidateDocs.get(i) != null && candidateDocs.get(i).getFileType().getTypeCode()
+							.equals(FileType.CURICULUMVITAE.typeCode)) {
+						result.setValid(true);
+					}
+
+				}
+			}
+
+		}
+		
+		return result;
+
 	}
 
 	@Override
