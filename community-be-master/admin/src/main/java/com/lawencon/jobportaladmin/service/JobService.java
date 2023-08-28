@@ -309,9 +309,9 @@ public class JobService {
 		return jobsDto;
 	}
 
-	public List<JobResDto> getByPic(String id) {
+	public List<JobResDto> getByPic() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
-		final List<Job> jobs = jobDao.getByAssignedPIC(id);
+		final List<Job> jobs = jobDao.getByAssignedPIC(principalService.getAuthPrincipal());
 
 		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();

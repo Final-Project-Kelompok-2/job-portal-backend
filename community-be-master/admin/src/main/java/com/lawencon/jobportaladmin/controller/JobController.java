@@ -43,6 +43,12 @@ public class JobController {
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 	
+	@GetMapping("/pic")
+	public ResponseEntity<List<JobResDto>> getByPic() {
+		final List<JobResDto> data = jobService.getByPic();
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
+	
 	@GetMapping("/company")
 	public ResponseEntity<List<JobResDto>> getByCompany(@RequestParam String code) {
 		final List<JobResDto> data = jobService.getByCompany(code);
