@@ -55,5 +55,11 @@ public class JobController {
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
+	@GetMapping("/topsalary")
+	public ResponseEntity<List<JobResDto>> getTopThreeSalary() {
+		final List<JobResDto> data = jobService.getTopThreeSalary();
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
+	
 	
 }
