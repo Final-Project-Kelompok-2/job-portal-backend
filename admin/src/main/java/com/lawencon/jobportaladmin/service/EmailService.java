@@ -122,7 +122,7 @@ public class EmailService {
 					ctx.setVariable("date", assesment.getAssesmentDate());
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 
-					final String htmlContent = htmlTemplateEngine.process("assesment-email-template", ctx);
+					final String htmlContent = htmlTemplateEngine.process("assesment-email", ctx);
 					email.setText(htmlContent, true);
 
 					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
@@ -161,7 +161,7 @@ public class EmailService {
 					ctx.setVariable("date", interview.getInterviewDate());
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 
-					final String htmlContent = htmlTemplateEngine.process("interview-email-template", ctx);
+					final String htmlContent = htmlTemplateEngine.process("interview-email", ctx);
 					email.setText(htmlContent, true);
 
 					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
@@ -201,7 +201,7 @@ public class EmailService {
 					ctx.setVariable("address", offeringLetter.getAddress());
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 
-					final String htmlContent = htmlTemplateEngine.process("offerletter-email-template", ctx);
+					final String htmlContent = htmlTemplateEngine.process("offeringletter-email", ctx);
 					email.setText(htmlContent, true);
 
 					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
