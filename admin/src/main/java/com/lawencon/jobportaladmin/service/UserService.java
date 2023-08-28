@@ -28,6 +28,9 @@ import com.lawencon.jobportaladmin.dto.profile.ProfileResDto;
 import com.lawencon.jobportaladmin.dto.profile.ProfileUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.user.UsersResDto;
+import com.lawencon.jobportaladmin.model.Applicant;
+import com.lawencon.jobportaladmin.model.Assesment;
+import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Profile;
@@ -135,25 +138,21 @@ public class UserService implements UserDetailsService {
 			profile.setPhoneNumber(userData.getPhoneNumber());
 			profile.setPersonType(personType);
 
-			File photo = new File();
-			photo.setFileName(userData.getPhotoName());
-			photo.setFileExtension(userData.getExtensionName());
-
-			photo = fileDao.save(photo);
-
-			profile.setPhoto(photo);
-
+			if(userData.getPhotoName() !=null && userData.getExtensionName()!=null) {
+				File photo = new File();
+				photo.setFileName(userData.getPhotoName());
+				photo.setFileExtension(userData.getExtensionName());
+				photo = fileDao.save(photo);
+				profile.setPhoto(photo);
+			}
+			
 			profile = profileDao.save(profile);
 			newUser.setProfile(profile);
 			newUser = userDao.save(newUser);
 
-			final String title = "Your JobRoad Account";
 			final String emailSubject = "Job Portal Account Registration";
-			final String emailbody = "Hi " + userData.getFullName() + "!, "
-					+ " your account has been created as " + role.getRoleName() + " on our platform. Kindly login with this credential: " + " Email: "
-					+ userData.getUserEmail() + " Password: " + generatePassword;
-
-			emailService.sendEmailNewUser(title, newUser, emailSubject, emailbody);
+			
+			emailService.sendEmailNewUser(emailSubject, newUser, generatePassword);
 
 			insertResDto.setId(newUser.getId());
 			insertResDto.setMessage("Insert User Success");

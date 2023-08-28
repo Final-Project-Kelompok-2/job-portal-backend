@@ -1,5 +1,8 @@
 package com.lawencon.jobportalcandidate.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import com.lawencon.jobportalcandidate.dao.QuestionDao;
 import com.lawencon.jobportalcandidate.dao.QuestionOptionDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
+import com.lawencon.jobportalcandidate.dto.questionanswer.QuestionAnswerResDto;
 import com.lawencon.jobportalcandidate.dto.questionanswer.QuestionAnswersInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.review.ReviewUpdateScoreReqDto;
 import com.lawencon.jobportalcandidate.model.Applicant;
@@ -76,7 +80,7 @@ public class QuestionAnswerService {
 				final QuestionOption questionOption = questionOptionDao.getById(QuestionOption.class,
 						data.getAnswers().get(i).getOptionId());
 				final Question question = questionDao.getById(Question.class, questionOption.getQuestion().getId());
-
+				answer.setApplicant(applicant);
 				answer.setCandidateUser(candidateUser);
 				answer.setQuestion(question);
 				answer.setQuestionOption(questionOption);
@@ -116,6 +120,17 @@ public class QuestionAnswerService {
 			e.printStackTrace();
 		}
 
+		return resDto;
+	}
+	
+	public List<QuestionAnswerResDto> getByApplicant(String id) {
+		final List<QuestionAnswerResDto> resDto = new ArrayList<>();
+		final List<QuestionAnswer> answer = questionAnswerDao.getAnswerByApplicant(id);
+		for(int i = 0; i < answer.size() ; i++) {
+			final QuestionAnswerResDto res = new QuestionAnswerResDto();
+			res.setId(answer.get(i).getId());
+			resDto.add(res);
+		}				
 		return resDto;
 	}
 

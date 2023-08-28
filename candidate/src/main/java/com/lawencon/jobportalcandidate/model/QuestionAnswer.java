@@ -22,6 +22,10 @@ public class QuestionAnswer extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name ="question_id")
 	private Question question;
+	
+	@OneToOne
+	@JoinColumn(name = "applicant_id")
+	private Applicant applicant;
 
 	public QuestionOption getQuestionOption() {
 		return questionOption;
@@ -46,4 +50,14 @@ public class QuestionAnswer extends BaseEntity{
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
+
+	public Applicant getApplicant() {
+		return applicant;
+	}
+
+	public void setApplicant(Applicant applicant) {
+		this.applicant = applicant;
+	}
+	
+	
 }

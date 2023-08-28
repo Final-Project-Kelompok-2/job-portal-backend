@@ -19,7 +19,9 @@ import org.thymeleaf.context.Context;
 import com.lawencon.jobportaladmin.model.Applicant;
 import com.lawencon.jobportaladmin.model.Assesment;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.model.Hired;
 import com.lawencon.jobportaladmin.model.Interview;
+import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.OfferingLetter;
 import com.lawencon.jobportaladmin.model.User;
 
@@ -28,6 +30,7 @@ public class EmailService {
 
 	private static final String JOBROAD_LOGO_IMAGE = "templates/images/jobroad.png";
 	private static final String JOBROAD_ILLUSTRATION_IMAGE = "templates/images/illustration_png-03.png";
+	private static final String JOBROAD_EMPLOYEE_IMAGE = "templates/images/employeenew.png";
 	private static final String PNG_MIME = "image/png";
 
 	private final Environment environment;
@@ -59,128 +62,212 @@ public class EmailService {
 
 	}
 
-	public void sendEmailNewUser(String title, User user, String subject, String message)
-			throws MessagingException, UnsupportedEncodingException {
+	public void sendEmailNewUser(String subject, User user, String password) {
 
-		String loginUrl = "http://localhost:4200/login";
+		Thread thread = new Thread() {
+			public void run() {
 
-		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
-		final MimeMessageHelper email;
-		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				try {
+					String loginUrl = "http://localhost:4200/login";
 
-		email.setTo(user.getUserEmail());
-		email.setSubject(subject);
+					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+					final MimeMessageHelper email;
+					email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-		final Context ctx = new Context(LocaleContextHolder.getLocale());
-		ctx.setVariable("title", title);
-		ctx.setVariable("name", user.getProfile().getFullName());
-		ctx.setVariable("email", user.getUserEmail());
-		ctx.setVariable("body", message);
-		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-		ctx.setVariable("url", loginUrl);
+					email.setTo(user.getUserEmail());
+					email.setSubject(subject);
 
-		final String htmlContent = this.htmlTemplateEngine.process("new-user-email", ctx);
-		email.setText(htmlContent, true);
+					final Context ctx = new Context(LocaleContextHolder.getLocale());
+					ctx.setVariable("name", user.getProfile().getFullName());
+					ctx.setVariable("email", user.getUserEmail());
+					ctx.setVariable("password", password);
+					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("url", loginUrl);
 
-		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-		email.addInline("jobroadLogo", clr, PNG_MIME);
+					final String htmlContent = htmlTemplateEngine.process("new-user-email", ctx);
+					email.setText(htmlContent, true);
 
-		javaMailSender.send(mimeMessage);
+					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+					email.addInline("jobroadLogo", clr, PNG_MIME);
+
+					javaMailSender.send(mimeMessage);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+
+			}
+		};
+
+		thread.start();
 
 	}
 
 	public void sendEmailAssessment(String emailSubject, CandidateUser candidate, Assesment assesment,
-			Applicant applicant) throws MessagingException, UnsupportedEncodingException {
+			Applicant applicant) {
 
-		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
-		final MimeMessageHelper email;
-		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-		email.setTo(candidate.getUserEmail());
-		email.setSubject(emailSubject);
+		Thread thread = new Thread() {
+			public void run() {
 
-		final Context ctx = new Context(LocaleContextHolder.getLocale());
-		ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
-		ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
-		ctx.setVariable("jobName", applicant.getJob().getJobName());
-		ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
-		ctx.setVariable("location", assesment.getAssesmentLocation());
-		ctx.setVariable("date", assesment.getAssesmentDate());
-		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-		ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
+				try {
+					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+					final MimeMessageHelper email;
+					email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					email.setTo(candidate.getUserEmail());
+					email.setSubject(emailSubject);
+					final Context ctx = new Context(LocaleContextHolder.getLocale());
+					ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
+					ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
+					ctx.setVariable("jobName", applicant.getJob().getJobName());
+					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
+					ctx.setVariable("location", assesment.getAssesmentLocation());
+					ctx.setVariable("date", assesment.getAssesmentDate());
+					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
-		final String htmlContent = this.htmlTemplateEngine.process("assessment-email", ctx);
-		email.setText(htmlContent, true);
+					final String htmlContent = htmlTemplateEngine.process("assessment-email", ctx);
+					email.setText(htmlContent, true);
 
-		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-		email.addInline("jobroadLogo", clr, PNG_MIME);
-		
-		ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
-		email.addInline("illustration", illustration, PNG_MIME);
+					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+					email.addInline("jobroadLogo", clr, PNG_MIME);
 
-		javaMailSender.send(mimeMessage);
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
+
+					javaMailSender.send(mimeMessage);
+
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+
+			}
+		};
+
+		thread.start();
 	}
 
 	public void sendEmailInterview(String emailSubject, CandidateUser candidate, Interview interview,
 			Applicant applicant) throws MessagingException, UnsupportedEncodingException {
 
-		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
-		final MimeMessageHelper email;
-		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-		email.setTo(candidate.getUserEmail());
-		email.setSubject(emailSubject);
+		Thread thread = new Thread() {
+			public void run() {
+				try {
+					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+					final MimeMessageHelper email;
+					email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					email.setTo(candidate.getUserEmail());
+					email.setSubject(emailSubject);
 
-		final Context ctx = new Context(LocaleContextHolder.getLocale());
-		ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
-		ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
-		ctx.setVariable("jobName", applicant.getJob().getJobName());
-		ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
-		ctx.setVariable("location", interview.getInterviewLocation());
-		ctx.setVariable("date", interview.getInterviewDate());
-		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-		ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
+					final Context ctx = new Context(LocaleContextHolder.getLocale());
+					ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
+					ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
+					ctx.setVariable("jobName", applicant.getJob().getJobName());
+					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
+					ctx.setVariable("location", interview.getInterviewLocation());
+					ctx.setVariable("date", interview.getInterviewDate());
+					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
-		final String htmlContent = this.htmlTemplateEngine.process("interview-email", ctx);
-		email.setText(htmlContent, true);
+					final String htmlContent = htmlTemplateEngine.process("interview-email", ctx);
+					email.setText(htmlContent, true);
 
-		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-		email.addInline("jobroadLogo", clr, PNG_MIME);
-		
-		ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
-		email.addInline("illustration", illustration, PNG_MIME);
+					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+					email.addInline("jobroadLogo", clr, PNG_MIME);
 
-		javaMailSender.send(mimeMessage);
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
+
+					javaMailSender.send(mimeMessage);
+
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		thread.start();
+
 	}
 
 	public void sendEmailOfferingLetter(String emailSubject, CandidateUser candidate, OfferingLetter offeringLetter,
-			Applicant applicant, byte[] fileToAttach, String fileName) throws MessagingException, UnsupportedEncodingException {
+			Applicant applicant, byte[] fileToAttach, String fileName)
+			throws MessagingException, UnsupportedEncodingException {
 
-		final MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
-		final MimeMessageHelper email;
-		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-		email.setTo(candidate.getUserEmail());
-		email.setSubject(emailSubject);
-		email.addAttachment(fileName + ".pdf", new ByteArrayResource(fileToAttach));
+		Thread thread = new Thread() {
+			public void run() {
+				try {
+					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+					final MimeMessageHelper email;
+					email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					email.setTo(candidate.getUserEmail());
+					email.setSubject(emailSubject);
+					email.addAttachment(fileName + ".pdf", new ByteArrayResource(fileToAttach));
 
-		final Context ctx = new Context(LocaleContextHolder.getLocale());
-		ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
-		ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
-		ctx.setVariable("jobName", applicant.getJob().getJobName());
-		ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
-		ctx.setVariable("salary", offeringLetter.getSalary());
-		ctx.setVariable("address", offeringLetter.getAddress());
-		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-		ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
+					final Context ctx = new Context(LocaleContextHolder.getLocale());
+					ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
+					ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
+					ctx.setVariable("jobName", applicant.getJob().getJobName());
+					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
+					ctx.setVariable("salary", offeringLetter.getSalary());
+					ctx.setVariable("address", offeringLetter.getAddress());
+					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
-		final String htmlContent = this.htmlTemplateEngine.process("offeringletter-email", ctx);
-		email.setText(htmlContent, true);
+					final String htmlContent = htmlTemplateEngine.process("offeringletter-email", ctx);
+					email.setText(htmlContent, true);
 
-		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-		email.addInline("jobroadLogo", clr, PNG_MIME);
+					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+					email.addInline("jobroadLogo", clr, PNG_MIME);
+
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
+
+					javaMailSender.send(mimeMessage);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		thread.start();
+	}
+
+	public void sendEmailNewEmployee(CandidateUser user, String emailSubject, Job job, Hired hired)
+			throws MessagingException, UnsupportedEncodingException {
 		
-		ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
-		email.addInline("illustration", illustration, PNG_MIME);
+		Thread thread = new Thread() {
+			public void run() {
+				try {
+					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+					final MimeMessageHelper email;
+					email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					email.setTo(user.getUserEmail());
+					email.setSubject(emailSubject);
 
-		javaMailSender.send(mimeMessage);
+					final Context ctx = new Context(LocaleContextHolder.getLocale());
+					ctx.setVariable("salutation", user.getCandidateProfile().getSalutation());
+					ctx.setVariable("name", user.getCandidateProfile().getFullname());
+					ctx.setVariable("jobName", job.getJobName());
+					ctx.setVariable("company", job.getCompany().getCompanyName());
+					ctx.setVariable("joinDate", hired.getStartDate());
+					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
+
+					final String htmlContent = htmlTemplateEngine.process("new-employee-email", ctx);
+					email.setText(htmlContent, true);
+
+					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+					email.addInline("jobroadLogo", clr, PNG_MIME);
+
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_EMPLOYEE_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
+
+					javaMailSender.send(mimeMessage);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		thread.start();
+		
 	}
 
 	public void sendEmailThymeLeaf(String title, String to, String subject, String message)
@@ -197,18 +284,20 @@ public class EmailService {
 		ctx.setVariable("body", message);
 		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 
-		final String htmlContent = this.htmlTemplateEngine.process("assesment-email", ctx);
+		final String htmlContent = this.htmlTemplateEngine.process("assessment-email", ctx);
 		email.setText(htmlContent, true);
 
 		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 		email.addInline("jobroadLogo", clr, PNG_MIME);
 
+		ClassPathResource illustration = new ClassPathResource(JOBROAD_EMPLOYEE_IMAGE);
+		email.addInline("illustration", illustration, PNG_MIME);
+
 		javaMailSender.send(mimeMessage);
 	}
 
 	public void sendMailWithAttachment(String to, String subject, String body, byte[] fileToAttach, String fileName) {
-		
-		
+
 		Thread thread = new Thread() {
 			public void run() {
 				try {
@@ -228,8 +317,7 @@ public class EmailService {
 		};
 
 		thread.start();
-		
-		
+
 	}
 
 }
