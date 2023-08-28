@@ -79,6 +79,7 @@ public class EmailService {
 		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 		ctx.setVariable("url", loginUrl);
 
+		
 		final String htmlContent = this.htmlTemplateEngine.process("new-user-email", ctx);
 		email.setText(htmlContent, true);
 
