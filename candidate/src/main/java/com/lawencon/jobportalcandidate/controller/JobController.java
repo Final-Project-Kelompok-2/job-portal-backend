@@ -1,5 +1,6 @@
 package com.lawencon.jobportalcandidate.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,13 @@ public class JobController {
 		final JobResDto response = jobService.getById(jobId);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
+	
+	@GetMapping("/filter")
+	public ResponseEntity<List<JobResDto>> filter(@Param("title")String title,@Param("location")String location,@Param("salary")BigDecimal salary) {
+		final List<JobResDto> response = jobService.filter(title,location,salary);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
 	
 	
 }
