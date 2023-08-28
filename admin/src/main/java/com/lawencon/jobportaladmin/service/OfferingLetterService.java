@@ -125,7 +125,6 @@ public class OfferingLetterService {
 
 	        kursIndonesia.setDecimalFormatSymbols(formatRp);
 			offeringData.setConvertedMoney(kursIndonesia.format(offeringData.getSalary()).toString());
-//	        System.out.println("Money : "+ kursIndonesia.format(offeringData.getSalary().doubleValue()));
 			offeringDatas.put("salary", offeringData.getConvertedMoney());
 			
 			final List<JasperReqDto> jasperBenefits = new ArrayList<>();
