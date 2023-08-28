@@ -27,6 +27,7 @@ import com.lawencon.jobportaladmin.model.User;
 public class EmailService {
 
 	private static final String JOBROAD_LOGO_IMAGE = "templates/images/jobroad.png";
+	private static final String JOBROAD_ILLUSTRATION_IMAGE = "templates/images/illustration_png-03.png";
 	private static final String PNG_MIME = "image/png";
 
 	private final Environment environment;
