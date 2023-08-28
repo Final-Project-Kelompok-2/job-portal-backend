@@ -204,6 +204,7 @@ public class CandidateService implements UserDetailsService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException("Insert Failed");
 		}
 		return result;
 	}
