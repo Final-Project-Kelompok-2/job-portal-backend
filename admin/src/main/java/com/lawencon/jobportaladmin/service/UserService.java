@@ -138,14 +138,14 @@ public class UserService implements UserDetailsService {
 			profile.setPhoneNumber(userData.getPhoneNumber());
 			profile.setPersonType(personType);
 
-			File photo = new File();
-			photo.setFileName(userData.getPhotoName());
-			photo.setFileExtension(userData.getExtensionName());
-
-			photo = fileDao.save(photo);
-
-			profile.setPhoto(photo);
-
+			if(userData.getPhotoName() !=null && userData.getExtensionName()!=null) {
+				File photo = new File();
+				photo.setFileName(userData.getPhotoName());
+				photo.setFileExtension(userData.getExtensionName());
+				photo = fileDao.save(photo);
+				profile.setPhoto(photo);
+			}
+			
 			profile = profileDao.save(profile);
 			newUser.setProfile(profile);
 			newUser = userDao.save(newUser);
