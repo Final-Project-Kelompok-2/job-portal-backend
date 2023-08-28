@@ -27,6 +27,7 @@ import com.lawencon.jobportaladmin.model.User;
 public class EmailService {
 
 	private static final String JOBROAD_LOGO_IMAGE = "templates/images/jobroad.png";
+	private static final String JOBROAD_ILLUSTRATION_IMAGE = "templates/images/illustration_png-03.png";
 	private static final String PNG_MIME = "image/png";
 
 	private final Environment environment;
@@ -105,12 +106,16 @@ public class EmailService {
 		ctx.setVariable("location", assesment.getAssesmentLocation());
 		ctx.setVariable("date", assesment.getAssesmentDate());
 		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+		ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
-		final String htmlContent = this.htmlTemplateEngine.process("assesment-email-template", ctx);
+		final String htmlContent = this.htmlTemplateEngine.process("assessment-email", ctx);
 		email.setText(htmlContent, true);
 
 		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 		email.addInline("jobroadLogo", clr, PNG_MIME);
+		
+		ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+		email.addInline("illustration", illustration, PNG_MIME);
 
 		javaMailSender.send(mimeMessage);
 	}
@@ -132,12 +137,16 @@ public class EmailService {
 		ctx.setVariable("location", interview.getInterviewLocation());
 		ctx.setVariable("date", interview.getInterviewDate());
 		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+		ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
-		final String htmlContent = this.htmlTemplateEngine.process("interview-email-template", ctx);
+		final String htmlContent = this.htmlTemplateEngine.process("interview-email", ctx);
 		email.setText(htmlContent, true);
 
 		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 		email.addInline("jobroadLogo", clr, PNG_MIME);
+		
+		ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+		email.addInline("illustration", illustration, PNG_MIME);
 
 		javaMailSender.send(mimeMessage);
 	}
@@ -160,12 +169,16 @@ public class EmailService {
 		ctx.setVariable("salary", offeringLetter.getSalary());
 		ctx.setVariable("address", offeringLetter.getAddress());
 		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+		ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
-		final String htmlContent = this.htmlTemplateEngine.process("offerletter-email-template", ctx);
+		final String htmlContent = this.htmlTemplateEngine.process("offeringletter-email", ctx);
 		email.setText(htmlContent, true);
 
 		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 		email.addInline("jobroadLogo", clr, PNG_MIME);
+		
+		ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+		email.addInline("illustration", illustration, PNG_MIME);
 
 		javaMailSender.send(mimeMessage);
 	}
