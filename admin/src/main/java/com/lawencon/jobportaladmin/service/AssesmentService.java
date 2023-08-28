@@ -115,7 +115,7 @@ public class AssesmentService {
 
 			assesment = assesmentDao.save(assesment);
 
-			final String emailSubject = "Assesment Schedule ";
+			final String emailSubject = "Assesment Schedule";
 //			final String emailBody = "Congratulation " + candidate.getCandidateProfile().getFullname()
 //					+ " ! We are currently reviewing and processing your application for "
 //					+ applicant.getJob().getJobName() + " position at "
