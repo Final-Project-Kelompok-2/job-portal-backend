@@ -86,7 +86,7 @@ public class EmailService {
 
 					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 					email.addInline("jobroadLogo", clr, PNG_MIME);
-
+					
 					javaMailSender.send(mimeMessage);
 				} catch (MessagingException e) {
 					e.printStackTrace();
@@ -121,14 +121,18 @@ public class EmailService {
 					ctx.setVariable("location", assesment.getAssesmentLocation());
 					ctx.setVariable("date", assesment.getAssesmentDate());
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("assesment-email", ctx);
 					email.setText(htmlContent, true);
 
 					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 					email.addInline("jobroadLogo", clr, PNG_MIME);
-					javaMailSender.send(mimeMessage);
 					
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
+					
+					javaMailSender.send(mimeMessage);
 					
 				} catch (MessagingException e) {
 					e.printStackTrace();
@@ -160,12 +164,16 @@ public class EmailService {
 					ctx.setVariable("location", interview.getInterviewLocation());
 					ctx.setVariable("date", interview.getInterviewDate());
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("interview-email", ctx);
 					email.setText(htmlContent, true);
 
 					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 					email.addInline("jobroadLogo", clr, PNG_MIME);
+					
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
 
 					javaMailSender.send(mimeMessage);
 					
@@ -200,12 +208,16 @@ public class EmailService {
 					ctx.setVariable("salary", offeringLetter.getSalary());
 					ctx.setVariable("address", offeringLetter.getAddress());
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("offeringletter-email", ctx);
 					email.setText(htmlContent, true);
 
 					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
 					email.addInline("jobroadLogo", clr, PNG_MIME);
+					
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
 
 					javaMailSender.send(mimeMessage);
 				} catch (MessagingException e) {
