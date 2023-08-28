@@ -389,15 +389,15 @@ public class CandidateService implements UserDetailsService {
 		
 		final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
 				principalService.getAuthPrincipal());
-		final CandidateProfile canProfile = candidateProfileDao.getById(CandidateProfile.class,
+		final CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class,
 				candidateUser.getCandidateProfile().getId());
 		final List<CandidateDocuments> candidateDocs = candidateDocumentsDao
 				.getCandidateDocumentsByCandidate(candidateUser.getId());
 
-		if (canProfile.getExperience() != null && canProfile.getExpectedSalary() != null
-				&& canProfile.getMobileNumber() != null && canProfile.getNik() != null
-				&& canProfile.getBirthDate() != null && canProfile.getBirthPlace() != null
-				&& canProfile.getMaritalStatus() != null && canProfile.getReligion().getId() != null) {
+		if (candidateProfile.getExperience() != null && candidateProfile.getExpectedSalary() != null
+				&& candidateProfile.getMobileNumber() != null && candidateProfile.getNik() != null
+				&& candidateProfile.getBirthDate() != null && candidateProfile.getBirthPlace() != null
+				&& candidateProfile.getMaritalStatus() != null && candidateProfile.getReligion().getId() != null) {
 
 			if (candidateDocs.size() > 0) {
 				for (int i = 0; i < candidateDocs.size(); i++) {
