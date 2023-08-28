@@ -59,7 +59,7 @@ public class EmailService {
 
 	}
 
-	public void sendEmailNewUser(String title, User user, String subject, String message){
+	public void sendEmailNewUser( User user, String subject, String message){
 
 		Thread thread= new Thread() {
 			public void run() {
@@ -75,7 +75,6 @@ public class EmailService {
 					email.setSubject(subject);
 
 					final Context ctx = new Context(LocaleContextHolder.getLocale());
-					ctx.setVariable("title", title);
 					ctx.setVariable("name", user.getProfile().getFullName());
 					ctx.setVariable("email", user.getUserEmail());
 					ctx.setVariable("body", message);
