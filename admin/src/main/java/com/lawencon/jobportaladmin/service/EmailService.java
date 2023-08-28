@@ -59,7 +59,7 @@ public class EmailService {
 
 	}
 
-	public void sendEmailNewUser(String title, User user, String subject, String message)
+	public void sendEmailNewUser(String emailSubject, User newUser, String password)
 			throws MessagingException, UnsupportedEncodingException {
 
 		String loginUrl = "http://localhost:4200/login";
@@ -68,14 +68,14 @@ public class EmailService {
 		final MimeMessageHelper email;
 		email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-		email.setTo(user.getUserEmail());
-		email.setSubject(subject);
+		email.setTo(newUser.getUserEmail());
+		email.setSubject(emailSubject);
 
 		final Context ctx = new Context(LocaleContextHolder.getLocale());
-		ctx.setVariable("title", title);
-		ctx.setVariable("name", user.getProfile().getFullName());
-		ctx.setVariable("email", user.getUserEmail());
-		ctx.setVariable("body", message);
+		ctx.setVariable("name", newUser.getProfile().getFullName());
+		ctx.setVariable("email", newUser.getUserEmail());
+		ctx.setVariable("password", password);
+		ctx.setVariable("position", newUser.getRole().getRoleName());
 		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 		ctx.setVariable("url", loginUrl);
 
