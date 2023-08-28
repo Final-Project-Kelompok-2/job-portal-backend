@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
 import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.candidate.CandidateMasterResDto;
+import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateCheckDataResDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserBlacklistReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.candidateuser.CandidateUserUpdateReqDto;
@@ -54,6 +55,12 @@ public class CandidateUserController {
 	@PatchMapping("/blacklist")
 	public ResponseEntity<UpdateResDto> updateBlacklist(@RequestBody CandidateUserBlacklistReqDto data){
 		final UpdateResDto response = candidateService.updateBlacklist(data);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
+	
+	@GetMapping("checks")
+	public ResponseEntity<CandidateCheckDataResDto> checkCandidateData(){
+		final CandidateCheckDataResDto response = candidateService.checkCandidateDatas();
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 }
