@@ -317,29 +317,23 @@ public class JobDao extends AbstractJpaDao{
 		
 		final StringBuilder sqlb = new StringBuilder();
 			sqlb.append("SELECT ")
-			.append(" tj.id AS job_id, ")
-			.append(" job_name, ")
-			.append(" company_name, ")
-			.append(" address, ")
-			.append(" start_date, ")
-			.append(" end_date, ")
-			.append(" hr_id, ")
-			.append(" pic_id, ")
-			.append(" expected_salary_min, ")
-			.append(" expected_salary_max, ")
-			.append(" employment_type_name, ")
-			.append(" job_picture_id ")
-			.append("FROM ")
-			.append(" t_job tj ")
-			.append("INNER JOIN ")
-			.append(" t_company tc ON tc.id = tj.company_id ")
-			.append("INNER JOIN ")
-			.append(" t_employment_type tet ON tet.id = tj.employment_type_id ")
-			.append("INNER JOIN ")
-			.append(" t_user tu ON tu.id = tj.hr_id ")
-			.append("INNER JOIN ")
-			.append(" t_user tu2 ON tu2.id = tj.pic_id ")
-			.append("WHERE ")
+			.append( "	tj.id AS job_id,")
+			.append( "	job_name,")
+			.append( "	tc.company_name,")
+			.append( "	address,")
+			.append( "	start_date,")
+			.append( "	end_date,")
+			.append( "	expected_salary_min,")
+			.append( "	expected_salary_max,")
+			.append( "	employment_type_name,")
+			.append( "	job_picture_id ")
+			.append( "FROM ")
+			.append( "	t_job tj ")
+			.append( "INNER JOIN ")
+			.append( "	t_company tc ON tc.id = tj.company_id ")
+			.append( "INNER JOIN")
+			.append( "	t_employment_type tet ON tet.id = tj.employment_type_id ")
+			.append( "WHERE ")
 			.append(" pic_id = :picid");
 		
 		final String sql =  "SELECT "
@@ -362,7 +356,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "WHERE "
 				+ "	pic_id = :picid";
 			
-		final List<?> jobObjs = em().createNativeQuery(sql)
+		final List<?> jobObjs = em().createNativeQuery(sqlb.toString())
 				.setParameter("picid", id)
 				.getResultList();
 		
