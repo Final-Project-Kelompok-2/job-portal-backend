@@ -18,11 +18,11 @@ public class HiringStatusDao extends AbstractJpaDao{
 	
 	public HiringStatus getByCode(String statusCode ) {
 		final StringBuilder sqlb = new StringBuilder();
-		sqlb.append("SELECT ");
-		sqlb.append(" hs ");
-		sqlb.append("FROM ");
-		sqlb.append(" HiringStatus hs ");
-		sqlb.append("WHERE ");
+		sqlb.append("SELECT ")
+		.append(" hs ")
+		.append("FROM ")
+		.append(" HiringStatus hs ")
+		.append("WHERE ");
 		sqlb.append(" hs.statusCode = :statusCode");
 		final String sql = "SELECT "
 				+ " hs.id, "

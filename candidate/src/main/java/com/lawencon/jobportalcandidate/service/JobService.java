@@ -1,5 +1,6 @@
 package com.lawencon.jobportalcandidate.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -229,6 +230,30 @@ public class JobService {
 		jobDto.setCompanyPhotoId(job.getCompany().getPhoto().getId());
 		return jobDto;
 
+	}
+	
+	public List<JobResDto> filter(String title,String location,BigDecimal salary) {
+		final List<Job> jobs = jobDao.filterJob(title, location, salary);
+		final List<JobResDto> jobsDto = new ArrayList<>();
+
+		for (int i = 0; i < jobs.size(); i++) {
+			final JobResDto job = new JobResDto();
+			job.setId(jobs.get(i).getId());
+			job.setJobName(jobs.get(i).getJobName());
+			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
+			job.setAddress(jobs.get(i).getCompany().getAddress());
+			job.setStartDate(jobs.get(i).getStartDate().toString());
+			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setDescription(jobs.get(i).getDescription());
+			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
+			job.setFileId(jobs.get(i).getJobPicture().getId());
+			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
+			jobsDto.add(job);
+		}
+
+		return jobsDto;
 	}
 
 }

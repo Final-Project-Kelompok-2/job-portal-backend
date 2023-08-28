@@ -1,5 +1,6 @@
 package com.lawencon.jobportalcandidate.dao;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -184,6 +186,94 @@ public class JobDao extends AbstractJpaDao {
 		return job;
 	}
 
+	
+	public List<Job>filterJob(String title,String location,BigDecimal salary){
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		final List<Job> jobs = new ArrayList<>();
+
+		final StringBuilder sqlb = new StringBuilder();
+		sqlb.append("SELECT ")
+		.append(" tj.id AS job_id, ")
+		.append(" job_name, ")
+		.append(" company_name, ")
+		.append(" tc.address, ")
+		.append(" start_date, ")
+		.append(" end_date, ")
+		.append(" expected_salary_min, ")
+		.append(" expected_salary_max, ")
+		.append(" employment_type_name, ")
+		.append(" job_picture_id, ")
+		.append(" tc.photo_id ")
+		.append("FROM ")
+		.append(" t_job tj ")
+		.append("INNER JOIN ")
+		.append(" t_company tc ON tc.id = tj.company_id ")
+		.append("INNER JOIN ")
+		.append(" t_employment_type tet ON tet.id = tj.employment_type_id ")
+		.append("WHERE ")
+		.append(" 1 = 1 ");
+		
+		if(title != null && !title.equalsIgnoreCase("")) {
+			sqlb.append(" AND tj.job_name ILIKE :name || '%' ");
+		}
+		if(location != null && !location.equalsIgnoreCase("")) {
+			sqlb.append(" AND tc.address ILIKE :location || '%' ");
+		}
+		if(salary != null) {
+			sqlb.append(" AND tj.expected_salary_min >= :salary ");
+		}
+		
+		final Query jobQuery = em().createNativeQuery(sqlb.toString());
+		
+		if(title != null && !title.equalsIgnoreCase("")) {
+			jobQuery.setParameter("name", title);
+		}
+		
+		if(location != null && !location.equalsIgnoreCase("")) {
+			jobQuery.setParameter("location", location);
+		}
+		if(salary != null) {
+			jobQuery.setParameter("salary", salary);
+		}
+		
+		final List<?> jobObjs =jobQuery.getResultList();
+
+		if (jobObjs.size() > 0) {
+			for (Object jobObj : jobObjs) {
+				
+					final Object[] jobArr = (Object[]) jobObj;
+					final Job job = new Job();
+					job.setId(jobArr[0].toString());
+					job.setJobName(jobArr[1].toString());
+					
+					final Company company = new Company();
+					company.setCompanyName(jobArr[2].toString());
+					company.setAddress(jobArr[3].toString());
+					final File companyPicture = new File();
+					companyPicture.setId(jobArr[10].toString());
+					company.setPhoto(companyPicture);
+					job.setCompany(company);
+					
+					job.setStartDate(LocalDate.parse(jobArr[4].toString()));
+					job.setEndDate(LocalDate.parse(jobArr[5].toString()));
+					job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobArr[6].toString()));
+					job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobArr[7].toString()));
+					
+					final EmploymentType type = new EmploymentType();
+					type.setEmploymentTypeName(jobArr[8].toString());
+					job.setEmploymentType(type);
+					
+					final File file = new File();
+					file.setId(jobArr[9].toString());
+					job.setJobPicture(file);
+					jobs.add(job);
+				
+			}
+		}
+	return jobs;
+  }
+
+
 	public List<Job> getByTopThreeSalary() {
 		final List<Job> jobs = new ArrayList<>();
 		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -241,6 +331,7 @@ public class JobDao extends AbstractJpaDao {
 				jobs.add(job);
 			}
 		}
+
 		
 		return jobs;
 	}
