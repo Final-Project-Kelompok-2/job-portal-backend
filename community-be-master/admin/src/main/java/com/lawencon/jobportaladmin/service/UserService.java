@@ -149,7 +149,7 @@ public class UserService implements UserDetailsService {
 
 			final String title = "Your JobRoad Account";
 			final String emailSubject = "Job Portal Account Registration";
-			final String emailbody = "Hi! " + userData.getFullName() + ", "
+			final String emailbody = "Hi " + userData.getFullName() + "!, "
 					+ " your account has been created as " + role.getRoleName() + " on our platform. Kindly login with this credential: " + " Email: "
 					+ userData.getUserEmail() + " Password: " + generatePassword;
 
