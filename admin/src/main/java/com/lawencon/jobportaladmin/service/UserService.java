@@ -28,6 +28,9 @@ import com.lawencon.jobportaladmin.dto.profile.ProfileResDto;
 import com.lawencon.jobportaladmin.dto.profile.ProfileUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.user.UsersResDto;
+import com.lawencon.jobportaladmin.model.Applicant;
+import com.lawencon.jobportaladmin.model.Assesment;
+import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Profile;
@@ -152,8 +155,8 @@ public class UserService implements UserDetailsService {
 			final String emailbody = "Hi " + userData.getFullName() + "!, "
 					+ " your account has been created as " + role.getRoleName() + " on our platform. Kindly login with this credential: " + " Email: "
 					+ userData.getUserEmail() + " Password: " + generatePassword;
-
-			emailService.sendEmailNewUser(title, newUser, emailSubject, emailbody);
+			
+			emailService.sendEmailNewUser(emailSubject, newUser, generatePassword);
 
 			insertResDto.setId(newUser.getId());
 			insertResDto.setMessage("Insert User Success");
