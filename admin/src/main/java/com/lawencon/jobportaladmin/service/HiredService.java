@@ -122,7 +122,8 @@ public class HiredService {
 			emailBody+= hiredData.getEndDate()!=null?" sampai tanggal "+hired.getEndDate() : "";		
 			
 			emailBody += " Sampai bertemu dikantor. Terima kasih";
-			emailService.sendEmail(candidateUser.getUserEmail(), emailSubject, emailBody);
+			emailService.sendEmailNewEmployee(candidateUser, emailSubject, job, hired);
+//			emailService.sendEmail(candidateUser.getUserEmail(), emailSubject, emailBody);
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);

@@ -9,6 +9,7 @@ public class OfferingLetterInsertReqDto {
 	private String statusCode;
 	private String address;
 	private BigDecimal salary;
+	private String convertedMoney;
 
 	public String getAddress() {
 		return address;
@@ -49,6 +50,14 @@ public class OfferingLetterInsertReqDto {
 
 	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
+	}
+
+	public String getConvertedMoney() {
+		return convertedMoney;
+	}
+
+	public void setConvertedMoney(String convertedMoney) {
+		this.convertedMoney = convertedMoney;
 	}
 
 }

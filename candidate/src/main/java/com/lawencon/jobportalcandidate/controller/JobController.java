@@ -56,6 +56,7 @@ public class JobController {
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
+
 	@GetMapping("/filter")
 	public ResponseEntity<List<JobResDto>> filter(@Param("title")String title,@Param("location")String location,@Param("salary")BigDecimal salary) {
 		final List<JobResDto> response = jobService.filter(title,location,salary);
@@ -63,5 +64,13 @@ public class JobController {
 	}
 	
 	
+
+	@GetMapping("/topsalary")
+	public ResponseEntity<List<JobResDto>> getTopThreeSalary() {
+		final List<JobResDto> data = jobService.getTopThreeSalary();
+		return new ResponseEntity<>(data, HttpStatus.OK);
+	}
+	
+
 	
 }

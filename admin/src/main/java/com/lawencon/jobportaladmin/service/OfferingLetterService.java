@@ -1,5 +1,7 @@
 package com.lawencon.jobportaladmin.service;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +116,17 @@ public class OfferingLetterService {
 			final User admin = userDao.getById(User.class, principalService.getAuthPrincipal());
 			
 			offeringDatas.put("adminName", admin.getProfile().getFullName());
-			offeringDatas.put("salary", offeringData.getSalary());
+			
+			DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getInstance();
+	        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+	        formatRp.setMonetaryDecimalSeparator(',');
+	        formatRp.setGroupingSeparator('.');
+
+	        kursIndonesia.setDecimalFormatSymbols(formatRp);
+			offeringData.setConvertedMoney(kursIndonesia.format(offeringData.getSalary()).toString());
+			offeringDatas.put("salary", offeringData.getConvertedMoney());
+			
 			final List<JasperReqDto> jasperBenefits = new ArrayList<>();
 			if (ownedBenefits.size() > 0) {
 				emailBody += " Benefit yang didapat adalah :";
