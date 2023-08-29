@@ -105,12 +105,15 @@ public class AssesmentService {
 					reviewDetailDao.save(reviewDetail);
 				}
 
+				final String appId = applicant.getId();
 				final String emailSubject = "Job Test";
 				final String emailbody = "Pada Job Vacancy ini kamu perlu mengerjakan tes sebanyak "
 						+ jobQuestions.size() + " soal. "
 						+ "Silahkan mengerjakan terlebih dahulu sebelum sesi Assessment Interview. Terima kasih";
+				final int questionsTotal = jobQuestions.size();
 
-				emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailbody);
+				emailService.sendEmailJobTest(emailSubject, candidate, applicant, questionsTotal);
+//				emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailbody);
 			}
 
 			assesment = assesmentDao.save(assesment);
