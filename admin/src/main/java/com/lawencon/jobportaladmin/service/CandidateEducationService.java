@@ -20,6 +20,7 @@ import com.lawencon.jobportaladmin.dto.candidateeducation.CandidateEducationResD
 import com.lawencon.jobportaladmin.dto.candidateeducation.CandidateEducationUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateEducation;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -63,7 +64,12 @@ public class CandidateEducationService {
 		try {
 			em().getTransaction().begin();
 			final CandidateEducation education = new CandidateEducation();
-			education.setEducationCode(data.getEducationCode());
+			
+			if (data.getEducationCode() != null) {
+				education.setEducationCode(data.getEducationCode());
+			} else {
+				education.setEducationCode(GenerateCode.generateCode());
+			}
 			
 			education.setDegreeName(data.getDegreeName());
 			education.setInstitutionName(data.getInstituitionName());

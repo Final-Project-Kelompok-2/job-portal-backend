@@ -21,6 +21,7 @@ import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.CandidateWorkExp;
 import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 import com.lawencon.jobportaladmin.util.DateUtil;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -66,7 +67,13 @@ public class CandidateWorkExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateWorkExp work = new CandidateWorkExp();
-			work.setWorkingCode(data.getWorkingCode());
+			
+			if (data.getWorkingCode() != null) {
+				work.setWorkingCode(data.getWorkingCode());
+			} else {
+				work.setWorkingCode(GenerateCode.generateCode());
+			}
+			
 			work.setPositionName(data.getPositionName());
 			work.setCompanyName(data.getCompanyName());
 			work.setAddress(data.getAddress());

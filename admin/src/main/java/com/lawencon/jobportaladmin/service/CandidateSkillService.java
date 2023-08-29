@@ -19,6 +19,7 @@ import com.lawencon.jobportaladmin.dto.candidateskill.CandidateSkillResDto;
 import com.lawencon.jobportaladmin.dto.candidateskill.CandidateSkillUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateSkill;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -57,8 +58,14 @@ public class CandidateSkillService {
 		try {
 			em().getTransaction().begin();
 			final CandidateSkill skill = new CandidateSkill();
+			
+			if (data.getSkillCode() != null) {
+				skill.setSkillCode(data.getSkillCode());
+			} else {
+				skill.setSkillCode(GenerateCode.generateCode());
+			}
+			
 			skill.setSkillName(data.getSkillName());
-			skill.setSkillCode(data.getSkillCode());
 			final CandidateUser candidate = candidateUserDao.getByEmail(data.getEmail());
 			skill.setCandidateUser(candidate);
 			skill.setCreatedBy(candidate.getId());
