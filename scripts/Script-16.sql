@@ -897,8 +897,8 @@ REFERENCES t_applicant(id);
 CREATE TABLE t_hired(
 	id varchar(36) NOT NULL,
 	applicant_id varchar(36) NOT NULL,
-	start_date timestamp NOT NULL,
-	end_date timestamp,
+	start_date date NOT NULL,
+	end_date date,
 	created_by varchar(36) NOT NULL,
 	created_at timestamp NOT NULL,
 	updated_by varchar(36),
@@ -950,8 +950,7 @@ INSERT INTO t_role (id,role_code,role_name,created_by,created_at,is_active,ver)
 VALUES
 ( uuid_generate_v4(),'R-001','ADMIN','SYSTEM',NOW(),TRUE,1),
 ( uuid_generate_v4(),'R-002','HR','SYSTEM',NOW(),TRUE,1),
-( uuid_generate_v4(),'R-003','CANDIDATE','SYSTEM',NOW(),TRUE,1),
-( uuid_generate_v4(),'R-004','PIC','SYSTEM',NOW(),TRUE,1);
+( uuid_generate_v4(),'R-003','PIC','SYSTEM',NOW(),TRUE,1);
 
 select * from t_assesment ta ;
 select * from t_interview ti ;
@@ -999,7 +998,8 @@ insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_
 (uuid_generate_v4(),'S-003','INTERVIEW',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-004','MCU',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-005','OFFERING',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
-(uuid_generate_v4(),'S-006','HIRED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
+(uuid_generate_v4(),'S-006','HIRED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
+(uuid_generate_v4(), 'S-007', 'REJECT', 'SYSTEM', now(), true, 0);
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 INSERT INTO t_marital_status (id, marital_code, marital_name, created_by, created_at, is_active, ver) VALUES 
@@ -1010,6 +1010,25 @@ INSERT INTO t_candidate_status (id, status_code, status_name, created_by, create
 	(uuid_generate_v4(), 'CS-01', 'Active',  (SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'), now(), true, 0),
 	(uuid_generate_v4(), 'CS-02', 'On Process',  (SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'), now(), true, 0),
 	(uuid_generate_v4(), 'CS-03', 'Blacklist',  (SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'), now(), true, 0);
+INSERT INTO t_religion (id, religion_code, religion_name, created_by, created_at, is_active, ver) VALUES 
+	(uuid_generate_v4(), 'ISL', 'Islam', 1, now(), true, 0),
+	(uuid_generate_v4(), 'CHR', 'Christian', 1, now(), true, 0),
+	(uuid_generate_v4(), 'CHT', 'Catholic', 1, now(), true, 0),
+	(uuid_generate_v4(), 'HND', 'Hindu', 1, now(), true, 0),
+	(uuid_generate_v4(), 'BDH', 'Buddha', 1, now(), true, 0),
+	(uuid_generate_v4(), 'OTH', 'Others', 1, now(), true, 0);
 
+--SELECT * FROM t_marital_status tms;
+INSERT INTO t_marital_status (id, marital_code, marital_name, created_by, created_at, is_active, ver) VALUES 
+	(uuid_generate_v4(), 'MRD', 'Married', 1, now(), true, 0),
+	(uuid_generate_v4(), 'SNG', 'Single', 1, now(), true, 0);
 
+select * from t_role tr ;
 SELECT * FROM t_candidate_training_exp tctE;
+select * from t_job tj where pic_id = '3345197c-4182-4ca1-b910-07f91cffa8a2';
+select * from t_company tc ;
+select * from t_hiring_status ths ;
+select * from t_user tu ;
+select * from t_candidate_profile tcp; 
+select * from t_religion tr ;
+select * from t_interview ti ;

@@ -1,5 +1,6 @@
 package com.lawencon.jobportaladmin.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -19,10 +20,10 @@ public class Hired extends BaseEntity{
 	private Applicant applicant;
 	
 	@Column(name = "start_date", nullable = false)
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 	
 	@Column(name = "end_date", nullable = true)
-	private LocalDateTime endDate;
+	private LocalDate endDate;
 
 
 	public Applicant getApplicant() {
@@ -35,24 +36,27 @@ public class Hired extends BaseEntity{
 	}
 
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
 
-	public LocalDateTime getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
+
+
+
 	
 
 }
