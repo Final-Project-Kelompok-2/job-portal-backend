@@ -118,6 +118,9 @@ public class UserService implements UserDetailsService {
 
 		try {
 			em().getTransaction().begin();
+			if(userData.getPhotoName().isBlank()) {
+				throw new NullPointerException("File is Empty");
+			}
 			User newUser = new User();
 
 			newUser.setUserEmail(userData.getUserEmail());
