@@ -20,6 +20,7 @@ import com.lawencon.jobportaladmin.dto.candidatefamily.CandidateFamilyResDto;
 import com.lawencon.jobportaladmin.dto.candidatefamily.CandidateFamilyUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateFamily;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -65,7 +66,13 @@ public class CandidateFamilyService {
 		
 		try {
 			em().getTransaction().begin();
-			family.setFamilyCode(data.getFamilyCode());
+			
+			if (data.getFamilyCode() != null) {
+				family.setFamilyCode(data.getFamilyCode());
+			} else {
+				family.setFamilyCode(GenerateCode.generateCode());
+			}
+			
 			family.setFullname(data.getFullname());
 			family.setRelationship(data.getRelationship());
 			family.setDegreeName(data.getDegreeName());

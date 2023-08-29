@@ -19,6 +19,7 @@ import com.lawencon.jobportaladmin.dto.candidatereferences.CandidateReferencesRe
 import com.lawencon.jobportaladmin.dto.candidatereferences.CandidateReferencesUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateReferences;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -66,7 +67,13 @@ public class CandidateReferencesService {
 		
 		try {
 			em().getTransaction().begin();
-			reference.setReferenceCode(data.getReferenceCode());
+			
+			if (data.getReferenceCode() != null) {
+				reference.setReferenceCode(data.getReferenceCode());
+			} else {
+				reference.setReferenceCode(GenerateCode.generateCode());
+			}
+			
 			reference.setFullName(data.getFullname());
 			reference.setRelationship(data.getRelationship());
 			reference.setOccupation(data.getOccupation());
