@@ -74,22 +74,56 @@ public class QuestionService {
 
 			for (int i = 0; i < newQuestions.getNewQuestions().size(); i++) {
 				final QuestionInsertReqDto question = newQuestions.getNewQuestions().get(i);
-
+				if("".equals(newQuestions.getNewQuestions().get(i).getQuestionDetail())) {
+					em().getTransaction().rollback();
+					throw new RuntimeException("Question Detail is null");
+				}
 				Question newQuestion = new Question();
 				newQuestion.setQuestionDetail(question.getQuestionDetail());
 				newQuestion.setQuestionCode(GenerateCode.generateCode());
 				newQuestion = questionDao.save(newQuestion);
 				newQuestions.getNewQuestions().get(i).setQuestionCode(newQuestion.getQuestionCode());
 
-				for (int j = 0; j < question.getOptions().size(); j++) {
-					final QuestionOptionInsertReqDto option = question.getOptions().get(j);
+				
+				if(question.getOptions().size()>=2) {
+					Boolean trueChecker =false;
+					
+					for (int j = 0; j < question.getOptions().size(); j++) {
+						final QuestionOptionInsertReqDto option = question.getOptions().get(j);
 
-					QuestionOption newOption = new QuestionOption();
-					newOption.setOptionLabel(option.getOptionLabel());
-					newOption.setIsCorrect(option.getIsCorrect());
-					newOption.setQuestion(newQuestion);
-					newOption = questionOptionDao.save(newOption);
+						if("".equals(question.getOptions().get(j).getOptionLabel())) {
+							em().getTransaction().rollback();
+							throw new RuntimeException("Question Option -"+(j+1)+" is null");
+						}
+						
+						if(trueChecker && option.getIsCorrect()) {
+							em().getTransaction().rollback();
+							throw new RuntimeException("Option True Should be only One");
+						}
+						
+						if(option.getIsCorrect()) {
+							trueChecker = true;
+						}
+						
+						QuestionOption newOption = new QuestionOption();
+						newOption.setOptionLabel(option.getOptionLabel());
+						
+						newOption.setIsCorrect(option.getIsCorrect());
+						newOption.setQuestion(newQuestion);
+						newOption = questionOptionDao.save(newOption);
+					}
+					
+					if(!trueChecker) {
+						em().getTransaction().rollback();
+						throw new RuntimeException("Option should have one correct answer");
+					}
+					
 				}
+				else {
+					em().getTransaction().rollback();
+					throw new RuntimeException("Question Option Minimum is 2");
+				}
+				
 			}
 
 			final String questionInsertCandidateAPI = "http://localhost:8081/questions";
@@ -117,7 +151,7 @@ public class QuestionService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
-			throw new RuntimeException("Insert Failed");
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return insertRes;
