@@ -103,11 +103,7 @@ public class OfferingLetterService {
 			
 			offeringLetter = offeringLetterDao.save(offeringLetter);
 
-			final String title = applicant.getJob().getJobName() + " Offering Letter";
 			final String emailSubject = "Offering Letter";
-			String emailBody = "Offering letter yang kami tawarkan yaitu anda " + " akan bekerja di Kantor "
-					+ offeringLetter.getAddress() + " pada posisi " + applicant.getJob().getJobName()
-					+ " yaitu dengan gaji sebesar Rp ." + offeringData.getSalary();
 			
 			offeringDatas.put("fullname",candidate.getCandidateProfile().getFullname());
 			offeringDatas.put("positionName", applicant.getJob().getJobName());
@@ -129,9 +125,7 @@ public class OfferingLetterService {
 			
 			final List<JasperReqDto> jasperBenefits = new ArrayList<>();
 			if (ownedBenefits.size() > 0) {
-				emailBody += " Benefit yang didapat adalah :";
 				for (int i = 0; i < ownedBenefits.size(); i++) {
-					emailBody += ownedBenefits.get(i).getBenefit().getBenefitName();
 					final JasperReqDto jasperBenefit = new JasperReqDto();
 					jasperBenefit.setBenefitName(ownedBenefits.get(i).getBenefit().getBenefitName());
 					jasperBenefits.add(jasperBenefit);
@@ -139,9 +133,7 @@ public class OfferingLetterService {
 			}
 
 			final byte[] jasperData = jasperUtil.responseToByteArray(jasperBenefits, offeringDatas, "OfferingLetter");
-			
-			emailBody += "Semoga penawaran ini dapat menjadi pendukung dalam pekerjaan ini terima kasih";
-
+		
 			emailService.sendEmailOfferingLetter(emailSubject, candidate, offeringLetter, applicant, jasperData, "OfferingLetter");
 //			emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailBody);
 //			emailService.sendMailWithAttachment(candidate.getUserEmail(), emailSubject, emailBody,jasperData, "OfferingLetter");
