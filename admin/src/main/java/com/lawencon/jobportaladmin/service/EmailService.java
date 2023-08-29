@@ -164,17 +164,13 @@ public class EmailService {
 					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
 					ctx.setVariable("location", assesment.getAssesmentLocation());
 					ctx.setVariable("date", assesment.getAssesmentDate());
-					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("assessment-email", ctx);
 					email.setText(htmlContent, true);
 
-					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-					email.addInline("jobroadLogo", clr, PNG_MIME);
 
-					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
-					email.addInline("illustration", illustration, PNG_MIME);
+					email.addInline("jobroadLogo", new ClassPathResource(JOBROAD_LOGO_IMAGE));
+					email.addInline("illustration", new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE));
 
 					javaMailSender.send(mimeMessage);
 
