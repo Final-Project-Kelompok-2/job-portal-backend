@@ -156,7 +156,7 @@ public class JobService {
 
 		try {
 			em().getTransaction().begin();
-			if(jobDto.getFile().isBlank()) {
+			if("".equals(jobDto.getFile())|| "".equals(jobDto.getFileExtension())) {
 				em().getTransaction().rollback();
 				throw new NullPointerException("File is Empty");
 			}
@@ -241,6 +241,7 @@ public class JobService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return result;
