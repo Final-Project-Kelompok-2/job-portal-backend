@@ -69,7 +69,7 @@ public class EmailService {
 			public void run() {
 
 				try {
-					String jobTestUrl = "http://localhost:4201/questoins/" + applicant.getApplicantCode();
+					String jobTestUrl = "http://localhost:4201/questions/" + applicant.getApplicantCode();
 					 
 					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 					final MimeMessageHelper email;
