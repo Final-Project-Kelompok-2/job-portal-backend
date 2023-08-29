@@ -123,7 +123,9 @@ public class HiredService {
 			
 			emailBody += " Sampai bertemu dikantor. Terima kasih";
 			emailService.sendEmailNewEmployee(candidateUser, emailSubject, job, hired);
+			
 //			emailService.sendEmail(candidateUser.getUserEmail(), emailSubject, emailBody);
+			
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
