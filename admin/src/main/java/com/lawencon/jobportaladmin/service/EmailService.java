@@ -291,6 +291,13 @@ public class EmailService {
 					ctx.setVariable("jobName", job.getJobName());
 					ctx.setVariable("company", job.getCompany().getCompanyName());
 					ctx.setVariable("joinDate", hired.getStartDate());
+					
+					if (hired.getEndDate() != null) {
+						ctx.setVariable("endDate", hired.getEndDate());
+					} else {
+						ctx.setVariable("endDate", "TBA");
+					}
+					
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
