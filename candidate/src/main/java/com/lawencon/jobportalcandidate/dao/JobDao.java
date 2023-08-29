@@ -182,7 +182,6 @@ public class JobDao extends AbstractJpaDao {
 			job.setIsActive(Boolean.valueOf(jobArr[17].toString()));
 			job.setVersion(Integer.valueOf(jobArr[18].toString()));
 		}
-
 		return job;
 	}
 
