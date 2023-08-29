@@ -105,29 +105,17 @@ public class AssesmentService {
 					reviewDetailDao.save(reviewDetail);
 				}
 
-				final String appId = applicant.getId();
 				final String emailSubject = "Job Test";
-				final String emailbody = "Pada Job Vacancy ini kamu perlu mengerjakan tes sebanyak "
-						+ jobQuestions.size() + " soal. "
-						+ "Silahkan mengerjakan terlebih dahulu sebelum sesi Assessment Interview. Terima kasih";
 				final int questionsTotal = jobQuestions.size();
 
 				emailService.sendEmailJobTest(emailSubject, candidate, applicant, questionsTotal);
-//				emailService.sendEmail(candidate.getUserEmail(), emailSubject, emailbody);
 			}
 
 			assesment = assesmentDao.save(assesment);
 
 			final String emailSubject = "Assesment Schedule";
-//			final String emailBody = "Congratulation " + candidate.getCandidateProfile().getFullname()
-//					+ " ! We are currently reviewing and processing your application for "
-//					+ applicant.getJob().getJobName() + " position at "
-//					+ applicant.getJob().getCompany().getCompanyName() + ". Please come to "
-//					+ assesment.getAssesmentLocation() + " on " + assesmentData.getAssesmentDate()
-//					+ " for HR Interview. Thank you.";
-			
+
 			emailService.sendEmailAssessment(emailSubject, candidate, assesment, applicant);
-//			emailService.sendEmailThymeLeaf(title, candidate.getUserEmail(), emailSubject, emailBody);
 
 			final HiringStatus hiringStatus = hiringStatusDao
 					.getByCode(com.lawencon.jobportaladmin.constant.HiringStatus.ASSESMENT.statusCode);
