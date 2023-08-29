@@ -62,6 +62,49 @@ public class EmailService {
 
 	}
 
+	public void sendEmailJobTest(String emailSubject, CandidateUser candidate, Applicant applicant, int jobQuestions)
+			throws MessagingException, UnsupportedEncodingException {
+
+		Thread thread = new Thread() {
+			public void run() {
+
+				try {
+					String jobTestUrl = "http://localhost:4201/questoins/" + applicant.getApplicantCode();
+					 
+					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+					final MimeMessageHelper email;
+					email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					email.setTo(candidate.getUserEmail());
+					email.setSubject(emailSubject);
+					final Context ctx = new Context(LocaleContextHolder.getLocale());
+					ctx.setVariable("salutation", candidate.getCandidateProfile().getSalutation());
+					ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
+					ctx.setVariable("totalQuestion", jobQuestions);
+					ctx.setVariable("url", jobTestUrl);
+					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
+					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
+
+					final String htmlContent = htmlTemplateEngine.process("job-test-email", ctx);
+					email.setText(htmlContent, true);
+
+					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
+					email.addInline("jobroadLogo", clr, PNG_MIME);
+
+					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
+					email.addInline("illustration", illustration, PNG_MIME);
+
+					javaMailSender.send(mimeMessage);
+
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		thread.start();
+
+	}
+
 	public void sendEmailNewUser(String subject, User user, String password) {
 
 		Thread thread = new Thread() {
@@ -232,7 +275,7 @@ public class EmailService {
 
 	public void sendEmailNewEmployee(CandidateUser user, String emailSubject, Job job, Hired hired)
 			throws MessagingException, UnsupportedEncodingException {
-		
+
 		Thread thread = new Thread() {
 			public void run() {
 				try {
@@ -267,7 +310,7 @@ public class EmailService {
 			}
 		};
 		thread.start();
-		
+
 	}
 
 	public void sendEmailThymeLeaf(String title, String to, String subject, String message)
