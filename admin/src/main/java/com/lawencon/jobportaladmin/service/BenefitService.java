@@ -33,6 +33,11 @@ public class BenefitService {
 			em().getTransaction().begin();
 
 			Benefit benefit = new Benefit();
+			if("".equals(benefitData.getBenefitName())) {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Benefit name is null");
+			}
+			
 			benefit.setBenefitName(benefitData.getBenefitName());
 			benefit.setBenefitCode(GenerateCode.generateCode());
 
@@ -45,11 +50,11 @@ public class BenefitService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
-			throw new RuntimeException("Insert Benefit Failed");
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return resDto;
-	}
+	}	
 
 	public List<BenefitResDto> getAll() {
 		final List<BenefitResDto> benefitsDto = new ArrayList<>();
