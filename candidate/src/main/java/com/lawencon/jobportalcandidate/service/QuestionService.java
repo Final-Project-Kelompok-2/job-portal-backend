@@ -75,6 +75,7 @@ public class QuestionService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return insertRes;
