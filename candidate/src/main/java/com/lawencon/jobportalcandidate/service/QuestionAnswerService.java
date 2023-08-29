@@ -70,7 +70,7 @@ public class QuestionAnswerService {
 			final CandidateUser candidateUser = candidateUserDao.getById(CandidateUser.class,
 					principalService.getAuthPrincipal());
 			
-			final Applicant applicant = applicantDao.getById(Applicant.class, data.getApplicantId());
+			final Applicant applicant = applicantDao.getByCode(data.getApplicantCode());
 			
 			data.setApplicantCode(applicant.getApplicantCode());
 			
@@ -123,9 +123,10 @@ public class QuestionAnswerService {
 		return resDto;
 	}
 	
-	public List<QuestionAnswerResDto> getByApplicant(String id) {
+	public List<QuestionAnswerResDto> getByApplicant(String code) {
+		final Applicant appCode = applicantDao.getByCode(code);
 		final List<QuestionAnswerResDto> resDto = new ArrayList<>();
-		final List<QuestionAnswer> answer = questionAnswerDao.getAnswerByApplicant(id);
+		final List<QuestionAnswer> answer = questionAnswerDao.getAnswerByApplicant(appCode.getId());
 		for(int i = 0; i < answer.size() ; i++) {
 			final QuestionAnswerResDto res = new QuestionAnswerResDto();
 			res.setId(answer.get(i).getId());

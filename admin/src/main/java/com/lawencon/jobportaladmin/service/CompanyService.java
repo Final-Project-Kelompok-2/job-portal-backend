@@ -69,6 +69,10 @@ public class CompanyService {
 		final InsertResDto insertRes = new InsertResDto();
 		try {
 			em().getTransaction().begin();
+			if(data.getFileName().isBlank()) {
+				em().getTransaction().rollback();
+				throw new NullPointerException("File is Empty");
+			}
 			Company company = new Company();
 
 			company.setCompanyName(data.getCompanyName());
