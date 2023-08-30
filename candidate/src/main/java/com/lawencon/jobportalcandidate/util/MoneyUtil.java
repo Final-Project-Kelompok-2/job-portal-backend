@@ -1,4 +1,4 @@
-package com.lawencon.jobportaladmin.util;
+package com.lawencon.jobportalcandidate.util;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

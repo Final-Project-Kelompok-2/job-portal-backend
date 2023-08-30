@@ -20,6 +20,7 @@ import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.SavedJob;
 import com.lawencon.jobportalcandidate.util.DateUtil;
+import com.lawencon.jobportalcandidate.util.MoneyUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -55,8 +56,8 @@ public class SavedJobService {
 			savedJob.setAddress(savedJobs.get(i).getJob().getCompany().getAddress());
 			savedJob.setStartDate(DateUtil.localDateToString(savedJobs.get(i).getJob().getStartDate()));
 			savedJob.setEndDate(DateUtil.localDateToString(savedJobs.get(i).getJob().getEndDate()));
-			savedJob.setExpectedSalaryMin(savedJobs.get(i).getJob().getExpectedSalaryMin().toString());
-			savedJob.setExpectedSalaryMax(savedJobs.get(i).getJob().getExpectedSalaryMax().toString());
+			savedJob.setExpectedSalaryMin(MoneyUtil.parseToRupiah(savedJobs.get(i).getJob().getExpectedSalaryMin()));
+			savedJob.setExpectedSalaryMax(MoneyUtil.parseToRupiah(savedJobs.get(i).getJob().getExpectedSalaryMax()));
 			savedJob.setEmploymenTypeName(savedJobs.get(i).getJob().getEmploymentType().getEmploymentTypeName());
 			savedjobsDto.add(savedJob);
 		}
