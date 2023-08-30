@@ -100,7 +100,7 @@ public class JobService {
 			job.setEndDate(jobs.get(i).getEndDate().toString());
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
@@ -124,7 +124,7 @@ public class JobService {
 			job.setEndDate(jobs.get(i).getEndDate().toString());
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
@@ -148,7 +148,7 @@ public class JobService {
 			job.setEndDate(jobs.get(i).getEndDate().toString());
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			jobsDto.add(job);
@@ -246,7 +246,7 @@ public class JobService {
 			job.setEndDate(jobs.get(i).getEndDate().toString());
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
+			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
