@@ -6,7 +6,9 @@ public class ReportResDto {
 
 	private String fullName;
 	private String jobName;
-	private LocalDateTime timeDifference;
+	private LocalDateTime applyAt;
+	private LocalDateTime HiredAt;
+	private Long timeDifference;
 	private String employmentTypeName;
 
 	public String getFullName() {
@@ -25,11 +27,11 @@ public class ReportResDto {
 		this.jobName = jobName;
 	}
 
-	public LocalDateTime getTimeDifference() {
+	public Long getTimeDifference() {
 		return timeDifference;
 	}
 
-	public void setTimeDifference(LocalDateTime timeDifference) {
+	public void setTimeDifference(Long timeDifference) {
 		this.timeDifference = timeDifference;
 	}
 
@@ -39,6 +41,22 @@ public class ReportResDto {
 
 	public void setEmploymentTypeName(String employmentTypeName) {
 		this.employmentTypeName = employmentTypeName;
+	}
+
+	public LocalDateTime getApplyAt() {
+		return applyAt;
+	}
+
+	public void setApplyAt(LocalDateTime applyAt) {
+		this.applyAt = applyAt;
+	}
+
+	public LocalDateTime getHiredAt() {
+		return HiredAt;
+	}
+
+	public void setHiredAt(LocalDateTime hiredAt) {
+		HiredAt = hiredAt;
 	}
 
 }

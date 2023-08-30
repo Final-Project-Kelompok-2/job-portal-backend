@@ -31,7 +31,7 @@ public class ReportController {
 	@GetMapping
 	public ResponseEntity<List<ReportResDto>> getReports(){
 		final List<ReportResDto> response = reportService.getReport();
-		return new ResponseEntity<>(response,HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 }
