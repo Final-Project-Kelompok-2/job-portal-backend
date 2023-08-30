@@ -22,6 +22,7 @@ import com.lawencon.jobportaladmin.model.CandidateWorkExp;
 import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.jobportaladmin.util.GenerateCode;
+import com.lawencon.jobportaladmin.util.MoneyUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -52,7 +53,7 @@ public class CandidateWorkExpService {
 			work.setAddress(works.get(i).getAddress());
 			work.setResponsibility(works.get(i).getResponsibility());
 			work.setReasonLeave(works.get(i).getReasonLeave());
-			work.setLastSalary(Float.valueOf(works.get(i).getLastSalary().toString()));
+			work.setLastSalary(MoneyUtil.parseToRupiah(works.get(i).getLastSalary()));
 			work.setStartDate(DateUtil.localDateToString(works.get(i).getStartDate()));
 			work.setEndDate(DateUtil.localDateToString(works.get(i).getEndDate()));
 
