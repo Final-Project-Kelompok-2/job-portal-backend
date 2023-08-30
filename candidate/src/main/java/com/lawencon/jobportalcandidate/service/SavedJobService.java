@@ -19,6 +19,7 @@ import com.lawencon.jobportalcandidate.dto.savedjob.SavedJobResDto;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
 import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.SavedJob;
+import com.lawencon.jobportalcandidate.util.DateUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -52,8 +53,8 @@ public class SavedJobService {
 			savedJob.setJobPictureId(savedJobs.get(i).getJob().getJobPicture().getId());
 			savedJob.setCompanyName(savedJobs.get(i).getJob().getCompany().getCompanyName());
 			savedJob.setAddress(savedJobs.get(i).getJob().getCompany().getAddress());
-			savedJob.setStartDate(savedJobs.get(i).getJob().getStartDate().toString());
-			savedJob.setEndDate(savedJobs.get(i).getJob().getEndDate().toString());
+			savedJob.setStartDate(DateUtil.localDateToString(savedJobs.get(i).getJob().getStartDate()));
+			savedJob.setEndDate(DateUtil.localDateToString(savedJobs.get(i).getJob().getEndDate()));
 			savedJob.setExpectedSalaryMin(savedJobs.get(i).getJob().getExpectedSalaryMin().toString());
 			savedJob.setExpectedSalaryMax(savedJobs.get(i).getJob().getExpectedSalaryMax().toString());
 			savedJob.setEmploymenTypeName(savedJobs.get(i).getJob().getEmploymentType().getEmploymentTypeName());

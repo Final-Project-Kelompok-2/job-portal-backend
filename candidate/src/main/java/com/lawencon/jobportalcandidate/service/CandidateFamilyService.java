@@ -29,6 +29,7 @@ import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyResDto
 import com.lawencon.jobportalcandidate.dto.candidatefamily.CandidateFamilyUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.CandidateFamily;
 import com.lawencon.jobportalcandidate.model.CandidateUser;
+import com.lawencon.jobportalcandidate.util.DateUtil;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -60,7 +61,7 @@ public class CandidateFamilyService {
 			family.setRelationship(families.get(i).getRelationship());
 			family.setDegreeName(families.get(i).getDegreeName());
 			family.setOccupation(families.get(i).getOccupation());
-			family.setBirthDate(families.get(i).getBirthDate().toString());
+			family.setBirthDate(DateUtil.localDateToString(families.get(i).getBirthDate()));
 			family.setBirthPlace(families.get(i).getBirthPlace());
 
 			familiesDto.add(family);

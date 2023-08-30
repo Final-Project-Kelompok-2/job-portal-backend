@@ -55,6 +55,7 @@ import com.lawencon.jobportaladmin.model.MaritalStatus;
 import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Religion;
 import com.lawencon.jobportaladmin.util.BigDecimalUtil;
+import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -571,7 +572,7 @@ public class CandidateUserService {
 			candidateDto.setMobileNumber(candidate.get(i).getCandidateProfile().getMobileNumber());
 			candidateDto.setNik(candidate.get(i).getCandidateProfile().getNik());
 			if (candidate.get(i).getCandidateProfile().getBirthDate() != null) {
-				candidateDto.setBirthDate(candidate.get(i).getCandidateProfile().getBirthDate().toString());
+				candidateDto.setBirthDate(DateUtil.localDateToString(candidate.get(i).getCandidateProfile().getBirthDate()));
 			}
 			candidateDto.setBirthPlace(candidate.get(i).getCandidateProfile().getBirthPlace());
 			if (candidate.get(i).getCandidateProfile().getMaritalStatus() != null) {
@@ -623,7 +624,7 @@ public class CandidateUserService {
 		candidateDto.setMobileNumber(candidate.getCandidateProfile().getMobileNumber());
 		candidateDto.setNik(candidate.getCandidateProfile().getNik());
 		if (candidate.getCandidateProfile().getBirthDate() != null) {
-			candidateDto.setBirthDate(candidate.getCandidateProfile().getBirthDate().toString());
+			candidateDto.setBirthDate(DateUtil.localDateToString(candidate.getCandidateProfile().getBirthDate()));
 		}
 		candidateDto.setBirthPlace(candidate.getCandidateProfile().getBirthPlace());
 		if (candidate.getCandidateProfile().getMaritalStatus() != null) {

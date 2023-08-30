@@ -123,7 +123,7 @@ public class InterviewService {
 		final Interview interview = interviewDao.getByApplicant(applicantId);
 
 		if (interview != null) {
-			interviewResDto.setInterviewDate(interview.getInterviewDate().toString());
+			interviewResDto.setInterviewDate(DateUtil.localDateTimeToString(interview.getInterviewDate()));
 			interviewResDto.setInterviewLocation(interview.getInterviewLocation());
 		}
 
