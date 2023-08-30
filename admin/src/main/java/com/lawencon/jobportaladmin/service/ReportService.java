@@ -22,7 +22,7 @@ public class ReportService {
 		final List<ReportResDto> reports = reportDao.getReport();
 		return reports;
 	}
-	
+		
 	public byte[] downloadReport(List<ReportResDto> reportDatas) throws Exception {
 
 		return  jasperUtil.responseToByteArray

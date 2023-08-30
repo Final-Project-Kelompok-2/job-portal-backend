@@ -19,14 +19,14 @@ public class ReportController {
 	@Autowired
 	private ReportService reportService;
 	
-//	@GetMapping
-//    public ResponseEntity<?> getFileById(@PathVariable("id") String id) {
-//        final String fileName = "attachment";
-//        final byte[] fileBytes = reportService.downloadReport(null);
-//        return ResponseEntity.ok()
-//                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".pdf")
-//                .body(fileBytes);
-//   }
+	@GetMapping("/download")
+    public ResponseEntity<?> getReport(List<ReportResDto> reportDatas) throws Exception {
+        final String fileName = "Report";
+        final byte[] fileBytes = reportService.downloadReport(reportDatas);
+        return ResponseEntity.ok()
+                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".pdf")
+                .body(fileBytes);
+   }
 	
 	@GetMapping
 	public ResponseEntity<List<ReportResDto>> getReports(){
