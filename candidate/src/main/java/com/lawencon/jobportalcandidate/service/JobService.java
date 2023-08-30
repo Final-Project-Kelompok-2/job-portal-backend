@@ -71,8 +71,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
@@ -96,8 +96,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
@@ -120,8 +120,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
@@ -144,8 +144,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
@@ -220,8 +220,8 @@ public class JobService {
 		jobDto.setJobName(job.getJobName());
 		jobDto.setCompanyName(job.getCompany().getCompanyName());
 		jobDto.setAddress(job.getCompany().getAddress());
-		jobDto.setStartDate(job.getStartDate().toString());
-		jobDto.setEndDate(job.getEndDate().toString());
+		jobDto.setStartDate(DateUtil.localDateToString(job.getStartDate()));
+		jobDto.setEndDate(DateUtil.localDateToString(job.getEndDate()));
 		jobDto.setDescription(job.getDescription());
 		jobDto.setExpectedSalaryMin(job.getExpectedSalaryMin().toString());
 		jobDto.setExpectedSalaryMax(job.getExpectedSalaryMax().toString());
@@ -242,8 +242,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());

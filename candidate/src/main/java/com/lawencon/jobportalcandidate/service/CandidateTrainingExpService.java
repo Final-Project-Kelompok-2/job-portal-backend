@@ -57,8 +57,8 @@ public class CandidateTrainingExpService {
 			trainingExpRes.setOrganizationName(trainingExp.get(i).getOrganizationName());
 			trainingExpRes.setId(trainingExp.get(i).getId());
 			trainingExpRes.setDescription(trainingExp.get(i).getDescription());
-			trainingExpRes.setStartDate(trainingExp.get(i).getStartDate().toString());
-			trainingExpRes.setEndDate(trainingExp.get(i).getEndDate().toString());
+			trainingExpRes.setStartDate(DateUtil.localDateToString(trainingExp.get(i).getStartDate()));
+			trainingExpRes.setEndDate(DateUtil.localDateToString(trainingExp.get(i).getEndDate()));
 			
 			trainingExpResList.add(trainingExpRes);
 		}

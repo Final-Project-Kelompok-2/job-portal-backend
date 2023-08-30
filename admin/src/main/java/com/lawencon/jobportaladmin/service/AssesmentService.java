@@ -160,7 +160,7 @@ public class AssesmentService {
 		final Assesment assesment = assesmentDao.getByApplicant(applicantId);
 		final AssesmentResDto assesmentDto = new AssesmentResDto();
 
-		assesmentDto.setAssesmentDate(assesment.getAssesmentDate().toString());
+		assesmentDto.setAssesmentDate(DateUtil.localDateTimeToString(assesment.getAssesmentDate()));
 		assesmentDto.setAssesmentLocation(assesment.getAssesmentLocation());
 		assesmentDto.setNotes(assesment.getNotes());
 		return assesmentDto;

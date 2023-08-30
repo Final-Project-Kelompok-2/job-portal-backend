@@ -52,6 +52,7 @@ import com.lawencon.jobportalcandidate.model.File;
 import com.lawencon.jobportalcandidate.model.MaritalStatus;
 import com.lawencon.jobportalcandidate.model.PersonType;
 import com.lawencon.jobportalcandidate.model.Religion;
+import com.lawencon.jobportalcandidate.util.DateUtil;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -121,7 +122,7 @@ public class CandidateService implements UserDetailsService {
 		candidateprofileDto.setMobileNumber(candidateprofile.getMobileNumber());
 		candidateprofileDto.setNik(candidateprofile.getNik());
 		if (candidateprofile.getBirthDate() != null) {
-			candidateprofileDto.setBirthDate(candidateprofile.getBirthDate().toString());
+			candidateprofileDto.setBirthDate(DateUtil.localDateToString(candidateprofile.getBirthDate()));
 		}
 
 		candidateprofileDto.setBirthPlace(candidateprofile.getBirthPlace());

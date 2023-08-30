@@ -37,6 +37,7 @@ import com.lawencon.jobportaladmin.model.OfferingLetter;
 import com.lawencon.jobportaladmin.model.OwnedBenefit;
 import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.BigDecimalUtil;
+import com.lawencon.jobportaladmin.util.MoneyUtil;
 import com.lawencon.security.principal.PrincipalService;
 import com.lawencon.util.JasperUtil;
 
@@ -112,15 +113,8 @@ public class OfferingLetterService {
 			final User admin = userDao.getById(User.class, principalService.getAuthPrincipal());
 			
 			offeringDatas.put("adminName", admin.getProfile().getFullName());
-			
-			DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getInstance();
-	        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
-	        formatRp.setMonetaryDecimalSeparator(',');
-	        formatRp.setGroupingSeparator('.');
-
-	        kursIndonesia.setDecimalFormatSymbols(formatRp);
-			offeringData.setConvertedMoney(kursIndonesia.format(offeringData.getSalary()).toString());
+			offeringData.setConvertedMoney(MoneyUtil.parseToRupiah(offeringData.getSalary()).toString());
 			offeringDatas.put("salary", offeringData.getConvertedMoney());
 			
 			final List<JasperReqDto> jasperBenefits = new ArrayList<>();
