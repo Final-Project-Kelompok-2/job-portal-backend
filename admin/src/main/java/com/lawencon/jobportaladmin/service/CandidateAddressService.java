@@ -19,6 +19,7 @@ import com.lawencon.jobportaladmin.dto.candidateaddress.CandidateAddressResDto;
 import com.lawencon.jobportaladmin.dto.candidateaddress.CandidateAddressUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateAddress;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -59,7 +60,11 @@ public class CandidateAddressService {
 		try {
 			em().getTransaction().begin();
 			final CandidateAddress candidateAddress = new CandidateAddress();
-			candidateAddress.setAddressCode(data.getAddressCode());
+			if (data.getAddressCode() != null) {				
+				candidateAddress.setAddressCode(data.getAddressCode());
+			} else {
+				candidateAddress.setAddressCode(GenerateCode.generateCode());
+			}
 			candidateAddress.setAddress(data.getAddress());
 			candidateAddress.setCity(data.getCity());
 			candidateAddress.setCountry(data.getCountry());

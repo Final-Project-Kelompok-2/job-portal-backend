@@ -32,8 +32,8 @@ public class QuestionAnswerController {
 	}
 	
 	@GetMapping
-	public ResponseEntity <List<QuestionAnswerResDto>> getByApplicant(@RequestParam String id){
-		final List<QuestionAnswerResDto> response = questionAnswerService.getByApplicant(id);
+	public ResponseEntity <List<QuestionAnswerResDto>> getByApplicant(@RequestParam String code){
+		final List<QuestionAnswerResDto> response = questionAnswerService.getByApplicant(code);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	

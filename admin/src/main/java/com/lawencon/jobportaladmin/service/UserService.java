@@ -28,9 +28,6 @@ import com.lawencon.jobportaladmin.dto.profile.ProfileResDto;
 import com.lawencon.jobportaladmin.dto.profile.ProfileUpdateReqDto;
 import com.lawencon.jobportaladmin.dto.user.UserInsertReqDto;
 import com.lawencon.jobportaladmin.dto.user.UsersResDto;
-import com.lawencon.jobportaladmin.model.Applicant;
-import com.lawencon.jobportaladmin.model.Assesment;
-import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.model.PersonType;
 import com.lawencon.jobportaladmin.model.Profile;
@@ -118,6 +115,9 @@ public class UserService implements UserDetailsService {
 
 		try {
 			em().getTransaction().begin();
+			if(userData.getPhotoName().isBlank()) {
+				throw new NullPointerException("File is Empty");
+			}
 			User newUser = new User();
 
 			newUser.setUserEmail(userData.getUserEmail());

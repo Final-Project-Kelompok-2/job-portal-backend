@@ -49,11 +49,11 @@ Jawa Barat, 172031]]></text>
 				<text><![CDATA[Telp : (021) 123456]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="400" y="40" width="130" height="15" uuid="e1fb1d29-c89b-4a94-9fff-ca2a64870e25"/>
+				<reportElement x="390" y="40" width="175" height="15" uuid="e1fb1d29-c89b-4a94-9fff-ca2a64870e25"/>
 				<textElement>
 					<font fontName="SansSerif"/>
 				</textElement>
-				<text><![CDATA[Email : jobroad@gmail.com]]></text>
+				<text><![CDATA[Email : jobroadlawencon@gmail.com]]></text>
 			</staticText>
 			<image>
 				<reportElement x="0" y="2" width="271" height="55" uuid="debb4588-61b3-40b5-ae00-774758a4fd39"/>
@@ -106,14 +106,42 @@ Jawa Barat, 172031]]></text>
 		</band>
 	</detail>
 	<lastPageFooter>
-		<band height="80">
+		<band height="175">
 			<textField>
-				<reportElement x="434" y="0" width="120" height="80" uuid="2ef3f16a-d5b9-4718-9b32-750fe366a508"/>
+				<reportElement x="434" y="10" width="120" height="80" uuid="2ef3f16a-d5b9-4718-9b32-750fe366a508"/>
 				<textElement>
 					<font fontName="&#xD;&#xA;SansSerif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Regards, \n"+$P{adminName}+"\n\n\n"+$P{companyName}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="379" y="135" width="173" height="40" uuid="7d4f4820-0594-4834-9373-e2dae06a6f5f"/>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/Final-Project-Kelompok-2/job-portal-frontend/main/projects/admin-jobroad/src/assets/jobroad.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="150" width="369" height="1" uuid="14f8482c-bc12-4e25-a774-3286cdecb1da"/>
+			</line>
+			<staticText>
+				<reportElement x="100" y="130" width="156" height="24" uuid="de5c101c-176e-4a59-9a43-fd045df847f9"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[JobRoad © Copyright 2023]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="151" width="170" height="15" uuid="a72d2fd3-8c96-47c1-8fb2-d1225b5c899f"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Email : jobroadlawencon@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="151" width="100" height="15" uuid="11434d66-9fa3-436b-9316-756ce5d3bbc2"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Telp : (021) 123456]]></text>
+			</staticText>
 		</band>
 	</lastPageFooter>
 	<summary>

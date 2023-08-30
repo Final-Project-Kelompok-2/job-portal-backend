@@ -69,6 +69,10 @@ public class CompanyService {
 		final InsertResDto insertRes = new InsertResDto();
 		try {
 			em().getTransaction().begin();
+			if(data.getFileName().isBlank()) {
+				em().getTransaction().rollback();
+				throw new RuntimeException("File is Empty");
+			}
 			Company company = new Company();
 
 			company.setCompanyName(data.getCompanyName());
@@ -110,14 +114,13 @@ public class CompanyService {
 				em().getTransaction().commit();
 			} else {
 				em().getTransaction().rollback();
-				
 				throw new RuntimeException("Insert Failed");
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			em().getTransaction().rollback();
-
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return insertRes;

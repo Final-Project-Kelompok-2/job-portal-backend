@@ -75,19 +75,16 @@ public class QuestionService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return insertRes;
 	}
 
-	public List<QuestionResDto> getByApplicant(String applicantId) {
-		System.out.println(applicantId);
-		final Applicant applicant = applicantDao.getById(Applicant.class, applicantId);
-		System.out.println(applicant.getId());
-		System.out.println(applicant.getApplicantCode());
+	public List<QuestionResDto> getByApplicant(String code) {
+		final Applicant applicantCode = applicantDao.getByCode(code);
+		final Applicant applicant = applicantDao.getById(Applicant.class, applicantCode.getId());
 		final List<QuestionResDto> questionsDto = new ArrayList<>();
-		System.out.println(applicantId);
-		System.out.println(applicant.getJob().getId());
 		final List<AssignedJobQuestion> jobQuestions = assignedJobQuestionDao.getByJob(applicant.getJob().getId());
 
 		for (int i = 0; i < jobQuestions.size(); i++) {

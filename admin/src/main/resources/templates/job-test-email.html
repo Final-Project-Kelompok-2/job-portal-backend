@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title th:remove="all">Hired</title>
+<title th:remove="all">Exam Stage</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -42,8 +42,16 @@ p {
 	display: none;
 }
 
-.footer {
-	text-align: right;
+.link {
+	border: solid 1px #000;
+	background-color: #286e33;
+	text-decoration: none;
+	color: #fff;
+	font-weight: bold;
+	display: block;
+	width: 100%;
+	text-align: center;
+	padding: 10px 0;
 }
 
 @media ( max-width :700px) {
@@ -104,6 +112,17 @@ p {
 		border-right: 0px;
 		border-bottom: 0;
 		border-left: 0;
+	}
+	.link {
+		border: solid 1px #000;
+		background-color: #286e33;
+		text-decoration: none;
+		color: #fff;
+		font-weight: bold;
+		display: block;
+		width: 360px;
+		text-align: center;
+		padding: 10px 0;
 	}
 }
 </style>
@@ -290,7 +309,7 @@ p {
 																	style="padding-left: 5px; padding-top: 10px; text-align: center; width: 100%;">
 																	<h1
 																		style="margin: 0; color: #286e33; direction: ltr; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0;">
-																		<span class="tinyMce-placeholder">Dear, <span
+																		<span class="tinyMce-placeholder">Hi, <span
 																			th:text="${salutation}">salutation </span> <span
 																			th:text="${name}">name</span></span>
 																	</h1>
@@ -306,13 +325,47 @@ p {
 																	style="padding-bottom: 10px; padding-left: 5px; padding-right: 5px; padding-top: 5px; text-align: center; width: 100%;">
 																	<h1
 																		style="margin: 0; color: #2f2e41; direction: ltr; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 29px; font-weight: 400; letter-spacing: 1px; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0;">
-																		<strong>Congratulation on this next step up
-																			in your career!</strong>
+																		<strong>You are required to do the <span
+																			style="color: #286e33;">Job Test</span> before the HR
+																			Interview
+																		</strong>
 																	</h1>
 																</td>
 															</tr>
 														</table>
+														<table border="0" cellpadding="0" cellspacing="0"
+															class="paragraph_block block-3" role="presentation"
+															style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
+															width="100%">
+															<tr>
+																<td class="pad"
+																	style="padding-bottom: 10px; padding-left: 5px; padding-right: 5px; padding-top: 10px;">
+																	<div
+																		style="color: #393d47; direction: ltr; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0px; line-height: 150%; text-align: left; mso-line-height-alt: 22.5px;">
+																		<p style="margin: 0;">
+																			There are <b><span th:text="${totalQuestion}">totalQuestion</span>
+																				Questions </b>that you have to accomplish. Please Click
+																			the button below to start working. Good Luck!
+																		</p>
+																	</div>
+																</td>
+															</tr>
 
+															<tr>
+																<td class="pad"
+																	style="padding-bottom: 10px; padding-left: 5px; padding-right: 5px; padding-top: 10px;">
+																	<div
+																		style="color: #393d47; direction: ltr; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0px; line-height: 150%; text-align: left; mso-line-height-alt: 22.5px;">
+																		<p style="margin: 0;">
+																			<a class="link" th:href="${url}" target="_blank">Let's
+																				Start</a>
+																		</p>
+																	</div>
+																</td>
+															</tr>
+
+
+														</table>
 													</div>
 												</td>
 												<td class="column column-2 last"
@@ -328,9 +381,9 @@ p {
 																	<div align="center" class="alignment"
 																		style="line-height: 10px">
 																		<img data-th-src="|cid:illustration|"
-																			class="fullWidth" src="images/employeenew.png"
-																			style="display: block; height: auto; border: 0; max-width: 282.2px; width: 100%;"
-																			title="Resume" width="282.2" />
+																			class="fullWidth" src="images/exzm.png"
+																			style="display: block; height: auto; border: 0; max-width: 320.2px; width: 100%;"
+																			width="320.2" />
 																	</div>
 																</td>
 															</tr>
@@ -345,116 +398,7 @@ p {
 							</tr>
 						</tbody>
 					</table>
-					<table align="center" border="0" cellpadding="0" cellspacing="0"
-						class="row row-6" role="presentation"
-						style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-						<tbody>
-							<tr>
-								<td>
-									<table align="center" border="0" cellpadding="0"
-										cellspacing="0" class="row-content stack" role="presentation"
-										style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fbfbfb; color: #000; width: 680px; margin: 0 auto;"
-										width="680">
-										<tbody>
-											<tr>
-												<td class="column column-1"
-													style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-													width="100%">
-													<div class="spacer_block block-1"
-														style="height: 10px; line-height: 10px; font-size: 1px;">
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
 
-
-
-					<table align="center" border="0" cellpadding="0" cellspacing="0"
-						class="row row-8" role="presentation"
-						style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto; margin-top: 1rem"
-						width="100%">
-						<tbody>
-							<tr>
-								<td>
-									<table align="center" border="0" cellpadding="0"
-										cellspacing="0" class="row-content stack" role="presentation"
-										style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fbfbfb; background-size: auto; color: #000; width: 680px; margin: 0 auto;"
-										width="680">
-										<tbody>
-											<tr>
-												<td class="column column-1"
-													style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 15px; padding-left: 25px; padding-right: 25px; padding-top: 25px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-													width="100%">
-													<table border="0" cellpadding="0" cellspacing="0"
-														class="paragraph_block block-2" role="presentation"
-														style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-														width="100%">
-														<tr>
-															<td class="pad"
-																style="padding-left: 5px; padding-right: 5px; padding-top: 10px;">
-																<div
-																	style="color: #393d47; direction: ltr; font-family: Cabin, Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 14px; font-weight: 400; letter-spacing: 0px; line-height: 150%; text-align: left; mso-line-height-alt: 21px;">
-																	<p style="margin: 0;">
-																		We are excited to inform you that you have hired as <b
-																			th:text="${jobName}">jobName</b> for <b
-																			th:text="${company}">company</b>. We believe that
-																		your combined excellence will help bring great impacts
-																		to the company. You will officially join with us
-																		started on <b th:text="${joinDate}">joinDate</b> and
-																		will be ended on <b th:text="${endDate}">endDate</b>. 
-																		We know working at this company is your lifelong
-																		dream, and we are overwhelmed with happiness for your
-																		achievement. Congratulation and welcome on board!
-																	</p>
-																	<br>
-																	<p class="footer" style="margin: 0;">
-																		Regards, <br>HR Team
-																	</p>
-																</div>
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-
-
-					<table align="center" border="0" cellpadding="0" cellspacing="0"
-						class="row row-16" role="presentation"
-						style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-						<tbody>
-							<tr>
-								<td>
-									<table align="center" border="0" cellpadding="0"
-										cellspacing="0" class="row-content stack" role="presentation"
-										style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fbfbfb; color: #000; width: 680px; margin: 0 auto;"
-										width="680">
-										<tbody>
-											<tr>
-												<td class="column column-1"
-													style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 7px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-													width="100%">
-													<div class="spacer_block block-1"
-														style="height: 25px; line-height: 25px; font-size: 1px;">
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
 					<table align="center" border="0" cellpadding="0" cellspacing="0"
 						class="row row-18" role="presentation"
 						style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin-top: 1rem;"

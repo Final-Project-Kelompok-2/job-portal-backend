@@ -20,6 +20,7 @@ import com.lawencon.jobportaladmin.dto.candidateprojectexp.CandidateProjectExpUp
 import com.lawencon.jobportaladmin.model.CandidateProjectExp;
 import com.lawencon.jobportaladmin.model.CandidateUser;
 import com.lawencon.jobportaladmin.util.DateUtil;
+import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -61,7 +62,13 @@ public class CandidateProjectExpService {
 		try {
 			em().getTransaction().begin();
 			final CandidateProjectExp projectExp = new CandidateProjectExp();
-			projectExp.setProjectCode(data.getProjectCode());
+			
+			if (data.getProjectCode() != null) {
+				projectExp.setProjectCode(data.getProjectCode());
+			} else {
+				projectExp.setProjectCode(GenerateCode.generateCode());
+			}
+			
 			projectExp.setProjectName(data.getProjectName());
 			projectExp.setDescription(data.getDescription());
 			projectExp.setProjectUrl(data.getProjectUrl());

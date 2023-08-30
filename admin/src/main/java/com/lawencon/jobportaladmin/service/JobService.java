@@ -156,6 +156,10 @@ public class JobService {
 
 		try {
 			em().getTransaction().begin();
+			if("".equals(jobDto.getFile())|| "".equals(jobDto.getFileExtension())) {
+				em().getTransaction().rollback();
+				throw new NullPointerException("File is Empty");
+			}
 			Job job = new Job();
 			job.setJobName(jobDto.getJobName());
 
@@ -180,7 +184,7 @@ public class JobService {
 			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 			job.setEmploymentType(type);
 			jobDto.setEmploymentTypeCode(type.getEmploymentTypeCode());
-
+			
 			File file = new File();
 			file.setFileName(jobDto.getFile());
 			file.setFileExtension(jobDto.getFileExtension());
@@ -237,6 +241,7 @@ public class JobService {
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return result;
