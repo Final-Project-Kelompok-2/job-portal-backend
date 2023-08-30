@@ -136,7 +136,7 @@ public class ApplicantService {
 			Applicant applicant = applicantDao.getByCode(updateData.getApplicantCode());
 			updateData.setApplicantCode(applicant.getApplicantCode());
 
-			final	 HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
+			final HiringStatus hiringStatus = hiringStatusDao.getByCode(updateData.getStatusCode());
 			applicant.setStatus(hiringStatus);
 			updateData.setStatusCode(hiringStatus.getStatusCode());
 
