@@ -71,9 +71,6 @@ public class BlacklistService {
 			candidateUser.setIsActive(false);
 			candidateUser = candidateUserDao.save(candidateUser);			
 			data.setIsActive(false);
-//			resDto.setId(blacklist.getId());
-//			resDto.setMessage("Insert Blacklist success");
-//			em().getTransaction().commit();
 			
 			final String updateCandidateStatusAPI = "http://localhost:8081/candidate-user/blacklist";
 			final HttpHeaders headers = new HttpHeaders();
