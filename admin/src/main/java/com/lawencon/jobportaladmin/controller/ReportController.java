@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.jobportaladmin.dto.report.ReportResDto;
 import com.lawencon.jobportaladmin.service.ReportService;
 
-@RestController("reports")
-@RequestMapping
+@RestController
+@RequestMapping("reports")
 public class ReportController {
 	
 	@Autowired
@@ -30,10 +30,10 @@ public class ReportController {
 //                .body(fileBytes);
 //   }
 	
-	@GetMapping("/filter")
+	@GetMapping
 	public ResponseEntity<List<ReportResDto>> getReports(){
 		final List<ReportResDto> response = reportService.getReport();
-		return new ResponseEntity<>(response,HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 }

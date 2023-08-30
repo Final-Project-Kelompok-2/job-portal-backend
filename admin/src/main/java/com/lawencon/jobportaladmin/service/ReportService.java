@@ -16,21 +16,19 @@ public class ReportService {
 
 	@Autowired
 	private ReportDao reportDao;
-	
-  @Autowired
+
+	@Autowired
 	private JasperUtil jasperUtil;
-  
-	public List<ReportResDto> getReport(){
+
+	public List<ReportResDto> getReport() {
 		final List<ReportResDto> reports = reportDao.getReport();
+		
 		return reports;
 	}
-	
-	
 
 	public byte[] downloadReport(List<ReportResDto> reportDatas) throws Exception {
 
-		return  jasperUtil.responseToByteArray
-				(reportDatas, null, "Report");		
+		return jasperUtil.responseToByteArray(reportDatas, null, "Report");
 	}
 
 }
