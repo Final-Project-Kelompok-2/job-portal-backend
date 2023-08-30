@@ -57,6 +57,7 @@ import com.lawencon.jobportaladmin.model.Religion;
 import com.lawencon.jobportaladmin.util.BigDecimalUtil;
 import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.jobportaladmin.util.GenerateCode;
+import com.lawencon.jobportaladmin.util.MoneyUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -567,7 +568,7 @@ public class CandidateUserService {
 			candidateDto.setFullname(candidate.get(i).getCandidateProfile().getFullname());
 			candidateDto.setGender(candidate.get(i).getCandidateProfile().getGender());
 			candidateDto.setExperience(candidate.get(i).getCandidateProfile().getExperience());
-			candidateDto.setExpectedSalary(candidate.get(i).getCandidateProfile().getExpectedSalary());
+			candidateDto.setExpectedSalary(MoneyUtil.parseToRupiah(candidate.get(i).getCandidateProfile().getExpectedSalary()));
 			candidateDto.setPhoneNumber(candidate.get(i).getCandidateProfile().getPhoneNumber());
 			candidateDto.setMobileNumber(candidate.get(i).getCandidateProfile().getMobileNumber());
 			candidateDto.setNik(candidate.get(i).getCandidateProfile().getNik());
@@ -619,7 +620,8 @@ public class CandidateUserService {
 		candidateDto.setFullname(candidate.getCandidateProfile().getFullname());
 		candidateDto.setGender(candidate.getCandidateProfile().getGender());
 		candidateDto.setExperience(candidate.getCandidateProfile().getExperience());
-		candidateDto.setExpectedSalary(candidate.getCandidateProfile().getExpectedSalary());
+		candidateDto.setExpectedSalary(MoneyUtil.parseToRupiah(candidate.getCandidateProfile().getExpectedSalary()));
+		candidateDto.setExpectedSalaryNum(candidate.getCandidateProfile().getExpectedSalary());
 		candidateDto.setPhoneNumber(candidate.getCandidateProfile().getPhoneNumber());
 		candidateDto.setMobileNumber(candidate.getCandidateProfile().getMobileNumber());
 		candidateDto.setNik(candidate.getCandidateProfile().getNik());
