@@ -74,7 +74,7 @@ public class InterviewService {
 
 			interview = interviewDao.save(interview);
 
-			final String emailSubject = "Interview Schedule ";
+			final String emailSubject = "Interview Schedule: [" + applicant.getJob().getJobName() + "] at " + applicant.getJob().getCompany().getCompanyName();
 
 			emailService.sendEmailInterview(emailSubject, candidate, interview, applicant);
 

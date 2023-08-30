@@ -31,8 +31,8 @@ import com.lawencon.jobportaladmin.util.MoneyUtil;
 public class EmailService {
 
 	private static final String JOBROAD_LOGO_IMAGE = "templates/images/jobroad.png";
-	private static final String JOBROAD_ILLUSTRATION_IMAGE = "templates/images/illustration_png-03.png";
-	private static final String JOBROAD_EMPLOYEE_IMAGE = "templates/images/employeenew.png";
+//	private static final String JOBROAD_ILLUSTRATION_IMAGE = "templates/images/illustration_png-03.png";
+//	private static final String JOBROAD_EMPLOYEE_IMAGE = "templates/images/employeenew.png";
 	private static final String PNG_MIME = "image/png";
 
 	@Autowired
@@ -287,7 +287,7 @@ public class EmailService {
 					if (hired.getEndDate() != null) {
 						ctx.setVariable("endDate", DateUtil.localDateToString(hired.getEndDate()));
 					} else {
-						ctx.setVariable("endDate", "TBA");
+						ctx.setVariable("endDate", "-");
 					}
 					
 //					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
