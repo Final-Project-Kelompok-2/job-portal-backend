@@ -28,6 +28,7 @@ import com.lawencon.jobportalcandidate.model.Job;
 import com.lawencon.jobportalcandidate.model.Question;
 import com.lawencon.jobportalcandidate.util.BigDecimalUtil;
 import com.lawencon.jobportalcandidate.util.DateUtil;
+import com.lawencon.jobportalcandidate.util.MoneyUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -74,8 +75,8 @@ public class JobService {
 			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
 			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
-			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
+			job.setExpectedSalaryMin(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMin()));
+			job.setExpectedSalaryMax(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMax()));
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setIsBookmark(savedJobDao.checkBookmark(jobs.get(i).getId(), principalService.getAuthPrincipal()));
@@ -99,8 +100,8 @@ public class JobService {
 			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
 			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
-			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
+			job.setExpectedSalaryMin(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMin()));
+			job.setExpectedSalaryMax(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMax()));
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
@@ -123,8 +124,8 @@ public class JobService {
 			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
 			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
-			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
+			job.setExpectedSalaryMin(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMin()));
+			job.setExpectedSalaryMax(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMax()));
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
@@ -147,8 +148,8 @@ public class JobService {
 			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
 			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
-			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
+			job.setExpectedSalaryMin(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMin()));
+			job.setExpectedSalaryMax(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMax()));
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			jobsDto.add(job);
@@ -223,8 +224,8 @@ public class JobService {
 		jobDto.setStartDate(DateUtil.localDateToString(job.getStartDate()));
 		jobDto.setEndDate(DateUtil.localDateToString(job.getEndDate()));
 		jobDto.setDescription(job.getDescription());
-		jobDto.setExpectedSalaryMin(job.getExpectedSalaryMin().toString());
-		jobDto.setExpectedSalaryMax(job.getExpectedSalaryMax().toString());
+		jobDto.setExpectedSalaryMin(MoneyUtil.parseToRupiah(job.getExpectedSalaryMin()));
+		jobDto.setExpectedSalaryMax(MoneyUtil.parseToRupiah(job.getExpectedSalaryMax()));
 		jobDto.setEmployementTypeName(job.getEmploymentType().getEmploymentTypeName());
 		jobDto.setFileId(job.getJobPicture().getId());
 		jobDto.setCompanyPhotoId(job.getCompany().getPhoto().getId());
@@ -245,8 +246,8 @@ public class JobService {
 			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
 			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setDescription(jobs.get(i).getDescription());
-			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
-			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
+			job.setExpectedSalaryMin(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMin()));
+			job.setExpectedSalaryMax(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMax()));
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
 			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());

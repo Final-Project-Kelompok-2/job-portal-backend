@@ -25,6 +25,7 @@ import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.OfferingLetter;
 import com.lawencon.jobportaladmin.model.User;
 import com.lawencon.jobportaladmin.util.DateUtil;
+import com.lawencon.jobportaladmin.util.MoneyUtil;
 
 @Service
 public class EmailService {
@@ -241,7 +242,7 @@ public class EmailService {
 					ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
 					ctx.setVariable("jobName", applicant.getJob().getJobName());
 					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
-					ctx.setVariable("salary", offeringLetter.getSalary());
+					ctx.setVariable("salary", MoneyUtil.parseToRupiah(offeringLetter.getSalary()));
 					ctx.setVariable("address", offeringLetter.getAddress());
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
