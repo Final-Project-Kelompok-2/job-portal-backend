@@ -19,7 +19,7 @@ public class ReportDao extends AbstractJpaDao{
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	public List<ReportResDto> getReport(String candidateName,String jobName,String employmentTypeName){
+	public List<ReportResDto> getReport(){
 		final List<ReportResDto>reportList = new ArrayList<>();
 		final StringBuilder sql = new StringBuilder();
 				sql.append("select  ")
@@ -42,15 +42,15 @@ public class ReportDao extends AbstractJpaDao{
 				.append( "on tet.id = tj.employment_type_id ")
 				.append( "where ")
 				.append(" 1 = 1 ");
-		if(candidateName != null && "".equalsIgnoreCase("")) {
-			sql.append(" AND tcp.fullname ILIKE :fullName || % ");
-		}
-		if(jobName != null && "".equalsIgnoreCase("")) {
-			sql.append(" AND tj.job_name ILIKE :jobName || % ");
-		}
-		if(employmentTypeName != null && "".equalsIgnoreCase("")) {
-			sql.append(" AND tet.employment_type_name ILIKE :type || % ");
-		}
+//		if(candidateName != null && "".equalsIgnoreCase("")) {
+//			sql.append(" AND tcp.fullname ILIKE :fullName || % ");
+//		}
+//		if(jobName != null && "".equalsIgnoreCase("")) {
+//			sql.append(" AND tj.job_name ILIKE :jobName || % ");
+//		}
+//		if(employmentTypeName != null && "".equalsIgnoreCase("")) {
+//			sql.append(" AND tet.employment_type_name ILIKE :type || % ");
+//		}
 		final List<?> reportObjs = em().createNativeQuery(sql.toString()).getResultList();
 		if(reportObjs.size() > 0) {
 			for(Object reportObj : reportObjs) {
