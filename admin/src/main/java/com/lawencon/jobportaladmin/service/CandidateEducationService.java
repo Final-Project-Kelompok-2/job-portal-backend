@@ -20,6 +20,7 @@ import com.lawencon.jobportaladmin.dto.candidateeducation.CandidateEducationResD
 import com.lawencon.jobportaladmin.dto.candidateeducation.CandidateEducationUpdateReqDto;
 import com.lawencon.jobportaladmin.model.CandidateEducation;
 import com.lawencon.jobportaladmin.model.CandidateUser;
+import com.lawencon.jobportaladmin.util.DateUtil;
 import com.lawencon.jobportaladmin.util.GenerateCode;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -50,8 +51,8 @@ public class CandidateEducationService {
 			education.setInstituitionName(educations.get(i).getInstitutionName());
 			education.setMajors(educations.get(i).getMajors());
 			education.setCgpa(educations.get(i).getCgpa());
-			education.setStartYear(educations.get(i).getStartYear().toString());
-			education.setEndYear(educations.get(i).getEndYear().toString());
+			education.setStartYear(DateUtil.localDateToString(educations.get(i).getStartYear()));
+			education.setEndYear(DateUtil.localDateToString(educations.get(i).getEndYear()));
 
 			educationsDto.add(education);
 		}

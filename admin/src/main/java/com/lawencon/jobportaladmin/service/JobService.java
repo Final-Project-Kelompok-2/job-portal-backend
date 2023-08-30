@@ -96,8 +96,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMax().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
@@ -118,8 +118,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
@@ -140,8 +140,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
@@ -302,8 +302,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
@@ -324,8 +324,8 @@ public class JobService {
 			job.setJobName(jobs.get(i).getJobName());
 			job.setCompanyName(jobs.get(i).getCompany().getCompanyName());
 			job.setAddress(jobs.get(i).getCompany().getAddress());
-			job.setStartDate(jobs.get(i).getStartDate().toString());
-			job.setEndDate(jobs.get(i).getEndDate().toString());
+			job.setStartDate(DateUtil.localDateToString(jobs.get(i).getStartDate()));
+			job.setEndDate(DateUtil.localDateToString(jobs.get(i).getEndDate()));
 			job.setExpectedSalaryMin(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setExpectedSalaryMax(jobs.get(i).getExpectedSalaryMin().toString());
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
@@ -344,9 +344,9 @@ public class JobService {
 		job.setJobName(jobDb.getJobName());
 		job.setCompanyName(jobDb.getCompany().getCompanyName());
 		job.setAddress(jobDb.getCompany().getAddress());
-		job.setStartDate(jobDb.getStartDate().toString());
+		job.setStartDate(DateUtil.localDateToString(jobDb.getStartDate()));
 		job.setDescription(jobDb.getDescription());
-		job.setEndDate(jobDb.getEndDate().toString());
+		job.setEndDate(DateUtil.localDateToString(jobDb.getEndDate()));
 		job.setExpectedSalaryMin(jobDb.getExpectedSalaryMin().toString());
 		job.setExpectedSalaryMax(jobDb.getExpectedSalaryMax().toString());
 		job.setEmployementTypeName(jobDb.getEmploymentType().getEmploymentTypeName());

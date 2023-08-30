@@ -60,7 +60,7 @@ public class ApplicantService {
 			final ApplicantResDto applicantRes = new ApplicantResDto();
 			applicantRes.setId(applicantList.get(i).getId());
 			applicantRes.setApplicantCode(applicantList.get(i).getApplicantCode());
-			applicantRes.setAppliedDate(applicantList.get(i).getAppliedDate().toString());
+			applicantRes.setAppliedDate(DateUtil.localDateTimeStampToString(applicantList.get(i).getAppliedDate()));
 			applicantRes.setStatusId(applicantList.get(i).getStatus().getId());
 			applicantRes.setStatusName(applicantList.get(i).getStatus().getStatusName());
 			applicantRes.setStatusCode(applicantList.get(i).getStatus().getStatusCode());

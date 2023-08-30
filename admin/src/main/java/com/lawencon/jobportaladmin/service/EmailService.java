@@ -24,6 +24,7 @@ import com.lawencon.jobportaladmin.model.Interview;
 import com.lawencon.jobportaladmin.model.Job;
 import com.lawencon.jobportaladmin.model.OfferingLetter;
 import com.lawencon.jobportaladmin.model.User;
+import com.lawencon.jobportaladmin.util.DateUtil;
 
 @Service
 public class EmailService {
@@ -158,7 +159,7 @@ public class EmailService {
 					ctx.setVariable("jobName", applicant.getJob().getJobName());
 					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
 					ctx.setVariable("location", assesment.getAssesmentLocation());
-					ctx.setVariable("date", assesment.getAssesmentDate());
+					ctx.setVariable("date", DateUtil.localDateTimeToString(assesment.getAssesmentDate()));
 
 					final String htmlContent = htmlTemplateEngine.process("assessment-email", ctx);
 					email.setText(htmlContent, true);
@@ -196,7 +197,7 @@ public class EmailService {
 					ctx.setVariable("jobName", applicant.getJob().getJobName());
 					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
 					ctx.setVariable("location", interview.getInterviewLocation());
-					ctx.setVariable("date", interview.getInterviewDate());
+					ctx.setVariable("date", DateUtil.localDateTimeToString(interview.getInterviewDate()));
 					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
@@ -280,10 +281,10 @@ public class EmailService {
 					ctx.setVariable("name", user.getCandidateProfile().getFullname());
 					ctx.setVariable("jobName", job.getJobName());
 					ctx.setVariable("company", job.getCompany().getCompanyName());
-					ctx.setVariable("joinDate", hired.getStartDate());
+					ctx.setVariable("joinDate", DateUtil.localDateToString(hired.getStartDate()));
 					
 					if (hired.getEndDate() != null) {
-						ctx.setVariable("endDate", hired.getEndDate());
+						ctx.setVariable("endDate", DateUtil.localDateToString(hired.getEndDate()));
 					} else {
 						ctx.setVariable("endDate", "TBA");
 					}

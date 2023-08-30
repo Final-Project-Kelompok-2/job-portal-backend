@@ -65,8 +65,8 @@ public class CandidateWorkExpService {
 			work.setResponsibility(works.get(i).getResponsibility());
 			work.setReasonLeave(works.get(i).getReasonLeave());
 			work.setLastSalary(works.get(i).getLastSalary().toString());
-			work.setStartDate(works.get(i).getStartDate().toString());
-			work.setEndDate(works.get(i).getEndDate().toString());
+			work.setStartDate(DateUtil.localDateToString(works.get(i).getStartDate()));
+			work.setEndDate(DateUtil.localDateToString(works.get(i).getEndDate()));
 
 			worksDto.add(work);
 		}

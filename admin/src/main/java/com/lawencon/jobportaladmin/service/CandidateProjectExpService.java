@@ -45,8 +45,8 @@ public class CandidateProjectExpService {
 		for (int i = 0; i < projectExp.size(); i++) {
 			final CandidateProjectExpResDto projectExpRes = new CandidateProjectExpResDto();
 			projectExpRes.setDescription(projectExp.get(i).getDescription());
-			projectExpRes.setEndDate(projectExp.get(i).getEndDate().toString());
-			projectExpRes.setStartDate(projectExp.get(i).getStartDate().toString());
+			projectExpRes.setEndDate(DateUtil.localDateToString(projectExp.get(i).getEndDate()));
+			projectExpRes.setStartDate(DateUtil.localDateToString(projectExp.get(i).getStartDate()));
 			projectExpRes.setProjectName(projectExp.get(i).getProjectName());
 			projectExpRes.setProjectUrl(projectExp.get(i).getProjectUrl());
 			projectExpRes.setId(projectExp.get(i).getId());
