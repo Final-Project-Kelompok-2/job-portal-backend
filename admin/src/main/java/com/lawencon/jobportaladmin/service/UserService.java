@@ -150,7 +150,7 @@ public class UserService implements UserDetailsService {
 			newUser.setProfile(profile);
 			newUser = userDao.save(newUser);
 
-			final String emailSubject = "Job Portal Account Registration";
+			final String emailSubject = "JobRoad Account Registration";
 			
 			emailService.sendEmailNewUser(emailSubject, newUser, generatePassword);
 

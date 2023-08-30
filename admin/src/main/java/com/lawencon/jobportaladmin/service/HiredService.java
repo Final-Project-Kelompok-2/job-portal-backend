@@ -112,7 +112,7 @@ public class HiredService {
 			
 			applicant = applicantDao.saveAndFlush(applicant);
 			
-			final String emailSubject = "Welcome New Employee";
+			final String emailSubject = "Here’s to your new career at " + applicant.getJob().getCompany().getCompanyName() + " [" + applicant.getJob().getJobName() + "]";
 
 			emailService.sendEmailNewEmployee(candidateUser, emailSubject, job, hired);
 			final String updateApplicantAPI = "http://localhost:8081/applicants";
