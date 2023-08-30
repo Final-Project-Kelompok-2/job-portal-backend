@@ -18,6 +18,7 @@ public class ReportDao extends AbstractJpaDao{
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
+	
 	public List<ReportResDto> getReport(){
 		final List<ReportResDto>reportList = new ArrayList<>();
 		final StringBuilder sql = new StringBuilder();

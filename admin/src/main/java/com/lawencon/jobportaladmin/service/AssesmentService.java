@@ -105,7 +105,8 @@ public class AssesmentService {
 					reviewDetailDao.save(reviewDetail);
 				}
 
-				final String emailSubject = "Job Test";
+				final String emailSubject = "Job Test: [" + applicant.getJob().getJobName() + "] at " + applicant.getJob().getCompany().getCompanyName();
+
 				final int questionsTotal = jobQuestions.size();
 
 				emailService.sendEmailJobTest(emailSubject, candidate, applicant, questionsTotal);
@@ -113,7 +114,7 @@ public class AssesmentService {
 
 			assesment = assesmentDao.save(assesment);
 
-			final String emailSubject = "Assesment Schedule";
+			final String emailSubject = "Assesment Schedule: [" + applicant.getJob().getJobName() + "] at " + applicant.getJob().getCompany().getCompanyName();
 
 			emailService.sendEmailAssessment(emailSubject, candidate, assesment, applicant);
 
