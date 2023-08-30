@@ -992,14 +992,16 @@ VALUES
 ( uuid_generate_v4(),'FE-06','CITIZEN CARD',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 ( uuid_generate_v4(),'FE-07','OTHERS',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
 
-insert into t_hiring_status(id,status_code,status_name,created_by,created_at,is_active,ver) values
+INSERT INTO t_hiring_status(id,status_code,status_name,created_by,created_at,is_active,ver) values
 (uuid_generate_v4(),'S-001','APPLIED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-002','ASSESMENT',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-003','INTERVIEW',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-004','MCU',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
 (uuid_generate_v4(),'S-005','OFFERING',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
-(uuid_generate_v4(),'S-006','HIRED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1),
-(uuid_generate_v4(), 'S-007', 'REJECT', 'SYSTEM', now(), true, 0);
+(uuid_generate_v4(),'S-006','HIRED',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'),NOW(),TRUE,1);
+(uuid_generate_v4(),'S-007','REJECT',(SELECT t_user.id from t_user INNER JOIN t_role on t_role.id  = t_user.role_id WHERE t_role.role_code = 'R-001'), now(), true, 0);
+
+
 -- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 INSERT INTO t_marital_status (id, marital_code, marital_name, created_by, created_at, is_active, ver) VALUES 

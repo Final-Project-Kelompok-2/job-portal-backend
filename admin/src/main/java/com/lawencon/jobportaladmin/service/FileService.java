@@ -9,6 +9,7 @@ import com.lawencon.jobportaladmin.model.File;
 
 @Service
 public class FileService {
+	
 	@Autowired
 	private FileDao fileDao;
 
