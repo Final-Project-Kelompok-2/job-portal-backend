@@ -19,15 +19,13 @@ public class ReportController {
 	@Autowired
 	private ReportService reportService;
 	
-	@GetMapping
-    public ResponseEntity<?> getFileById(@PathVariable("id") String id) {
-//        final File file = fileService.getById(id);
-//        System.out.println(file.getFileName());
-        final String fileName = "attachment";
-        final byte[] fileBytes = Base64.getDecoder().decode("sd");
-        return ResponseEntity.ok()
-                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".pdf")
-                .body(fileBytes);
-   }
+//	@GetMapping
+//    public ResponseEntity<?> getFileById(@PathVariable("id") String id) {
+//        final String fileName = "attachment";
+//        final byte[] fileBytes = reportService.downloadReport(null);
+//        return ResponseEntity.ok()
+//                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".pdf")
+//                .body(fileBytes);
+//   }
 	
 }
