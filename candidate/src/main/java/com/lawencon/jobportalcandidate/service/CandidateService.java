@@ -54,6 +54,7 @@ import com.lawencon.jobportalcandidate.model.PersonType;
 import com.lawencon.jobportalcandidate.model.Religion;
 import com.lawencon.jobportalcandidate.util.DateUtil;
 import com.lawencon.jobportalcandidate.util.GenerateCode;
+import com.lawencon.jobportalcandidate.util.MoneyUtil;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -115,7 +116,8 @@ public class CandidateService implements UserDetailsService {
 		candidateprofileDto.setExperience(candidateprofile.getExperience());
 
 		if (candidateprofile.getExpectedSalary() != null) {
-			candidateprofileDto.setExpectedSalary(candidateprofile.getExpectedSalary());
+			candidateprofileDto.setExpectedSalaryNum(candidateprofile.getExpectedSalary());
+			candidateprofileDto.setExpectedSalary(MoneyUtil.parseToRupiah(candidateprofile.getExpectedSalary()));
 		}
 
 		candidateprofileDto.setPhoneNumber(candidateprofile.getPhoneNumber());

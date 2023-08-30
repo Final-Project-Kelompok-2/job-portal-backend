@@ -9,7 +9,8 @@ public class CandidateProfileResDto {
 	private String fullname;
 	private String gender;
 	private String experience;
-	private BigDecimal expectedSalary;
+	private String expectedSalary;
+	private BigDecimal expectedSalaryNum;
 	private String phoneNumber;
 	private String mobileNumber;
 	private String nik;
@@ -101,11 +102,11 @@ public class CandidateProfileResDto {
 		this.experience = experience;
 	}
 
-	public BigDecimal getExpectedSalary() {
+	public String getExpectedSalary() {
 		return expectedSalary;
 	}
 
-	public void setExpectedSalary(BigDecimal expectedSalary) {
+	public void setExpectedSalary(String expectedSalary) {
 		this.expectedSalary = expectedSalary;
 	}
 
@@ -219,6 +220,14 @@ public class CandidateProfileResDto {
 
 	public void setCandidateStatusId(String candidateStatusId) {
 		this.candidateStatusId = candidateStatusId;
+	}
+
+	public BigDecimal getExpectedSalaryNum() {
+		return expectedSalaryNum;
+	}
+
+	public void setExpectedSalaryNum(BigDecimal expectedSalaryNum) {
+		this.expectedSalaryNum = expectedSalaryNum;
 	}
 
 }
