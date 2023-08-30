@@ -31,8 +31,6 @@ import com.lawencon.jobportaladmin.util.MoneyUtil;
 public class EmailService {
 
 	private static final String JOBROAD_LOGO_IMAGE = "templates/images/jobroad.png";
-//	private static final String JOBROAD_ILLUSTRATION_IMAGE = "templates/images/illustration_png-03.png";
-//	private static final String JOBROAD_EMPLOYEE_IMAGE = "templates/images/employeenew.png";
 	private static final String PNG_MIME = "image/png";
 
 	@Autowired
@@ -77,17 +75,9 @@ public class EmailService {
 					ctx.setVariable("name", candidate.getCandidateProfile().getFullname());
 					ctx.setVariable("totalQuestion", jobQuestions);
 					ctx.setVariable("url", jobTestUrl);
-//					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-//					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("job-test-email", ctx);
 					email.setText(htmlContent, true);
-
-//					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-//					email.addInline("jobroadLogo", clr, PNG_MIME);
-//
-//					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
-//					email.addInline("illustration", illustration, PNG_MIME);
 
 					javaMailSender.send(mimeMessage);
 
@@ -161,12 +151,9 @@ public class EmailService {
 					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
 					ctx.setVariable("location", assesment.getAssesmentLocation());
 					ctx.setVariable("date", DateUtil.localDateTimeToString(assesment.getAssesmentDate()));
-//					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("assessment-email", ctx);
 					email.setText(htmlContent, true);
-//					email.addInline("jobroadLogo", new ClassPathResource(JOBROAD_LOGO_IMAGE));
-//					email.addInline("illustration", new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE));
 
 					javaMailSender.send(mimeMessage);
 
@@ -199,17 +186,9 @@ public class EmailService {
 					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
 					ctx.setVariable("location", interview.getInterviewLocation());
 					ctx.setVariable("date", DateUtil.localDateTimeToString(interview.getInterviewDate()));
-//					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-//					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("interview-email", ctx);
 					email.setText(htmlContent, true);
-
-//					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-//					email.addInline("jobroadLogo", clr, PNG_MIME);
-//
-//					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
-//					email.addInline("illustration", illustration, PNG_MIME);
 
 					javaMailSender.send(mimeMessage);
 
@@ -244,17 +223,9 @@ public class EmailService {
 					ctx.setVariable("company", applicant.getJob().getCompany().getCompanyName());
 					ctx.setVariable("salary", MoneyUtil.parseToRupiah(offeringLetter.getSalary()));
 					ctx.setVariable("address", offeringLetter.getAddress());
-//					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-//					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("offeringletter-email", ctx);
 					email.setText(htmlContent, true);
-
-//					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-//					email.addInline("jobroadLogo", clr, PNG_MIME);
-//
-//					ClassPathResource illustration = new ClassPathResource(JOBROAD_ILLUSTRATION_IMAGE);
-//					email.addInline("illustration", illustration, PNG_MIME);
 
 					javaMailSender.send(mimeMessage);
 				} catch (MessagingException e) {
@@ -289,18 +260,9 @@ public class EmailService {
 					} else {
 						ctx.setVariable("endDate", "-");
 					}
-					
-//					ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
-//					ctx.setVariable("illustration", JOBROAD_ILLUSTRATION_IMAGE);
 
 					final String htmlContent = htmlTemplateEngine.process("new-employee-email", ctx);
 					email.setText(htmlContent, true);
-
-//					ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-//					email.addInline("jobroadLogo", clr, PNG_MIME);
-//
-//					ClassPathResource illustration = new ClassPathResource(JOBROAD_EMPLOYEE_IMAGE);
-//					email.addInline("illustration", illustration, PNG_MIME);
 
 					javaMailSender.send(mimeMessage);
 				} catch (MessagingException e) {
@@ -324,16 +286,9 @@ public class EmailService {
 		final Context ctx = new Context(LocaleContextHolder.getLocale());
 		ctx.setVariable("title", title);
 		ctx.setVariable("body", message);
-//		ctx.setVariable("jobroadLogo", JOBROAD_LOGO_IMAGE);
 
 		final String htmlContent = this.htmlTemplateEngine.process("assessment-email", ctx);
 		email.setText(htmlContent, true);
-
-//		ClassPathResource clr = new ClassPathResource(JOBROAD_LOGO_IMAGE);
-//		email.addInline("jobroadLogo", clr, PNG_MIME);
-//
-//		ClassPathResource illustration = new ClassPathResource(JOBROAD_EMPLOYEE_IMAGE);
-//		email.addInline("illustration", illustration, PNG_MIME);
 
 		javaMailSender.send(mimeMessage);
 	}
