@@ -104,7 +104,7 @@ public class OfferingLetterService {
 			
 			offeringLetter = offeringLetterDao.save(offeringLetter);
 
-			final String emailSubject = "Offering Letter";
+			final String emailSubject = "Offering Letter: [" + applicant.getJob().getJobName() + "] at " + applicant.getJob().getCompany().getCompanyName();
 			
 			offeringDatas.put("fullname",candidate.getCandidateProfile().getFullname());
 			offeringDatas.put("positionName", applicant.getJob().getJobName());

@@ -81,16 +81,16 @@ Jawa Barat, 172031]]></text>
 				<textFieldExpression><![CDATA["We are delighted to offer you the position of "+$P{positionName} +" at "+ $P{companyName}+". We noticed your impressive skills and experience during the selection process, and we believe you would be a valuable addition to our company. Below are the details of the job offer:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="6" y="148" width="544" height="59" uuid="244e640e-dd6e-46b5-ba7f-84d6ca115df4"/>
+				<reportElement x="3" y="139" width="544" height="59" uuid="244e640e-dd6e-46b5-ba7f-84d6ca115df4"/>
 				<textElement>
 					<font fontName="&#xD;&#xA;SansSerif" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Name : "+ $P{fullname}+ "\nPosition : "+$P{positionName}+ "  \nSalary : Rp "+$P{salary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Name : "+ $P{fullname}+ "\nPosition : "+$P{positionName}+ "  \nSalary : "+$P{salary}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
-		<band height="25">
+		<band height="22">
 			<textField>
 				<reportElement x="20" y="2" width="100" height="20" uuid="bdcb1c78-072b-4f4b-be70-56caa3a8be78"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
@@ -99,7 +99,7 @@ Jawa Barat, 172031]]></text>
 				<textFieldExpression><![CDATA[$F{benefitName}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="2" width="10" height="20" uuid="9cfb2090-316b-43f1-977d-de0b049edc12"/>
+				<reportElement x="10" y="3" width="10" height="19" uuid="d3d125ec-eb78-4285-a5e5-1f1a6fe9f764"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[•]]></text>
 			</staticText>
@@ -161,7 +161,7 @@ Jawa Barat, 172031]]></text>
 				<textElement>
 					<font fontName="&#xD;&#xA;SansSerif" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Once we receive your paperwork, we will confirm your start date. We are looking forward to having you on the "+$P{companyName} +" team."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Once we receive your paperwork, we will confirm your start date. We are looking forward to having you on the "+$P{companyName} +" team."]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
