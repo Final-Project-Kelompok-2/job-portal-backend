@@ -31,6 +31,7 @@ public class CandidateUserResDto {
 	private String candidateStatus;
 	private String candidateStatusCode;
 	private String candidateStatusId;
+	private String createdBy;
 
 	public String getMaritalStatusCode() {
 		return maritalStatusCode;
@@ -248,6 +249,14 @@ public class CandidateUserResDto {
 
 	public void setExpectedSalary(String expectedSalary) {
 		this.expectedSalary = expectedSalary;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	

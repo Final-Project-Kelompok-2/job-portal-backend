@@ -273,6 +273,35 @@ public class EmailService {
 		thread.start();
 
 	}
+	
+	public void sendEmailNewCandidate(CandidateUser user, String emailSubject)
+			throws MessagingException, UnsupportedEncodingException {
+
+		Thread thread = new Thread() {
+			public void run() {
+				try {
+					final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+					final MimeMessageHelper email;
+					email = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					email.setTo(user.getUserEmail());
+					email.setSubject(emailSubject);
+
+					final Context ctx = new Context(LocaleContextHolder.getLocale());
+					ctx.setVariable("salutation", user.getCandidateProfile().getSalutation());
+					ctx.setVariable("name", user.getCandidateProfile().getFullname());
+					
+					final String htmlContent = htmlTemplateEngine.process("welcome-candidate-email", ctx);
+					email.setText(htmlContent, true);
+
+					javaMailSender.send(mimeMessage);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		thread.start();
+
+	}
 
 	public void sendEmailThymeLeaf(String title, String to, String subject, String message)
 			throws MessagingException, UnsupportedEncodingException {
