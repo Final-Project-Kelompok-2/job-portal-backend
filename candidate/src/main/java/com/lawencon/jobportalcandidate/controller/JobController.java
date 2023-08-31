@@ -33,7 +33,7 @@ public class JobController {
 	}
 	
 	@GetMapping("/company")
-	public ResponseEntity<List<JobResDto>> getByCompany(@Param("code")String code) {
+	public ResponseEntity<List<JobResDto>> getByCompany(@RequestParam("code")String code) {
 		final List<JobResDto> data = jobService.getJobsByCompany(code);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}

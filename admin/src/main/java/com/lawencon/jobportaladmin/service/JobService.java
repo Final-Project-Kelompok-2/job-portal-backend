@@ -134,7 +134,7 @@ public class JobService {
 	public List<JobResDto> getByPrincipal() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByPerson(principalService.getAuthPrincipal());
-
+		
 		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
@@ -355,7 +355,7 @@ public class JobService {
 		job.setPicId(jobDb.getPic().getId());
 		job.setHrId(jobDb.getHr().getId());
 		job.setCompanyPhotoId(jobDb.getCompany().getPhoto().getId());
-		
+		job.setCreatedBy(jobDb.getCreatedBy());
 		return job;
 	}
 	

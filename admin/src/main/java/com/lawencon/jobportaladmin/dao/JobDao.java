@@ -153,7 +153,7 @@ public class JobDao extends AbstractJpaDao{
 			.append("INNER JOIN ")
 			.append(" t_employment_type tet ON tet.id = tj.employment_type_id ")
 			.append("WHERE ")
-			.append(" tj.hr_id = :id");
+			.append(" tj.hr_id = :id  ;");
 		
 		final String sql = "SELECT "
 				+ "	tj.id AS job_id,"
@@ -173,7 +173,7 @@ public class JobDao extends AbstractJpaDao{
 				+ "INNER JOIN"
 				+ "	t_employment_type tet ON tet.id = tj.employment_type_id "
 				+ "WHERE "
-				+ "	tj.hr_id = :id";
+				+ "	tj.hr_id = :id OR tj.created_by =:id";
 
 		final List<?> jobObjs = em().createNativeQuery(sql)
 				.setParameter("id", id)

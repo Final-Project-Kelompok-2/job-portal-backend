@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan(basePackages = { "com.lawencon" })
 @EntityScan(basePackages = { "com.lawencon" })
-//@SpringBootApplication
+//@SpringBootApplication	
 @SpringBootApplication(exclude = { ThymeleafAutoConfiguration.class })
 public class JobPortalAdmin {
 

@@ -16,6 +16,7 @@ public class JobDetailResDto {
 	private String companyPhotoId;
 	private String picId;
 	private String hrId;
+	private String createdBy;
 	
 
 	public String getId() {
@@ -128,6 +129,14 @@ public class JobDetailResDto {
 
 	public void setHrId(String hrId) {
 		this.hrId = hrId;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 	

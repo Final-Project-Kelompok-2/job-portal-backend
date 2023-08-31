@@ -119,6 +119,9 @@ public class CandidateUserService {
 
 	@Autowired
 	private PrincipalService<String> principalService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	private EntityManager em() {
 		return ConnHandler.getManager();
@@ -481,6 +484,9 @@ public class CandidateUserService {
 			candidateUser.setCandidateProfile(candidateProfile);
 			candidateUser = candidateUserDao.saveNoLogin(candidateUser, () -> GenerateCode.generateCode());
 
+			final String emailSubject = "Welcome to JobRoad";
+			emailService.sendEmailNewCandidate(candidateUser, emailSubject);
+			
 			insertResDto.setId(candidateUser.getId());
 			insertResDto.setMessage("Candidate has been added!");
 
@@ -662,6 +668,8 @@ public class CandidateUserService {
 			candidateDto.setCandidateStatus(status.getStatusName());
 			candidateDto.setProfileId(candidate.getCandidateProfile().getId());
 		}
+		
+		candidateDto.setCreatedBy(candidate.getCreatedBy());
 
 		return candidateDto;
 	}

@@ -3,6 +3,7 @@ package com.lawencon.jobportaladmin.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +30,8 @@ public class ReportController {
    }
 	
 	@GetMapping
-	public ResponseEntity<List<ReportResDto>> getReports(){
-		final List<ReportResDto> response = reportService.getReport();
+	public ResponseEntity<List<ReportResDto>> getReports(@Param("startDate")String startDate, @Param("endDate")String endDate ){
+		final List<ReportResDto> response = reportService.getReport(startDate,endDate);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	

@@ -49,6 +49,9 @@ public class ApplicantService {
 
 	@Autowired
 	private CandidateUserDao candidateUserDao;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -154,6 +157,10 @@ public class ApplicantService {
 
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
 
+				if (applicant.getStatus().getStatusCode().equals(com.lawencon.jobportaladmin.constant.HiringStatus.REJECT.statusCode)) {
+					final String emailSubject = "Your Job Application to " + applicant.getJob().getCompany().getCompanyName() + " at " + applicant.getJob().getJobName();
+					emailService.sendEmailRejection(applicant, emailSubject);
+				}
 				resDto.setVersion(applicant.getVersion());
 				resDto.setMessage("Update Application Success");
 				em().getTransaction().commit();

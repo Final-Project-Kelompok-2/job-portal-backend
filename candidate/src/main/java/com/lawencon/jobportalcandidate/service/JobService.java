@@ -90,7 +90,8 @@ public class JobService {
 	public List<JobResDto> getJobsByCompany(String code) {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByCompany(code);
-
+		
+		System.out.println("Job length = "+ jobs.size());
 		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
@@ -104,10 +105,15 @@ public class JobService {
 			job.setExpectedSalaryMax(MoneyUtil.parseToRupiah(jobs.get(i).getExpectedSalaryMax()));
 			job.setEmployementTypeName(jobs.get(i).getEmploymentType().getEmploymentTypeName());
 			job.setFileId(jobs.get(i).getJobPicture().getId());
-			job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
+			if(jobs.get(i).getCompany().getPhoto()!=null) {
+				
+				job.setCompanyPhotoId(jobs.get(i).getCompany().getPhoto().getId());
+			}
 			jobsDto.add(job);
 		}
 
+		
+		
 		return jobsDto;
 	}
 
