@@ -26,16 +26,16 @@ on tet.id = tj.employment_type_id]]>
 		<property name="com.jaspersoft.studio.field.label" value="fullname"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="t_candidate_profile"/>
 	</field>
-	<field name="job_name" class="java.lang.String">
+	<field name="jobName" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="job_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="job_name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="t_job"/>
 	</field>
-	<field name="dif" class="org.postgresql.util.PGInterval">
+	<field name="duration" class="org.postgresql.util.PGInterval">
 		<property name="com.jaspersoft.studio.field.name" value="dif"/>
 		<property name="com.jaspersoft.studio.field.label" value="dif"/>
 	</field>
-	<field name="employment_type_name" class="java.lang.String">
+	<field name="employmentType" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="employment_type_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="employment_type_name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="t_employment_type"/>
@@ -127,19 +127,19 @@ Jawa Barat, 172031]]></text>
 				<reportElement x="141" y="0" width="138" height="30" uuid="3575a108-0010-4a39-a110-aedfcb186c3f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4b42a66-d78e-4097-acbe-158736d46c7a"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{job_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{jobName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="279" y="0" width="138" height="30" uuid="0a8a1394-6203-4c7e-a18c-d596c835d7b7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f6b991f-f768-4c1d-bba7-8a0864d43b3b"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{dif}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="417" y="0" width="138" height="30" uuid="3240e164-1d85-494e-bee0-5a20eefbe388">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6737ec2b-b2d7-40ba-924c-3eb22cdf2aba"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{employment_type_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employmentType}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
