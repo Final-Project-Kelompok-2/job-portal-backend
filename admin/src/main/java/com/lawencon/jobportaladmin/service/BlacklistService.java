@@ -71,15 +71,11 @@ public class BlacklistService {
 			candidateUser.setIsActive(false);
 			candidateUser = candidateUserDao.save(candidateUser);			
 			data.setIsActive(false);
-//			resDto.setId(blacklist.getId());
-//			resDto.setMessage("Insert Blacklist success");
-//			em().getTransaction().commit();
 			
 			final String updateCandidateStatusAPI = "http://localhost:8081/candidate-user/blacklist";
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			headers.setBearerAuth(JwtConfig.get());
-			System.out.println("hello bro");
 			final RequestEntity<BlacklistInsertReqDto> candidateUpdate = RequestEntity.patch(updateCandidateStatusAPI)
 					.headers(headers).body(data);
 			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(candidateUpdate,

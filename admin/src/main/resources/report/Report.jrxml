@@ -1,31 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4f3b50de-5b4f-4a59-9989-523eef0355ab">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select 
+	tcp.fullname ,
+	tj.job_name ,
+	th.created_at  	- ta.created_at as dif,
+	tet.employment_type_name 
+from t_hired th 
+inner join t_applicant ta 
+on	ta.id = th.applicant_id 
+inner join t_candidate_user tcu 
+on tcu.id = ta.candidate_id 
+inner join t_candidate_profile tcp 
+on tcp.id  = tcu.profile_id 
+inner join t_job tj
+on ta.job_id  = tj.id 
+inner join t_employment_type tet 
+on tet.id = tj.employment_type_id]]>
 	</queryString>
+	<field name="fullname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fullname"/>
+		<property name="com.jaspersoft.studio.field.label" value="fullname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_candidate_profile"/>
+	</field>
+	<field name="job_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="job_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="job_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_job"/>
+	</field>
+	<field name="dif" class="org.postgresql.util.PGInterval">
+		<property name="com.jaspersoft.studio.field.name" value="dif"/>
+		<property name="com.jaspersoft.studio.field.label" value="dif"/>
+	</field>
+	<field name="employment_type_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="employment_type_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="employment_type_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_employment_type"/>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="2" width="271" height="55" uuid="176b5c21-30ee-452a-9fcf-20febe540812"/>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/Final-Project-Kelompok-2/job-portal-frontend/main/projects/admin-jobroad/src/assets/jobroad.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="280" y="0" width="274" height="40" uuid="e86a7103-e9b2-404d-930b-b446628aafd9"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="13"/>
+				</textElement>
+				<text><![CDATA[Jalan Zingiber Volturi, Blok Tatang Rocket
+Jawa Barat, 172031]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="40" width="100" height="15" uuid="a021be59-c618-4bb5-af4e-ff1dbd2e83b5"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Telp : (021) 123456]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="40" width="175" height="15" uuid="ce3db414-a9f3-4933-bd6d-fc332a6caebf"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Email : jobroadlawencon@gmail.com]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="60" width="560" height="1" uuid="c43afa91-8e99-426d-afcb-cc1d41094a2b"/>
+			</line>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement x="185" y="0" width="190" height="30" uuid="b68f062e-a301-49c4-a8d2-68e893f47682"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APPLICATION REPORT]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="141" height="30" uuid="e487ff61-ec24-4cfc-9c95-7941540fb79c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eeb393cc-f4b3-46ff-acdf-eca1c3a29e96"/>
+				</reportElement>
+				<text><![CDATA[Candidate Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="0" width="138" height="30" uuid="d49e7dbd-0b91-4cbd-bdfa-2e237279da80">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4b42a66-d78e-4097-acbe-158736d46c7a"/>
+				</reportElement>
+				<text><![CDATA[Job Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="138" height="30" uuid="45b5c1ea-9abc-44c1-bb1c-9b672c9bbc58">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f6b991f-f768-4c1d-bba7-8a0864d43b3b"/>
+				</reportElement>
+				<text><![CDATA[Hiring Duration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="138" height="30" uuid="16e67250-329a-4aaf-ae6c-35cf0d9377ea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6737ec2b-b2d7-40ba-924c-3eb22cdf2aba"/>
+				</reportElement>
+				<text><![CDATA[Employment Type]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="111" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="141" height="30" uuid="901ba497-c6ef-420b-a7f4-c342d0530705">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eeb393cc-f4b3-46ff-acdf-eca1c3a29e96"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="0" width="138" height="30" uuid="3575a108-0010-4a39-a110-aedfcb186c3f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4b42a66-d78e-4097-acbe-158736d46c7a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{job_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="138" height="30" uuid="0a8a1394-6203-4c7e-a18c-d596c835d7b7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f6b991f-f768-4c1d-bba7-8a0864d43b3b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{dif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="138" height="30" uuid="3240e164-1d85-494e-bee0-5a20eefbe388">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6737ec2b-b2d7-40ba-924c-3eb22cdf2aba"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{employment_type_name}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
+	<lastPageFooter>
+		<band height="49">
+			<staticText>
+				<reportElement x="2" y="25" width="170" height="15" uuid="742e1cbf-cbb2-42bb-8cf3-6de1ef340f7e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Email : jobroadlawencon@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="4" width="156" height="24" uuid="7720a704-a4a7-451e-9e66-b9483407b80a"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[JobRoad © Copyright 2023]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="25" width="100" height="15" uuid="0bcde0ce-f17d-4ee5-84c2-e371c11a8ef7"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Telp : (021) 123456]]></text>
+			</staticText>
+			<image>
+				<reportElement x="381" y="9" width="173" height="40" uuid="ce547028-1a50-4948-83cb-dd6aa66a274c"/>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/Final-Project-Kelompok-2/job-portal-frontend/main/projects/admin-jobroad/src/assets/jobroad.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="24" width="369" height="1" uuid="b767b231-3fe1-4823-b0d2-4c78e78c77a2"/>
+			</line>
+		</band>
+	</lastPageFooter>
 </jasperReport>
