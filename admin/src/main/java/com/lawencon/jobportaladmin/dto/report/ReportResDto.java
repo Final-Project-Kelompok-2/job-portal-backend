@@ -7,7 +7,7 @@ public class ReportResDto {
 	private String fullName;
 	private String jobName;
 	private LocalDateTime applyAt;
-	private LocalDateTime HiredAt;
+	private LocalDateTime hiredAt;
 	private Long timeDifference;
 	private String employmentTypeName;
 
@@ -52,11 +52,12 @@ public class ReportResDto {
 	}
 
 	public LocalDateTime getHiredAt() {
-		return HiredAt;
+		return hiredAt;
 	}
 
 	public void setHiredAt(LocalDateTime hiredAt) {
-		HiredAt = hiredAt;
+		this.hiredAt = hiredAt;
 	}
 
+	
 }
