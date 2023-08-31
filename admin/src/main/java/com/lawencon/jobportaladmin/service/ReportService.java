@@ -35,9 +35,22 @@ public class ReportService {
 		return reports;
 	}
 
-	public byte[] downloadReport(List<ReportResDto> reportDatas) throws Exception {
+	public byte[] downloadReport(String startDate, String endDate) throws Exception {
 
-		return jasperUtil.responseToByteArray(reportDatas, null, "Report");
+		Timestamp newStartDate = null;
+		Timestamp newEndDate = null;
+
+		if (startDate != null) {
+			newStartDate = Timestamp.valueOf(startDate);
+
+		}
+		if (endDate != null || "".equalsIgnoreCase(endDate)) {
+			newEndDate = Timestamp.valueOf(endDate);
+
+		}
+		final List<ReportResDto> reports = reportDao.getReport(newStartDate, newEndDate);
+		
+		return jasperUtil.responseToByteArray(reports, null, "Report");
 	}
 
 }

@@ -21,25 +21,10 @@ on ta.job_id  = tj.id
 inner join t_employment_type tet 
 on tet.id = tj.employment_type_id]]>
 	</queryString>
-	<field name="fullname" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="fullname"/>
-		<property name="com.jaspersoft.studio.field.label" value="fullname"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="t_candidate_profile"/>
-	</field>
-	<field name="jobName" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="job_name"/>
-		<property name="com.jaspersoft.studio.field.label" value="job_name"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="t_job"/>
-	</field>
-	<field name="duration" class="org.postgresql.util.PGInterval">
-		<property name="com.jaspersoft.studio.field.name" value="dif"/>
-		<property name="com.jaspersoft.studio.field.label" value="dif"/>
-	</field>
-	<field name="employmentType" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="employment_type_name"/>
-		<property name="com.jaspersoft.studio.field.label" value="employment_type_name"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="t_employment_type"/>
-	</field>
+	<field name="jobName" class="java.lang.String"/>
+	<field name="fullName" class="java.lang.String"/>
+	<field name="employmentTypeName" class="java.lang.String"/>
+	<field name="timeDifference" class="java.lang.Long"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -88,58 +73,58 @@ Jawa Barat, 172031]]></text>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="69" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="141" height="30" uuid="e487ff61-ec24-4cfc-9c95-7941540fb79c">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eeb393cc-f4b3-46ff-acdf-eca1c3a29e96"/>
+				<reportElement x="2" y="0" width="138" height="30" uuid="dfe06264-8021-4f48-9a5a-9877e4efe37a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d823768-c854-4be7-b3ed-f641e603bd9d"/>
 				</reportElement>
-				<text><![CDATA[Candidate Name]]></text>
+				<text><![CDATA[fullName]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="141" y="0" width="138" height="30" uuid="d49e7dbd-0b91-4cbd-bdfa-2e237279da80">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4b42a66-d78e-4097-acbe-158736d46c7a"/>
-				</reportElement>
-				<text><![CDATA[Job Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="279" y="0" width="138" height="30" uuid="45b5c1ea-9abc-44c1-bb1c-9b672c9bbc58">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f6b991f-f768-4c1d-bba7-8a0864d43b3b"/>
-				</reportElement>
-				<text><![CDATA[Hiring Duration]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="417" y="0" width="138" height="30" uuid="16e67250-329a-4aaf-ae6c-35cf0d9377ea">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6737ec2b-b2d7-40ba-924c-3eb22cdf2aba"/>
+				<reportElement x="417" y="0" width="138" height="30" uuid="a4f039cc-7694-4c5c-bed8-07c5c141501a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b6e38e2-6db0-469e-8198-811cb6032794"/>
 				</reportElement>
 				<text><![CDATA[Employment Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="138" height="30" uuid="ee7b0dac-fbbc-463a-868b-80dd9a2ad8f5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5da7036b-ebd1-4fa7-8641-227a349385c2"/>
+				</reportElement>
+				<text><![CDATA[timeDifference]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="0" width="141" height="30" uuid="fb60953b-1b0a-4f86-be89-f20e819339bf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b6bbcda-c1cc-4869-b3a0-2e878465e693"/>
+				</reportElement>
+				<text><![CDATA[jobName]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="111" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="141" height="30" uuid="901ba497-c6ef-420b-a7f4-c342d0530705">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eeb393cc-f4b3-46ff-acdf-eca1c3a29e96"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="141" y="0" width="138" height="30" uuid="3575a108-0010-4a39-a110-aedfcb186c3f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d4b42a66-d78e-4097-acbe-158736d46c7a"/>
+				<reportElement x="139" y="0" width="141" height="30" uuid="9087476a-54dc-457e-89f8-5499c8545a3b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b6bbcda-c1cc-4869-b3a0-2e878465e693"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{jobName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="279" y="0" width="138" height="30" uuid="0a8a1394-6203-4c7e-a18c-d596c835d7b7">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f6b991f-f768-4c1d-bba7-8a0864d43b3b"/>
+				<reportElement x="0" y="0" width="138" height="30" uuid="f1534e19-32a3-4bb2-acf6-7735946c2a09">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d823768-c854-4be7-b3ed-f641e603bd9d"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="417" y="0" width="138" height="30" uuid="3240e164-1d85-494e-bee0-5a20eefbe388">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6737ec2b-b2d7-40ba-924c-3eb22cdf2aba"/>
+				<reportElement x="417" y="0" width="138" height="30" uuid="53518270-bc3f-4d3a-afb0-c7b518366d92">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b6e38e2-6db0-469e-8198-811cb6032794"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{employmentType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{employmentTypeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="138" height="30" uuid="b0d082a3-a1d4-4098-8da7-707e953e8245">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5da7036b-ebd1-4fa7-8641-227a349385c2"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{timeDifference}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
