@@ -134,7 +134,6 @@ public class JobService {
 	public List<JobResDto> getByPrincipal() {
 		final List<JobResDto> jobsDto = new ArrayList<>();
 		final List<Job> jobs = jobDao.getByPerson(principalService.getAuthPrincipal());
-
 		for (int i = 0; i < jobs.size(); i++) {
 			final JobResDto job = new JobResDto();
 			job.setId(jobs.get(i).getId());
