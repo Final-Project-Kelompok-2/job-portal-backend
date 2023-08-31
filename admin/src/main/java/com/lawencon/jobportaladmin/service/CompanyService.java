@@ -64,6 +64,23 @@ public class CompanyService {
 		}
 		return companyResList;
 	}
+	
+	public CompanyResDto getDetail(String id) {
+		final Company company = companyDao.getById(Company.class, id);		
+		final CompanyResDto companyRes = new CompanyResDto();
+		companyRes.setId(company.getId());
+		companyRes.setCompanyName(company.getCompanyName());
+		companyRes.setCompanyCode(company.getCompanyCode());
+		companyRes.setCompanyPhone(company.getCompanyPhone());
+		companyRes.setAddress(company.getAddress());
+
+		if (company.getCompanyUrl() != null) {
+			companyRes.setCompanyUrl(company.getCompanyUrl());
+		}
+		companyRes.setPhotoId(company.getPhoto().getId());
+		
+		return companyRes;
+	}
 
 	public InsertResDto insertCompany(CompanyInsertReqDto data) {
 		final InsertResDto insertRes = new InsertResDto();
