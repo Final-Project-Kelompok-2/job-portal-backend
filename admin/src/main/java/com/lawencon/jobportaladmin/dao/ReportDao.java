@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,7 @@ public class ReportDao extends AbstractJpaDao{
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	public List<ReportResDto> getReport(){
+	public List<ReportResDto> getReport(Timestamp startDate, Timestamp endDate){
 		final List<ReportResDto>reportList = new ArrayList<>();
 		final StringBuilder sql = new StringBuilder();
 				sql.append("select  ")
@@ -51,7 +52,20 @@ public class ReportDao extends AbstractJpaDao{
 //		if(employmentTypeName != null && "".equalsIgnoreCase("")) {
 //			sql.append(" AND tet.employment_type_name ILIKE :type || % ");
 //		}
-		final List<?> reportObjs = em().createNativeQuery(sql.toString()).getResultList();
+		if(startDate != null && "".equalsIgnoreCase("")) {
+			sql.append(" AND ta.created_at >= :startDate ");
+		}
+		if(endDate != null && "".equalsIgnoreCase("")) {
+			sql.append(" AND th.created_at <= :endDate");
+		}
+		final Query reportQuery = em().createNativeQuery(sql.toString());
+		if(startDate != null && "".equalsIgnoreCase("")) {
+			reportQuery.setParameter("startDate", startDate);
+		}
+		if(endDate != null && "".equalsIgnoreCase("")) {
+			reportQuery.setParameter("endDate", endDate);
+		}
+		final List<?>reportObjs = reportQuery.getResultList();
 		if(reportObjs.size() > 0) {
 			for(Object reportObj : reportObjs) {
 				final ReportResDto reports = new ReportResDto();
