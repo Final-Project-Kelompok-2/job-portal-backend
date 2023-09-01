@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.ConnHandler;
 import com.lawencon.jobportaladmin.constant.PersonTypes;
+import com.lawencon.jobportaladmin.constant.Role;
 import com.lawencon.jobportaladmin.dao.CandidateProfileDao;
 import com.lawencon.jobportaladmin.dao.CandidateUserDao;
 import com.lawencon.jobportaladmin.dao.EmployeeDao;
@@ -32,44 +33,63 @@ public class EmployeeService {
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	
+
 	@Autowired
 	private EmployeeDao employeeDao;
-	
+
 	@Autowired
 	private CandidateUserDao candidateUserDao;
-	
+
 	@Autowired
 	private CandidateProfileDao candidateProfileDao;
-	
+
 	@Autowired
 	private PersonTypeDao personTypeDao;
-	
+
 	@Autowired
 	private JobDao jobDao;
-	
+
 	@Autowired
 	private PrincipalService<String> principalService;
-	
-	public List<EmployeeResDto>getAll(){
+
+	public List<EmployeeResDto> getAll() {
 		final List<Employee> getList = employeeDao.getAll(Employee.class);
 		final List<EmployeeResDto> employeeRes = new ArrayList<>();
-		for(int i = 0 ; i < getList.size() ; i++) {
+		for (int i = 0; i < getList.size(); i++) {
 			final EmployeeResDto resDto = new EmployeeResDto();
+			resDto.setId(getList.get(i).getId());
 			resDto.setCandidateName(getList.get(i).getCandidate().getCandidateProfile().getFullname());
 			resDto.setPhoneNumber(getList.get(i).getCandidate().getCandidateProfile().getPhoneNumber());
 			resDto.setJobName(getList.get(i).getJob().getJobName());
 			resDto.setCompanyUrl(getList.get(i).getJob().getCompany().getCompanyUrl());
 			resDto.setEmploymentTypeName(getList.get(i).getJob().getEmploymentType().getEmploymentTypeName());
 			resDto.setCandidateEmail(getList.get(i).getCandidate().getUserEmail());
+			resDto.setCreatedBy(getList.get(i).getCandidate().getCreatedBy());
+
 			employeeRes.add(resDto);
 		}
 		return employeeRes;
 	}
 
+	public EmployeeResDto getById(String id) {
+		final EmployeeResDto employeeResDto = new EmployeeResDto();
+		final Employee employee = employeeDao.getById(Employee.class, id);
+
+		employeeResDto.setId(employee.getId());
+		employeeResDto.setCandidateName(employee.getCandidate().getCandidateProfile().getFullname());
+		employeeResDto.setPhoneNumber(employee.getCandidate().getCandidateProfile().getPhoneNumber());
+		employeeResDto.setJobName(employee.getJob().getJobName());
+		employeeResDto.setCompanyUrl(employee.getJob().getCompany().getCompanyUrl());
+		employeeResDto.setEmploymentTypeName(employee.getJob().getEmploymentType().getEmploymentTypeName());
+		employeeResDto.setCandidateEmail(employee.getCandidate().getUserEmail());
+		employeeResDto.setCreatedBy(employee.getJob().getCreatedBy());
+
+		return employeeResDto;
+	}
+
 	public InsertResDto insertEmployeeFromAdmin(EmployeInsertReqAdminDto data) {
 		final InsertResDto response = new InsertResDto();
-		
+
 		try {
 			em().getTransaction().begin();
 			final Employee employee = new Employee();
@@ -78,25 +98,25 @@ public class EmployeeService {
 			employee.setCandidate(candidateUser);
 			employee.setJob(job);
 			employee.setEmployeeCode(GenerateCode.generateCode());
-			employee.setCreatedBy(principalService.getAuthPrincipal());
 			employeeDao.save(employee);
-			
+
 			response.setId(employee.getId());
 			response.setMessage("Candidate Assigned to a Job");
-			
-			CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class, candidateUser.getCandidateProfile().getId());
+
+			CandidateProfile candidateProfile = candidateProfileDao.getById(CandidateProfile.class,
+					candidateUser.getCandidateProfile().getId());
 			final PersonType personType = personTypeDao.getByCode(PersonTypes.EMPLOYEE.typeCode);
 			candidateProfile.setPersonType(personType);
-			
+
 			candidateProfile = candidateProfileDao.saveAndFlush(candidateProfile);
-			
+
 			em().getTransaction().commit();
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
 			throw new RuntimeException("Assign Candidate to a Job Failed");
 		}
-		
+
 		return response;
 	}
 }
