@@ -1,6 +1,7 @@
 package com.lawencon.jobportaladmin.dao;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,12 @@ public class ReportDao extends AbstractJpaDao{
 	private EntityManager em() {
 		return ConnHandler.getManager();
 	}
-	public List<ReportResDto> getReport(Timestamp startDate, Timestamp endDate){
+	public List<ReportResDto> getReport(LocalDate startDate, LocalDate endDate){
 		final List<ReportResDto>reportList = new ArrayList<>();
 		final StringBuilder sql = new StringBuilder();
 				sql.append("select  ")
 				.append( "	tcp.fullname , ")
 				.append( "	tj.job_name , ")
-//				.append( "	to_char(th.created_at  	- ta.created_at,'DD:HH') as time, ")
 				.append(" ta.created_at as apply, ")
 				.append(" th.created_at as hired, ")
 				.append( "	tet.employment_type_name  ")
@@ -43,15 +43,7 @@ public class ReportDao extends AbstractJpaDao{
 				.append( "on tet.id = tj.employment_type_id ")
 				.append( "where ")
 				.append(" 1 = 1 ");
-//		if(candidateName != null && "".equalsIgnoreCase("")) {
-//			sql.append(" AND tcp.fullname ILIKE :fullName || % ");
-//		}
-//		if(jobName != null && "".equalsIgnoreCase("")) {
-//			sql.append(" AND tj.job_name ILIKE :jobName || % ");
-//		}
-//		if(employmentTypeName != null && "".equalsIgnoreCase("")) {
-//			sql.append(" AND tet.employment_type_name ILIKE :type || % ");
-//		}
+
 		if(startDate != null && "".equalsIgnoreCase("")) {
 			sql.append(" AND ta.created_at >= :startDate ");
 		}
