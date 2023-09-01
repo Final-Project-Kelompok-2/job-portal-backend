@@ -23,7 +23,8 @@ public class ReportController {
 
 	@GetMapping("/download")
 	public ResponseEntity<?> getReport(@RequestParam String startDate, @RequestParam String endDate) throws Exception {
-		final String fileName = "Report";
+		
+		final String fileName = "Application Report";
 		final byte[] fileBytes = reportService.downloadReport(startDate, endDate);
 		return ResponseEntity.ok().header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
 				"attachment; filename=" + fileName + ".pdf"	).body(fileBytes);
