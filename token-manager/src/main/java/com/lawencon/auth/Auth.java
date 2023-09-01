@@ -9,6 +9,7 @@ public class Auth {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(Auth.class, args);
-	 
+	  
 	}
 }
+ 
