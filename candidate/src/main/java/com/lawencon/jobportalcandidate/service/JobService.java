@@ -273,7 +273,8 @@ public class JobService {
 		try {
 			em().getTransaction().begin();
 			
-			Job job = jobDao.getByCode(data.getJobCode());
+			final Job jobByCode = jobDao.getByCode(data.getJobCode());
+			Job job = jobDao.getById(Job.class, jobByCode.getId());
 			
 			if(data.getJobName()!= null) {
 				job.setJobName(data.getJobName());
@@ -304,7 +305,7 @@ public class JobService {
 				job.setEmploymentType(type);
 			}
 			
-			if(data.getFileId()!= null && data.getFileExtension()!=null) {
+			if(data.getFile()!= null && data.getFileExtension()!=null) {
 				File file = new File();
 				file.setFileName(data.getFile());
 				file.setFileExtension(data.getFileExtension());

@@ -249,12 +249,13 @@ public class JobService {
 	}
 
 	public UpdateResDto updateJob(JobUpdateReqDto jobDto) {
-		final Job job = jobDao.getById(Job.class, jobDto.getId());
+		
 
 		UpdateResDto result = null;
 
 		try {
 			em().getTransaction().begin();
+			Job job = jobDao.getById(Job.class, jobDto.getId());
 			jobDto.setJobCode(job.getJobCode());
 			
 			if(jobDto.getJobName()!=null) {
@@ -298,7 +299,7 @@ public class JobService {
 				job.setJobPicture(file);
 			}
 			
-			jobDao.saveAndFlush(job);
+			job = jobDao.saveAndFlush(job);
 			
 			final String jobUpdateAPI = "http://localhost:8081/jobs";
 

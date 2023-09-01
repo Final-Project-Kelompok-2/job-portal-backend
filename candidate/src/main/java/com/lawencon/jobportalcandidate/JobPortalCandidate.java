@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class JobPortalCandidate {
 
-	
 	public static void main (String[] args) {
 		
 		SpringApplication.run(JobPortalCandidate.class,args);
