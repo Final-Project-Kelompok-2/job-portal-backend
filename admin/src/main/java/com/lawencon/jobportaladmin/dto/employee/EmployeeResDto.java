@@ -9,6 +9,7 @@ public class EmployeeResDto {
 	private String jobName;
 	private String companyUrl;
 	private String employmentTypeName;
+	private String createdBy;
 	
 
 	public String getId() {
@@ -66,6 +67,14 @@ public class EmployeeResDto {
 
 	public void setCandidateEmail(String candidateEmail) {
 		this.candidateEmail = candidateEmail;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }
