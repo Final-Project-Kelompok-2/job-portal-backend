@@ -74,7 +74,7 @@ Jawa Barat, 172031]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="158" y="21" width="122" height="18" uuid="5a36f9d0-372d-43a3-86dc-9afa877c0890"/>
-				<textFieldExpression><![CDATA["From : "+ $P{startDate} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["From : "+ $P{startDate}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="21" width="120" height="18" uuid="7cf6d66a-31ae-4edf-a165-a27b1c16113b"/>
@@ -98,7 +98,7 @@ Jawa Barat, 172031]]></text>
 				<text><![CDATA[Candidate Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="418" y="0" width="138" height="30" uuid="a4f039cc-7694-4c5c-bed8-07c5c141501a">
+				<reportElement x="418" y="0" width="137" height="30" uuid="a4f039cc-7694-4c5c-bed8-07c5c141501a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b6e38e2-6db0-469e-8198-811cb6032794"/>
 				</reportElement>
 				<box>
@@ -190,7 +190,7 @@ Jawa Barat, 172031]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{timeDifference}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{timeDifference} <=1?  "Less than 1 Days" : $F{timeDifference}+" days"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
