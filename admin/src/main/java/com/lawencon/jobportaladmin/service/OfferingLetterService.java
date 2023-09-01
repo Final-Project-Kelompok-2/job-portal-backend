@@ -1,7 +1,5 @@
 package com.lawencon.jobportaladmin.service;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
