@@ -2,26 +2,17 @@ package com.lawencon.jobportalcandidate.dto.job;
 
 public class JobUpdateReqDto {
 
-	private String id;
+	private String jobCode;
 	private String jobName;
-	private String companyId;
 	private String startDate;
 	private String endDate;
 	private String description;
 	private String expectedSalaryMin;
 	private String expectedSalaryMax;
-	private String employmentTypeId;
+	private String employmentTypeCode;
 	private String fileId;
 	private String file;
 	private String fileExtension;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getJobName() {
 		return jobName;
@@ -31,13 +22,6 @@ public class JobUpdateReqDto {
 		this.jobName = jobName;
 	}
 
-	public String getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
-	}
 
 	public String getStartDate() {
 		return startDate;
@@ -79,13 +63,6 @@ public class JobUpdateReqDto {
 		this.expectedSalaryMax = expectedSalaryMax;
 	}
 
-	public String getEmploymentTypeId() {
-		return employmentTypeId;
-	}
-
-	public void setEmploymentTypeId(String employmentTypeId) {
-		this.employmentTypeId = employmentTypeId;
-	}
 
 	public String getFileId() {
 		return fileId;
@@ -109,6 +86,22 @@ public class JobUpdateReqDto {
 
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
+	}
+
+	public String getEmploymentTypeCode() {
+		return employmentTypeCode;
+	}
+
+	public void setEmploymentTypeCode(String employmentTypeCode) {
+		this.employmentTypeCode = employmentTypeCode;
+	}
+
+	public String getJobCode() {
+		return jobCode;
+	}
+
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
 	}
 
 }

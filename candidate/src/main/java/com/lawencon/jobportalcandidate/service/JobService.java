@@ -1,6 +1,7 @@
 package com.lawencon.jobportalcandidate.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,10 @@ import com.lawencon.jobportalcandidate.dao.JobDao;
 import com.lawencon.jobportalcandidate.dao.QuestionDao;
 import com.lawencon.jobportalcandidate.dao.SavedJobDao;
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
+import com.lawencon.jobportalcandidate.dto.UpdateResDto;
 import com.lawencon.jobportalcandidate.dto.job.JobInsertReqDto;
 import com.lawencon.jobportalcandidate.dto.job.JobResDto;
+import com.lawencon.jobportalcandidate.dto.job.JobUpdateReqDto;
 import com.lawencon.jobportalcandidate.model.AssignedJobQuestion;
 import com.lawencon.jobportalcandidate.model.Company;
 import com.lawencon.jobportalcandidate.model.EmploymentType;
@@ -263,4 +266,70 @@ public class JobService {
 		return jobsDto;
 	}
 
+	
+	public UpdateResDto updateJob(JobUpdateReqDto data) {
+		UpdateResDto resDto = null;
+		
+		try {
+			em().getTransaction().begin();
+			
+			Job job = jobDao.getByCode(data.getJobCode());
+			
+			if(data.getJobName()!= null) {
+				job.setJobName(data.getJobName());
+			}
+			
+			if(data.getStartDate()!=null) {
+				job.setStartDate(LocalDate.parse(data.getStartDate()));				
+			}
+			
+			if(data.getEndDate()!= null) {
+				job.setEndDate(LocalDate.parse(data.getEndDate()));		
+			}
+			
+			if(data.getDescription()!=null) {				
+				job.setDescription(data.getDescription());
+			}
+			
+			if(data.getExpectedSalaryMin()!=null) {				
+				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(data.getExpectedSalaryMin()));
+			}
+			
+			if(data.getExpectedSalaryMax()!=null) {
+				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(data.getExpectedSalaryMax()));
+			}
+
+			if(data.getEmploymentTypeCode()!=null) {
+				final EmploymentType type= employmentTypeDao.getByCode(data.getEmploymentTypeCode());
+				job.setEmploymentType(type);
+			}
+			
+			if(data.getFileId()!= null && data.getFileExtension()!=null) {
+				File file = new File();
+				file.setFileName(data.getFile());
+				file.setFileExtension(data.getFileExtension());
+				file = fileDao.save(file);
+				final String oldPicture = job.getJobPicture().getId();
+				jobDao.deleteById(Job.class, oldPicture);
+				job.setJobPicture(file);
+			}
+			
+			job = jobDao.save(job);
+			resDto = new UpdateResDto();
+			
+			resDto.setMessage("Update job success");
+			resDto.setVersion(job.getVersion());
+			
+			em().getTransaction().commit();
+			
+		} catch (Exception e) {
+			em().getTransaction().rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		}
+		
+		return resDto;
+	}
+	
+	
 }
