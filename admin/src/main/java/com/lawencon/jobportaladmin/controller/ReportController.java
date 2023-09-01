@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportaladmin.dto.report.ReportResDto;
@@ -21,9 +22,9 @@ public class ReportController {
 	private ReportService reportService;
 	
 	@GetMapping("/download")
-    public ResponseEntity<?> getReport(List<ReportResDto> reportDatas) throws Exception {
+    public ResponseEntity<?> getReport(@RequestParam String startDate ,@RequestParam String endDate) throws Exception {
         final String fileName = "Report";
-        final byte[] fileBytes = reportService.downloadReport(reportDatas);
+        final byte[] fileBytes = reportService.downloadReport(startDate,endDate);
         return ResponseEntity.ok()
                 .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".pdf")
                 .body(fileBytes);
