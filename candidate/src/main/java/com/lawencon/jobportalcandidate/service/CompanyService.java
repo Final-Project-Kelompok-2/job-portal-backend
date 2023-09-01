@@ -108,22 +108,30 @@ public class CompanyService {
 	}
 	
 	public UpdateResDto updateCompany(CompanyUpdateReqDto data) {
-		final Company company = companyDao.getById(Company.class, data.getId());
+		final Company company = companyDao.getByCode(data.getCompanyCode());
+		
 		final UpdateResDto updateRes = new UpdateResDto();
 		try {
 			em().getTransaction().begin();
-			company.setCompanyName(data.getCompanyName());
-			company.setCompanyCode(data.getCompanyCode());
-			company.setCompanyPhone(data.getCompanyPhone());
+			if(data.getCompanyName()!=null) {
+				company.setCompanyName(data.getCompanyName());
+			}
+			if(data.getCompanyPhone()!=null) {
+				company.setCompanyPhone(data.getCompanyPhone());
+			}
+
 			if (data.getCompanyUrl() != null) {
 				company.setCompanyUrl(data.getCompanyUrl());
 			}
-			final File file = new File();
-			file.setFileName(data.getFileName());
-			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy("Id principal");
-			fileDao.save(file);
-			company.setCreatedBy("Id Principal");
+
+			if(data.getFileName()!=null && data.getFileExtension()!=null) {
+				 File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				file =fileDao.save(file);	
+				company.setPhoto(file);
+			}
+		
 			final Company companyId = companyDao.saveAndFlush(company);
 			updateRes.setVersion(companyId.getVersion());
 			updateRes.setMessage("Company Update Success");
@@ -131,7 +139,7 @@ public class CompanyService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			em().getTransaction().rollback();
-			
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return updateRes;

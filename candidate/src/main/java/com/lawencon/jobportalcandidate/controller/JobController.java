@@ -39,7 +39,7 @@ public class JobController {
 	}
 	
 	@GetMapping("/salary")
-	public ResponseEntity<List<JobResDto>> getBySalary(@Param("salary")Float salary) {
+	public ResponseEntity<List<JobResDto>> getBySalary(@RequestParam("salary")Float salary) {
 		final List<JobResDto> data = jobService.getJobsBySalary(salary);
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
@@ -58,7 +58,7 @@ public class JobController {
 	
 
 	@GetMapping("/filter")
-	public ResponseEntity<List<JobResDto>> filter(@Param("title")String title,@Param("location")String location,@Param("salary")BigDecimal salary) {
+	public ResponseEntity<List<JobResDto>> filter(@RequestParam("title")String title,@RequestParam("location")String location,@RequestParam("salary")BigDecimal salary) {
 		final List<JobResDto> response = jobService.filter(title,location,salary);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

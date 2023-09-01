@@ -1,7 +1,7 @@
 package com.lawencon.jobportalcandidate.dto.company;
 
 public class CompanyUpdateReqDto {
-	private String id;
+	
 	private String companyCode;
 	private String companyName;
 	private String address;
@@ -10,13 +10,6 @@ public class CompanyUpdateReqDto {
 	private String fileName;
 	private String fileExtension;
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getCompanyCode() {
 		return companyCode;
