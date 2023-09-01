@@ -17,24 +17,24 @@ import com.lawencon.jobportaladmin.service.ReportService;
 @RestController
 @RequestMapping("reports")
 public class ReportController {
-	
+
 	@Autowired
 	private ReportService reportService;
-	
+
 	@GetMapping("/download")
-    public ResponseEntity<?> getReport(@RequestParam String startDate ,@RequestParam String endDate) throws Exception {
-        final String fileName = "Report";
-        final byte[] fileBytes = reportService.downloadReport(startDate,endDate);
-        return ResponseEntity.ok()
-                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".pdf")
-                .body(fileBytes);
-   }
-	
+	public ResponseEntity<?> getReport(@RequestParam String startDate, @RequestParam String endDate) throws Exception {
+		final String fileName = "Report";
+		final byte[] fileBytes = reportService.downloadReport(startDate, endDate);
+		return ResponseEntity.ok().header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+				"attachment; filename=" + fileName + ".pdf"	).body(fileBytes);
+	}
+
 	@GetMapping
-	public ResponseEntity<List<ReportResDto>> getReports(@Param("startDate")String startDate, @Param("endDate")String endDate ){
-		final List<ReportResDto> response = reportService.getReport(startDate,endDate);
+	public ResponseEntity<List<ReportResDto>> getReports(
+			@RequestParam(value = "startDate", required = false) String startDate,
+			@RequestParam(value = "endDate", required = false) String endDate) {
+		final List<ReportResDto> response = reportService.getReport(startDate, endDate);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-}
 
+}
