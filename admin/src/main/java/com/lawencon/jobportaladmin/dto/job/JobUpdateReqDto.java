@@ -3,14 +3,15 @@ package com.lawencon.jobportaladmin.dto.job;
 public class JobUpdateReqDto {
 
 	private String id;
+	private String jobCode;
 	private String jobName;
-	private String companyId;
 	private String startDate;
 	private String endDate;
 	private String description;
 	private String expectedSalaryMin;
 	private String expectedSalaryMax;
 	private String employmentTypeId;
+	private String employmentTypeCode;
 	private String fileId;
 	private String file;
 	private String fileExtension;
@@ -29,14 +30,6 @@ public class JobUpdateReqDto {
 
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
-	}
-
-	public String getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
 	}
 
 	public String getStartDate() {
@@ -109,6 +102,22 @@ public class JobUpdateReqDto {
 
 	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
+	}
+
+	public String getEmploymentTypeCode() {
+		return employmentTypeCode;
+	}
+
+	public void setEmploymentTypeCode(String employmentTypeCode) {
+		this.employmentTypeCode = employmentTypeCode;
+	}
+
+	public String getJobCode() {
+		return jobCode;
+	}
+
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
 	}
 
 }

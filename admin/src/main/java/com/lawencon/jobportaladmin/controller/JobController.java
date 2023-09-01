@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportaladmin.dto.InsertResDto;
+import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.job.JobDetailResDto;
 import com.lawencon.jobportaladmin.dto.job.JobInsertReqDto;
 import com.lawencon.jobportaladmin.dto.job.JobResDto;
+import com.lawencon.jobportaladmin.dto.job.JobUpdateReqDto;
 import com.lawencon.jobportaladmin.service.JobService;
 
 @RestController
@@ -61,4 +64,9 @@ public class JobController {
 		return new ResponseEntity<>(data, HttpStatus.OK);
 	}
 	
+	@PatchMapping
+	public ResponseEntity<UpdateResDto> updateJob(@RequestBody JobUpdateReqDto data) {
+		final UpdateResDto response = jobService.updateJob(data);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }
