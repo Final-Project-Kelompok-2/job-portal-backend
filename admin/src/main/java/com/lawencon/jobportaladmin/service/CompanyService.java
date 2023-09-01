@@ -23,6 +23,7 @@ import com.lawencon.jobportaladmin.dto.UpdateResDto;
 import com.lawencon.jobportaladmin.dto.company.CompanyInsertReqDto;
 import com.lawencon.jobportaladmin.dto.company.CompanyResDto;
 import com.lawencon.jobportaladmin.dto.company.CompanyUpdateReqDto;
+import com.lawencon.jobportaladmin.dto.question.QuestionUpdateReqDto;
 import com.lawencon.jobportaladmin.model.Company;
 import com.lawencon.jobportaladmin.model.File;
 import com.lawencon.jobportaladmin.util.GenerateCode;
@@ -130,36 +131,61 @@ public class CompanyService {
 
 	public UpdateResDto updateCompany(CompanyUpdateReqDto data) {
 		final Company company = companyDao.getById(Company.class, data.getId());
+		
 		final UpdateResDto updateRes = new UpdateResDto();
+		
 		try {
 			em().getTransaction().begin();
-			company.setCompanyName(data.getCompanyName());
-			company.setCompanyCode(data.getCompanyCode());
-			company.setCompanyPhone(data.getCompanyPhone());
-			
+			data.setCompanyCode(company.getCompanyCode());
+			if(data.getCompanyName()!=null) {
+				company.setCompanyName(data.getCompanyName());
+			}
+			if(data.getCompanyPhone()!=null) {
+				company.setCompanyPhone(data.getCompanyPhone());
+			}
+
 			if (data.getCompanyUrl() != null) {
 				company.setCompanyUrl(data.getCompanyUrl());
 			}
 
-			final File file = new File();
-			file.setFileName(data.getFileName());
-			file.setFileExtension(data.getFileExtension());
-			file.setCreatedBy(principalService.getAuthPrincipal());
-
-			fileDao.save(file);
-			company.setPhoto(file);
-			company.setUpdatedBy(principalService.getAuthPrincipal());
-
+			if(data.getFileName()!=null && data.getFileExtension()!=null) {
+				File file = new File();
+				file.setFileName(data.getFileName());
+				file.setFileExtension(data.getFileExtension());
+				file = fileDao.save(file);	
+				company.setPhoto(file);
+			}
+			
 			final Company companyId = companyDao.saveAndFlush(company);
 
-			updateRes.setVersion(companyId.getVersion());
-			updateRes.setMessage("Company Update Success");
-	
-			em().getTransaction().commit();
-		} catch (Exception e) {
+			final String companyUpdateAPI = "http://localhost:8081/companies";
+
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
+
+			final RequestEntity<CompanyUpdateReqDto> companyUpdate = RequestEntity.patch(companyUpdateAPI)
+					.headers(headers).body(data);
+
+			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(companyUpdate,
+					UpdateResDto.class);
+
+			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
+
+				updateRes.setVersion(companyId.getVersion());
+				updateRes.setMessage("Company Update Success");
+				
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Update Failed");
+
+			}
+			
+			} catch (Exception e) {
 			e.printStackTrace();
 			em().getTransaction().rollback();
-
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return updateRes;

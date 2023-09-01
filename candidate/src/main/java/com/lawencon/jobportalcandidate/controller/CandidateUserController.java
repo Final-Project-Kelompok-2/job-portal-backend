@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.jobportalcandidate.dto.InsertResDto;
@@ -29,7 +30,7 @@ public class CandidateUserController {
 	private CandidateService candidateService;
 	
 	@GetMapping
-	public ResponseEntity<CandidateMasterResDto> getCandidate(@Param("id") String id) {
+	public ResponseEntity<CandidateMasterResDto> getCandidate(@RequestParam("id") String id) {
 		final CandidateMasterResDto response = candidateService.getCandidateProfile(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

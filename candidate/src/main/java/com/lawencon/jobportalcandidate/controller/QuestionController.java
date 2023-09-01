@@ -30,7 +30,6 @@ public class QuestionController {
 
 	@PostMapping
 	public ResponseEntity<InsertResDto> insertQuestions(@RequestBody QuestionsInsertReqDto newQuestions) {
-		
 		final InsertResDto response = questionService.insertQuestion(newQuestions);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
