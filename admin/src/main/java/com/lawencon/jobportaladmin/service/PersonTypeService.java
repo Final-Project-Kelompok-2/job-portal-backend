@@ -23,12 +23,23 @@ public class PersonTypeService {
 		for (int i = 0; i < personTypes.size(); i++) {
 			final PersonTypeGetResDto personTypeDto = new PersonTypeGetResDto();
 			personTypeDto.setId(personTypes.get(i).getId());
+			personTypeDto.setTypeCode(personTypes.get(i).getTypeCode());
 			personTypeDto.setTypeName(personTypes.get(i).getTypeName());
 			personTypesDto.add(personTypeDto);
 		}
 
 		return personTypesDto;
-
+	}
+	
+	public PersonTypeGetResDto getById(String id) {
+		final PersonTypeGetResDto personTypeDto = new PersonTypeGetResDto();
+		final PersonType personType = personTypeDao.getById(PersonType.class, id);
+		
+		personTypeDto.setId(personType.getId());
+		personTypeDto.setTypeCode(personType.getTypeCode());
+		personTypeDto.setTypeName(personType.getTypeName());
+		
+		return personTypeDto;
 	}
 
 }
