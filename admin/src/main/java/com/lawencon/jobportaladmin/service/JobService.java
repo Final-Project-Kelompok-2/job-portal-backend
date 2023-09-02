@@ -258,37 +258,37 @@ public class JobService {
 			Job job = jobDao.getById(Job.class, jobDto.getId());
 			jobDto.setJobCode(job.getJobCode());
 			
-			if(jobDto.getJobName()!=null) {
+			if(jobDto.getJobName()!=null && jobDto.getJobName()!="") {
 				job.setJobName(jobDto.getJobName());			
 			}
 			
-			if(jobDto.getStartDate()!=null) {
+			if(jobDto.getStartDate()!=null && jobDto.getStartDate()!="") {
 				job.setStartDate(LocalDate.parse(jobDto.getStartDate()));				
 			}
 			
-			if(jobDto.getEndDate()!=null) {
+			if(jobDto.getEndDate()!=null && jobDto.getEndDate()!="") {
 				job.setEndDate(LocalDate.parse(jobDto.getEndDate()));		
 			}
 			
-			if(jobDto.getDescription()!=null) {				
+			if(jobDto.getDescription()!=null && jobDto.getDescription()!="") {				
 				job.setDescription(jobDto.getDescription());
 			}
 			
-			if(jobDto.getExpectedSalaryMin()!=null) {				
+			if(jobDto.getExpectedSalaryMin()!=null && jobDto.getExpectedSalaryMin()!="") {				
 				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMin()));
 			}
 			
-			if(jobDto.getExpectedSalaryMax()!=null) {
+			if(jobDto.getExpectedSalaryMax()!=null && jobDto.getExpectedSalaryMax()!="") {
 				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMax()));
 			}
 
-			if(jobDto.getEmploymentTypeId()!=null) {
+			if(jobDto.getEmploymentTypeId()!=null && jobDto.getEmploymentTypeId()!="") {
 				final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 				job.setEmploymentType(type);
 				jobDto.setEmploymentTypeCode(type.getEmploymentTypeCode());
 			}
 			
-			if (jobDto.getFile() != null) {
+			if (jobDto.getFile() != null && jobDto.getFile()!="" && jobDto.getFileExtension()!=null && jobDto.getFileExtension()!="") {
 				File file = new File();
 				file.setFileName(jobDto.getFile());
 				file.setFileExtension(jobDto.getFileExtension());

@@ -276,36 +276,36 @@ public class JobService {
 			final Job jobByCode = jobDao.getByCode(data.getJobCode());
 			Job job = jobDao.getById(Job.class, jobByCode.getId());
 			
-			if(data.getJobName()!= null) {
+			if(data.getJobName()!= null && data.getJobName()!="") {
 				job.setJobName(data.getJobName());
 			}
 			
-			if(data.getStartDate()!=null) {
+			if(data.getStartDate()!=null && data.getStartDate()!="") {
 				job.setStartDate(LocalDate.parse(data.getStartDate()));				
 			}
 			
-			if(data.getEndDate()!= null) {
+			if(data.getEndDate()!= null && data.getEndDate()!="") {
 				job.setEndDate(LocalDate.parse(data.getEndDate()));		
 			}
 			
-			if(data.getDescription()!=null) {				
+			if(data.getDescription()!=null && data.getDescription()!="") {				
 				job.setDescription(data.getDescription());
 			}
 			
-			if(data.getExpectedSalaryMin()!=null) {				
+			if(data.getExpectedSalaryMin()!=null && data.getExpectedSalaryMin()!="") {				
 				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(data.getExpectedSalaryMin()));
 			}
 			
-			if(data.getExpectedSalaryMax()!=null) {
+			if(data.getExpectedSalaryMax()!=null && data.getExpectedSalaryMax()!="") {
 				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(data.getExpectedSalaryMax()));
 			}
 
-			if(data.getEmploymentTypeCode()!=null) {
+			if(data.getEmploymentTypeCode()!=null && data.getEmploymentTypeCode()!="") {
 				final EmploymentType type= employmentTypeDao.getByCode(data.getEmploymentTypeCode());
 				job.setEmploymentType(type);
 			}
 			
-			if(data.getFile()!= null && data.getFileExtension()!=null) {
+			if(data.getFile()!= null && data.getFileExtension()!=null && data.getFile()!= "" && data.getFileExtension()!="") {
 				File file = new File();
 				file.setFileName(data.getFile());
 				file.setFileExtension(data.getFileExtension());
