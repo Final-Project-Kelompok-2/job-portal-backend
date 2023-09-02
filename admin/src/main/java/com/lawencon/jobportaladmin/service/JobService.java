@@ -249,45 +249,84 @@ public class JobService {
 	}
 
 	public UpdateResDto updateJob(JobUpdateReqDto jobDto) {
-		final Job job = jobDao.getById(Job.class, jobDto.getId());
+		
 
 		UpdateResDto result = null;
 
 		try {
 			em().getTransaction().begin();
-			job.setJobName(jobDto.getJobName());
+			Job job = jobDao.getById(Job.class, jobDto.getId());
+			jobDto.setJobCode(job.getJobCode());
+			
+			if(jobDto.getJobName()!=null) {
+				job.setJobName(jobDto.getJobName());			
+			}
+			
+			if(jobDto.getStartDate()!=null) {
+				job.setStartDate(LocalDate.parse(jobDto.getStartDate()));				
+			}
+			
+			if(jobDto.getEndDate()!=null) {
+				job.setEndDate(LocalDate.parse(jobDto.getEndDate()));		
+			}
+			
+			if(jobDto.getDescription()!=null) {				
+				job.setDescription(jobDto.getDescription());
+			}
+			
+			if(jobDto.getExpectedSalaryMin()!=null) {				
+				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMin()));
+			}
+			
+			if(jobDto.getExpectedSalaryMax()!=null) {
+				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMax()));
+			}
 
-			final Company company = companyDao.getById(Company.class, jobDto.getCompanyId());
-			job.setCompany(company);
-			job.setStartDate(LocalDate.parse(jobDto.getStartDate()));
-			job.setEndDate(LocalDate.parse(jobDto.getEndDate()));
-			job.setDescription(jobDto.getDescription());
-			job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMin()));
-			job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMax()));
-
-			final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
-			job.setEmploymentType(type);
-
+			if(jobDto.getEmploymentTypeId()!=null) {
+				final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
+				job.setEmploymentType(type);
+				jobDto.setEmploymentTypeCode(type.getEmploymentTypeCode());
+			}
+			
 			if (jobDto.getFile() != null) {
-				final File file = new File();
+				File file = new File();
 				file.setFileName(jobDto.getFile());
 				file.setFileExtension(jobDto.getFileExtension());
 				file.setCreatedBy(principalService.getAuthPrincipal());
-				fileDao.save(file);
+				file = fileDao.save(file);
+				String oldPicture = job.getPic().getId();
+				jobDao.deleteById(Job.class, oldPicture);
 				job.setJobPicture(file);
-				fileDao.deleteById(File.class, jobDto.getFileId());
 			}
+			
+			job = jobDao.saveAndFlush(job);
+			
+			final String jobUpdateAPI = "http://localhost:8081/jobs";
 
-			jobDao.saveAndFlush(job);
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.setBearerAuth(JwtConfig.get());
 
-			result = new UpdateResDto();
-			result = new UpdateResDto();
-			result.setVersion(job.getVersion());
-			result.setMessage("New job vacancy added!");
+			final RequestEntity<JobUpdateReqDto> jobUpdate = RequestEntity.patch(jobUpdateAPI)
+					.headers(headers).body(jobDto);
 
-			em().getTransaction().commit();
+			final ResponseEntity<UpdateResDto> responseCandidate = restTemplate.exchange(jobUpdate,
+					UpdateResDto.class);
+
+			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
+				result = new UpdateResDto();
+				result.setVersion(job.getVersion());
+				result.setMessage("Job Updated!");
+				em().getTransaction().commit();
+			} else {
+				em().getTransaction().rollback();
+				throw new RuntimeException("Update Failed");
+			}
+			
 		} catch (Exception e) {
 			em().getTransaction().rollback();
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return result;

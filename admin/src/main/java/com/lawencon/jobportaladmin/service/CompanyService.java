@@ -171,7 +171,6 @@ public class CompanyService {
 					UpdateResDto.class);
 
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
-
 				updateRes.setVersion(companyId.getVersion());
 				updateRes.setMessage("Company Update Success");
 				
@@ -179,7 +178,6 @@ public class CompanyService {
 			} else {
 				em().getTransaction().rollback();
 				throw new RuntimeException("Update Failed");
-
 			}
 			
 			} catch (Exception e) {
@@ -189,5 +187,20 @@ public class CompanyService {
 		}
 
 		return updateRes;
+	}
+	
+	public CompanyResDto getById(String id) {
+		final Company company = companyDao.getById(Company.class, id);
+		final CompanyResDto companyDto= new CompanyResDto();
+
+		companyDto.setId(company.getId());
+		companyDto.setCompanyCode(company.getCompanyCode());
+		companyDto.setCompanyName(company.getCompanyName());
+		companyDto.setAddress(company.getAddress());
+		companyDto.setCompanyUrl(company.getCompanyUrl());
+		companyDto.setCompanyPhone(company.getCompanyPhone());
+		companyDto.setPhotoId(company.getPhoto().getId());
+		
+		return companyDto;
 	}
 }
