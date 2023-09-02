@@ -37,13 +37,13 @@ public class CandidateLanguageController {
 	}
 
 	@PostMapping
-	public ResponseEntity<InsertResDto> insertCandidateDocument(@RequestBody CandidateLanguageInsertReqDto data) {
+	public ResponseEntity<InsertResDto> insertCandidateLanguage(@RequestBody CandidateLanguageInsertReqDto data) {
 		final InsertResDto response = languageService.insertCandidateLanguage(data);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
 	@PatchMapping
-	public ResponseEntity<UpdateResDto> updateCandidateDocument(@RequestBody CandidateLanguageUpdateReqDto data){
+	public ResponseEntity<UpdateResDto> updateCandidateLanguage(@RequestBody CandidateLanguageUpdateReqDto data){
 		final UpdateResDto response = languageService.updateCandidateLanguage(data);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
