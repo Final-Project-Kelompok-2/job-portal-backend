@@ -137,18 +137,18 @@ public class CompanyService {
 		try {
 			em().getTransaction().begin();
 			data.setCompanyCode(company.getCompanyCode());
-			if(data.getCompanyName()!=null) {
+			if(data.getCompanyName()!=null && !data.getCompanyName().equals("")) {
 				company.setCompanyName(data.getCompanyName());
 			}
-			if(data.getCompanyPhone()!=null) {
+			if(data.getCompanyPhone()!=null && !data.getCompanyPhone().equals("")) {
 				company.setCompanyPhone(data.getCompanyPhone());
 			}
 
-			if (data.getCompanyUrl() != null) {
+			if (data.getCompanyUrl() != null && !data.getCompanyUrl().equals("") ) {
 				company.setCompanyUrl(data.getCompanyUrl());
 			}
 
-			if(data.getFileName()!=null && data.getFileExtension()!=null) {
+			if(data.getFileName()!=null && data.getFileExtension()!=null && !data.getFileName().equals("") && !data.getFileExtension().equals("")) {
 				File file = new File();
 				file.setFileName(data.getFileName());
 				file.setFileExtension(data.getFileExtension());
