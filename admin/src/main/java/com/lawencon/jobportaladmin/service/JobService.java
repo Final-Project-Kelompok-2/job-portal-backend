@@ -343,6 +343,7 @@ public class JobService {
 		
 		job.setId(jobDb.getId());
 		job.setJobName(jobDb.getJobName());
+		job.setCompanyId(jobDb.getCompany().getId());
 		job.setCompanyName(jobDb.getCompany().getCompanyName());
 		job.setAddress(jobDb.getCompany().getAddress());
 		job.setStartDate(DateUtil.localDateToString(jobDb.getStartDate()));
@@ -350,6 +351,7 @@ public class JobService {
 		job.setEndDate(DateUtil.localDateToString(jobDb.getEndDate()));
 		job.setExpectedSalaryMin(MoneyUtil.parseToRupiah(jobDb.getExpectedSalaryMin()));
 		job.setExpectedSalaryMax(MoneyUtil.parseToRupiah(jobDb.getExpectedSalaryMax()));
+		job.setEmploymentTypeId(jobDb.getEmploymentType().getId());
 		job.setEmployementTypeName(jobDb.getEmploymentType().getEmploymentTypeName());
 		job.setFileId(jobDb.getJobPicture().getId());
 		job.setPicId(jobDb.getPic().getId());

@@ -38,7 +38,7 @@ public class AssignedJobQuestionService {
 		for(int i = 0 ; i < assignedJobQuestion.size() ; i++) {
 			final AssignedJobQuestionResDto assignedQuestion = new AssignedJobQuestionResDto();
 			assignedQuestion.setId(assignedJobQuestion.get(i).getId());
-			assignedQuestion.setQuestionId(assignedJobQuestion.get(i).getId());
+			assignedQuestion.setQuestionId(assignedJobQuestion.get(i).getQuestion().getId());
 			assignedQuestion.setQuestionDetail(assignedJobQuestion.get(i).getQuestion().getQuestionDetail());
 			jobQuestionRes.add(assignedQuestion);
 		}
