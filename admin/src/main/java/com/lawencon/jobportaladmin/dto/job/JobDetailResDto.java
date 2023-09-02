@@ -4,6 +4,7 @@ public class JobDetailResDto {
 
 	private String id;
 	private String jobName;
+	private String companyId;
 	private String companyName;
 	private String address;
 	private String startDate;
@@ -11,13 +12,13 @@ public class JobDetailResDto {
 	private String description;
 	private String expectedSalaryMin;
 	private String expectedSalaryMax;
+	private String employmentTypeId;
 	private String employementTypeName;
 	private String fileId;
 	private String companyPhotoId;
 	private String picId;
 	private String hrId;
 	private String createdBy;
-	
 
 	public String getId() {
 		return id;
@@ -33,6 +34,14 @@ public class JobDetailResDto {
 
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getCompanyName() {
@@ -91,6 +100,14 @@ public class JobDetailResDto {
 		this.expectedSalaryMax = expectedSalaryMax;
 	}
 
+	public String getEmploymentTypeId() {
+		return employmentTypeId;
+	}
+
+	public void setEmploymentTypeId(String employmentTypeId) {
+		this.employmentTypeId = employmentTypeId;
+	}
+
 	public String getEmployementTypeName() {
 		return employementTypeName;
 	}
@@ -138,6 +155,5 @@ public class JobDetailResDto {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	
-	
+
 }
