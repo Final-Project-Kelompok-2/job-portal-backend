@@ -258,37 +258,37 @@ public class JobService {
 			Job job = jobDao.getById(Job.class, jobDto.getId());
 			jobDto.setJobCode(job.getJobCode());
 			
-			if(jobDto.getJobName()!=null && jobDto.getJobName()!="") {
+			if(jobDto.getJobName()!=null && !jobDto.getJobName().equals("")) {
 				job.setJobName(jobDto.getJobName());			
 			}
 			
-			if(jobDto.getStartDate()!=null && jobDto.getStartDate()!="") {
+			if(jobDto.getStartDate()!=null && !jobDto.getStartDate().equals("")) {
 				job.setStartDate(LocalDate.parse(jobDto.getStartDate()));				
 			}
 			
-			if(jobDto.getEndDate()!=null && jobDto.getEndDate()!="") {
+			if(jobDto.getEndDate()!=null && !jobDto.getEndDate().equals("")) {
 				job.setEndDate(LocalDate.parse(jobDto.getEndDate()));		
 			}
 			
-			if(jobDto.getDescription()!=null && jobDto.getDescription()!="") {				
+			if(jobDto.getDescription()!=null && !jobDto.getDescription().equals("")) {				
 				job.setDescription(jobDto.getDescription());
 			}
 			
-			if(jobDto.getExpectedSalaryMin()!=null && jobDto.getExpectedSalaryMin()!="") {				
+			if(jobDto.getExpectedSalaryMin()!=null && !jobDto.getExpectedSalaryMin().equals("")) {				
 				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMin()));
 			}
 			
-			if(jobDto.getExpectedSalaryMax()!=null && jobDto.getExpectedSalaryMax()!="") {
+			if(jobDto.getExpectedSalaryMax()!=null && !jobDto.getExpectedSalaryMax().equals("")) {
 				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(jobDto.getExpectedSalaryMax()));
 			}
 
-			if(jobDto.getEmploymentTypeId()!=null && jobDto.getEmploymentTypeId()!="") {
+			if(jobDto.getEmploymentTypeId()!=null && !jobDto.getEmploymentTypeId().equals("")) {
 				final EmploymentType type = employmentTypeDao.getById(EmploymentType.class, jobDto.getEmploymentTypeId());
 				job.setEmploymentType(type);
 				jobDto.setEmploymentTypeCode(type.getEmploymentTypeCode());
 			}
 			
-			if (jobDto.getFile() != null && jobDto.getFile()!="" && jobDto.getFileExtension()!=null && jobDto.getFileExtension()!="") {
+			if (jobDto.getFile() != null && !jobDto.getFile().equals("") && jobDto.getFileExtension()!=null && !jobDto.getFileExtension().equals("")) {
 				File file = new File();
 				file.setFileName(jobDto.getFile());
 				file.setFileExtension(jobDto.getFileExtension());
@@ -318,6 +318,7 @@ public class JobService {
 				result.setVersion(job.getVersion());
 				result.setMessage("Job Updated!");
 				em().getTransaction().commit();
+				
 			} else {
 				em().getTransaction().rollback();
 				throw new RuntimeException("Update Failed");
