@@ -276,36 +276,36 @@ public class JobService {
 			final Job jobByCode = jobDao.getByCode(data.getJobCode());
 			Job job = jobDao.getById(Job.class, jobByCode.getId());
 			
-			if(data.getJobName()!= null && data.getJobName()!="") {
+			if(data.getJobName()!= null && !data.getJobName().equals("")) {
 				job.setJobName(data.getJobName());
 			}
 			
-			if(data.getStartDate()!=null && data.getStartDate()!="") {
+			if(data.getStartDate()!=null && !data.getStartDate().equals("")) {
 				job.setStartDate(LocalDate.parse(data.getStartDate()));				
 			}
 			
-			if(data.getEndDate()!= null && data.getEndDate()!="") {
+			if(data.getEndDate()!= null && !data.getEndDate().equals("")) {
 				job.setEndDate(LocalDate.parse(data.getEndDate()));		
 			}
 			
-			if(data.getDescription()!=null && data.getDescription()!="") {				
+			if(data.getDescription()!=null && !data.getDescription().equals("")) {				
 				job.setDescription(data.getDescription());
 			}
 			
-			if(data.getExpectedSalaryMin()!=null && data.getExpectedSalaryMin()!="") {				
+			if(data.getExpectedSalaryMin()!=null && !data.getExpectedSalaryMin().equals("")) {				
 				job.setExpectedSalaryMin(BigDecimalUtil.parseToBigDecimal(data.getExpectedSalaryMin()));
 			}
 			
-			if(data.getExpectedSalaryMax()!=null && data.getExpectedSalaryMax()!="") {
+			if(data.getExpectedSalaryMax()!=null && !data.getExpectedSalaryMax().equals("")) {
 				job.setExpectedSalaryMax(BigDecimalUtil.parseToBigDecimal(data.getExpectedSalaryMax()));
 			}
 
-			if(data.getEmploymentTypeCode()!=null && data.getEmploymentTypeCode()!="") {
+			if(data.getEmploymentTypeCode()!=null && !data.getEmploymentTypeCode().equals("")) {
 				final EmploymentType type= employmentTypeDao.getByCode(data.getEmploymentTypeCode());
 				job.setEmploymentType(type);
 			}
 			
-			if(data.getFile()!= null && data.getFileExtension()!=null && data.getFile()!= "" && data.getFileExtension()!="") {
+			if(data.getFile()!= null && data.getFileExtension()!=null && !data.getFile().equals("") && !data.getFileExtension().equals("")) {
 				File file = new File();
 				file.setFileName(data.getFile());
 				file.setFileExtension(data.getFileExtension());
