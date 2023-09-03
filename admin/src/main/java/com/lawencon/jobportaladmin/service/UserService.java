@@ -100,11 +100,13 @@ public class UserService implements UserDetailsService {
 			} else {
 				em().getTransaction().rollback();
 				resDto.setMessage("Update Password Failed");
+				throw new RuntimeException("Password lama tidak sama");
 			}
 
 		} catch (Exception e) {
 			em().getTransaction().rollback();
 			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 
 		return resDto;

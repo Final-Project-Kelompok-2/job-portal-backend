@@ -19,13 +19,16 @@ public class RoleService {
 	public List<RoleResDto> getRoles() {
 		final List<RoleResDto> rolesDto = new ArrayList<>();
 		final List<Role> roles = roleDao.getAll(Role.class);
-
+		
+		
 		for (int i = 0; i < roles.size(); i++) {
-			final RoleResDto roleDto = new RoleResDto();
-			roleDto.setId(roles.get(i).getId());
-			roleDto.setRoleName(roles.get(i).getRoleName());
-			roleDto.setRoleCode(roles.get(i).getRoleCode());
-			rolesDto.add(roleDto);
+			if(!roles.get(i).getRoleCode().equals(com.lawencon.jobportaladmin.constant.Role.ADMIN.roleCode)) {
+				final RoleResDto roleDto = new RoleResDto();
+				roleDto.setId(roles.get(i).getId());
+				roleDto.setRoleName(roles.get(i).getRoleName());
+				roleDto.setRoleCode(roles.get(i).getRoleCode());
+				rolesDto.add(roleDto);
+			}
 		}
 
 		return rolesDto;

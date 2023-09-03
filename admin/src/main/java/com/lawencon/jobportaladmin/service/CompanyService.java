@@ -143,6 +143,10 @@ public class CompanyService {
 			if(data.getCompanyPhone()!=null && !data.getCompanyPhone().equals("")) {
 				company.setCompanyPhone(data.getCompanyPhone());
 			}
+			
+			if(data.getAddress()!=null && !data.getAddress().equals("")) {
+				company.setAddress(data.getAddress());
+			}
 
 			if (data.getCompanyUrl() != null && !data.getCompanyUrl().equals("") ) {
 				company.setCompanyUrl(data.getCompanyUrl());
@@ -173,7 +177,7 @@ public class CompanyService {
 			if (responseCandidate.getStatusCode().equals(HttpStatus.OK)) {
 				updateRes.setVersion(companyId.getVersion());
 				updateRes.setMessage("Company Update Success");
-				
+				System.out.println("=========SUCCESS");
 				em().getTransaction().commit();
 			} else {
 				em().getTransaction().rollback();
